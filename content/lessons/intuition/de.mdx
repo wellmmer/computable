@@ -1,0 +1,156 @@
+export const meta = {
+  title: 'Intuition: der menschliche Rechner',
+  summary: 'Wie Turing aus einem Menschen, der mit dem Bleistift rechnet, eine Maschine mit Band, Kopf, Zuständen und Regeln machte.',
+  minutes: 7,
+};
+
+Im Jahr 1936 veröffentlichte Alan Turing einen Aufsatz mit dem Titel *On Computable Numbers* („Über berechenbare Zahlen“).
+Er beschreibt eine Maschine, die niemand gebaut hat.
+Heute nennen wir sie die Turingmaschine.
+Diese Lektion zeigt, woher die Idee kam.
+Sie beginnt mit einem Menschen, einem Bleistift und einem Blatt Karopapier.
+
+## Eine Frage über Verfahren
+
+Turing wollte eine Frage aus der Mathematik beantworten.
+Die Frage war, ob ein festes Verfahren für jede Formel der Logik entscheiden kann, ob sie beweisbar ist.
+Ihr deutscher Name ist *Entscheidungsproblem*.
+Eine spätere Lektion erzählt diese Geschichte.
+
+Um die Frage zu beantworten, brauchte Turing zuerst eine klare Vorstellung von einem Verfahren.
+Menschen benutzten Verfahren schon lange, zum Beispiel die schriftliche Division.
+Aber niemand hatte genau gesagt, was als Verfahren zählt.
+Turing fand einen Weg, das zu sagen.
+Er sah sich einen Menschen genau an, der einem Verfahren folgt.
+
+## Der menschliche Rechner
+
+Im Jahr 1936 bezeichnete das englische Wort „computer“ einen Menschen, der rechnet.
+Turing stellte sich diesen Menschen bei der Arbeit vor.
+Seine Analyse beginnt mit diesen Worten:
+
+> „Rechnen geschieht normalerweise, indem man bestimmte Symbole auf Papier schreibt. Wir können annehmen, dass dieses Papier in Kästchen eingeteilt ist wie ein Rechenheft für Kinder.“ (Turing, 1936, Seite 249, eigene Übersetzung)
+
+Denk an eine Schülerin, die zwei lange Zahlen auf Karopapier addiert.
+Sie schreibt eine Ziffer in jedes Kästchen.
+Sie schaut auf ein paar Kästchen, schreibt eine Ziffer und macht weiter.
+In jedem Moment behält sie auch etwas im Kopf, zum Beispiel „1 im Sinn“.
+
+Turing nannte das einen „Geisteszustand“.
+Er schrieb:
+
+> „Das Verhalten des Rechners ist in jedem Moment bestimmt durch die Symbole, die er beobachtet, und durch seinen ‚Geisteszustand‘ in diesem Moment.“ (Turing, 1936, Seite 250, eigene Übersetzung)
+
+Zwei Dinge bestimmen also die nächste Handlung.
+Das eine ist, was der Mensch auf dem Papier sieht.
+Das andere ist, was er im Kopf hat.
+
+## Turing vereinfacht das Bild
+
+Danach nahm Turing jedes Detail weg, das ein Verfahren nicht braucht.
+Jeder Punkt unten streicht ein Detail und behält das Verfahren.
+
+- **Eine Reihe von Kästchen.** Ein Blatt Papier hat Zeilen und Spalten. Turing argumentierte, dass eine lange Reihe genügt. Was auf einem Blatt steht, lässt sich immer in einer einzigen Reihe aufschreiben.
+- **Eine feste Menge von Symbolen.** Der Mensch benutzt eine begrenzte Menge von Symbolen, etwa die Ziffern 0 bis 9. Eine lange Zahl ist nur eine Folge von Symbolen nebeneinander.
+- **Wenige Kästchen auf einmal.** Ein Mensch kann nur wenige Kästchen auf einmal sehen. Um mehr zu sehen, muss er noch einmal hinschauen, ein Blick nach dem anderen.
+- **Eine feste Menge von Geisteszuständen.** Ein Mensch kann nur eine begrenzte Zahl von Dingen im Kopf behalten. Alles Weitere kann er auf das Papier schreiben.
+- **Sehr kleine Schritte.** Jeder Schritt ändert höchstens ein Symbol. Jeder Schritt verschiebt die Aufmerksamkeit nur ein kleines Stück.
+
+Turing argumentierte, dass diese Grenzen das Verfahren nicht schwächen.
+Ein Mensch, der sich an sie hält, kann dieselbe Arbeit leisten.
+Die Arbeit braucht dann höchstens mehr Kästchen und mehr Schritte.
+
+## Vom Menschen zur Maschine
+
+Setze jetzt eine Maschine an die Stelle des Menschen.
+Jeder Teil des Bildes wird zu einem Teil der Maschine.
+
+- Die Reihe von Kästchen wird zum **Band**. Das Band ist in Felder eingeteilt, und jedes Feld enthält ein Symbol.
+- Das Kästchen, auf das der Mensch schaut, wird zum Feld unter dem **Kopf**. Der Kopf liest dieses eine Feld und kann ein neues Symbol hineinschreiben.
+- Der Geisteszustand wird zum **Zustand** der Maschine. Turing nannte ihn „m-Konfiguration“.
+- Das Verfahren wird zu einer Tabelle von **Regeln**. Jede Regel sagt: In diesem Zustand, beim Lesen dieses Symbols, tu diese Dinge und wechsle dann in jenen Zustand.
+
+Der Kopf bewegt sich immer nur um ein Feld, nach links oder nach rechts.
+Das genügt, denn die Maschine kann eine Bewegung so oft wiederholen, wie sie muss.
+Das Band hat kein Ende, also gehen der Maschine nie die Felder aus.
+
+Die Maschine hat kein anderes Gedächtnis.
+Sie kann nicht das ganze Band auf einmal ansehen.
+Sie wählt auch nie zwischen Regeln.
+Für jeden Zustand und jedes Symbol gibt es höchstens eine Regel.
+Wenn keine Regel passt, hält die Maschine an.
+
+## Turings erste Maschine
+
+Schon früh gibt Turings Aufsatz ein erstes Beispiel.
+Diese Maschine druckt 0 1 0 1 … auf das Band, ohne Ende.
+Sie beginnt auf einem leeren Band, im Zustand 𝔟.
+Turing benannte seine Zustände mit alten deutschen Buchstaben: 𝔟, 𝔠, 𝔢 und 𝔨.
+
+Die Maschine hat vier Regeln, und jede liest ein leeres Feld:
+
+- In 𝔟 druckt sie 0, geht nach rechts und wechselt zu 𝔠.
+- In 𝔠 geht sie nach rechts und wechselt zu 𝔢.
+- In 𝔢 druckt sie 1, geht nach rechts und wechselt zu 𝔨.
+- In 𝔨 geht sie nach rechts und wechselt zu 𝔟.
+
+Drücke viermal **Schritt**.
+Sieh zu, wie der Zustand über dem Kopf von 𝔟 zu 𝔠, zu 𝔢, zu 𝔨 und zurück zu 𝔟 wechselt.
+
+<Machine example="turing-1936" />
+
+Die Maschine lässt nach jeder Ziffer ein Feld leer.
+In seinem Aufsatz hält Turing jedes zweite Feld für Notizen frei.
+Diese Maschine braucht keine Notizen, also bleiben diese Felder leer.
+
+Die Maschine hält nie an.
+Nach 𝔨 geht sie immer zurück zu 𝔟.
+Für Turing war das kein Problem.
+Er wollte Maschinen, die die Ziffern einer Zahl schreiben, eine nach der anderen, ohne Ende.
+
+## Eine Maschine, die eins addiert
+
+Turing schrieb seine Regeln in seiner eigenen Notation.
+Die meisten Lehrbücher benutzen heute eine kürzere Form.
+Jede Regel liest ein Symbol, schreibt ein Symbol, geht ein Feld weiter und nennt den nächsten Zustand.
+Der Simulator von Computable benutzt diese Form auch.
+
+Die nächste Maschine addiert 1 zu einer Binärzahl.
+Die Eingabe 1011 ist die Zahl elf.
+Die Maschine soll mit 1100 enden, der Zahl zwölf.
+
+Sie arbeitet wie ein Mensch, der von Hand 1 addiert:
+
+1. Im Zustand q0 geht der Kopf nach rechts, bis er das Leerzeichen nach der letzten Ziffer liest.
+2. Dann geht er zurück auf die letzte Ziffer und wechselt in den Zustand q1.
+3. In q1 wird eine 1 zu 0, und der Kopf geht nach links. Das ist der Übertrag.
+4. In q1 wird eine 0 oder ein Leerzeichen zu 1. Die Arbeit ist fertig, und die Maschine wechselt zu qA, ihrem akzeptierenden Zustand.
+
+Drücke **Starten** und sieh zu, wie der Übertrag nach links wandert.
+
+<Machine example="binary-plus-one" />
+
+Die Maschine hält nach 8 Schritten in qA an.
+Auf dem Band steht jetzt 1100.
+Öffne sie im Simulator, um alle sechs Regeln zu sehen oder eine andere Eingabe zu testen.
+
+## Warum das wichtig ist
+
+Turings Maschine ist sehr einfach.
+Sie liest, schreibt und bewegt sich, ein Feld nach dem anderen.
+Trotzdem argumentierte Turing, dass sie jede Rechnung leisten kann, die ein Mensch nach festen Regeln ausführt.
+Heute heißt diese Behauptung Church-Turing-These.
+Eine spätere Lektion sieht sie sich genau an.
+
+Die Maschine gab Turing auch seine Antwort.
+Mit einer klaren Vorstellung von einem Verfahren konnte er zeigen, dass es für manche Fragen gar kein Verfahren gibt.
+Spätere Lektionen erklären, wie.
+
+<Quiz />
+
+## Quellen
+
+- A. M. Turing, „On Computable Numbers, with an Application to the Entscheidungsproblem“, *Proceedings of the London Mathematical Society*, Reihe 2, Band 42, Seiten 230–265, 1936. Die erste Maschine steht in Abschnitt 3. Der menschliche Rechner steht in Abschnitt 9.
+- Michael Sipser, *Introduction to the Theory of Computation*, 3. Auflage, Cengage Learning, 2013. Kapitel 3.
+- John E. Hopcroft, Rajeev Motwani und Jeffrey D. Ullman, *Introduction to Automata Theory, Languages, and Computation*, 3. Auflage, Addison-Wesley, 2007. Kapitel 8.
+- Wellmmer Lucas de Oliveira Pinto, [*Simulador de Máquina de Turing, Uma Aplicação Web para o Ensino*](https://github.com/wellmmer/computable/blob/master/docs/tcc/paper/TCC%20-%20Simulador%20de%20M%C3%A1quina%20de%20Turing%2C%20Uma%20Aplica%C3%A7%C3%A3o%20Web%20para%20o%20Ensino.pdf), Abschlussarbeit im Fach Informatik, UNASP, 2016. Auf Portugiesisch. Abschnitt 2.3.

@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "computer": {
+      "text": "En 1936, que désignait le mot anglais « computer » ?",
+      "options": {
+        "electronic": {
+          "text": "Une machine électronique qui fait des calculs",
+          "why": "Les ordinateurs électroniques sont venus plus tard. En 1936, un computer était une personne."
+        },
+        "person": {
+          "text": "Une personne qui calcule à la main",
+          "why": "Turing a construit sa machine à partir de l’image de cette personne au travail."
+        },
+        "tables": {
+          "text": "Un livre de tables de nombres",
+          "why": "On utilisait de tels livres, mais le mot « computer » désignait la personne qui calcule."
+        }
+      }
+    },
+    "tape": {
+      "text": "Quelle partie du travail du calculateur humain est devenue la bande ?",
+      "options": {
+        "pencil": {
+          "text": "Le crayon",
+          "why": "Le crayon écrit dans un carré à la fois. Il ressemble plutôt à la tête, qui lit et écrit une case."
+        },
+        "mind": {
+          "text": "L’état d’esprit de la personne",
+          "why": "L’état d’esprit est devenu l’état de la machine, pas la bande."
+        },
+        "paper": {
+          "text": "Le papier quadrillé",
+          "why": "Turing a gardé une longue rangée de carrés, et cette rangée est devenue la bande."
+        }
+      }
+    },
+    "state": {
+      "text": "Que contient l’état de la machine ?",
+      "options": {
+        "memory": {
+          "text": "Ce que la machine doit retenir de son travail jusqu’ici",
+          "why": "Comme un état d’esprit, l’état contient des choses comme « je retiens 1 »."
+        },
+        "cell": {
+          "text": "Le symbole de la case sous la tête",
+          "why": "La tête lit ce symbole. L’état est autre chose, et les deux ensemble choisissent la règle."
+        },
+        "whole-tape": {
+          "text": "Tout ce qui est écrit sur la bande",
+          "why": "La machine ne voit qu’une case à la fois. La bande contient les symboles, pas l’état."
+        },
+        "rules": {
+          "text": "La table des règles",
+          "why": "Les règles restent les mêmes pendant toute l’exécution. L’état change d’un pas à l’autre."
+        }
+      }
+    },
+    "first-machine": {
+      "text": "Quand la première machine de Turing s’arrête-t-elle ?",
+      "options": {
+        "four-steps": {
+          "text": "Après quatre pas, quand chaque état a servi une fois",
+          "why": "Après 𝔨, la machine revient à 𝔟 et continue."
+        },
+        "end-of-tape": {
+          "text": "Quand elle arrive au bout de la bande",
+          "why": "La bande n’a pas de fin, donc la machine ne manque jamais de cases."
+        },
+        "never": {
+          "text": "Jamais",
+          "why": "Chaque règle mène à un autre état, donc la machine imprime 0 1 0 1 … sans fin."
+        }
+      }
+    },
+    "carry": {
+      "text": "La machine Binaire +1 est dans l’état q1 et lit un 1. Que fait-elle ?",
+      "options": {
+        "write-one-stop": {
+          "text": "Elle écrit 1 et s’arrête",
+          "why": "C’est ce qui se passe avec un 0 ou un blanc. Un 1 veut dire qu’il y a une retenue."
+        },
+        "write-zero-left": {
+          "text": "Elle écrit 0 et va à gauche",
+          "why": "1 plus 1 fait 0 avec une retenue, donc la machine va à gauche pour y ajouter la retenue."
+        },
+        "move-right": {
+          "text": "Elle va à droite pour trouver la fin du nombre",
+          "why": "C’est ce que fait l’état q0. En q1, la machine va à gauche."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,156 @@
+export const meta = {
+  title: 'Intuition : le calculateur humain',
+  summary: 'Comment Turing a transformé une personne qui calcule au crayon en une machine avec une bande, une tête, des états et des règles.',
+  minutes: 7,
+};
+
+En 1936, Alan Turing a publié un article intitulé *On Computable Numbers* (« Sur les nombres calculables »).
+Cet article décrit une machine que personne n’a construite.
+Aujourd’hui, on l’appelle la machine de Turing.
+Cette leçon montre d’où vient l’idée.
+Elle commence par une personne, un crayon et une feuille de papier quadrillé.
+
+## Une question sur les méthodes
+
+Turing voulait répondre à une question des mathématiques.
+La question était de savoir si une méthode fixe peut décider, pour toute formule de la logique, si elle peut être démontrée.
+Son nom allemand est *Entscheidungsproblem*, le « problème de la décision ».
+Une leçon future raconte cette histoire.
+
+Pour répondre à la question, Turing avait d’abord besoin d’une idée claire de ce qu’est une méthode.
+Les gens utilisaient des méthodes depuis longtemps, comme la division posée.
+Mais personne n’avait dit exactement ce qui compte comme une méthode.
+Turing a trouvé une façon de le dire.
+Il a regardé de près une personne qui suit une méthode.
+
+## Le calculateur humain
+
+En 1936, le mot anglais « computer » désignait une personne qui calcule.
+Turing a imaginé cette personne au travail.
+Son analyse commence par ces mots :
+
+> « Le calcul se fait normalement en écrivant certains symboles sur du papier. On peut supposer que ce papier est divisé en carrés, comme un cahier d’arithmétique d’enfant. » (Turing, 1936, page 249, notre traduction)
+
+Pensez à un élève qui additionne deux grands nombres sur du papier quadrillé.
+L’élève écrit un chiffre dans chaque carré.
+L’élève regarde quelques carrés, écrit un chiffre, puis continue.
+À chaque instant, l’élève garde aussi quelque chose en tête, comme « je retiens 1 ».
+
+Turing a appelé cela un « état d’esprit ».
+Il a écrit :
+
+> « Le comportement du calculateur à chaque instant est déterminé par les symboles qu’il observe et par son “état d’esprit” à cet instant. » (Turing, 1936, page 250, notre traduction)
+
+Deux choses décident donc de l’action suivante.
+La première est ce que la personne voit sur le papier.
+La seconde est ce que la personne a en tête.
+
+## Turing simplifie l’image
+
+Ensuite, Turing a retiré tous les détails dont une méthode n’a pas besoin.
+Chaque point ci-dessous retire un détail et garde la méthode.
+
+- **Une seule rangée de carrés.** Une feuille de papier a des lignes et des colonnes. Turing a soutenu qu’une longue rangée suffit. Le travail fait sur une feuille peut toujours s’écrire sur une seule rangée.
+- **Un ensemble fixe de symboles.** La personne utilise un ensemble limité de symboles, comme les chiffres de 0 à 9. Un grand nombre n’est que plusieurs symboles côte à côte.
+- **Quelques carrés à la fois.** Une personne ne peut regarder que quelques carrés à la fois. Pour en voir plus, elle doit regarder à nouveau, un coup d’œil après l’autre.
+- **Un ensemble fixe d’états d’esprit.** Une personne ne peut garder en tête qu’un nombre limité de choses. Le reste peut être écrit sur le papier.
+- **De très petits pas.** Chaque pas change au plus un symbole. Chaque pas ne déplace l’attention de la personne que d’un petit peu.
+
+Turing a soutenu que ces limites n’affaiblissent pas la méthode.
+Une personne qui les suit peut faire le même travail.
+Ce travail peut seulement demander plus de carrés et plus de pas.
+
+## De la personne à la machine
+
+Mettez maintenant une machine à la place de la personne.
+Chaque partie de l’image devient une partie de la machine.
+
+- La rangée de carrés devient la **bande**. La bande est divisée en cases, et chaque case contient un symbole.
+- Le carré que la personne regarde devient la case sous la **tête**. La tête lit cette case et peut y écrire un nouveau symbole.
+- L’état d’esprit devient l’**état** de la machine. Turing l’a appelé « m-configuration ».
+- La méthode devient une table de **règles**. Chaque règle dit : dans cet état, en lisant ce symbole, fais ces actions, puis passe à tel état.
+
+La tête ne se déplace que d’une case à la fois, vers la gauche ou vers la droite.
+Cela suffit, car la machine peut répéter un déplacement autant de fois qu’il le faut.
+La bande n’a pas de fin, donc la machine ne manque jamais de cases.
+
+La machine n’a pas d’autre mémoire.
+Elle ne peut pas regarder toute la bande d’un coup.
+Elle ne choisit jamais non plus entre plusieurs règles.
+Pour chaque état et chaque symbole, il y a au plus une règle.
+Si aucune règle ne convient, la machine s’arrête.
+
+## La première machine de Turing
+
+Très tôt, l’article de Turing donne un premier exemple.
+Cette machine imprime 0 1 0 1 … sur la bande, sans fin.
+Elle commence sur une bande vide, dans l’état 𝔟.
+Turing a nommé ses états avec d’anciennes lettres allemandes : 𝔟, 𝔠, 𝔢 et 𝔨.
+
+La machine a quatre règles, et chacune lit une case vide :
+
+- En 𝔟, elle imprime 0, va à droite et passe à 𝔠.
+- En 𝔠, elle va à droite et passe à 𝔢.
+- En 𝔢, elle imprime 1, va à droite et passe à 𝔨.
+- En 𝔨, elle va à droite et passe à 𝔟.
+
+Appuyez quatre fois sur **Un pas**.
+Regardez l’état au-dessus de la tête passer de 𝔟 à 𝔠, puis à 𝔢, puis à 𝔨, et revenir à 𝔟.
+
+<Machine example="turing-1936" />
+
+La machine laisse une case vide après chaque chiffre.
+Dans son article, Turing garde une case sur deux libre pour des notes de brouillon.
+Cette machine n’a pas besoin de notes, donc ces cases restent vides.
+
+La machine ne s’arrête jamais.
+Après 𝔨, elle revient toujours à 𝔟.
+Pour Turing, ce n’était pas un problème.
+Il voulait des machines qui écrivent les chiffres d’un nombre, l’un après l’autre, sans fin.
+
+## Une machine qui ajoute un
+
+Turing a écrit ses règles dans sa propre notation.
+La plupart des manuels d’aujourd’hui utilisent une forme plus courte.
+Chaque règle lit un symbole, écrit un symbole, se déplace d’une case et donne l’état suivant.
+Le simulateur de Computable utilise aussi cette forme.
+
+La machine suivante ajoute 1 à un nombre écrit en binaire.
+L’entrée 1011 est le nombre onze.
+La machine doit finir avec 1100, le nombre douze.
+
+Elle travaille comme une personne qui ajoute 1 à la main :
+
+1. Dans l’état q0, la tête va à droite jusqu’à lire le blanc après le dernier chiffre.
+2. Ensuite, elle revient sur le dernier chiffre et passe à l’état q1.
+3. En q1, un 1 devient 0, et la tête va à gauche. C’est la retenue.
+4. En q1, un 0 ou un blanc devient 1. Le travail est fini, et la machine passe à qA, son état d’acceptation.
+
+Appuyez sur **Lancer** et regardez la retenue aller vers la gauche.
+
+<Machine example="binary-plus-one" />
+
+La machine s’arrête en qA après 8 pas.
+La bande affiche maintenant 1100.
+Ouvrez-la dans le simulateur pour voir ses six règles ou pour essayer une autre entrée.
+
+## Pourquoi c’est important
+
+La machine de Turing est très simple.
+Elle lit, écrit et se déplace, une case à la fois.
+Pourtant, Turing a soutenu qu’elle peut faire tout calcul qu’une personne fait en suivant des règles fixes.
+Aujourd’hui, cette affirmation s’appelle la thèse de Church–Turing.
+Une leçon future l’examine de près.
+
+La machine a aussi donné à Turing sa réponse.
+Avec une idée claire de ce qu’est une méthode, il a pu montrer que certaines questions n’ont aucune méthode.
+Les leçons futures expliquent comment.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, « On Computable Numbers, with an Application to the Entscheidungsproblem », *Proceedings of the London Mathematical Society*, série 2, volume 42, pages 230–265, 1936. La première machine se trouve à la section 3. Le calculateur humain se trouve à la section 9.
+- Michael Sipser, *Introduction to the Theory of Computation*, 3e édition, Cengage Learning, 2013. Chapitre 3.
+- John E. Hopcroft, Rajeev Motwani et Jeffrey D. Ullman, *Introduction to Automata Theory, Languages, and Computation*, 3e édition, Addison-Wesley, 2007. Chapitre 8.
+- Wellmmer Lucas de Oliveira Pinto, [*Simulador de Máquina de Turing, Uma Aplicação Web para o Ensino*](https://github.com/wellmmer/computable/blob/master/docs/tcc/paper/TCC%20-%20Simulador%20de%20M%C3%A1quina%20de%20Turing%2C%20Uma%20Aplica%C3%A7%C3%A3o%20Web%20para%20o%20Ensino.pdf), projet de fin d’études en informatique, UNASP, 2016. En portugais. Section 2.3.

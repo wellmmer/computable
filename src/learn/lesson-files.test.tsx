@@ -3,6 +3,7 @@
 import type { MDXContent } from 'mdx/types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
+import { routing } from '@/i18n/routing';
 import { EXAMPLE_IDS, type ExampleId } from '@/simulator/examples';
 import { buildQuiz, type QuizKey } from './quiz-data';
 
@@ -48,6 +49,11 @@ describe('lesson files (content/lessons)', () => {
     const key = quizKeys[`../../content/lessons/${lesson}/quiz.ts`].quiz;
     const files = Object.entries(mdxFiles).filter(([path]) => lessonAndName(path)[0] === lesson);
     const texts = Object.entries(quizTexts).filter(([path]) => lessonAndName(path)[0] === lesson);
+
+    it('has a lesson file and a quiz text file in every language (spec 1: all 5 languages go live together)', () => {
+      expect(files.map(([path]) => lessonAndName(path)[1]).sort()).toEqual([...routing.locales].sort());
+      expect(texts.map(([path]) => lessonAndName(path)[1]).sort()).toEqual(routing.locales.map((locale) => `quiz.${locale}`).sort());
+    });
 
     it('has a quiz of 4 or 5 questions, with 3 or 4 options each and unique ids (spec 2.4)', () => {
       expect(key.length).toBeGreaterThanOrEqual(4);
