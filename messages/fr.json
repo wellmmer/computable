@@ -345,5 +345,20 @@
         "task": "Choisissez un exemple, puis appuyez sur Terminer."
       }
     }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Vérifiez ce que vous avez appris",
+      "intro": "Choisissez une réponse pour chaque question, puis appuyez sur Vérifier.",
+      "number": "Question {number} sur {total}",
+      "check": "Vérifier",
+      "right": "Juste.",
+      "wrong": "Pas tout à fait.",
+      "rightAnswer": "Bonne réponse",
+      "yourAnswer": "Votre réponse",
+      "score": "Vous avez {score} bonnes réponses sur {total}.",
+      "saved": "Votre résultat est enregistré dans ce navigateur seulement.",
+      "tryAgain": "Réessayer"
+    }
   }
 }

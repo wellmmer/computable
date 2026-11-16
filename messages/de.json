@@ -345,5 +345,20 @@
         "task": "Wähle ein Beispiel und drücke dann Fertig."
       }
     }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Prüfe, was du gelernt hast",
+      "intro": "Wähle für jede Frage eine Antwort und drücke dann Prüfen.",
+      "number": "Frage {number} von {total}",
+      "check": "Prüfen",
+      "right": "Richtig.",
+      "wrong": "Nicht ganz.",
+      "rightAnswer": "Richtige Antwort",
+      "yourAnswer": "Deine Antwort",
+      "score": "Du hast {score} von {total} richtig.",
+      "saved": "Dein Ergebnis bleibt nur in diesem Browser gespeichert.",
+      "tryAgain": "Noch einmal versuchen"
+    }
   }
 }

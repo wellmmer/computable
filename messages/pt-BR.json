@@ -345,5 +345,20 @@
         "task": "Escolha um exemplo e aperte Concluir."
       }
     }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Confira o que você aprendeu",
+      "intro": "Escolha uma resposta para cada pergunta e aperte Conferir.",
+      "number": "Pergunta {number} de {total}",
+      "check": "Conferir",
+      "right": "Certo.",
+      "wrong": "Não exatamente.",
+      "rightAnswer": "Resposta certa",
+      "yourAnswer": "Sua resposta",
+      "score": "Você acertou {score} de {total}.",
+      "saved": "Seu resultado fica salvo só neste navegador.",
+      "tryAgain": "Tentar de novo"
+    }
   }
 }

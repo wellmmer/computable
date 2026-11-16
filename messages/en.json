@@ -345,5 +345,20 @@
         "task": "Pick an example, then press Finish."
       }
     }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Check what you learned",
+      "intro": "Choose one answer for each question, then press Check.",
+      "number": "Question {number} of {total}",
+      "check": "Check",
+      "right": "Right.",
+      "wrong": "Not quite.",
+      "rightAnswer": "Right answer",
+      "yourAnswer": "Your answer",
+      "score": "You got {score} of {total} right.",
+      "saved": "Your result is saved in this browser only.",
+      "tryAgain": "Try again"
+    }
   }
 }
