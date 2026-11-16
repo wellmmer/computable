@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from 'react';
-import { createBrowserProgressStorage, type Progress, type ProgressStorage } from './progress-storage';
+import { createBrowserProgressStorage, PROGRESS_KEY, type Progress, type ProgressStorage } from './progress-storage';
 
 // One copy per page load, shared by the quiz and the Learn page, so a finished quiz shows at once.
+// A save or reset in another tab updates it through the "storage" event.
 let storage: ProgressStorage | null = null;
 let snapshot: Progress | null = null;
 const listeners = new Set<() => void>();
@@ -23,10 +24,21 @@ function publish(next: Progress) {
   for (const listener of listeners) listener();
 }
 
+/**
+ * Another tab saved or reset the progress. The browser fires "storage" only in the other tabs.
+ * A null key means the other tab cleared all of localStorage.
+ */
+function onStorage(event: StorageEvent) {
+  if (event.key !== PROGRESS_KEY && event.key !== null) return;
+  publish(openStorage().load());
+}
+
 function subscribe(listener: () => void) {
+  if (listeners.size === 0) window.addEventListener('storage', onStorage);
   listeners.add(listener);
   return () => {
     listeners.delete(listener);
+    if (listeners.size === 0) window.removeEventListener('storage', onStorage);
   };
 }
 

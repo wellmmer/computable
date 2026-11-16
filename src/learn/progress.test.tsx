@@ -45,4 +45,36 @@ describe('useProgress', () => {
     expect(result.current).toEqual({});
     expect(localStorage.getItem(PROGRESS_KEY)).toBeNull();
   });
+
+  it('shows a result that another tab saved', () => {
+    const { result } = renderHook(() => useProgress());
+    expect(result.current).toEqual({});
+    const saved = '{"intuition":{"best":5,"total":5,"finishedAt":"2026-11-16T11:00:00.000Z"}}';
+    // Another tab writes to localStorage. This tab only hears the storage event.
+    localStorage.setItem(PROGRESS_KEY, saved);
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: PROGRESS_KEY, newValue: saved, storageArea: localStorage }));
+    });
+    expect(result.current).toEqual({ intuition: { best: 5, total: 5, finishedAt: '2026-11-16T11:00:00.000Z' } });
+  });
+
+  it('shows no results after another tab resets the progress', () => {
+    const { result } = renderHook(() => useProgress());
+    act(() => saveQuizResult('intuition', 4, 5));
+    localStorage.removeItem(PROGRESS_KEY);
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: PROGRESS_KEY, newValue: null, storageArea: localStorage }));
+    });
+    expect(result.current).toEqual({});
+  });
+
+  it('ignores storage events for other keys', () => {
+    const { result } = renderHook(() => useProgress());
+    act(() => saveQuizResult('intuition', 4, 5));
+    const before = result.current;
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { key: 'computable.machine', newValue: '{}', storageArea: localStorage }));
+    });
+    expect(result.current).toBe(before);
+  });
 });
