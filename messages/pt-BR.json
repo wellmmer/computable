@@ -363,6 +363,23 @@
     "machine": {
       "tape": "Fita de {name}",
       "open": "Abrir no simulador"
+    },
+    "page": {
+      "pageTitle": "Aprender",
+      "title": "Aprender",
+      "lead": "Lições curtas sobre a máquina de Turing. Cada lição tem máquinas que você pode rodar e um quiz no fim.",
+      "lesson": "Lição {number}",
+      "minutes": "{minutes} min de leitura",
+      "notStarted": "Não iniciada",
+      "score": "Quiz: {best} de {total}",
+      "more": "Mais lições virão depois."
+    },
+    "reset": {
+      "button": "Zerar meu progresso",
+      "question": "Apagar todos os seus resultados de quiz neste navegador?",
+      "confirm": "Sim, apagar",
+      "cancel": "Cancelar",
+      "done": "Seus resultados de quiz foram apagados."
     }
   }
 }

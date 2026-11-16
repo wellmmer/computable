@@ -363,6 +363,23 @@
     "machine": {
       "tape": "Cinta de {name}",
       "open": "Abrir en el simulador"
+    },
+    "page": {
+      "pageTitle": "Aprender",
+      "title": "Aprender",
+      "lead": "Lecciones cortas sobre la máquina de Turing. Cada lección tiene máquinas que puedes ejecutar y un cuestionario al final.",
+      "lesson": "Lección {number}",
+      "minutes": "{minutes} min de lectura",
+      "notStarted": "Sin empezar",
+      "score": "Cuestionario: {best} de {total}",
+      "more": "Más lecciones llegarán después."
+    },
+    "reset": {
+      "button": "Borrar mi progreso",
+      "question": "¿Borrar todos tus resultados de cuestionarios en este navegador?",
+      "confirm": "Sí, borrarlos",
+      "cancel": "Cancelar",
+      "done": "Tus resultados de cuestionarios están borrados."
     }
   }
 }

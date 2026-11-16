@@ -363,6 +363,23 @@
     "machine": {
       "tape": "Bande de {name}",
       "open": "Ouvrir dans le simulateur"
+    },
+    "page": {
+      "pageTitle": "Apprendre",
+      "title": "Apprendre",
+      "lead": "De courtes leçons sur la machine de Turing. Chaque leçon contient des machines que vous pouvez lancer, et un quiz à la fin.",
+      "lesson": "Leçon {number}",
+      "minutes": "{minutes} min de lecture",
+      "notStarted": "Pas commencée",
+      "score": "Quiz : {best} sur {total}",
+      "more": "D’autres leçons viendront plus tard."
+    },
+    "reset": {
+      "button": "Effacer ma progression",
+      "question": "Effacer tous vos résultats de quiz dans ce navigateur ?",
+      "confirm": "Oui, les effacer",
+      "cancel": "Annuler",
+      "done": "Vos résultats de quiz sont effacés."
     }
   }
 }

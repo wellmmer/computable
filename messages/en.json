@@ -363,6 +363,23 @@
     "machine": {
       "tape": "Tape of {name}",
       "open": "Open in the simulator"
+    },
+    "page": {
+      "pageTitle": "Learn",
+      "title": "Learn",
+      "lead": "Short lessons about the Turing machine. Each lesson has machines you can run, and a quiz at the end.",
+      "lesson": "Lesson {number}",
+      "minutes": "{minutes} min read",
+      "notStarted": "Not started",
+      "score": "Quiz: {best} of {total}",
+      "more": "More lessons come later."
+    },
+    "reset": {
+      "button": "Reset my progress",
+      "question": "Clear all your quiz results in this browser?",
+      "confirm": "Yes, clear them",
+      "cancel": "Cancel",
+      "done": "Your quiz results are cleared."
     }
   }
 }
