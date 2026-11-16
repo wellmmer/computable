@@ -40,14 +40,23 @@ describe('SiteHeader', () => {
     expect(screen.getByRole('button', { name: 'Night paper' })).toBeTruthy();
   });
 
-  it('shows Learn, Enigma and Bombe as coming soon, without a link', () => {
+  it('shows Enigma and Bombe as coming soon, without a link', () => {
     navigation.pathname = '/';
     renderWithIntl(<SiteHeader />);
     const menu = screen.getByRole('navigation', { name: 'Main menu' });
-    expect(within(menu).getAllByRole('link').map((link) => link.textContent)).toEqual(['Simulator']);
-    for (const name of ['Learn', 'Enigma', 'Bombe']) {
+    expect(within(menu).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['Learn', '/learn'],
+      ['Simulator', '/simulator'],
+    ]);
+    for (const name of ['Enigma', 'Bombe']) {
       expect(within(menu).getByText(name).textContent).toBe(`${name}, coming soon`);
     }
+  });
+
+  it('marks Learn as the current page on a lesson', () => {
+    navigation.pathname = '/learn/intuition';
+    renderWithIntl(<SiteHeader />);
+    expect(within(screen.getByRole('navigation', { name: 'Main menu' })).getByRole('link', { name: 'Learn' }).getAttribute('aria-current')).toBe('page');
   });
 
   it('draws the cup in pencil red on the Support page', () => {
