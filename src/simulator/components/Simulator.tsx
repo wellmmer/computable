@@ -27,7 +27,12 @@ export function Simulator() {
 
   useEffect(() => {
     store.getState().boot(window.location.hash);
-    dropLinkFromUrl();
+    // While the simulator asks before a link replaces the visitor's machine, the link stays in the
+    // address, so a reload asks again. Either answer drops it, so a reload does not ask again.
+    if (store.getState().pendingLink === null) dropLinkFromUrl();
+    const unsubscribe = store.subscribe((state, previous) => {
+      if (previous.pendingLink !== null && state.pendingLink === null) dropLinkFromUrl();
+    });
     // Pasting a link into the address bar of an open tab changes only the hash; the page does not reload.
     // The paste also added a history entry. Going back to the entry before it means the next Back
     // leaves the page, instead of showing the same page again. Forward opens the link again.
@@ -39,6 +44,7 @@ export function Simulator() {
     window.addEventListener('hashchange', onHashChange);
     return () => {
       window.removeEventListener('hashchange', onHashChange);
+      unsubscribe();
       store.getState().pause();
     };
   }, [store]);

@@ -9,6 +9,7 @@ import { LiveRegion } from './LiveRegion';
 import { MachineFile } from './MachineFile';
 import { MachineHeader } from './MachineHeader';
 import { Notices } from './Notices';
+import { ReplaceLinkDialog } from './ReplaceLinkDialog';
 import { ResultLine } from './ResultLine';
 import { RulesPanel } from './RulesPanel';
 import { StepSentence } from './StepSentence';
@@ -39,6 +40,7 @@ export function SimulatorView() {
       </div>
       <MachineFile />
       <LiveRegion />
+      <ReplaceLinkDialog />
       <TourPanel />
     </main>
   );

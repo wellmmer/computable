@@ -64,7 +64,8 @@ export function KeyboardShortcuts() {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey || event.metaKey || event.altKey || event.defaultPrevented) return;
-      if (dialog.current?.open || isField(event.target)) return;
+      // Any open dialog (this list, or the share-link question) keeps the shortcuts off.
+      if (document.querySelector('dialog[open]') !== null || isField(event.target)) return;
       const action = KEYS[event.key];
       if (action === undefined || (event.key === ' ' && isPressable(event.target))) return;
       event.preventDefault();

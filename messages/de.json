@@ -184,6 +184,12 @@
       "help": "Diese Liste zeigen",
       "off": "Die Tastenkürzel sind aus, solange du in einem Textfeld tippst.",
       "startTapeEdit": "Band bearbeiten"
+    },
+    "replaceLink": {
+      "title": "Deine Maschine ersetzen?",
+      "text": "Dieser Link öffnet eine andere Maschine, und deine jetzige Maschine geht verloren.",
+      "replace": "Ersetzen",
+      "keep": "Meine behalten"
     }
   },
   "shell": {

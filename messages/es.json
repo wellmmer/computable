@@ -184,6 +184,12 @@
       "help": "Mostrar esta lista",
       "off": "Los atajos se desactivan mientras escribes en un campo de texto.",
       "startTapeEdit": "Editar la cinta"
+    },
+    "replaceLink": {
+      "title": "¿Reemplazar tu máquina?",
+      "text": "Este enlace abre otra máquina, y la máquina que tienes ahora se perderá.",
+      "replace": "Reemplazar",
+      "keep": "Conservar la mía"
     }
   },
   "shell": {

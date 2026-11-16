@@ -184,6 +184,12 @@
       "help": "Show this list",
       "off": "Shortcuts are off while you type in a text field.",
       "startTapeEdit": "Edit the tape"
+    },
+    "replaceLink": {
+      "title": "Replace your machine?",
+      "text": "This link opens another machine, and the machine you have now will be lost.",
+      "replace": "Replace",
+      "keep": "Keep mine"
     }
   },
   "shell": {

@@ -55,7 +55,7 @@ machine could do the same work.
   first machine as a built-in example.
 - **One-sided or two-way tape**, chosen per machine.
 - **Save and share.** Machines save in your browser, download as JSON, and share as a link.
-  Machines from the 2016 version import directly.
+  A link asks before it replaces a machine you built. Machines from the 2016 version import directly.
 - **A guided tour** that asks you to press Step, not just read about it.
 - **Keyboard first.** `Space` runs, `→` steps, `←` steps back, `?` lists every shortcut.
 - **English, Português (Brasil), Español, Français, Deutsch.** The app picks your browser's

@@ -184,6 +184,12 @@
       "help": "Afficher cette liste",
       "off": "Les raccourcis sont désactivés pendant que vous tapez dans un champ de texte.",
       "startTapeEdit": "Modifier la bande"
+    },
+    "replaceLink": {
+      "title": "Remplacer votre machine ?",
+      "text": "Ce lien ouvre une autre machine, et la machine que vous avez maintenant sera perdue.",
+      "replace": "Remplacer",
+      "keep": "Garder la mienne"
     }
   },
   "shell": {

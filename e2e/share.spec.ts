@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { openSimulator, pickExample } from './helpers';
 
@@ -45,5 +46,41 @@ test.describe('share links (spec 5.6)', () => {
     await expect(page.getByText('This link does not hold a Computable machine. The simulator kept the current machine.')).toBeVisible();
     await pickExample(page, 'Palindrome checker');
     await expect(page.getByText('This link does not hold a Computable machine.', { exact: false })).toHaveCount(0);
+  });
+
+  test('a link asks before it replaces a machine the visitor built', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await openSimulator(page);
+    await pickExample(page, 'Palindrome checker');
+    await page.getByRole('button', { name: 'Copy share link' }).click();
+    const hash = new URL(await page.evaluate(() => navigator.clipboard.readText())).hash;
+
+    // Build a machine: Binary +1 with one rule changed is no longer an example.
+    await pickExample(page, 'Binary +1');
+    await page.getByRole('textbox', { name: 'Rule 5: then go to' }).fill('qR');
+    const question = page.getByRole('dialog', { name: 'Replace your machine?' });
+
+    // "Keep mine" keeps the built machine and drops the link from the address.
+    await page.goto('/en');
+    await openSimulator(page, hash);
+    await expect(question).toBeVisible();
+    await expect(question.getByRole('button', { name: 'Keep mine' })).toBeFocused();
+    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+    await question.getByRole('button', { name: 'Keep mine' }).click();
+    await expect(question).toBeHidden();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Binary +1');
+    await expect(page.getByRole('textbox', { name: 'Rule 5: then go to' })).toHaveValue('qR');
+    await expect(page).toHaveURL(/\/en\/simulator$/);
+    await page.reload();
+    await expect(page.getByRole('textbox', { name: 'Rule 5: then go to' })).toHaveValue('qR');
+    await expect(question).toBeHidden();
+
+    // "Replace" opens the link's machine.
+    await page.goto('/en');
+    await openSimulator(page, hash);
+    await question.getByRole('button', { name: 'Replace' }).click();
+    await expect(question).toBeHidden();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Palindrome checker');
+    await expect(page).toHaveURL(/\/en\/simulator$/);
   });
 });

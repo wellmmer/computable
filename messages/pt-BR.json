@@ -184,6 +184,12 @@
       "help": "Mostrar esta lista",
       "off": "Os atalhos ficam desligados enquanto você digita num campo de texto.",
       "startTapeEdit": "Editar a fita"
+    },
+    "replaceLink": {
+      "title": "Substituir sua máquina?",
+      "text": "Este link abre outra máquina, e a máquina que você tem agora vai se perder.",
+      "replace": "Substituir",
+      "keep": "Manter a minha"
     }
   },
   "shell": {
