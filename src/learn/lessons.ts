@@ -71,7 +71,7 @@ function lesson(slug: string, key: QuizKey, sources: Record<Locale, LessonSource
   };
 }
 
-/** The live lessons, in order (spec 2.1). */
+/** The live lessons, in order (spec 2.1). Their slugs match LESSON_SLUGS in lesson-slugs.ts, which the proxy reads. */
 export const LESSONS: readonly Lesson[] = [
   lesson('intuition', intuitionQuiz, {
     en: [intuitionEn, intuitionQuizEn],

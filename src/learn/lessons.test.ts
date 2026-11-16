@@ -1,10 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { routing } from '@/i18n/routing';
+import { LESSON_SLUGS } from './lesson-slugs';
 import { findLesson, LESSONS } from './lessons';
 
 describe('LESSONS (spec 3)', () => {
   it('lists the live lessons in order: lesson 1 only, until R2a-2 adds lesson 2', () => {
     expect(LESSONS.map((lesson) => lesson.slug)).toEqual(['intuition']);
+  });
+
+  it('has the same slugs, in the same order, as the list the proxy reads', () => {
+    expect(LESSONS.map((lesson) => lesson.slug)).toEqual(LESSON_SLUGS);
   });
 
   it.each(routing.locales)('has the title, summary and reading time of every lesson in %s', (locale) => {
