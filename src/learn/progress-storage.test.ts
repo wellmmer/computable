@@ -53,6 +53,19 @@ describe('createBrowserProgressStorage (spec 4)', () => {
     expect(storage.load()).toEqual({});
   });
 
+  it('keeps the other lessons when one saved result is bad', () => {
+    const backing = fakeStorage();
+    backing.setItem(
+      PROGRESS_KEY,
+      '{"intuition":{"best":4,"total":5,"finishedAt":"2026-11-16T10:00:00.000Z"},"formal-definition":{"best":9,"total":5}}',
+    );
+    const storage = createBrowserProgressStorage(() => backing);
+    expect(storage.saveResult('formal-definition', 3, 5, TUESDAY)).toEqual({
+      intuition: { best: 4, total: 5, finishedAt: '2026-11-16T10:00:00.000Z' },
+      'formal-definition': { best: 3, total: 5, finishedAt: '2026-11-17T09:30:00.000Z' },
+    });
+  });
+
   it('keeps working in memory when reading localStorage itself throws', () => {
     const storage = createBrowserProgressStorage(() => {
       throw new DOMException('denied', 'SecurityError');
@@ -74,6 +87,12 @@ describe('parseProgress: data that does not parse reads as no progress (spec 4)'
     ['a date that is not a date', '{"intuition":{"best":4,"total":5,"finishedAt":"Monday"}}'],
   ])('%s', (_, text) => {
     expect(parseProgress(text)).toEqual({});
+  });
+
+  it('drops only the bad result, and keeps the good ones', () => {
+    const text =
+      '{"intuition":{"best":4,"total":5,"finishedAt":"2026-11-16T10:00:00.000Z"},"formal-definition":{"best":6,"total":5,"finishedAt":"2026-11-16T10:00:00.000Z"}}';
+    expect(parseProgress(text)).toEqual({ intuition: { best: 4, total: 5, finishedAt: '2026-11-16T10:00:00.000Z' } });
   });
 
   it('reads a good result', () => {

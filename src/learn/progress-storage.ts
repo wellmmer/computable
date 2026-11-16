@@ -20,17 +20,28 @@ export type Progress = Readonly<Record<string, LessonResult>>;
 const resultSchema = z
   .strictObject({ best: z.int().nonnegative(), total: z.int().positive(), finishedAt: z.iso.datetime() })
   .refine((result) => result.best <= result.total);
-const progressSchema = z.record(z.string(), resultSchema);
+const savedSchema = z.record(z.string(), z.unknown());
 
-/** Reads saved progress. Data that does not parse reads as no progress, so it never breaks a page (spec 4). */
+/**
+ * Reads saved progress. Data that does not parse reads as no progress, so it never breaks a page
+ * (spec 4). Each lesson is checked alone: one bad result is dropped, and the other lessons stay.
+ */
 export function parseProgress(text: string | null): Progress {
   if (text === null) return {};
+  let saved: unknown;
   try {
-    const result = progressSchema.safeParse(JSON.parse(text));
-    return result.success ? result.data : {};
+    saved = JSON.parse(text);
   } catch {
     return {};
   }
+  const record = savedSchema.safeParse(saved);
+  if (!record.success) return {};
+  const progress: Record<string, LessonResult> = {};
+  for (const [slug, value] of Object.entries(record.data)) {
+    const result = resultSchema.safeParse(value);
+    if (result.success) progress[slug] = result.data;
+  }
+  return progress;
 }
 
 /**
