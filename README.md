@@ -8,8 +8,9 @@ press Run, and watch the head read, write and move, one square at a time. Every 
 in a plain sentence.
 
 > **Status: release 1 is live at https://computable-lac.vercel.app.** This repo held a 2016 capstone project built with jQuery. It is
-> now Computable, built release by release. Release 1 is the simulator; the roadmap below lists
-> the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
+> now Computable, built release by release. Release 1 is the simulator. Release 2a, the first
+> lessons, is in progress; the roadmap below lists the rest. The 2016 version stays available at
+> the git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -35,7 +36,9 @@ machine could do the same work.
 | Release | What you get | Status |
 | --- | --- | --- |
 | **R1** | The simulator, the guided tour, 5 languages, light and dark themes, About, Support the dev | Live. Support the dev shows its payment links once they are set. |
-| **R2** | Lessons: the formal definition, the Entscheidungsproblem, the halting problem, Church–Turing, the universal machine, and Turing's 1936 paper read alongside a running tape. Quizzes. | Planned |
+| **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | In progress. The Learn page and lesson 1 are ready; lesson 2 comes next. |
+| **R2b** | Lessons: the Entscheidungsproblem, the halting problem, Church–Turing, the universal machine | Planned |
+| **R2c** | Turing's 1936 paper, read alongside a running tape | Planned |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
@@ -61,6 +64,20 @@ machine could do the same work.
   menu overrides it.
 - **No accounts, no ads.** The site counts visits with Vercel Web Analytics, which sets no cookies.
   The only cookie keeps your language. The Privacy page lists what is counted.
+
+## What R2a brings
+
+- **A Learn page.** It lists the lessons in order, with the reading time and your quiz score.
+- **Machines inside the lessons.** Small simulators sit between the paragraphs. Press Step, Run or
+  Reset, or open the machine in the full simulator with one click.
+- **Lesson 1, "Intuition".** How Turing turned a person who computes with a pencil into a machine.
+  It runs Turing's first machine and a machine that adds 1 to a binary number.
+- **A quiz at the end of each lesson.** Every answer says why it is right or wrong. Your best score
+  stays in your browser only, and "Reset my progress" clears it.
+- **All 5 languages.** The Spanish, French and German lesson texts are AI translations, marked as
+  such on every page.
+- **Sources for every lesson.** Each lesson lists the books and papers it draws on. The texts are
+  under CC BY 4.0.
 
 ## The machine format
 
@@ -91,8 +108,8 @@ Input `1011` ends as `1100` and the machine accepts.
 
 ## Built with
 
-Next.js and TypeScript, Tailwind CSS, next-intl for languages, React Flow for the state diagram,
-and Zustand for the simulator's state. The Turing machine logic lives in plain TypeScript with no
+Next.js and TypeScript, Tailwind CSS, next-intl for languages, MDX for the lessons, React Flow
+for the state diagram, and Zustand for the simulator's state. The Turing machine logic lives in plain TypeScript with no
 UI code, tested with Vitest and Playwright. Hosted on Vercel, with Vercel Web Analytics.
 
 ## Where this came from
@@ -114,4 +131,5 @@ payment link shows there once its handle is set in `src/config/support.ts`.
 ## License
 
 The code is under the [MIT License](LICENSE). Lesson texts and other written content are under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (see
+[`content/lessons/LICENSE`](content/lessons/LICENSE)).
