@@ -359,6 +359,10 @@
       "score": "Du hast {score} von {total} richtig.",
       "saved": "Dein Ergebnis bleibt nur in diesem Browser gespeichert.",
       "tryAgain": "Noch einmal versuchen"
+    },
+    "machine": {
+      "tape": "Band von {name}",
+      "open": "Im Simulator öffnen"
     }
   }
 }

@@ -359,6 +359,10 @@
       "score": "You got {score} of {total} right.",
       "saved": "Your result is saved in this browser only.",
       "tryAgain": "Try again"
+    },
+    "machine": {
+      "tape": "Tape of {name}",
+      "open": "Open in the simulator"
     }
   }
 }

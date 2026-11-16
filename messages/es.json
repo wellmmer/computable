@@ -359,6 +359,10 @@
       "score": "Acertaste {score} de {total}.",
       "saved": "Tu resultado se guarda solo en este navegador.",
       "tryAgain": "Intentar de nuevo"
+    },
+    "machine": {
+      "tape": "Cinta de {name}",
+      "open": "Abrir en el simulador"
     }
   }
 }

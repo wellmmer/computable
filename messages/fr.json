@@ -359,6 +359,10 @@
       "score": "Vous avez {score} bonnes réponses sur {total}.",
       "saved": "Votre résultat est enregistré dans ce navigateur seulement.",
       "tryAgain": "Réessayer"
+    },
+    "machine": {
+      "tape": "Bande de {name}",
+      "open": "Ouvrir dans le simulateur"
     }
   }
 }

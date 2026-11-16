@@ -359,6 +359,10 @@
       "score": "Você acertou {score} de {total}.",
       "saved": "Seu resultado fica salvo só neste navegador.",
       "tryAgain": "Tentar de novo"
+    },
+    "machine": {
+      "tape": "Fita de {name}",
+      "open": "Abrir no simulador"
     }
   }
 }
