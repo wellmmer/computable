@@ -380,6 +380,14 @@
       "confirm": "Sí, borrarlos",
       "cancel": "Cancelar",
       "done": "Tus resultados de cuestionarios están borrados."
+    },
+    "lesson": {
+      "position": "Lección {number} de {total}",
+      "license": "El texto de esta lección está bajo la licencia <link>CC BY 4.0</link>. Puedes compartirlo y adaptarlo si das crédito a Computable.",
+      "nav": "Lecciones",
+      "previous": "Lección anterior: {title}",
+      "next": "Lección siguiente: {title}",
+      "all": "Todas las lecciones"
     }
   }
 }

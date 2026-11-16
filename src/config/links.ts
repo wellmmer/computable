@@ -19,3 +19,6 @@ export const TCC_PAPER_URL = `${REPO_URL}/blob/master/docs/tcc/paper/${encodeURI
 export function translationEditUrl(locale: string): string {
   return `${REPO_URL}/edit/master/messages/${locale}.json`;
 }
+
+/** The license of the lesson texts (spec 1, "License"). */
+export const CC_BY_URL = 'https://creativecommons.org/licenses/by/4.0/';

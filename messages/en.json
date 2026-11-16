@@ -380,6 +380,14 @@
       "confirm": "Yes, clear them",
       "cancel": "Cancel",
       "done": "Your quiz results are cleared."
+    },
+    "lesson": {
+      "position": "Lesson {number} of {total}",
+      "license": "The text of this lesson is under the <link>CC BY 4.0</link> license. You may share and adapt it if you credit Computable.",
+      "nav": "Lessons",
+      "previous": "Previous lesson: {title}",
+      "next": "Next lesson: {title}",
+      "all": "All lessons"
     }
   }
 }

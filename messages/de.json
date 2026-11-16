@@ -380,6 +380,14 @@
       "confirm": "Ja, löschen",
       "cancel": "Abbrechen",
       "done": "Deine Quiz-Ergebnisse sind gelöscht."
+    },
+    "lesson": {
+      "position": "Lektion {number} von {total}",
+      "license": "Der Text dieser Lektion steht unter der Lizenz <link>CC BY 4.0</link>. Du darfst ihn teilen und bearbeiten, wenn du Computable nennst.",
+      "nav": "Lektionen",
+      "previous": "Vorherige Lektion: {title}",
+      "next": "Nächste Lektion: {title}",
+      "all": "Alle Lektionen"
     }
   }
 }

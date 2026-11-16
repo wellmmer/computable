@@ -380,6 +380,14 @@
       "confirm": "Sim, apagar",
       "cancel": "Cancelar",
       "done": "Seus resultados de quiz foram apagados."
+    },
+    "lesson": {
+      "position": "Lição {number} de {total}",
+      "license": "O texto desta lição está sob a licença <link>CC BY 4.0</link>. Você pode compartilhar e adaptar o texto se der o crédito ao Computable.",
+      "nav": "Lições",
+      "previous": "Lição anterior: {title}",
+      "next": "Próxima lição: {title}",
+      "all": "Todas as lições"
     }
   }
 }
