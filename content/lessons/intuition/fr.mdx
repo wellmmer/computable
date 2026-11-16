@@ -76,9 +76,9 @@ La bande n’a pas de fin, donc la machine ne manque jamais de cases.
 
 La machine n’a pas d’autre mémoire.
 Elle ne peut pas regarder toute la bande d’un coup.
-Elle ne choisit jamais non plus entre plusieurs règles.
+Les machines de cette leçon, et de ce simulateur, ne choisissent jamais entre plusieurs règles.
 Pour chaque état et chaque symbole, il y a au plus une règle.
-Si aucune règle ne convient, la machine s’arrête.
+Dans ce simulateur, une machine s’arrête quand aucune règle ne convient.
 
 ## La première machine de Turing
 
@@ -112,7 +112,8 @@ Il voulait des machines qui écrivent les chiffres d’un nombre, l’un après 
 
 Turing a écrit ses règles dans sa propre notation.
 La plupart des manuels d’aujourd’hui utilisent une forme plus courte.
-Chaque règle lit un symbole, écrit un symbole, se déplace d’une case et donne l’état suivant.
+Chaque règle lit un symbole, écrit un symbole et donne l’état suivant.
+Elle déplace aussi la tête d’une case vers la gauche ou vers la droite, ou laisse la tête où elle est.
 Le simulateur de Computable utilise aussi cette forme.
 
 La machine suivante ajoute 1 à un nombre écrit en binaire.

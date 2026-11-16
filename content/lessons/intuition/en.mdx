@@ -76,9 +76,9 @@ The tape has no end, so the machine never runs out of cells.
 
 The machine has no other memory.
 It cannot look at the whole tape at once.
-It also never chooses between rules.
+The machines in this lesson, and in this simulator, never choose between rules.
 For each state and symbol, there is at most one rule.
-If no rule fits, the machine stops.
+In this simulator, a machine stops when no rule fits.
 
 ## Turing's first machine
 
@@ -112,7 +112,8 @@ He wanted machines that write the digits of a number, one after another, without
 
 Turing wrote his rules in his own notation.
 Most textbooks today use a shorter form.
-Each rule reads one symbol, writes one symbol, moves one cell, and names the next state.
+Each rule reads one symbol, writes one symbol, and names the next state.
+It also moves the head one cell left or right, or leaves the head where it is.
 The simulator in Computable uses this form too.
 
 The next machine adds 1 to a number written in binary.
