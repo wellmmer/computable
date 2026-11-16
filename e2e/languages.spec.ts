@@ -87,6 +87,12 @@ test.describe('pages in other languages', () => {
       'href',
       'https://github.com/wellmmer/computable/edit/master/messages/fr.json',
     );
+    // A lesson's text lives in its own file, not in messages/fr.json.
+    await openPage(page, '/fr/learn/intuition');
+    await expect(page.getByRole('link', { name: 'Aidez à améliorer la traduction' })).toHaveAttribute(
+      'href',
+      'https://github.com/wellmmer/computable/edit/master/content/lessons/intuition/fr.mdx',
+    );
     await openPage(page, '/pt-br/about');
     await expect(page.getByRole('contentinfo').getByRole('link', { name: /tradução/ })).toHaveCount(0);
   });

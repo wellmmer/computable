@@ -1,18 +1,22 @@
+'use client';
+
 import { useLocale, useTranslations } from 'next-intl';
 import { REPO_URL, translationEditUrl } from '@/config/links';
 import { MACHINE_TRANSLATED } from '@/i18n/languages';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 
 const link = 'underline decoration-1 underline-offset-4 hover:decoration-2';
 
 /**
  * The footer on every page: the pages outside the menu, the source code and the licenses (spec 3).
- * On a page that an AI translated, it asks for help with the translation.
+ * On a page that an AI translated, it asks for help with the translation, and links the file that
+ * holds this page's text.
  */
 export function SiteFooter() {
   const t = useTranslations('shell.footer');
   const tMenu = useTranslations('shell.menu');
   const locale = useLocale();
+  const pathname = usePathname();
   return (
     <footer className="mt-16 border-t-2 border-ink bg-cell">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-3 px-4 py-6 text-sm sm:px-7 md:flex-row md:items-baseline md:justify-between">
@@ -49,7 +53,7 @@ export function SiteFooter() {
         <p className="mx-auto max-w-[1200px] px-4 pb-3 text-sm sm:px-7">
           {t.rich('machineTranslated', {
             link: (chunks) => (
-              <a href={translationEditUrl(locale)} className={link}>
+              <a href={translationEditUrl(locale, pathname)} className={link}>
                 {chunks}
               </a>
             ),
