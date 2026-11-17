@@ -16,6 +16,8 @@ for (const path of [
   '/de/learn/halting-problem',
   '/fr/learn/entscheidungsproblem',
   '/pt-br/learn/church-turing',
+  '/en/learn/paper',
+  '/pt-br/learn/paper',
 ]) {
   test(`${path} answers 200`, async ({ request }) => {
     const response = await request.get(path, { maxRedirects: 0 });

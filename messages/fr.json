@@ -406,7 +406,20 @@
     "paper": {
       "tape": {
         "step": "Étape {step}"
-      }
+      },
+      "pageTitle": "L’article de Turing de 1936",
+      "title": "L’article de Turing de 1936",
+      "lead": "Un guide de lecture de l’article de Turing « On Computable Numbers », partie par partie. Chaque partie a ses pages dans la revue et un court résumé. La plupart des parties ont aussi une citation et des liens vers les leçons qui les expliquent.",
+      "source": "L’article : A. M. Turing, « On Computable Numbers, with an Application to the Entscheidungsproblem », Proceedings of the London Mathematical Society, série 2, volume 42, pages 230–265. <link>doi.org/10.1112/plms/s2-42.1.230</link>",
+      "notice": "Ce guide cite l’article et ne le reproduit pas. Les citations restent dans l’anglais de Turing, avec une traduction à côté.",
+      "tapeIntro": "La bande en haut fait tourner la première machine de Turing, de la section 3. Chaque partie que vous atteignez la fait avancer d’un pas. Si votre appareil demande moins de mouvement, utilisez les boutons Un pas et Réinitialiser.",
+      "pages": "Volume {volume}, pages {from}–{to}",
+      "quotePage": "(Turing, 1936, page {page})",
+      "translation": "Traduction : « {text} »",
+      "lessons": "Expliqué dans",
+      "lessonLink": "Leçon {number} : {title}",
+      "readCorrection": "Lire la correction sur le site de l’éditeur",
+      "license": "Le texte de ce guide est sous licence <link>CC BY 4.0</link>. Les citations de l’article de Turing ne le sont pas."
     }
   }
 }

@@ -15,3 +15,11 @@ export const LESSON_SLUGS: readonly string[] = [
 export function isLessonSlug(slug: string): boolean {
   return LESSON_SLUGS.includes(slug);
 }
+
+/** The reading guide to Turing's paper (spec R2c 3). It lives under /learn, but it is not a lesson: it has no quiz. */
+export const PAPER_SLUG = 'paper';
+
+/** True when a page under /learn has this slug: a lesson or the reading guide. */
+export function isLearnSlug(slug: string): boolean {
+  return isLessonSlug(slug) || slug === PAPER_SLUG;
+}
