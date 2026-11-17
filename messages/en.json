@@ -184,6 +184,12 @@
       "help": "Show this list",
       "off": "Shortcuts are off while you type in a text field.",
       "startTapeEdit": "Edit the tape"
+    },
+    "replaceLink": {
+      "title": "Replace your machine?",
+      "text": "This link opens another machine, and the machine you have now will be lost.",
+      "replace": "Replace",
+      "keep": "Keep mine"
     }
   },
   "shell": {
@@ -244,6 +250,7 @@
     "lead": "Computable has no accounts and keeps no personal data about you. It sets one cookie, only to remember your language.",
     "browserTitle": "What stays in your browser",
     "browser": "Your browser keeps your current machine, your choice of squared or night paper, your language, and whether you saw the tour. They stay on your device.",
+    "quiz": "Your quiz results stay in this browser only.",
     "language": "The language is also in a cookie named NEXT_LOCALE, for one year. The site sets it when you choose a language, or when you open a page in a language other than your browser's. Your browser sends it with each page request, so the site's main address opens your language. It holds only the language code, such as pt-BR.",
     "shareLink": "A share link holds the machine after the # sign. Browsers do not send that part of a link to any server.",
     "analytics": {
@@ -344,6 +351,50 @@
         "text": "Pick another machine from the Example list. Press ? at any time to see every keyboard shortcut.",
         "task": "Pick an example, then press Finish."
       }
+    }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Check what you learned",
+      "intro": "Choose one answer for each question, then press Check.",
+      "number": "Question {number} of {total}",
+      "check": "Check",
+      "right": "Right.",
+      "wrong": "Not quite.",
+      "rightAnswer": "Right answer",
+      "yourAnswer": "Your answer",
+      "score": "You got {score} of {total} right.",
+      "saved": "Your result is saved in this browser only.",
+      "tryAgain": "Try again"
+    },
+    "machine": {
+      "tape": "Tape of {name}",
+      "open": "Open in the simulator"
+    },
+    "page": {
+      "pageTitle": "Learn",
+      "title": "Learn",
+      "lead": "Short lessons about the Turing machine. Each lesson has machines you can run, and a quiz at the end.",
+      "lesson": "Lesson {number}",
+      "minutes": "{minutes} min read",
+      "notStarted": "Not started",
+      "score": "Quiz: {best} of {total}",
+      "more": "More lessons come later."
+    },
+    "reset": {
+      "button": "Reset my progress",
+      "question": "Clear all your quiz results in this browser?",
+      "confirm": "Yes, clear them",
+      "cancel": "Cancel",
+      "done": "Your quiz results are cleared."
+    },
+    "lesson": {
+      "position": "Lesson {number} of {total}",
+      "license": "The text of this lesson is under the <link>CC BY 4.0</link> license. You may share and adapt it if you credit Computable.",
+      "nav": "Lessons",
+      "previous": "Previous lesson: {title}",
+      "next": "Next lesson: {title}",
+      "all": "All lessons"
     }
   }
 }

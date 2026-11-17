@@ -1,0 +1,157 @@
+export const meta = {
+  title: 'Intuition: the human computer',
+  summary: 'How Turing turned a person who computes with a pencil into a machine with a tape, a head, states and rules.',
+  minutes: 7,
+};
+
+In 1936, Alan Turing published a paper called *On Computable Numbers*.
+It describes a machine that nobody built.
+Today we call it the Turing machine.
+This lesson shows where the idea came from.
+It starts with a person, a pencil and a sheet of squared paper.
+
+## A question about methods
+
+Turing wanted to answer a question from mathematics.
+The question asked if one fixed method can decide, for any formula of logic, whether it can be proved.
+Its German name is the *Entscheidungsproblem*, the "decision problem".
+A later lesson tells that story.
+
+To answer the question, Turing first needed a clear idea of a method.
+People had used methods for a long time, such as long division.
+But nobody had said exactly what counts as a method.
+Turing found a way to say it.
+He looked closely at a person who follows a method.
+
+## The human computer
+
+In 1936, the word "computer" meant a person who computes.
+Turing pictured such a person at work.
+His analysis starts with these words:
+
+> “Computing is normally done by writing certain symbols on paper. We may suppose this paper is divided into squares like a child's arithmetic book.” (Turing, 1936, page 249)
+
+Think of a student who adds two long numbers on squared paper.
+The student writes one digit in each square.
+The student looks at a few squares, writes a digit, and moves on.
+At each moment, the student also keeps something in mind, such as "I carry a 1".
+
+Turing called this a "state of mind".
+He wrote:
+
+> “The behaviour of the computer at any moment is determined by the symbols which he is observing, and his ‘state of mind’ at that moment.” (Turing, 1936, page 250)
+
+So two things decide the next action.
+One is what the person sees on the paper.
+The other is what the person has in mind.
+
+## Turing makes the picture simpler
+
+Next, Turing took away every detail that a method does not need.
+Each point below drops one detail and keeps the method.
+
+- **One row of squares.** A sheet of paper has rows and columns. Turing argued that one long row is enough. Work on a sheet can always be written out in one row.
+- **A fixed set of symbols.** The person uses a limited set of symbols, such as the digits 0 to 9. A long number is just several symbols side by side.
+- **A few squares at a time.** A person can look at only a few squares at once. To see more, the person must look again, one glance after another.
+- **A fixed set of states of mind.** A person can keep only a limited number of things in mind. Anything more can be written down on the paper instead.
+- **Very small steps.** Each step changes at most one symbol. Each step moves the person's attention only a short way.
+
+Turing argued that these limits do not weaken the method.
+A person who follows them can still do the same work.
+The work may only take more squares and more steps.
+
+## From the person to the machine
+
+Now put a machine in the place of the person.
+Each part of the picture becomes one part of the machine.
+
+- The row of squares becomes the **tape**. The tape is divided into cells, and each cell holds one symbol.
+- The square the person looks at becomes the cell under the **head**. The head reads that one cell, and it can write a new symbol there.
+- The state of mind becomes the machine's **state**. Turing called it an "m-configuration".
+- The method becomes a table of **rules**. Each rule says: in this state, reading this symbol, do these things, then go to that state.
+
+The head moves only one cell at a time, to the left or to the right.
+That is enough, because the machine can repeat a move as often as it needs.
+The tape has no end, so the machine never runs out of cells.
+
+The machine has no other memory.
+It cannot look at the whole tape at once.
+The machines in this lesson, and in this simulator, never choose between rules.
+For each state and symbol, there is at most one rule.
+In this simulator, a machine stops when no rule fits.
+
+## Turing's first machine
+
+Turing's paper soon gives a first example.
+This machine prints 0 1 0 1 … on the tape, without end.
+It starts on a blank tape, in the state 𝔟.
+Turing named his states with old German letters: 𝔟, 𝔠, 𝔢 and 𝔨.
+
+The machine has four rules, and each one reads a blank cell:
+
+- In 𝔟, it prints 0, moves right, and goes to 𝔠.
+- In 𝔠, it moves right and goes to 𝔢.
+- In 𝔢, it prints 1, moves right, and goes to 𝔨.
+- In 𝔨, it moves right and goes to 𝔟.
+
+Press **Step** four times.
+Watch the state above the head change from 𝔟 to 𝔠, to 𝔢, to 𝔨, and back to 𝔟.
+
+<Machine example="turing-1936" />
+
+The machine leaves a blank cell after each digit.
+In his paper, Turing keeps every other cell free for rough notes.
+This machine needs no notes, so those cells stay blank.
+
+The machine never stops.
+After 𝔨, it always goes back to 𝔟.
+For Turing, this was not a problem.
+He wanted machines that write the digits of a number, one after another, without end.
+
+## A machine that adds one
+
+Turing wrote his rules in his own notation.
+Most textbooks today use a shorter form.
+Each rule reads one symbol, writes one symbol, and names the next state.
+It also moves the head one cell left or right, or leaves the head where it is.
+The simulator in Computable uses this form too.
+
+The next machine adds 1 to a number written in binary.
+The input 1011 is the number eleven.
+The machine should end with 1100, the number twelve.
+
+It works like a person who adds 1 by hand:
+
+1. In state q0, the head moves right until it reads the blank after the last digit.
+2. Then it steps back onto the last digit and goes to state q1.
+3. In q1, a 1 becomes 0, and the head moves left. This is the carry.
+4. In q1, a 0 or a blank becomes 1. The work is done, and the machine goes to qA, its accept state.
+
+Press **Run** and watch the carry move to the left.
+
+<Machine example="binary-plus-one" />
+
+The machine stops in qA after 8 steps.
+The tape now reads 1100.
+Open it in the simulator to see all six rules, or to try another input.
+
+## Why this matters
+
+Turing's machine is very simple.
+It reads, writes and moves, one cell at a time.
+Yet Turing argued that it can do any computation that a person can do by following fixed rules.
+Today this claim is called the Church–Turing thesis.
+A later lesson looks at it closely.
+
+The machine also gave Turing his answer.
+With a clear idea of a method, he could show that some questions have no method at all.
+Later lessons explain how.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, "On Computable Numbers, with an Application to the Entscheidungsproblem", *Proceedings of the London Mathematical Society*, series 2, volume 42, pages 230–265, 1936. The first machine is in section 3. The human computer is in section 9.
+- Michael Sipser, *Introduction to the Theory of Computation*, 3rd edition, Cengage Learning, 2013. Chapter 3.
+- John E. Hopcroft, Rajeev Motwani and Jeffrey D. Ullman, *Introduction to Automata Theory, Languages, and Computation*, 3rd edition, Addison-Wesley, 2007. Chapter 8.
+- Wellmmer Lucas de Oliveira Pinto, [*Simulador de Máquina de Turing, Uma Aplicação Web para o Ensino*](https://github.com/wellmmer/computable/blob/master/docs/tcc/paper/TCC%20-%20Simulador%20de%20M%C3%A1quina%20de%20Turing%2C%20Uma%20Aplica%C3%A7%C3%A3o%20Web%20para%20o%20Ensino.pdf), capstone project in Computer Science, UNASP, 2016. Section 2.3.

@@ -1,0 +1,14 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Wellmmer Lucas de Oliveira Pinto
+
+The lesson texts in this folder (the .mdx files and the quiz.<language>.json
+files), in every language, are licensed under the Creative Commons Attribution
+4.0 International License. You may share and adapt them for any purpose, even
+commercially, if you give credit, link to the license, and say what you changed.
+
+Summary: https://creativecommons.org/licenses/by/4.0/
+Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+The code in this folder (the quiz.ts files) is under the MIT License in the
+LICENSE file at the root of the repository.

@@ -1,26 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { machine } from '@/engines/turing/test-helpers';
+import { blockedStorage, fakeStorage } from '@/test/fake-storage';
 import { createBrowserStorage, createMemoryStorage, MACHINE_KEY } from './machine-storage';
-
-/** A Storage backed by a Map, like localStorage in a browser that allows it. */
-function fakeStorage(): Storage {
-  const items = new Map<string, string>();
-  return {
-    get length() {
-      return items.size;
-    },
-    clear: () => items.clear(),
-    getItem: (key) => items.get(key) ?? null,
-    key: (index) => [...items.keys()][index] ?? null,
-    removeItem: (key) => void items.delete(key),
-    setItem: (key, value) => void items.set(key, String(value)),
-  };
-}
-
-/** A Storage that throws on every write, like Safari in a private window with storage blocked. */
-function blockedStorage(): Storage {
-  return { ...fakeStorage(), setItem: () => { throw new DOMException('blocked', 'SecurityError'); } };
-}
 
 const binary = machine([{ state: 'q0', read: '1', write: '0', move: 'R', next: 'qA' }], { name: 'Mine', input: '1' });
 

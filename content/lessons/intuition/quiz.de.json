@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "computer": {
+      "text": "Was bedeutete das englische Wort „computer“ im Jahr 1936?",
+      "options": {
+        "electronic": {
+          "text": "Eine elektronische Maschine, die rechnet",
+          "why": "Elektronische Computer kamen erst später. 1936 war ein computer ein Mensch."
+        },
+        "person": {
+          "text": "Ein Mensch, der von Hand rechnet",
+          "why": "Turing baute seine Maschine nach dem Bild eines solchen Menschen bei der Arbeit."
+        },
+        "tables": {
+          "text": "Ein Buch mit Zahlentabellen",
+          "why": "Solche Bücher gab es, aber das Wort „computer“ bezeichnete den Menschen, der rechnet."
+        }
+      }
+    },
+    "tape": {
+      "text": "Welcher Teil der Arbeit des menschlichen Rechners wurde zum Band?",
+      "options": {
+        "pencil": {
+          "text": "Der Bleistift",
+          "why": "Der Bleistift schreibt in ein Kästchen nach dem anderen. Er ähnelt eher dem Kopf, der ein Feld liest und beschreibt."
+        },
+        "mind": {
+          "text": "Der Geisteszustand des Menschen",
+          "why": "Der Geisteszustand wurde zum Zustand der Maschine, nicht zum Band."
+        },
+        "paper": {
+          "text": "Das Karopapier",
+          "why": "Turing behielt eine lange Reihe von Kästchen, und diese Reihe wurde zum Band."
+        }
+      }
+    },
+    "state": {
+      "text": "Was speichert der Zustand der Maschine?",
+      "options": {
+        "memory": {
+          "text": "Was sich die Maschine von ihrer bisherigen Arbeit merken muss",
+          "why": "Wie ein Geisteszustand speichert der Zustand Dinge wie „1 im Sinn“."
+        },
+        "cell": {
+          "text": "Das Symbol im Feld unter dem Kopf",
+          "why": "Der Kopf liest dieses Symbol. Der Zustand ist etwas anderes, und beide zusammen wählen die Regel."
+        },
+        "whole-tape": {
+          "text": "Alles, was auf dem Band steht",
+          "why": "Die Maschine sieht immer nur ein Feld. Das Band speichert die Symbole, nicht den Zustand."
+        },
+        "rules": {
+          "text": "Die Tabelle der Regeln",
+          "why": "Die Regeln bleiben während des ganzen Laufs gleich. Der Zustand ändert sich von Schritt zu Schritt."
+        }
+      }
+    },
+    "first-machine": {
+      "text": "Wann hält Turings erste Maschine an?",
+      "options": {
+        "four-steps": {
+          "text": "Nach vier Schritten, wenn jeder Zustand einmal dran war",
+          "why": "Nach 𝔨 geht die Maschine zurück zu 𝔟 und macht weiter."
+        },
+        "end-of-tape": {
+          "text": "Wenn sie das Ende des Bandes erreicht",
+          "why": "Das Band hat kein Ende, also gehen der Maschine nie die Felder aus."
+        },
+        "never": {
+          "text": "Nie",
+          "why": "Jede Regel führt zu einem anderen Zustand, also druckt die Maschine 0 1 0 1 … ohne Ende."
+        }
+      }
+    },
+    "carry": {
+      "text": "Die Maschine Binär +1 ist im Zustand q1 und liest eine 1. Was tut sie?",
+      "options": {
+        "write-one-stop": {
+          "text": "Sie schreibt 1 und hält an",
+          "why": "Das passiert bei einer 0 oder einem Leerzeichen. Eine 1 bedeutet, dass es einen Übertrag gibt."
+        },
+        "write-zero-left": {
+          "text": "Sie schreibt 0 und geht nach links",
+          "why": "1 plus 1 ergibt 0 mit Übertrag, also geht die Maschine nach links, um dort den Übertrag zu addieren."
+        },
+        "move-right": {
+          "text": "Sie geht nach rechts, um das Ende der Zahl zu finden",
+          "why": "Das macht der Zustand q0. In q1 geht die Maschine nach links."
+        }
+      }
+    }
+  }
+}

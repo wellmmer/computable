@@ -1,3 +1,4 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
@@ -20,6 +21,8 @@ const nextConfig: NextConfig = {
   },
 };
 
+// Compiles the lesson files (.mdx). They are imported by name, so pageExtensions stays as it is.
+const withMDX = createMDX({});
 // Reads src/i18n/request.ts, so every page gets its language and messages.
 const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(nextConfig);
+export default withNextIntl(withMDX(nextConfig));

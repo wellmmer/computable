@@ -24,6 +24,11 @@ describe('Privacy (spec 4.2)', () => {
     expect(screen.getByText(/The language is also in a cookie named NEXT_LOCALE, for one year\./)).toBeTruthy();
   });
 
+  it('says that quiz results stay in this browser only (spec R2a 4)', () => {
+    renderWithIntl(<PrivacyPage />);
+    expect(screen.getByText('Your quiz results stay in this browser only.')).toBeTruthy();
+  });
+
   it('says the counter never receives the machine from a share link (spec 5.6)', () => {
     renderWithIntl(<PrivacyPage />);
     expect(

@@ -5,8 +5,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
 import { SiteFooter } from './SiteFooter';
 
-// The real Link needs the Next.js router, which screen tests do not have.
+const navigation = vi.hoisted(() => ({ pathname: '/simulator' }));
+
+// The real Link and usePathname need the Next.js router, which screen tests do not have.
 vi.mock('@/i18n/navigation', () => ({
+  usePathname: () => navigation.pathname,
   Link: ({ href, children, ...props }: { href: string; children: ReactNode }) => (
     <a href={href} {...props}>
       {children}
@@ -14,7 +17,10 @@ vi.mock('@/i18n/navigation', () => ({
   ),
 }));
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  navigation.pathname = '/simulator';
+});
 
 describe('SiteFooter', () => {
   it('links About, Privacy, Support the dev and the source code, and names both licenses', () => {
@@ -34,6 +40,28 @@ describe('SiteFooter', () => {
       renderWithIntl(<SiteFooter />, locale);
       expect(screen.getByRole('link', { name: 'Help improve the translation' }).getAttribute('href')).toBe(
         `https://github.com/wellmmer/computable/edit/master/messages/${locale}.json`,
+      );
+      cleanup();
+    }
+  });
+
+  it('on a lesson page, links the lesson file of that language, where the lesson text lives', () => {
+    navigation.pathname = '/learn/intuition';
+    for (const locale of ['es', 'fr', 'de'] as const) {
+      renderWithIntl(<SiteFooter />, locale);
+      expect(screen.getByRole('link', { name: 'Help improve the translation' }).getAttribute('href')).toBe(
+        `https://github.com/wellmmer/computable/edit/master/content/lessons/intuition/${locale}.mdx`,
+      );
+      cleanup();
+    }
+  });
+
+  it('on the Learn page and on an unknown lesson address, links the language file', () => {
+    for (const pathname of ['/learn', '/learn/nope']) {
+      navigation.pathname = pathname;
+      renderWithIntl(<SiteFooter />, 'de');
+      expect(screen.getByRole('link', { name: 'Help improve the translation' }).getAttribute('href')).toBe(
+        'https://github.com/wellmmer/computable/edit/master/messages/de.json',
       );
       cleanup();
     }

@@ -1,0 +1,157 @@
+export const meta = {
+  title: 'Intuición: el computador humano',
+  summary: 'Cómo Turing convirtió a una persona que calcula con un lápiz en una máquina con cinta, cabeza, estados y reglas.',
+  minutes: 7,
+};
+
+En 1936, Alan Turing publicó un artículo llamado *On Computable Numbers* ("Sobre los números computables").
+El artículo describe una máquina que nadie construyó.
+Hoy la llamamos máquina de Turing.
+Esta lección muestra de dónde vino la idea.
+Empieza con una persona, un lápiz y una hoja de papel cuadriculado.
+
+## Una pregunta sobre métodos
+
+Turing quería responder a una pregunta de las matemáticas.
+La pregunta era si un método fijo puede decidir, para cualquier fórmula de la lógica, si se puede demostrar.
+Su nombre en alemán es *Entscheidungsproblem*, el "problema de la decisión".
+Una lección futura cuenta esa historia.
+
+Para responder a la pregunta, Turing primero necesitaba una idea clara de método.
+La gente ya usaba métodos desde hacía mucho tiempo, como la división larga.
+Pero nadie había dicho con exactitud qué cuenta como un método.
+Turing encontró una forma de decirlo.
+Miró de cerca a una persona que sigue un método.
+
+## El computador humano
+
+En 1936, la palabra inglesa "computer" (computador) quería decir una persona que hace cálculos.
+Turing imaginó a esa persona trabajando.
+Su análisis empieza con estas palabras:
+
+> “Calcular se hace normalmente escribiendo ciertos símbolos en papel. Podemos suponer que este papel está dividido en cuadrados, como un cuaderno de aritmética infantil.” (Turing, 1936, página 249, traducción nuestra)
+
+Piensa en un alumno que suma dos números largos en papel cuadriculado.
+El alumno escribe una cifra en cada cuadrado.
+El alumno mira unos pocos cuadrados, escribe una cifra y sigue adelante.
+En cada momento, el alumno también tiene algo en mente, como "me llevo una".
+
+Turing llamó a esto un "estado mental".
+Escribió:
+
+> “El comportamiento del computador en cada momento está determinado por los símbolos que observa y por su ‘estado mental’ en ese momento.” (Turing, 1936, página 250, traducción nuestra)
+
+Así que dos cosas deciden la acción siguiente.
+Una es lo que la persona ve en el papel.
+La otra es lo que la persona tiene en mente.
+
+## Turing simplifica la imagen
+
+Después, Turing quitó todos los detalles que un método no necesita.
+Cada punto de abajo quita un detalle y conserva el método.
+
+- **Una fila de cuadrados.** Una hoja de papel tiene filas y columnas. Turing argumentó que basta con una fila larga. El trabajo hecho en una hoja siempre se puede escribir en una sola fila.
+- **Un conjunto fijo de símbolos.** La persona usa un conjunto limitado de símbolos, como las cifras del 0 al 9. Un número largo es solo varios símbolos uno al lado del otro.
+- **Pocos cuadrados a la vez.** Una persona solo puede mirar unos pocos cuadrados a la vez. Para ver más, tiene que volver a mirar, una mirada tras otra.
+- **Un conjunto fijo de estados mentales.** Una persona solo puede tener en mente un número limitado de cosas. Lo demás se puede escribir en el papel.
+- **Pasos muy pequeños.** Cada paso cambia como mucho un símbolo. Cada paso mueve la atención de la persona solo un poco.
+
+Turing argumentó que estos límites no debilitan el método.
+Una persona que los sigue puede hacer el mismo trabajo.
+Ese trabajo solo puede necesitar más cuadrados y más pasos.
+
+## De la persona a la máquina
+
+Ahora pon una máquina en el lugar de la persona.
+Cada parte de la imagen se convierte en una parte de la máquina.
+
+- La fila de cuadrados se convierte en la **cinta**. La cinta está dividida en casillas, y cada casilla guarda un símbolo.
+- El cuadrado que mira la persona se convierte en la casilla bajo la **cabeza**. La cabeza lee esa casilla y puede escribir un símbolo nuevo en ella.
+- El estado mental se convierte en el **estado** de la máquina. Turing lo llamó "m-configuración".
+- El método se convierte en una tabla de **reglas**. Cada regla dice: en este estado, leyendo este símbolo, haz estas cosas y después pasa a aquel estado.
+
+La cabeza se mueve solo una casilla cada vez, a la izquierda o a la derecha.
+Eso basta, porque la máquina puede repetir un movimiento tantas veces como necesite.
+La cinta no tiene fin, así que la máquina nunca se queda sin casillas.
+
+La máquina no tiene otra memoria.
+No puede mirar toda la cinta a la vez.
+Las máquinas de esta lección, y de este simulador, nunca eligen entre reglas.
+Para cada estado y símbolo, hay como mucho una regla.
+En este simulador, una máquina se detiene cuando ninguna regla encaja.
+
+## La primera máquina de Turing
+
+Muy pronto, el artículo de Turing da un primer ejemplo.
+Esta máquina imprime 0 1 0 1 … en la cinta, sin fin.
+Empieza con la cinta en blanco, en el estado 𝔟.
+Turing nombró sus estados con letras alemanas antiguas: 𝔟, 𝔠, 𝔢 y 𝔨.
+
+La máquina tiene cuatro reglas, y cada una lee una casilla en blanco:
+
+- En 𝔟, imprime 0, se mueve a la derecha y pasa a 𝔠.
+- En 𝔠, se mueve a la derecha y pasa a 𝔢.
+- En 𝔢, imprime 1, se mueve a la derecha y pasa a 𝔨.
+- En 𝔨, se mueve a la derecha y pasa a 𝔟.
+
+Pulsa **Paso** cuatro veces.
+Mira cómo el estado sobre la cabeza cambia de 𝔟 a 𝔠, a 𝔢, a 𝔨 y vuelve a 𝔟.
+
+<Machine example="turing-1936" />
+
+La máquina deja una casilla en blanco después de cada cifra.
+En su artículo, Turing deja libre una casilla sí y otra no para notas de borrador.
+Esta máquina no necesita notas, así que esas casillas quedan en blanco.
+
+La máquina nunca se detiene.
+Después de 𝔨, siempre vuelve a 𝔟.
+Para Turing, eso no era un problema.
+Quería máquinas que escriben las cifras de un número, una tras otra, sin fin.
+
+## Una máquina que suma uno
+
+Turing escribió sus reglas en su propia notación.
+La mayoría de los libros de hoy usa una forma más corta.
+Cada regla lee un símbolo, escribe un símbolo y dice el estado siguiente.
+También mueve la cabeza una casilla a la izquierda o a la derecha, o deja la cabeza donde está.
+El simulador de Computable también usa esta forma.
+
+La siguiente máquina suma 1 a un número escrito en binario.
+La entrada 1011 es el número once.
+La máquina debe terminar con 1100, el número doce.
+
+Funciona como una persona que suma 1 a mano:
+
+1. En el estado q0, la cabeza se mueve a la derecha hasta leer el blanco después de la última cifra.
+2. Luego vuelve a la última cifra y pasa al estado q1.
+3. En q1, un 1 se convierte en 0, y la cabeza se mueve a la izquierda. Esto es el "me llevo una".
+4. En q1, un 0 o un blanco se convierte en 1. El trabajo termina, y la máquina pasa a qA, su estado de aceptación.
+
+Pulsa **Ejecutar** y mira cómo el "me llevo una" se mueve a la izquierda.
+
+<Machine example="binary-plus-one" />
+
+La máquina se detiene en qA después de 8 pasos.
+La cinta ahora muestra 1100.
+Ábrela en el simulador para ver sus seis reglas o para probar otra entrada.
+
+## Por qué importa
+
+La máquina de Turing es muy simple.
+Lee, escribe y se mueve, una casilla cada vez.
+Aun así, Turing argumentó que puede hacer cualquier cálculo que una persona hace siguiendo reglas fijas.
+Hoy esta afirmación se llama tesis de Church–Turing.
+Una lección futura la mira de cerca.
+
+La máquina también le dio a Turing su respuesta.
+Con una idea clara de método, pudo mostrar que algunas preguntas no tienen ningún método.
+Las lecciones futuras explican cómo.
+
+<Quiz />
+
+## Fuentes
+
+- A. M. Turing, "On Computable Numbers, with an Application to the Entscheidungsproblem", *Proceedings of the London Mathematical Society*, serie 2, volumen 42, páginas 230–265, 1936. La primera máquina está en la sección 3. El computador humano está en la sección 9.
+- Michael Sipser, *Introduction to the Theory of Computation*, 3.ª edición, Cengage Learning, 2013. Capítulo 3.
+- John E. Hopcroft, Rajeev Motwani y Jeffrey D. Ullman, *Introduction to Automata Theory, Languages, and Computation*, 3.ª edición, Addison-Wesley, 2007. Capítulo 8.
+- Wellmmer Lucas de Oliveira Pinto, [*Simulador de Máquina de Turing, Uma Aplicação Web para o Ensino*](https://github.com/wellmmer/computable/blob/master/docs/tcc/paper/TCC%20-%20Simulador%20de%20M%C3%A1quina%20de%20Turing%2C%20Uma%20Aplica%C3%A7%C3%A3o%20Web%20para%20o%20Ensino.pdf), trabajo de fin de grado en Ciencias de la Computación, UNASP, 2016. En portugués. Sección 2.3.

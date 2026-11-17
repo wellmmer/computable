@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "computer": {
+      "text": "In 1936, what did the word “computer” mean?",
+      "options": {
+        "electronic": {
+          "text": "An electronic machine that does sums",
+          "why": "Electronic computers came later. In 1936, a computer was a person."
+        },
+        "person": {
+          "text": "A person who calculates by hand",
+          "why": "Turing built his machine from a picture of such a person at work."
+        },
+        "tables": {
+          "text": "A book of number tables",
+          "why": "People used such books, but the word “computer” meant the person who calculates."
+        }
+      }
+    },
+    "tape": {
+      "text": "Which part of the human computer's work became the tape?",
+      "options": {
+        "pencil": {
+          "text": "The pencil",
+          "why": "The pencil writes in one square at a time. It is closer to the head, which reads and writes one cell."
+        },
+        "mind": {
+          "text": "The person's state of mind",
+          "why": "The state of mind became the machine's state, not the tape."
+        },
+        "paper": {
+          "text": "The squared paper",
+          "why": "Turing kept one long row of squares, and that row became the tape."
+        }
+      }
+    },
+    "state": {
+      "text": "What does the machine's state hold?",
+      "options": {
+        "memory": {
+          "text": "What the machine must remember about its work so far",
+          "why": "Like a state of mind, the state holds things such as “I carry a 1”."
+        },
+        "cell": {
+          "text": "The symbol in the cell under the head",
+          "why": "The head reads that symbol. The state is a separate thing, and together they pick the rule."
+        },
+        "whole-tape": {
+          "text": "Everything written on the tape",
+          "why": "The machine sees only one cell at a time. The tape holds the symbols, not the state."
+        },
+        "rules": {
+          "text": "The table of rules",
+          "why": "The rules stay the same for the whole run. The state changes from step to step."
+        }
+      }
+    },
+    "first-machine": {
+      "text": "When does Turing's first machine stop?",
+      "options": {
+        "four-steps": {
+          "text": "After four steps, when each state has run once",
+          "why": "After 𝔨, the machine goes back to 𝔟 and goes on."
+        },
+        "end-of-tape": {
+          "text": "When it reaches the end of the tape",
+          "why": "The tape has no end, so the machine never runs out of cells."
+        },
+        "never": {
+          "text": "Never",
+          "why": "Every rule leads to another state, so the machine prints 0 1 0 1 … forever."
+        }
+      }
+    },
+    "carry": {
+      "text": "Binary plus one is in state q1 and reads a 1. What does it do?",
+      "options": {
+        "write-one-stop": {
+          "text": "It writes 1 and stops",
+          "why": "That is what happens with a 0 or a blank. A 1 means there is a carry."
+        },
+        "write-zero-left": {
+          "text": "It writes 0 and moves left",
+          "why": "1 plus 1 makes 0 with a carry, so the machine moves left to add the carry there."
+        },
+        "move-right": {
+          "text": "It moves right to find the end of the number",
+          "why": "That is what state q0 does. In q1, the machine moves left."
+        }
+      }
+    }
+  }
+}

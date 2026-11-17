@@ -176,6 +176,69 @@ describe('the simulator store', () => {
     expect(store.getState().exampleId).toBe('turing-1936');
   });
 
+  describe('a share link and a machine the visitor built', () => {
+    const built = machine([{ state: 'q0', read: '_', write: '1', move: 'R', next: 'qA' }], { name: 'My machine' });
+    const hashOf = (m: typeof built) => {
+      const link = shareUrl('https://x.example/en/simulator', m);
+      if (!link.ok) throw new Error('expected a link');
+      return new URL(link.url).hash;
+    };
+
+    it('opens the link with no question when nothing is saved', () => {
+      const store = createSimulatorStore({ storage });
+      store.getState().boot(hashOf(built));
+      expect(store.getState()).toMatchObject({ machine: built, pendingLink: null });
+    });
+
+    it('opens the link with no question when the saved machine is an example, whatever its input', () => {
+      storage.saveMachine({ ...examples.palindrome.machine, input: '0110' });
+      const store = createSimulatorStore({ storage });
+      store.getState().boot(hashOf(built));
+      expect(store.getState()).toMatchObject({ machine: built, pendingLink: null });
+    });
+
+    it('opens the link with no question when the saved machine is the same as the link', () => {
+      storage.saveMachine(built);
+      const store = createSimulatorStore({ storage });
+      store.getState().boot(hashOf(built));
+      expect(store.getState()).toMatchObject({ machine: built, pendingLink: null });
+    });
+
+    it('asks before the link replaces another machine, and saves nothing yet', () => {
+      storage.saveMachine(built);
+      const store = createSimulatorStore({ storage });
+      store.getState().boot(hashOf(examples['turing-1936'].machine));
+      expect(store.getState()).toMatchObject({ machine: built, pendingLink: examples['turing-1936'].machine });
+      expect(storage.loadMachine()).toEqual(built);
+    });
+
+    it('Replace opens the link and saves it', () => {
+      storage.saveMachine(built);
+      const store = createSimulatorStore({ storage });
+      store.getState().boot(hashOf(examples['turing-1936'].machine));
+      store.getState().replaceWithLink();
+      expect(store.getState()).toMatchObject({ exampleId: 'turing-1936', pendingLink: null });
+      expect(storage.loadMachine()).toEqual(examples['turing-1936'].machine);
+    });
+
+    it('Keep mine keeps the saved machine', () => {
+      storage.saveMachine(built);
+      const store = createSimulatorStore({ storage });
+      store.getState().boot(hashOf(examples['turing-1936'].machine));
+      store.getState().keepMachine();
+      expect(store.getState()).toMatchObject({ machine: built, pendingLink: null });
+      expect(storage.loadMachine()).toEqual(built);
+    });
+
+    it('asks too when the link is pasted into a tab that is already open', () => {
+      const store = createSimulatorStore({ storage });
+      store.getState().boot('');
+      store.getState().loadMachine(built);
+      expect(store.getState().openLink(hashOf(examples.palindrome.machine))).toBe(true);
+      expect(store.getState()).toMatchObject({ machine: built, pendingLink: examples.palindrome.machine });
+    });
+  });
+
   it('opens the saved machine when the link is bad, and says so', () => {
     storage.saveMachine(examples.palindrome.machine);
     const store = createSimulatorStore({ storage });

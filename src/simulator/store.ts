@@ -41,6 +41,11 @@ export interface SimulatorState {
   storageBlocked: boolean;
   /** True after a share link that holds no machine, until the next machine loads. */
   badLink: boolean;
+  /**
+   * The machine from a share link that waits for the visitor's answer, or null. A link that would
+   * replace a machine the visitor built asks first, so nothing is saved until they press Replace.
+   */
+  pendingLink: Machine | null;
   /** What the live region says. `id` changes every time, so the same text is spoken again. */
   announcement: { messages: SimMessage[]; id: number } | null;
   /**
@@ -51,8 +56,15 @@ export interface SimulatorState {
 
   /** Opens the saved machine, then the share link in `hash`. Runs once per store. */
   boot(hash: string): void;
-  /** Opens the machine in a share link. Returns false when the hash holds no machine. */
+  /**
+   * Opens the machine in a share link, or asks first when it would replace a machine the visitor
+   * built (`pendingLink`). Returns false when the hash holds no machine.
+   */
   openLink(hash: string): boolean;
+  /** "Replace": opens the machine from the share link that waits for an answer. */
+  replaceWithLink(): void;
+  /** "Keep mine": keeps the current machine and forgets the share link. */
+  keepMachine(): void;
   loadExample(id: ExampleId): void;
   loadMachine(machine: Machine, importWarnings?: LegacyWarning[]): void;
   /** Replaces the machine after an edit in the rule table: compiles it and starts the run again. */
@@ -88,6 +100,20 @@ export interface StoreOptions {
 /** The index of the rule the last step applied, for the highlighted row; null before the first step. */
 export function currentRuleIndex(state: Pick<SimulatorState, 'run'>): number | null {
   return state.run?.history.at(-1)?.ruleIndex ?? null;
+}
+
+/** True when both are the same machine, input included. */
+function sameMachine(a: Machine, b: Machine): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/**
+ * True when opening `link` needs no question: the current machine is the same as the link's, or it
+ * is an example (any input), which the visitor can open again from the Example list. With nothing
+ * saved, the current machine is the first example.
+ */
+function linkReplacesNothing(current: Machine, link: Machine): boolean {
+  return sameMachine(current, link) || findExampleId(current) !== null;
 }
 
 function machineState(machine: Machine, importWarnings: LegacyWarning[]) {
@@ -187,6 +213,7 @@ export function createSimulatorStore({ storage, stepLimit = DEFAULT_STEP_LIMIT }
       loop: 'idle',
       storageBlocked: false,
       badLink: false,
+      pendingLink: null,
       announcement: null,
 
       boot(hash) {
@@ -196,7 +223,8 @@ export function createSimulatorStore({ storage, stepLimit = DEFAULT_STEP_LIMIT }
         set({ storageBlocked: !storage.persistent });
         const saved = storage.loadMachine();
         if (saved !== null) get().loadMachine(saved);
-        // The link comes last: a good link replaces the saved machine, and a bad link's note stays.
+        // The link comes last: a good link replaces the saved machine (after a question when the
+        // visitor built it), and a bad link's note stays.
         get().openLink(hash);
       },
 
@@ -207,8 +235,20 @@ export function createSimulatorStore({ storage, stepLimit = DEFAULT_STEP_LIMIT }
           set({ badLink: true });
           return false;
         }
-        get().loadMachine(fromLink.machine);
+        if (linkReplacesNothing(get().machine, fromLink.machine)) get().loadMachine(fromLink.machine);
+        else set({ pendingLink: fromLink.machine });
         return true;
+      },
+
+      replaceWithLink() {
+        const { pendingLink } = get();
+        if (pendingLink === null) return;
+        get().loadMachine(pendingLink);
+        set({ pendingLink: null });
+      },
+
+      keepMachine() {
+        set({ pendingLink: null });
       },
 
       loadExample(id) {

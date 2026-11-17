@@ -1,0 +1,64 @@
+// @vitest-environment jsdom
+import { act, cleanup, fireEvent, screen, within } from '@testing-library/react';
+import type { ReactNode } from 'react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { resetProgress, saveQuizResult } from '@/learn/progress';
+import { renderWithIntl } from '@/test/intl';
+import LearnPage from './page';
+
+// The real Link needs the Next.js router, which screen tests do not have.
+vi.mock('@/i18n/navigation', () => ({
+  Link: ({ href, children, ...props }: { href: string; children: ReactNode }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
+
+afterEach(() => {
+  cleanup();
+  resetProgress();
+});
+
+const lessonRow = () => screen.getAllByRole('listitem')[0];
+
+describe('Learn page (spec 2.1)', () => {
+  it('lists the live lessons with their number, title, summary and reading time', () => {
+    renderWithIntl(<LearnPage />);
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Learn');
+    expect(screen.getAllByRole('listitem')).toHaveLength(1);
+    expect(within(lessonRow()).getByText('Lesson 1')).toBeTruthy();
+    expect(within(lessonRow()).getByRole('link', { name: 'Intuition: the human computer' }).getAttribute('href')).toBe('/learn/intuition');
+    expect(within(lessonRow()).getByText(/^How Turing turned a person/)).toBeTruthy();
+    expect(within(lessonRow()).getByText('7 min read')).toBeTruthy();
+    expect(screen.getByText('More lessons come later.')).toBeTruthy();
+  });
+
+  it('shows the quiz status of each lesson', () => {
+    renderWithIntl(<LearnPage />);
+    expect(within(lessonRow()).getByText('Not started')).toBeTruthy();
+    act(() => saveQuizResult('intuition', 4, 5));
+    expect(within(lessonRow()).getByText('Quiz: 4 of 5')).toBeTruthy();
+  });
+
+  it('asks before it resets the progress, and Cancel keeps it', () => {
+    renderWithIntl(<LearnPage />);
+    act(() => saveQuizResult('intuition', 4, 5));
+    fireEvent.click(screen.getByRole('button', { name: 'Reset my progress' }));
+    const question = screen.getByRole('group', { name: 'Clear all your quiz results in this browser?' });
+    expect(document.activeElement).toBe(within(question).getByRole('button', { name: 'Cancel' }));
+    fireEvent.click(within(question).getByRole('button', { name: 'Cancel' }));
+    expect(within(lessonRow()).getByText('Quiz: 4 of 5')).toBeTruthy();
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Reset my progress' }));
+  });
+
+  it('clears every quiz result after the confirmation', () => {
+    renderWithIntl(<LearnPage />);
+    act(() => saveQuizResult('intuition', 4, 5));
+    fireEvent.click(screen.getByRole('button', { name: 'Reset my progress' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Yes, clear them' }));
+    expect(within(lessonRow()).getByText('Not started')).toBeTruthy();
+    expect(screen.getByRole('status').textContent).toBe('Your quiz results are cleared.');
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Reset my progress' }));
+  });
+});

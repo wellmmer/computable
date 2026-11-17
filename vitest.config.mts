@@ -1,7 +1,19 @@
+import { compile } from '@mdx-js/mdx';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  plugins: [
+    {
+      // Compiles .mdx files the way @next/mdx does for the app, with the same components file.
+      name: 'mdx',
+      enforce: 'pre',
+      async transform(source, id) {
+        if (!id.endsWith('.mdx')) return null;
+        return { code: String(await compile(source, { providerImportSource: '@/mdx-components' })), map: null };
+      },
+    },
+  ],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   test: {
     include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],

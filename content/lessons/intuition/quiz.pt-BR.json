@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "computer": {
+      "text": "Em 1936, o que a palavra inglesa “computer” queria dizer?",
+      "options": {
+        "electronic": {
+          "text": "Uma máquina eletrônica que faz contas",
+          "why": "Os computadores eletrônicos vieram depois. Em 1936, um computer era uma pessoa."
+        },
+        "person": {
+          "text": "Uma pessoa que faz cálculos à mão",
+          "why": "Turing criou a máquina dele a partir da imagem dessa pessoa trabalhando."
+        },
+        "tables": {
+          "text": "Um livro de tabelas de números",
+          "why": "As pessoas usavam esses livros, mas a palavra “computer” queria dizer a pessoa que calcula."
+        }
+      }
+    },
+    "tape": {
+      "text": "Que parte do trabalho do computador humano virou a fita?",
+      "options": {
+        "pencil": {
+          "text": "O lápis",
+          "why": "O lápis escreve em um quadrado de cada vez. Ele se parece mais com a cabeça, que lê e escreve uma casa."
+        },
+        "mind": {
+          "text": "O estado mental da pessoa",
+          "why": "O estado mental virou o estado da máquina, não a fita."
+        },
+        "paper": {
+          "text": "O papel quadriculado",
+          "why": "Turing ficou com uma fileira longa de quadrados, e essa fileira virou a fita."
+        }
+      }
+    },
+    "state": {
+      "text": "O que o estado da máquina guarda?",
+      "options": {
+        "memory": {
+          "text": "O que a máquina precisa lembrar sobre o trabalho até agora",
+          "why": "Como um estado mental, o estado guarda coisas como “vai um”."
+        },
+        "cell": {
+          "text": "O símbolo na casa embaixo da cabeça",
+          "why": "A cabeça lê esse símbolo. O estado é outra coisa, e os dois juntos escolhem a regra."
+        },
+        "whole-tape": {
+          "text": "Tudo o que está escrito na fita",
+          "why": "A máquina só vê uma casa de cada vez. A fita guarda os símbolos, não o estado."
+        },
+        "rules": {
+          "text": "A tabela de regras",
+          "why": "As regras ficam iguais durante toda a execução. O estado muda de um passo para o outro."
+        }
+      }
+    },
+    "first-machine": {
+      "text": "Quando a primeira máquina de Turing para?",
+      "options": {
+        "four-steps": {
+          "text": "Depois de quatro passos, quando cada estado rodou uma vez",
+          "why": "Depois de 𝔨, a máquina volta para 𝔟 e continua."
+        },
+        "end-of-tape": {
+          "text": "Quando chega ao fim da fita",
+          "why": "A fita não tem fim, então a máquina nunca fica sem casas."
+        },
+        "never": {
+          "text": "Nunca",
+          "why": "Toda regra leva a outro estado, então a máquina imprime 0 1 0 1 … para sempre."
+        }
+      }
+    },
+    "carry": {
+      "text": "A máquina Binário +1 está no estado q1 e lê um 1. O que ela faz?",
+      "options": {
+        "write-one-stop": {
+          "text": "Escreve 1 e para",
+          "why": "Isso acontece com um 0 ou um branco. Um 1 quer dizer que há um “vai um”."
+        },
+        "write-zero-left": {
+          "text": "Escreve 0 e anda para a esquerda",
+          "why": "1 mais 1 dá 0 e vai um, então a máquina anda para a esquerda para somar o “vai um” lá."
+        },
+        "move-right": {
+          "text": "Anda para a direita para achar o fim do número",
+          "why": "Isso é o que o estado q0 faz. Em q1, a máquina anda para a esquerda."
+        }
+      }
+    }
+  }
+}

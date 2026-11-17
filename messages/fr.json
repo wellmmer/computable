@@ -184,6 +184,12 @@
       "help": "Afficher cette liste",
       "off": "Les raccourcis sont désactivés pendant que vous tapez dans un champ de texte.",
       "startTapeEdit": "Modifier la bande"
+    },
+    "replaceLink": {
+      "title": "Remplacer votre machine ?",
+      "text": "Ce lien ouvre une autre machine, et la machine que vous avez maintenant sera perdue.",
+      "replace": "Remplacer",
+      "keep": "Garder la mienne"
     }
   },
   "shell": {
@@ -244,6 +250,7 @@
     "lead": "Computable n’a pas de comptes et ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
     "browserTitle": "Ce qui reste dans votre navigateur",
     "browser": "Votre navigateur garde votre machine actuelle, votre choix entre papier quadrillé et papier de nuit, votre langue, et si vous avez vu la visite. Ils restent sur votre appareil.",
+    "quiz": "Vos résultats de quiz restent dans ce navigateur seulement.",
     "language": "La langue est aussi dans un cookie nommé NEXT_LOCALE, pendant un an. Le site le pose quand vous choisissez une langue, ou quand vous ouvrez une page dans une autre langue que celle de votre navigateur. Votre navigateur l’envoie avec chaque page demandée, pour que l’adresse principale du site s’ouvre dans votre langue. Il ne contient que le code de la langue, comme pt-BR.",
     "shareLink": "Un lien de partage contient la machine après le signe #. Les navigateurs n’envoient cette partie d’un lien à aucun serveur.",
     "analytics": {
@@ -344,6 +351,50 @@
         "text": "Choisissez une autre machine dans la liste Exemple. Appuyez sur ? à tout moment pour voir tous les raccourcis clavier.",
         "task": "Choisissez un exemple, puis appuyez sur Terminer."
       }
+    }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Vérifiez ce que vous avez appris",
+      "intro": "Choisissez une réponse pour chaque question, puis appuyez sur Vérifier.",
+      "number": "Question {number} sur {total}",
+      "check": "Vérifier",
+      "right": "Juste.",
+      "wrong": "Pas tout à fait.",
+      "rightAnswer": "Bonne réponse",
+      "yourAnswer": "Votre réponse",
+      "score": "Vous avez {score} bonnes réponses sur {total}.",
+      "saved": "Votre résultat est enregistré dans ce navigateur seulement.",
+      "tryAgain": "Réessayer"
+    },
+    "machine": {
+      "tape": "Bande de {name}",
+      "open": "Ouvrir dans le simulateur"
+    },
+    "page": {
+      "pageTitle": "Apprendre",
+      "title": "Apprendre",
+      "lead": "De courtes leçons sur la machine de Turing. Chaque leçon contient des machines que vous pouvez lancer, et un quiz à la fin.",
+      "lesson": "Leçon {number}",
+      "minutes": "{minutes} min de lecture",
+      "notStarted": "Pas commencée",
+      "score": "Quiz : {best} sur {total}",
+      "more": "D’autres leçons viendront plus tard."
+    },
+    "reset": {
+      "button": "Effacer ma progression",
+      "question": "Effacer tous vos résultats de quiz dans ce navigateur ?",
+      "confirm": "Oui, les effacer",
+      "cancel": "Annuler",
+      "done": "Vos résultats de quiz sont effacés."
+    },
+    "lesson": {
+      "position": "Leçon {number} sur {total}",
+      "license": "Le texte de cette leçon est sous licence <link>CC BY 4.0</link>. Vous pouvez le partager et l’adapter si vous citez Computable.",
+      "nav": "Leçons",
+      "previous": "Leçon précédente : {title}",
+      "next": "Leçon suivante : {title}",
+      "all": "Toutes les leçons"
     }
   }
 }

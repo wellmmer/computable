@@ -44,3 +44,27 @@ describe('the language in the URL (spec 3, "Language on first visit")', () => {
     expect(cookie).toContain('Max-Age=31536000');
   });
 });
+
+describe('a lesson address that does not exist (spec R2a 3)', () => {
+  const NOT_FOUND = /^http:\/\/localhost\/[^/]+\/_unknown-lesson$/;
+
+  it('rewrites an unknown lesson to an address no page answers, so the server sends 404', () => {
+    expect(visit('/en/learn/nope').headers.get('x-middleware-rewrite')).toMatch(NOT_FOUND);
+    expect(visit('/pt-br/learn/nope').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/_unknown-lesson');
+    expect(visit('/de/learn/nope/').headers.get('x-middleware-rewrite')).toBe('http://localhost/de/_unknown-lesson');
+  });
+
+  it('keeps the language cookie on that answer', () => {
+    expect(visit('/pt-br/learn/nope', { 'accept-language': 'en-US' }).headers.get('set-cookie')).toContain('NEXT_LOCALE=pt-BR');
+  });
+
+  it('leaves a lesson that exists, and the Learn page, as they are', () => {
+    expect(visit('/en/learn/intuition').headers.get('x-middleware-rewrite')).toBeNull();
+    expect(visit('/pt-br/learn/intuition').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/intuition');
+    expect(visit('/en/learn').headers.get('x-middleware-rewrite')).toBeNull();
+  });
+
+  it('still sends /pt-BR to /pt-br first', () => {
+    expect(visit('/pt-BR/learn/nope').headers.get('location')).toBe('http://localhost/pt-br/learn/nope');
+  });
+});

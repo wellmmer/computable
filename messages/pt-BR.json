@@ -184,6 +184,12 @@
       "help": "Mostrar esta lista",
       "off": "Os atalhos ficam desligados enquanto você digita num campo de texto.",
       "startTapeEdit": "Editar a fita"
+    },
+    "replaceLink": {
+      "title": "Substituir sua máquina?",
+      "text": "Este link abre outra máquina, e a máquina que você tem agora vai se perder.",
+      "replace": "Substituir",
+      "keep": "Manter a minha"
     }
   },
   "shell": {
@@ -244,6 +250,7 @@
     "lead": "O Computable não tem contas e não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
     "browserTitle": "O que fica no seu navegador",
     "browser": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho.",
+    "quiz": "Seus resultados de quiz ficam só neste navegador.",
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
     "analytics": {
@@ -344,6 +351,50 @@
         "text": "Escolha outra máquina na lista Exemplo. Aperte ? a qualquer momento para ver todos os atalhos de teclado.",
         "task": "Escolha um exemplo e aperte Concluir."
       }
+    }
+  },
+  "learn": {
+    "quiz": {
+      "title": "Confira o que você aprendeu",
+      "intro": "Escolha uma resposta para cada pergunta e aperte Conferir.",
+      "number": "Pergunta {number} de {total}",
+      "check": "Conferir",
+      "right": "Certo.",
+      "wrong": "Não exatamente.",
+      "rightAnswer": "Resposta certa",
+      "yourAnswer": "Sua resposta",
+      "score": "Você acertou {score} de {total}.",
+      "saved": "Seu resultado fica salvo só neste navegador.",
+      "tryAgain": "Tentar de novo"
+    },
+    "machine": {
+      "tape": "Fita de {name}",
+      "open": "Abrir no simulador"
+    },
+    "page": {
+      "pageTitle": "Aprender",
+      "title": "Aprender",
+      "lead": "Lições curtas sobre a máquina de Turing. Cada lição tem máquinas que você pode rodar e um quiz no fim.",
+      "lesson": "Lição {number}",
+      "minutes": "{minutes} min de leitura",
+      "notStarted": "Não iniciada",
+      "score": "Quiz: {best} de {total}",
+      "more": "Mais lições virão depois."
+    },
+    "reset": {
+      "button": "Zerar meu progresso",
+      "question": "Apagar todos os seus resultados de quiz neste navegador?",
+      "confirm": "Sim, apagar",
+      "cancel": "Cancelar",
+      "done": "Seus resultados de quiz foram apagados."
+    },
+    "lesson": {
+      "position": "Lição {number} de {total}",
+      "license": "O texto desta lição está sob a licença <link>CC BY 4.0</link>. Você pode compartilhar e adaptar o texto se der o crédito ao Computable.",
+      "nav": "Lições",
+      "previous": "Lição anterior: {title}",
+      "next": "Próxima lição: {title}",
+      "all": "Todas as lições"
     }
   }
 }

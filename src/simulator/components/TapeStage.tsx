@@ -15,9 +15,10 @@ const CELLS_EACH_SIDE = 15;
 /**
  * The tape on the stage, with the red pencil head and its state tag (spec 5.1). While the visitor
  * edits the tape (spec 5.4), the tape shows the input, the cursor sits in the middle, and the head is hidden.
- * Home shows a tape that only runs: `editable={false}` turns off the click on a cell.
+ * Home shows a tape that only runs: `editable={false}` turns off the click on a cell. A page with
+ * several tapes gives each its own `label`, so screen readers can tell the regions apart.
  */
-export function TapeStage({ editable = true }: { editable?: boolean }) {
+export function TapeStage({ editable = true, label }: { editable?: boolean; label?: string }) {
   const t = useTranslations('simulator.tape');
   const store = useSimulatorStore();
   const run = useSimulator((s) => s.run);
@@ -43,7 +44,7 @@ export function TapeStage({ editable = true }: { editable?: boolean }) {
   };
 
   return (
-    <section aria-label={t('label')} data-tour="tape" onClick={editable ? onClick : undefined} className="relative mt-6 h-[170px] overflow-hidden">
+    <section aria-label={label ?? t('label')} data-tour="tape" onClick={editable ? onClick : undefined} className="relative mt-6 h-[170px] overflow-hidden">
       {tapeEdit !== null && <TapeEditor cell={tapeEdit.cell} />}
       {run !== null && tapeEdit === null && (
         <>

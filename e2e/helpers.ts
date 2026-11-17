@@ -47,12 +47,14 @@ export function statesCutOff(page: Page, state?: string) {
   }, state ?? null);
 }
 
-/** The pages from plan R1c-1, with the heading each one shows. */
+/** The pages from plan R1c-1 and the Learn pages from R2a-1, with the heading each one shows. */
 export const PAGES = [
   { name: 'home', path: '/en', heading: 'Computable' },
   { name: 'about', path: '/en/about', heading: 'About Computable' },
   { name: 'support', path: '/en/support', heading: 'Buy the dev a coffee' },
   { name: 'privacy', path: '/en/privacy', heading: 'Privacy' },
+  { name: 'learn', path: '/en/learn', heading: 'Learn' },
+  { name: 'lesson', path: '/en/learn/intuition', heading: 'Intuition: the human computer' },
 ] as const;
 
 /**

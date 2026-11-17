@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "computer": {
+      "text": "En 1936, ¿qué quería decir la palabra inglesa “computer”?",
+      "options": {
+        "electronic": {
+          "text": "Una máquina electrónica que hace cuentas",
+          "why": "Los computadores electrónicos llegaron después. En 1936, un computer era una persona."
+        },
+        "person": {
+          "text": "Una persona que calcula a mano",
+          "why": "Turing creó su máquina a partir de la imagen de esa persona trabajando."
+        },
+        "tables": {
+          "text": "Un libro de tablas de números",
+          "why": "La gente usaba esos libros, pero la palabra “computer” quería decir la persona que calcula."
+        }
+      }
+    },
+    "tape": {
+      "text": "¿Qué parte del trabajo del computador humano se convirtió en la cinta?",
+      "options": {
+        "pencil": {
+          "text": "El lápiz",
+          "why": "El lápiz escribe en un cuadrado cada vez. Se parece más a la cabeza, que lee y escribe una casilla."
+        },
+        "mind": {
+          "text": "El estado mental de la persona",
+          "why": "El estado mental se convirtió en el estado de la máquina, no en la cinta."
+        },
+        "paper": {
+          "text": "El papel cuadriculado",
+          "why": "Turing se quedó con una fila larga de cuadrados, y esa fila se convirtió en la cinta."
+        }
+      }
+    },
+    "state": {
+      "text": "¿Qué guarda el estado de la máquina?",
+      "options": {
+        "memory": {
+          "text": "Lo que la máquina debe recordar de su trabajo hasta ahora",
+          "why": "Como un estado mental, el estado guarda cosas como “me llevo una”."
+        },
+        "cell": {
+          "text": "El símbolo de la casilla bajo la cabeza",
+          "why": "La cabeza lee ese símbolo. El estado es otra cosa, y juntos eligen la regla."
+        },
+        "whole-tape": {
+          "text": "Todo lo que está escrito en la cinta",
+          "why": "La máquina solo ve una casilla cada vez. La cinta guarda los símbolos, no el estado."
+        },
+        "rules": {
+          "text": "La tabla de reglas",
+          "why": "Las reglas no cambian durante toda la ejecución. El estado cambia de un paso a otro."
+        }
+      }
+    },
+    "first-machine": {
+      "text": "¿Cuándo se detiene la primera máquina de Turing?",
+      "options": {
+        "four-steps": {
+          "text": "Después de cuatro pasos, cuando cada estado se ha ejecutado una vez",
+          "why": "Después de 𝔨, la máquina vuelve a 𝔟 y sigue."
+        },
+        "end-of-tape": {
+          "text": "Cuando llega al final de la cinta",
+          "why": "La cinta no tiene fin, así que la máquina nunca se queda sin casillas."
+        },
+        "never": {
+          "text": "Nunca",
+          "why": "Cada regla lleva a otro estado, así que la máquina imprime 0 1 0 1 … para siempre."
+        }
+      }
+    },
+    "carry": {
+      "text": "La máquina Binario +1 está en el estado q1 y lee un 1. ¿Qué hace?",
+      "options": {
+        "write-one-stop": {
+          "text": "Escribe 1 y se detiene",
+          "why": "Eso pasa con un 0 o un blanco. Un 1 quiere decir que hay un “me llevo una”."
+        },
+        "write-zero-left": {
+          "text": "Escribe 0 y se mueve a la izquierda",
+          "why": "1 más 1 da 0 y me llevo una, así que la máquina se mueve a la izquierda para sumar ahí lo que lleva."
+        },
+        "move-right": {
+          "text": "Se mueve a la derecha para buscar el final del número",
+          "why": "Eso es lo que hace el estado q0. En q1, la máquina se mueve a la izquierda."
+        }
+      }
+    }
+  }
+}
