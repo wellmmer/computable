@@ -141,6 +141,15 @@ for (const viewport of [
   });
 }
 
+test('on a 1440 × 1600 screen the last part, the 1937 correction, still reaches the reading line', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1600 } });
+  const page = await context.newPage();
+  await openPage(page, '/en/learn/paper');
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect(tape(page).getByText('Step 13')).toBeVisible();
+  await context.close();
+});
+
 test('the page does not shift while it loads, hydrates and scrolls (CLS under 0.05)', async ({ browser }) => {
   for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion });
