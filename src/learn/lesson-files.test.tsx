@@ -18,8 +18,8 @@ function lessonAndName(path: string): [string, string] {
   return [lesson, file.replace(/\.(mdx|ts|json)$/, '')];
 }
 
-/** The tags that markdown makes from headings, paragraphs, quotes, lists, links and emphasis (spec 3). */
-const MARKDOWN_TAGS = ['h2', 'h3', 'p', 'blockquote', 'ul', 'ol', 'li', 'a', 'strong', 'em'];
+/** The tags that markdown makes from headings, paragraphs, quotes, lists, links, emphasis (spec 3) and tables (spec R2b 2). */
+const MARKDOWN_TAGS = ['h2', 'h3', 'p', 'blockquote', 'ul', 'ol', 'li', 'a', 'strong', 'em', 'table', 'thead', 'tbody', 'tr', 'th', 'td'];
 
 /** Draws a lesson file with stand-ins for <Machine> and <Quiz>, and reads the HTML back. */
 function render(Content: MDXContent): Element {
