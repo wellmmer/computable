@@ -371,6 +371,13 @@
       "tape": "Bande de {name}",
       "open": "Ouvrir dans le simulateur"
     },
+    "encoding": {
+      "caption": "La première machine de Turing, écrite comme description",
+      "hint": "Pointez une ligne, touchez-la ou atteignez-la avec Tab. Sa partie de la description et du nombre est marquée.",
+      "column": "En lettres",
+      "sd": "Description standard",
+      "dn": "Nombre de description"
+    },
     "page": {
       "pageTitle": "Apprendre",
       "title": "Apprendre",

@@ -371,6 +371,13 @@
       "tape": "Tape of {name}",
       "open": "Open in the simulator"
     },
+    "encoding": {
+      "caption": "Turing’s first machine, written as a description",
+      "hint": "Point at a row, tap it, or move to it with Tab. Its part of the description and of the number is marked.",
+      "column": "In letters",
+      "sd": "Standard description",
+      "dn": "Description number"
+    },
     "page": {
       "pageTitle": "Learn",
       "title": "Learn",
