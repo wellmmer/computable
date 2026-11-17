@@ -61,6 +61,8 @@ describe('a lesson address that does not exist (spec R2a 3)', () => {
   it('leaves a lesson that exists, and the Learn page, as they are', () => {
     expect(visit('/en/learn/intuition').headers.get('x-middleware-rewrite')).toBeNull();
     expect(visit('/pt-br/learn/intuition').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/intuition');
+    expect(visit('/en/learn/formal-definition').headers.get('x-middleware-rewrite')).toBeNull();
+    expect(visit('/pt-br/learn/formal-definition').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/formal-definition');
     expect(visit('/en/learn').headers.get('x-middleware-rewrite')).toBeNull();
   });
 

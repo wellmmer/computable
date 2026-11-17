@@ -20,17 +20,21 @@ afterEach(() => {
   resetProgress();
 });
 
-const lessonRow = () => screen.getAllByRole('listitem')[0];
+const lessonRow = (number = 1) => screen.getAllByRole('listitem')[number - 1];
 
 describe('Learn page (spec 2.1)', () => {
   it('lists the live lessons with their number, title, summary and reading time', () => {
     renderWithIntl(<LearnPage />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Learn');
-    expect(screen.getAllByRole('listitem')).toHaveLength(1);
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
     expect(within(lessonRow()).getByText('Lesson 1')).toBeTruthy();
     expect(within(lessonRow()).getByRole('link', { name: 'Intuition: the human computer' }).getAttribute('href')).toBe('/learn/intuition');
     expect(within(lessonRow()).getByText(/^How Turing turned a person/)).toBeTruthy();
     expect(within(lessonRow()).getByText('7 min read')).toBeTruthy();
+    expect(within(lessonRow(2)).getByText('Lesson 2')).toBeTruthy();
+    expect(within(lessonRow(2)).getByRole('link', { name: 'The formal definition' }).getAttribute('href')).toBe('/learn/formal-definition');
+    expect(within(lessonRow(2)).getByText(/^The seven parts of a Turing machine/)).toBeTruthy();
+    expect(within(lessonRow(2)).getByText('7 min read')).toBeTruthy();
     expect(screen.getByText('More lessons come later.')).toBeTruthy();
   });
 
@@ -39,6 +43,9 @@ describe('Learn page (spec 2.1)', () => {
     expect(within(lessonRow()).getByText('Not started')).toBeTruthy();
     act(() => saveQuizResult('intuition', 4, 5));
     expect(within(lessonRow()).getByText('Quiz: 4 of 5')).toBeTruthy();
+    expect(within(lessonRow(2)).getByText('Not started')).toBeTruthy();
+    act(() => saveQuizResult('formal-definition', 3, 5));
+    expect(within(lessonRow(2)).getByText('Quiz: 3 of 5')).toBeTruthy();
   });
 
   it('asks before it resets the progress, and Cancel keeps it', () => {

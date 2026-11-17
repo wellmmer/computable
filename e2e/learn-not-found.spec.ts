@@ -8,7 +8,9 @@ for (const path of ['/en/learn/nope', '/pt-br/learn/nope']) {
   });
 }
 
-test('/en/learn/intuition answers 200', async ({ request }) => {
-  const response = await request.get('/en/learn/intuition', { maxRedirects: 0 });
-  expect(response.status()).toBe(200);
-});
+for (const path of ['/en/learn/intuition', '/en/learn/formal-definition', '/pt-br/learn/formal-definition']) {
+  test(`${path} answers 200`, async ({ request }) => {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect(response.status()).toBe(200);
+  });
+}
