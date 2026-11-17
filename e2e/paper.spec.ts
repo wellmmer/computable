@@ -1,13 +1,22 @@
 import { expect, test, type Page } from '@playwright/test';
 import { openPage } from './helpers';
 
-/** The reading guide in each language (spec R2c 3): its title, the label of a translated quote, and the step counter at the start. */
+/**
+ * The reading guide in each language (spec R2c 3): its title, the label of a translated quote, the
+ * step counter at the start, and the note shown without script.
+ */
 const LANGUAGES = [
-  { path: '/en', title: 'Turing’s 1936 paper', translation: null, start: 'Step 0' },
-  { path: '/pt-br', title: 'O artigo de Turing de 1936', translation: 'Tradução:', start: 'Passo 0' },
-  { path: '/es', title: 'El artículo de Turing de 1936', translation: 'Traducción:', start: 'Paso 0' },
-  { path: '/fr', title: 'L’article de Turing de 1936', translation: 'Traduction :', start: 'Étape 0' },
-  { path: '/de', title: 'Turings Arbeit von 1936', translation: 'Übersetzung:', start: 'Schritt 0' },
+  { path: '/en', title: 'Turing’s 1936 paper', translation: null, start: 'Step 0', noScript: 'The tape needs JavaScript to move.' },
+  {
+    path: '/pt-br',
+    title: 'O artigo de Turing de 1936',
+    translation: 'Tradução:',
+    start: 'Passo 0',
+    noScript: 'A fita precisa de JavaScript para se mover.',
+  },
+  { path: '/es', title: 'El artículo de Turing de 1936', translation: 'Traducción:', start: 'Paso 0', noScript: 'La cinta necesita JavaScript para moverse.' },
+  { path: '/fr', title: 'L’article de Turing de 1936', translation: 'Traduction :', start: 'Étape 0', noScript: 'La bande a besoin de JavaScript pour bouger.' },
+  { path: '/de', title: 'Turings Arbeit von 1936', translation: 'Übersetzung:', start: 'Schritt 0', noScript: 'Das Band braucht JavaScript, um sich zu bewegen.' },
 ] as const;
 
 const tape = (page: Page) => page.getByTestId('paper-tape');
@@ -37,6 +46,19 @@ for (const { path, title, translation, start } of LANGUAGES) {
     await expect(tape(page).getByText(start)).toBeVisible();
   });
 }
+
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  for (const { path, start, noScript } of LANGUAGES) {
+    test(`${path}/learn/paper shows the tape at its first step, a note that it needs JavaScript to move, and no buttons`, async ({ page }) => {
+      await page.goto(`${path}/learn/paper`);
+      await expect(page.getByText(noScript, { exact: true })).toBeVisible();
+      await expect(tape(page).getByText(start)).toBeVisible();
+      await expect(tape(page).getByRole('button')).toHaveCount(0);
+    });
+  }
+});
 
 test('scrolling moves the tape one step per part reached, and back on the way up', async ({ page }) => {
   await openPage(page, '/en/learn/paper');

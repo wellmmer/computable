@@ -415,6 +415,7 @@
       "source": "O artigo: A. M. Turing, “On Computable Numbers, with an Application to the Entscheidungsproblem”, Proceedings of the London Mathematical Society, série 2, volume 42, páginas 230–265. <link>doi.org/10.1112/plms/s2-42.1.230</link>",
       "notice": "Este guia cita o artigo e não o reproduz. As citações ficam no inglês de Turing, com uma tradução ao lado.",
       "tapeIntro": "A fita no alto roda a primeira máquina de Turing, da seção 3. Cada parte que você alcança faz a máquina dar um passo. Se o seu aparelho pede menos movimento, use os botões Passo e Reiniciar.",
+      "tapeNoScript": "A fita precisa de JavaScript para se mover.",
       "pages": "Volume {volume}, páginas {from}–{to}",
       "quotePage": "(Turing, 1936, página {page})",
       "translation": "Tradução: “{text}”",

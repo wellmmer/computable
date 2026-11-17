@@ -93,6 +93,10 @@ export function PaperGuide() {
       </p>
       <p className="mt-4">{t('notice')}</p>
       <p className="mt-4 text-muted">{t('tapeIntro')}</p>
+      {/* Without script the tape shows its first step and no buttons: they could not work. */}
+      <noscript>
+        <p className="mt-2 text-muted">{t('tapeNoScript')}</p>
+      </noscript>
 
       {/* The tape and the parts share one parent: a sticky element only sticks inside its parent. */}
       <div className="mt-8 text-[17px]">

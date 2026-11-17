@@ -415,6 +415,7 @@
       "source": "Die Arbeit: A. M. Turing, „On Computable Numbers, with an Application to the Entscheidungsproblem“, Proceedings of the London Mathematical Society, Serie 2, Band 42, Seiten 230–265. <link>doi.org/10.1112/plms/s2-42.1.230</link>",
       "notice": "Dieser Leitfaden zitiert die Arbeit und gibt sie nicht wieder. Die Zitate bleiben in Turings Englisch, mit einer Übersetzung daneben.",
       "tapeIntro": "Das Band oben lässt Turings erste Maschine aus Abschnitt 3 laufen. Jeder Teil, den du erreichst, bewegt sie einen Schritt. Wenn dein Gerät weniger Bewegung wünscht, nutze die Knöpfe Schritt und Zurücksetzen.",
+      "tapeNoScript": "Das Band braucht JavaScript, um sich zu bewegen.",
       "pages": "Band {volume}, Seiten {from}–{to}",
       "quotePage": "(Turing, 1936, Seite {page})",
       "translation": "Übersetzung: „{text}“",
