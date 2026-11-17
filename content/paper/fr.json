@@ -1,0 +1,128 @@
+{
+  "parts": {
+    "section-1": {
+      "title": "1. Machines à calculer",
+      "summary": [
+        "Turing compare une personne qui calcule un nombre à une machine.",
+        "La machine a un nombre fini d’états, qu’il appelle « m-configurations ».",
+        "Elle voit une case d’une bande à la fois.",
+        "Elle peut écrire ou effacer un symbole dans cette case, et avancer d’une case vers la gauche ou vers la droite."
+      ],
+      "translation": "La machine reçoit une ‘bande’ (l’équivalent du papier) qui la traverse et qui est divisée en sections (appelées ‘cases’), chacune pouvant porter un ‘symbole’."
+    },
+    "section-2": {
+      "title": "2. Définitions",
+      "summary": [
+        "Turing nomme les types de machines qu’il va utiliser.",
+        "Une machine à calculer imprime les chiffres 0 et 1, et elle peut imprimer d’autres symboles comme notes.",
+        "Une machine qui continue d’imprimer des chiffres pour toujours est « sans cercle ».",
+        "Une machine qui n’imprime qu’un nombre fini de chiffres est « circulaire »."
+      ],
+      "translation": "On dit qu’une suite est calculable si elle peut être calculée par une machine sans cercle."
+    },
+    "section-3": {
+      "title": "3. Exemples de machines à calculer",
+      "summary": [
+        "Turing présente ses premières machines, chacune sous la forme d’une table de règles.",
+        "La première machine imprime 0 et 1 tour à tour, avec une case vide entre les deux, et ne s’arrête jamais.",
+        "C’est la machine de la bande en haut de cette page.",
+        "Une deuxième machine imprime 0 0 1 0 1 1 0 1 1 1 …, avec un 1 de plus à chaque fois."
+      ],
+      "translation": "On peut construire une machine qui calcule la suite 010101…."
+    },
+    "section-4": {
+      "title": "4. Tables abrégées",
+      "summary": [
+        "Beaucoup de machines refont sans cesse les mêmes types de travail.",
+        "Turing écrit ce travail une seule fois, sous la forme de « tables squelettes » qui contiennent des variables.",
+        "Les tables suivantes deviennent ainsi bien plus courtes."
+      ],
+      "translation": "Ces processus comprennent la copie de suites de symboles, la comparaison de suites, l’effacement de tous les symboles d’une forme donnée, etc."
+    },
+    "section-5": {
+      "title": "5. Énumération des suites calculables",
+      "summary": [
+        "Turing écrit la table de n’importe quelle machine sur une seule ligne de lettres : sa « description standard ».",
+        "Il remplace chaque lettre par un chiffre, ce qui donne le « nombre de description » de la machine.",
+        "Ainsi, toute suite calculable a au moins un nombre.",
+        "« Énumérable » veut dire que l’on peut mettre les suites dans une liste, l’une après l’autre."
+      ],
+      "translation": "Les suites et les nombres calculables sont donc énumérables."
+    },
+    "section-6": {
+      "title": "6. La machine à calculer universelle",
+      "summary": [
+        "Cette section présente la machine universelle.",
+        "Sa bande commence par la description standard d’une autre machine.",
+        "La machine universelle calcule alors la même suite que cette autre machine.",
+        "Turing explique l’idée ici et donne la table complète dans la section 7."
+      ],
+      "translation": "Il est possible d’inventer une seule machine qui peut servir à calculer n’importe quelle suite calculable."
+    },
+    "section-7": {
+      "title": "7. Description détaillée de la machine universelle",
+      "summary": [
+        "Ici, Turing donne la table complète de la machine universelle.",
+        "Au départ, sa bande porte une description standard (S.D, en anglais), suivie d’un double deux-points « :: ».",
+        "Chaque instruction a cinq parties : la m-configuration, le symbole lu, le symbole à écrire, le mouvement et la m-configuration suivante."
+      ],
+      "translation": "La S.D se compose de plusieurs instructions, séparées par des points-virgules."
+    },
+    "section-8": {
+      "title": "8. Application du procédé diagonal",
+      "summary": [
+        "Turing montre qu’une machine ne peut pas répondre à certaines questions sur les machines.",
+        "Aucune machine ne peut décider, pour toute machine, si elle est sans cercle.",
+        "Donc aucune machine ne peut décider, pour toute machine, si elle imprime un jour 0.",
+        "Aucune de ces deux questions n’est le problème de l’arrêt tel que les livres l’énoncent aujourd’hui, et la leçon 4 explique la différence."
+      ],
+      "translation": "En fait, en appliquant correctement l’argument du procédé diagonal, nous pouvons montrer qu’il ne peut exister aucun procédé général de ce type."
+    },
+    "section-9": {
+      "title": "9. L’étendue des nombres calculables",
+      "summary": [
+        "Turing se demande si ses machines calculent tout nombre que l’on appellerait calculable.",
+        "Il dit que tout argument en ce sens fait appel à l’intuition, donc qu’aucun n’est une preuve mathématique complète.",
+        "Il donne trois types d’arguments.",
+        "Le premier observe une personne qui calcule sur du papier quadrillé."
+      ],
+      "translation": "La vraie question est ‘Quels sont les processus possibles que l’on peut effectuer pour calculer un nombre ?’"
+    },
+    "section-10": {
+      "title": "10. Exemples de grandes classes de nombres calculables",
+      "summary": [
+        "Turing définit les fonctions calculables et énonce des théorèmes à leur sujet.",
+        "Il ne démontre que certains de ces théorèmes.",
+        "Il en déduit que beaucoup de nombres connus sont calculables, par exemple π et e."
+      ],
+      "translation": "Il existe de nombreuses manières équivalentes de définir une fonction calculable d’une variable entière."
+    },
+    "section-11": {
+      "title": "11. Application à l’Entscheidungsproblem",
+      "summary": [
+        "Turing utilise la section 8 pour répondre à l’Entscheidungsproblem de Hilbert.",
+        "Pour chaque machine, il écrit une formule de logique que l’on peut démontrer exactement quand la machine imprime 0 à un moment donné.",
+        "Une méthode qui déciderait quelles formules on peut démontrer déciderait donc aussi si une machine imprime un jour 0.",
+        "La section 8 a montré que c’est impossible."
+      ],
+      "translation": "Donc l’Entscheidungsproblem ne peut pas être résolu."
+    },
+    "appendix": {
+      "title": "Annexe : calculabilité et calculabilité effective",
+      "summary": [
+        "Turing a ajouté l’annexe le 28 août 1936.",
+        "Elle compare ses suites calculables aux suites « λ-définissables » de Church.",
+        "Turing donne les grandes lignes d’une preuve que les deux idées donnent les mêmes suites."
+      ],
+      "translation": "Le théorème selon lequel toutes les suites effectivement calculables (λ-définissables) sont calculables, ainsi que sa réciproque, sont démontrés ci-dessous dans les grandes lignes."
+    },
+    "correction": {
+      "title": "La correction",
+      "summary": [
+        "Plus tard, Turing a publié une courte correction de l’article, intitulée « A Correction ».",
+        "Elle se trouve dans la même revue, dans le volume 43.",
+        "Ce guide n’avait pas de scan de la correction à vérifier, donc il ne la résume pas et ne la cite pas."
+      ]
+    }
+  }
+}

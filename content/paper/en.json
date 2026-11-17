@@ -1,0 +1,116 @@
+{
+  "parts": {
+    "section-1": {
+      "title": "1. Computing machines",
+      "summary": [
+        "Turing compares a person who computes a number with a machine.",
+        "The machine has a finite number of conditions, which he calls “m-configurations”.",
+        "It sees one square of a tape at a time.",
+        "It can write or erase a symbol there, and move one square to the left or to the right."
+      ]
+    },
+    "section-2": {
+      "title": "2. Definitions",
+      "summary": [
+        "Turing names the kinds of machine he will use.",
+        "A computing machine prints the figures 0 and 1, and it may print other symbols as notes.",
+        "A machine that goes on printing figures forever is “circle-free”.",
+        "A machine that prints only a finite number of figures is “circular”."
+      ]
+    },
+    "section-3": {
+      "title": "3. Examples of computing machines",
+      "summary": [
+        "Turing gives his first machines, each as a table of rules.",
+        "The first machine prints 0 and 1 in turn, with a blank square between them, and never stops.",
+        "It is the machine on the tape at the top of this page.",
+        "A second machine prints 0 0 1 0 1 1 0 1 1 1 …, with one more 1 each time."
+      ]
+    },
+    "section-4": {
+      "title": "4. Abbreviated tables",
+      "summary": [
+        "Many machines do the same kinds of work again and again.",
+        "Turing writes this work once, as “skeleton tables” that hold variables.",
+        "This makes the later tables much shorter."
+      ]
+    },
+    "section-5": {
+      "title": "5. Enumeration of computable sequences",
+      "summary": [
+        "Turing writes the table of any machine as one line of letters: its “standard description”.",
+        "He turns each letter into a digit, which gives the machine's “description number”.",
+        "So every computable sequence has at least one number.",
+        "“Enumerable” means that the sequences can be listed one after another."
+      ]
+    },
+    "section-6": {
+      "title": "6. The universal computing machine",
+      "summary": [
+        "This section brings in the universal machine.",
+        "Its tape starts with the standard description of another machine.",
+        "The universal machine then computes the same sequence as that machine.",
+        "Turing explains the idea here and gives the full table in section 7."
+      ]
+    },
+    "section-7": {
+      "title": "7. Detailed description of the universal machine",
+      "summary": [
+        "Here Turing gives the full table of the universal machine.",
+        "When it starts, its tape holds a standard description (S.D), followed by a double colon “::”.",
+        "Each instruction has five parts: the m-configuration, the symbol read, the symbol to write, the move, and the next m-configuration."
+      ]
+    },
+    "section-8": {
+      "title": "8. Application of the diagonal process",
+      "summary": [
+        "Turing shows that a machine cannot answer some questions about machines.",
+        "No machine can decide, for every machine, whether it is circle-free.",
+        "So no machine can decide, for every machine, whether it ever prints 0.",
+        "Neither question is the halting problem as books state it today, and lesson 4 explains the difference."
+      ]
+    },
+    "section-9": {
+      "title": "9. The extent of the computable numbers",
+      "summary": [
+        "Turing asks whether his machines compute every number that people would call computable.",
+        "He says that every argument for this appeals to intuition, so none is a full mathematical proof.",
+        "He gives three kinds of argument.",
+        "The first one looks at a person who computes on squared paper."
+      ]
+    },
+    "section-10": {
+      "title": "10. Examples of large classes of numbers which are computable",
+      "summary": [
+        "Turing defines computable functions and lists theorems about them.",
+        "He proves only some of these theorems.",
+        "From them he finds that many well-known numbers are computable, for example π and e."
+      ]
+    },
+    "section-11": {
+      "title": "11. Application to the Entscheidungsproblem",
+      "summary": [
+        "Turing uses section 8 to answer Hilbert's Entscheidungsproblem.",
+        "For each machine, he writes a formula of logic that can be proved exactly when the machine prints 0 at some point.",
+        "So a method that decides which formulas can be proved would also decide whether a machine ever prints 0.",
+        "Section 8 showed that this is impossible."
+      ]
+    },
+    "appendix": {
+      "title": "Appendix: Computability and effective calculability",
+      "summary": [
+        "Turing added the appendix on 28 August 1936.",
+        "It compares his computable sequences with Church's “λ-definable” sequences.",
+        "Turing gives an outline of a proof that the two ideas give the same sequences."
+      ]
+    },
+    "correction": {
+      "title": "The correction",
+      "summary": [
+        "Turing later published a short correction to the paper, called “A Correction”.",
+        "It is in the same journal, in volume 43.",
+        "This guide had no scan of the correction to check, so it does not summarise it or quote it."
+      ]
+    }
+  }
+}

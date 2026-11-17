@@ -1,0 +1,128 @@
+{
+  "parts": {
+    "section-1": {
+      "title": "1. Máquinas de computar",
+      "summary": [
+        "Turing compara a una persona que calcula un número con una máquina.",
+        "La máquina tiene un número finito de condiciones, que él llama “m-configuraciones”.",
+        "Ve una casilla de una cinta cada vez.",
+        "Puede escribir o borrar un símbolo en esa casilla, y moverse una casilla a la izquierda o a la derecha."
+      ],
+      "translation": "La máquina recibe una ‘cinta’ (el equivalente del papel) que pasa a través de ella y está dividida en secciones (llamadas ‘casillas’), cada una capaz de llevar un ‘símbolo’."
+    },
+    "section-2": {
+      "title": "2. Definiciones",
+      "summary": [
+        "Turing da nombre a los tipos de máquina que va a usar.",
+        "Una máquina de computar imprime las cifras 0 y 1, y puede imprimir otros símbolos como notas.",
+        "Una máquina que sigue imprimiendo cifras para siempre es “libre de círculos”.",
+        "Una máquina que imprime solo un número finito de cifras es “circular”."
+      ],
+      "translation": "Se dice que una sucesión es computable si puede ser calculada por una máquina libre de círculos."
+    },
+    "section-3": {
+      "title": "3. Ejemplos de máquinas de computar",
+      "summary": [
+        "Turing presenta sus primeras máquinas, cada una como una tabla de reglas.",
+        "La primera máquina imprime 0 y 1 por turnos, con una casilla en blanco entre ellos, y nunca se detiene.",
+        "Es la máquina de la cinta en la parte de arriba de esta página.",
+        "Una segunda máquina imprime 0 0 1 0 1 1 0 1 1 1 …, con un 1 más cada vez."
+      ],
+      "translation": "Se puede construir una máquina que calcule la sucesión 010101…."
+    },
+    "section-4": {
+      "title": "4. Tablas abreviadas",
+      "summary": [
+        "Muchas máquinas hacen los mismos tipos de trabajo una y otra vez.",
+        "Turing escribe ese trabajo una sola vez, como “tablas esqueleto” que contienen variables.",
+        "Así las tablas siguientes son mucho más cortas."
+      ],
+      "translation": "Estos procesos incluyen copiar sucesiones de símbolos, comparar sucesiones, borrar todos los símbolos de una forma dada, etc."
+    },
+    "section-5": {
+      "title": "5. Enumeración de las sucesiones computables",
+      "summary": [
+        "Turing escribe la tabla de cualquier máquina como una línea de letras: su “descripción estándar”.",
+        "Cambia cada letra por una cifra, lo que da el “número de descripción” de la máquina.",
+        "Así, toda sucesión computable tiene al menos un número.",
+        "“Enumerable” quiere decir que las sucesiones se pueden poner en una lista, una tras otra."
+      ],
+      "translation": "Las sucesiones y los números computables son, por lo tanto, enumerables."
+    },
+    "section-6": {
+      "title": "6. La máquina de computar universal",
+      "summary": [
+        "Esta sección presenta la máquina universal.",
+        "Su cinta empieza con la descripción estándar de otra máquina.",
+        "La máquina universal calcula entonces la misma sucesión que esa otra máquina.",
+        "Turing explica la idea aquí y da la tabla completa en la sección 7."
+      ],
+      "translation": "Es posible inventar una única máquina que se puede usar para calcular cualquier sucesión computable."
+    },
+    "section-7": {
+      "title": "7. Descripción detallada de la máquina universal",
+      "summary": [
+        "Aquí Turing da la tabla completa de la máquina universal.",
+        "Al empezar, su cinta lleva una descripción estándar (S.D, en inglés), seguida de dos puntos dobles “::”.",
+        "Cada instrucción tiene cinco partes: la m-configuración, el símbolo leído, el símbolo que se escribe, el movimiento y la m-configuración siguiente."
+      ],
+      "translation": "La S.D consta de varias instrucciones, separadas por punto y coma."
+    },
+    "section-8": {
+      "title": "8. Aplicación del proceso diagonal",
+      "summary": [
+        "Turing muestra que una máquina no puede responder algunas preguntas sobre máquinas.",
+        "Ninguna máquina puede decidir, para toda máquina, si es libre de círculos.",
+        "Por eso ninguna máquina puede decidir, para toda máquina, si alguna vez imprime 0.",
+        "Ninguna de las dos preguntas es el problema de la parada tal como lo enuncian hoy los libros, y la lección 4 explica la diferencia."
+      ],
+      "translation": "De hecho, aplicando correctamente el argumento del proceso diagonal, podemos mostrar que no puede existir ningún proceso general de ese tipo."
+    },
+    "section-9": {
+      "title": "9. El alcance de los números computables",
+      "summary": [
+        "Turing se pregunta si sus máquinas calculan todo número que la gente llamaría computable.",
+        "Dice que todo argumento a favor de esto apela a la intuición, así que ninguno es una prueba matemática completa.",
+        "Da tres tipos de argumento.",
+        "El primero observa a una persona que calcula en papel cuadriculado."
+      ],
+      "translation": "La verdadera cuestión es ‘¿Cuáles son los procesos posibles que se pueden llevar a cabo al calcular un número?’"
+    },
+    "section-10": {
+      "title": "10. Ejemplos de grandes clases de números que son computables",
+      "summary": [
+        "Turing define las funciones computables y enumera teoremas sobre ellas.",
+        "Solo demuestra algunos de esos teoremas.",
+        "A partir de ellos concluye que muchos números conocidos son computables, por ejemplo π y e."
+      ],
+      "translation": "Hay muchas maneras equivalentes de definir una función computable de una variable entera."
+    },
+    "section-11": {
+      "title": "11. Aplicación al Entscheidungsproblem",
+      "summary": [
+        "Turing usa la sección 8 para responder al Entscheidungsproblem de Hilbert.",
+        "Para cada máquina, escribe una fórmula de la lógica que se puede demostrar exactamente cuando la máquina imprime 0 en algún momento.",
+        "Así, un método que decida qué fórmulas se pueden demostrar también decidiría si una máquina alguna vez imprime 0.",
+        "La sección 8 mostró que eso es imposible."
+      ],
+      "translation": "Por tanto, el Entscheidungsproblem no se puede resolver."
+    },
+    "appendix": {
+      "title": "Apéndice: computabilidad y calculabilidad efectiva",
+      "summary": [
+        "Turing añadió el apéndice el 28 de agosto de 1936.",
+        "Compara sus sucesiones computables con las sucesiones “λ-definibles” de Church.",
+        "Turing da un esbozo de prueba de que las dos ideas dan las mismas sucesiones."
+      ],
+      "translation": "El teorema de que todas las sucesiones efectivamente calculables (λ-definibles) son computables, y su recíproco, se demuestran abajo a grandes rasgos."
+    },
+    "correction": {
+      "title": "La corrección",
+      "summary": [
+        "Más tarde, Turing publicó una corrección corta del artículo, llamada “A Correction”.",
+        "Está en la misma revista, en el volumen 43.",
+        "Esta guía no tuvo un escaneo de la corrección para revisarla, así que no la resume ni la cita."
+      ]
+    }
+  }
+}

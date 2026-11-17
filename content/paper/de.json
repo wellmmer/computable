@@ -1,0 +1,128 @@
+{
+  "parts": {
+    "section-1": {
+      "title": "1. Rechenmaschinen",
+      "summary": [
+        "Turing vergleicht einen Menschen, der eine Zahl berechnet, mit einer Maschine.",
+        "Die Maschine hat endlich viele Zustände, die er „m-Konfigurationen“ nennt.",
+        "Sie sieht immer nur ein Feld eines Bandes.",
+        "Sie kann dort ein Symbol schreiben oder löschen und ein Feld nach links oder nach rechts gehen."
+      ],
+      "translation": "Die Maschine erhält ein ‚Band‘ (das Gegenstück zum Papier), das durch sie läuft und in Abschnitte (‚Felder‘ genannt) geteilt ist, von denen jeder ein ‚Symbol‘ tragen kann."
+    },
+    "section-2": {
+      "title": "2. Definitionen",
+      "summary": [
+        "Turing benennt die Arten von Maschinen, die er verwenden wird.",
+        "Eine Rechenmaschine druckt die Ziffern 0 und 1, und sie darf andere Symbole als Notizen drucken.",
+        "Eine Maschine, die für immer weiter Ziffern druckt, ist „zirkelfrei“.",
+        "Eine Maschine, die nur endlich viele Ziffern druckt, ist „zirkulär“."
+      ],
+      "translation": "Eine Folge heißt berechenbar, wenn sie von einer zirkelfreien Maschine berechnet werden kann."
+    },
+    "section-3": {
+      "title": "3. Beispiele für Rechenmaschinen",
+      "summary": [
+        "Turing zeigt seine ersten Maschinen, jede als Tabelle von Regeln.",
+        "Die erste Maschine druckt abwechselnd 0 und 1, mit einem leeren Feld dazwischen, und hält nie an.",
+        "Es ist die Maschine auf dem Band oben auf dieser Seite.",
+        "Eine zweite Maschine druckt 0 0 1 0 1 1 0 1 1 1 …, mit jedes Mal einer 1 mehr."
+      ],
+      "translation": "Man kann eine Maschine bauen, die die Folge 010101… berechnet."
+    },
+    "section-4": {
+      "title": "4. Abgekürzte Tabellen",
+      "summary": [
+        "Viele Maschinen erledigen immer wieder dieselben Arten von Arbeit.",
+        "Turing schreibt diese Arbeit nur einmal auf, als „Skeletttabellen“ mit Variablen.",
+        "Dadurch werden die späteren Tabellen viel kürzer."
+      ],
+      "translation": "Zu diesen Vorgängen gehören das Abschreiben von Symbolfolgen, das Vergleichen von Folgen, das Löschen aller Symbole einer bestimmten Form usw."
+    },
+    "section-5": {
+      "title": "5. Aufzählung der berechenbaren Folgen",
+      "summary": [
+        "Turing schreibt die Tabelle jeder Maschine als eine Zeile aus Buchstaben: ihre „Standardbeschreibung“.",
+        "Er ersetzt jeden Buchstaben durch eine Ziffer, und das ergibt die „Beschreibungszahl“ der Maschine.",
+        "So hat jede berechenbare Folge mindestens eine Zahl.",
+        "„Aufzählbar“ heißt, dass man die Folgen nacheinander in eine Liste schreiben kann."
+      ],
+      "translation": "Die berechenbaren Folgen und Zahlen sind daher aufzählbar."
+    },
+    "section-6": {
+      "title": "6. Die universelle Rechenmaschine",
+      "summary": [
+        "Dieser Abschnitt führt die universelle Maschine ein.",
+        "Ihr Band beginnt mit der Standardbeschreibung einer anderen Maschine.",
+        "Die universelle Maschine berechnet dann dieselbe Folge wie diese andere Maschine.",
+        "Turing erklärt die Idee hier und gibt die vollständige Tabelle in Abschnitt 7."
+      ],
+      "translation": "Es ist möglich, eine einzige Maschine zu erfinden, mit der man jede berechenbare Folge berechnen kann."
+    },
+    "section-7": {
+      "title": "7. Ausführliche Beschreibung der universellen Maschine",
+      "summary": [
+        "Hier gibt Turing die vollständige Tabelle der universellen Maschine.",
+        "Am Anfang steht auf ihrem Band eine Standardbeschreibung (S.D, englisch), gefolgt von einem doppelten Doppelpunkt „::“.",
+        "Jede Anweisung hat fünf Teile: die m-Konfiguration, das gelesene Symbol, das zu schreibende Symbol, die Bewegung und die nächste m-Konfiguration."
+      ],
+      "translation": "Die S.D besteht aus mehreren Anweisungen, die durch Semikolons getrennt sind."
+    },
+    "section-8": {
+      "title": "8. Anwendung des Diagonalverfahrens",
+      "summary": [
+        "Turing zeigt, dass eine Maschine manche Fragen über Maschinen nicht beantworten kann.",
+        "Keine Maschine kann für jede Maschine entscheiden, ob sie zirkelfrei ist.",
+        "Also kann keine Maschine für jede Maschine entscheiden, ob sie jemals 0 druckt.",
+        "Keine der beiden Fragen ist das Halteproblem, wie Bücher es heute formulieren, und Lektion 4 erklärt den Unterschied."
+      ],
+      "translation": "Tatsächlich können wir, wenn wir das Argument des Diagonalverfahrens richtig anwenden, zeigen, dass es kein solches allgemeines Verfahren geben kann."
+    },
+    "section-9": {
+      "title": "9. Die Reichweite der berechenbaren Zahlen",
+      "summary": [
+        "Turing fragt, ob seine Maschinen jede Zahl berechnen, die man berechenbar nennen würde.",
+        "Er sagt, dass jedes Argument dafür sich auf die Intuition beruft, also ist keines ein vollständiger mathematischer Beweis.",
+        "Er gibt drei Arten von Argumenten.",
+        "Das erste betrachtet einen Menschen, der auf kariertem Papier rechnet."
+      ],
+      "translation": "Die eigentliche Frage ist: ‚Welches sind die möglichen Vorgänge, die man beim Berechnen einer Zahl ausführen kann?‘"
+    },
+    "section-10": {
+      "title": "10. Beispiele für große Klassen berechenbarer Zahlen",
+      "summary": [
+        "Turing definiert berechenbare Funktionen und nennt Sätze über sie.",
+        "Er beweist nur einige dieser Sätze.",
+        "Daraus folgert er, dass viele bekannte Zahlen berechenbar sind, zum Beispiel π und e."
+      ],
+      "translation": "Es gibt viele gleichwertige Arten, eine berechenbare Funktion einer ganzzahligen Variablen zu definieren."
+    },
+    "section-11": {
+      "title": "11. Anwendung auf das Entscheidungsproblem",
+      "summary": [
+        "Turing nutzt Abschnitt 8, um Hilberts Entscheidungsproblem zu beantworten.",
+        "Für jede Maschine schreibt er eine Formel der Logik, die genau dann beweisbar ist, wenn die Maschine irgendwann 0 druckt.",
+        "Ein Verfahren, das entscheidet, welche Formeln beweisbar sind, würde also auch entscheiden, ob eine Maschine jemals 0 druckt.",
+        "Abschnitt 8 hat gezeigt, dass das unmöglich ist."
+      ],
+      "translation": "Also kann das Entscheidungsproblem nicht gelöst werden."
+    },
+    "appendix": {
+      "title": "Anhang: Berechenbarkeit und effektive Berechenbarkeit",
+      "summary": [
+        "Turing hat den Anhang am 28. August 1936 hinzugefügt.",
+        "Er vergleicht seine berechenbaren Folgen mit Churchs „λ-definierbaren“ Folgen.",
+        "Turing gibt einen Beweis in Umrissen, dass beide Ideen dieselben Folgen ergeben."
+      ],
+      "translation": "Das Theorem, dass alle effektiv berechenbaren (λ-definierbaren) Folgen berechenbar sind, und seine Umkehrung werden unten in Grundzügen bewiesen."
+    },
+    "correction": {
+      "title": "Die Berichtigung",
+      "summary": [
+        "Später veröffentlichte Turing eine kurze Berichtigung zu der Arbeit, mit dem Titel „A Correction“.",
+        "Sie steht in derselben Zeitschrift, in Band 43.",
+        "Dieser Leitfaden hatte keinen Scan der Berichtigung zum Prüfen, deshalb fasst er sie nicht zusammen und zitiert sie nicht."
+      ]
+    }
+  }
+}
