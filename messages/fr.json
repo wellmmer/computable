@@ -386,7 +386,9 @@
       "minutes": "{minutes} min de lecture",
       "notStarted": "Pas commencée",
       "score": "Quiz : {best} sur {total}",
-      "more": "D’autres leçons viendront plus tard."
+      "guide": "Guide de lecture",
+      "guideTitle": "Lire l’article de Turing de 1936",
+      "guideSummary": "L’article derrière ces leçons, partie par partie : pages, courts résumés et citations, avec une bande qui avance pendant votre lecture. Sans quiz."
     },
     "reset": {
       "button": "Effacer ma progression",

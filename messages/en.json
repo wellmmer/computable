@@ -386,7 +386,9 @@
       "minutes": "{minutes} min read",
       "notStarted": "Not started",
       "score": "Quiz: {best} of {total}",
-      "more": "More lessons come later."
+      "guide": "Reading guide",
+      "guideTitle": "Read Turing’s 1936 paper",
+      "guideSummary": "The paper behind these lessons, part by part: pages, short summaries and quotes, with a tape that runs as you read. No quiz."
     },
     "reset": {
       "button": "Reset my progress",

@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t('pageTitle') };
 }
 
-/** Learn (spec 2.1): the live lessons in order, each with its quiz status, and a way to reset the progress. */
+/** Learn (spec 2.1): the live lessons in order, each with its quiz status, the reading guide, and a way to reset the progress. */
 export default function LearnPage() {
   const t = useTranslations('learn.page');
   const locale = useLocale();
@@ -41,7 +41,17 @@ export default function LearnPage() {
           );
         })}
       </ol>
-      <p className="mt-6 text-muted">{t('more')}</p>
+
+      {/* The reading guide is not a lesson: no number, no reading time, no quiz status (spec R2c 3). */}
+      <section aria-labelledby="paper-guide" className={`mt-5 border-t-4 border-ink ${sheet}`}>
+        <p className="text-sm font-semibold text-muted">{t('guide')}</p>
+        <h2 id="paper-guide" className={`mt-1 ${sectionTitle}`}>
+          <Link href="/learn/paper" className={textLink}>
+            {t('guideTitle')}
+          </Link>
+        </h2>
+        <p className="mt-3">{t('guideSummary')}</p>
+      </section>
 
       <ResetProgress />
     </main>

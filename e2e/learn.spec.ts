@@ -103,6 +103,31 @@ for (const { path, learn, lessons } of LANGUAGES) {
   });
 }
 
+/** The Learn page's link to the reading guide, and the guide's title, in each language (spec R2c 3). */
+const GUIDE_LINKS = [
+  { path: '/en', link: 'Read Turing’s 1936 paper', title: 'Turing’s 1936 paper' },
+  { path: '/pt-br', link: 'Leia o artigo de Turing de 1936', title: 'O artigo de Turing de 1936' },
+  { path: '/es', link: 'Lee el artículo de Turing de 1936', title: 'El artículo de Turing de 1936' },
+  { path: '/fr', link: 'Lire l’article de Turing de 1936', title: 'L’article de Turing de 1936' },
+  { path: '/de', link: 'Turings Arbeit von 1936 lesen', title: 'Turings Arbeit von 1936' },
+] as const;
+
+for (const { path, link, title } of GUIDE_LINKS) {
+  test(`${path}/learn links the reading guide after lesson 6, and the link opens it`, async ({ page }) => {
+    await openPage(page, `${path}/learn`);
+    // The guide comes after the list of lessons.
+    const afterLessons = await page.evaluate((name) => {
+      const lessons = document.querySelector('main ol');
+      const guide = [...document.querySelectorAll('main a')].find((anchor) => anchor.textContent === name);
+      return lessons !== null && guide !== undefined && Boolean(lessons.compareDocumentPosition(guide) & Node.DOCUMENT_POSITION_FOLLOWING);
+    }, link);
+    expect(afterLessons).toBe(true);
+    await page.getByRole('link', { name: link }).click();
+    await expect(page).toHaveURL(new RegExp(`${path}/learn/paper$`));
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+  });
+}
+
 test('the previous and next links join the 6 lessons in order, and lesson 6 has no next lesson', async ({ page }) => {
   await openPage(page, '/en/learn/intuition');
   const nav = page.getByRole('navigation', { name: 'Lessons' });
@@ -230,7 +255,7 @@ test('lesson 6 end to end: answer the quiz, then the score shows on the Learn pa
   await page.getByRole('navigation', { name: 'Lessons' }).getByRole('link', { name: 'All lessons' }).click();
   await expect(lessonRow(page, 'The Church–Turing thesis').getByText('Quiz: 4 of 5')).toBeVisible();
   await expect(lessonRow(page, 'The Entscheidungsproblem').getByText('Not started')).toBeVisible();
-  await expect(page.getByText('More lessons come later.')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Read Turing’s 1936 paper' })).toBeVisible();
 });
 
 /**

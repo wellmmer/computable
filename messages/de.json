@@ -386,7 +386,9 @@
       "minutes": "{minutes} Min. Lesezeit",
       "notStarted": "Nicht begonnen",
       "score": "Quiz: {best} von {total}",
-      "more": "Weitere Lektionen folgen später."
+      "guide": "Leseleitfaden",
+      "guideTitle": "Turings Arbeit von 1936 lesen",
+      "guideSummary": "Die Arbeit hinter diesen Lektionen, Teil für Teil: Seiten, kurze Zusammenfassungen und Zitate, mit einem Band, das beim Lesen mitläuft. Ohne Quiz."
     },
     "reset": {
       "button": "Fortschritt zurücksetzen",
