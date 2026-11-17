@@ -13,7 +13,7 @@
         },
         "decide-provable": {
           "text": "A method that decides, for every formula, whether it is provable",
-          "why": "That is the question. The method must work for every formula and always stop."
+          "why": "That is the question, as Turing states it. The method must work for every formula and always stop."
         }
       }
     },

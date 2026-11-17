@@ -13,7 +13,7 @@
         },
         "decide-provable": {
           "text": "Une méthode qui décide, pour toute formule, si elle est démontrable",
-          "why": "C’est la question. La méthode doit fonctionner pour toute formule et toujours s’arrêter."
+          "why": "C’est la question, telle que Turing la pose. La méthode doit fonctionner pour toute formule et toujours s’arrêter."
         }
       }
     },

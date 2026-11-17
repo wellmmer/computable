@@ -93,8 +93,10 @@ machine could do the same work.
   why no machine can tell which, for every machine. It shows the diagonal argument step by step,
   with tables. It also says what Turing himself proved, and how that differs from today's form.
 - **Lesson 5, "The Entscheidungsproblem".** Hilbert and Ackermann asked for one method that decides,
-  for every formula of logic, whether it can be proved. The lesson gives Turing's answer, no, in five
-  steps. His proof uses the "ever prints 0" result of lesson 4. Church also answered no, in 1936.
+  for every formula of logic, whether it is valid. Turing asks whether it can be proved. For this
+  logic, the two questions come to the same thing (Gödel, 1930). The lesson gives Turing's answer,
+  no, in five steps. His proof uses the "ever prints 0" result of lesson 4. Church also answered no,
+  in 1936.
 - **Lesson 6, "The Church–Turing thesis".** What a person can compute by following a fixed method, a
   Turing machine can compute. The lesson explains why this is a thesis and not a theorem. Turing's
   appendix shows that his computable sequences and Church's λ-definable ones are the same.

@@ -13,7 +13,7 @@
         },
         "decide-provable": {
           "text": "Nach einem Verfahren, das für jede Formel entscheidet, ob sie beweisbar ist",
-          "why": "Das ist die Frage. Das Verfahren muss für jede Formel funktionieren und immer anhalten."
+          "why": "Das ist die Frage, so wie Turing sie stellt. Das Verfahren muss für jede Formel funktionieren und immer anhalten."
         }
       }
     },
