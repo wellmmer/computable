@@ -37,7 +37,7 @@ machine could do the same work.
 | --- | --- | --- |
 | **R1** | The simulator, the guided tour, 5 languages, light and dark themes, About, Support the dev | Live. Support the dev shows its payment links once they are set. |
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
-| **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | In progress: lessons 3 and 4 are live; 5 and 6 come next |
+| **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Planned |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
@@ -92,6 +92,12 @@ machine could do the same work.
 - **Lesson 4, "The halting problem".** One machine stops and one runs forever. The lesson explains
   why no machine can tell which, for every machine. It shows the diagonal argument step by step,
   with tables. It also says what Turing himself proved, and how that differs from today's form.
+- **Lesson 5, "The Entscheidungsproblem".** Hilbert and Ackermann asked for one method that decides,
+  for every formula of logic, whether it can be proved. The lesson gives Turing's answer, no, in five
+  steps. His proof uses the "ever prints 0" result of lesson 4. Church also answered no, in 1936.
+- **Lesson 6, "The Church–Turing thesis".** What a person can compute by following a fixed method, a
+  Turing machine can compute. The lesson explains why this is a thesis and not a theorem. Turing's
+  appendix shows that his computable sequences and Church's λ-definable ones are the same.
 - **Quotes from the paper, with page numbers.** They stay in Turing's English. The other languages
   add a translation next to them.
 
