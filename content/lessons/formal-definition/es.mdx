@@ -4,7 +4,7 @@ export const meta = {
   minutes: 7,
 };
 
-La lección 1 describió la máquina de Turing con palabras: una cinta, un cabezal, estados y reglas.
+La lección 1 describió la máquina de Turing con palabras: una cinta, una cabeza, estados y reglas.
 Los libros también dan una definición exacta, escrita con conjuntos.
 Esta lección sigue la definición del libro de Michael Sipser, *Introduction to the Theory of Computation*.
 La definición tiene siete partes.
@@ -53,7 +53,7 @@ Debe ser exactamente un símbolo.
 
 En la definición de Sipser, una entrada nunca contiene el blanco.
 El simulador no lo comprueba.
-Un blanco en la entrada es solo una celda vacía.
+Un blanco en la entrada es solo una casilla vacía.
 
 ## Las reglas: δ
 
@@ -69,25 +69,25 @@ La tabla las muestra en otro orden, pero el sentido es el mismo.
 
 El simulador se aparta del δ de Sipser en tres puntos:
 
-- **Un tercer movimiento.** En la definición de Sipser, el cabezal se mueve a la izquierda (L) o a la derecha (R) en cada paso. El simulador también tiene S, que deja el cabezal donde está. S no permite que una máquina haga más cosas. Un movimiento a la derecha y luego uno a la izquierda, con un estado más, hacen el mismo trabajo.
+- **Un tercer movimiento.** En la definición de Sipser, la cabeza se mueve a la izquierda (L) o a la derecha (R) en cada paso. El simulador también tiene S, que deja la cabeza donde está. S no permite que una máquina haga más cosas. Un movimiento a la derecha y luego uno a la izquierda, con un estado más, hacen el mismo trabajo.
 - **Reglas que faltan.** El δ de Sipser tiene una regla para cada estado y cada símbolo de la cinta. El simulador te deja omitir reglas. Cuando ninguna regla sirve, la máquina se detiene, y el simulador muestra la ejecución como rechazada.
 - **Dos reglas para el mismo caso.** Una función da exactamente una respuesta, así que δ tiene exactamente una regla para cada estado y símbolo. El simulador permite como máximo una. Si dos filas tienen el mismo estado y el mismo símbolo, muestra un error y no ejecuta la máquina.
 
 ## La cinta
 
 La cinta de Sipser tiene un extremo a la izquierda, pero ninguno a la derecha.
-La entrada empieza en la primera celda, y el cabezal empieza allí también.
-Todas las demás celdas contienen el blanco.
-Si el cabezal está en la primera celda y una regla dice L, el cabezal se queda en la primera celda.
+La entrada empieza en la primera casilla, y la cabeza empieza allí también.
+Todas las demás casillas contienen el blanco.
+Si la cabeza está en la primera casilla y una regla dice L, la cabeza se queda en la primera casilla.
 
 El simulador tiene un ajuste **Cinta** con dos opciones.
 **Con extremo izquierdo** funciona como la cinta de Sipser.
-Su primera celda es la celda 0, y un movimiento a la izquierda desde la celda 0 deja el cabezal allí.
+Su primera casilla es la casilla 0, y un movimiento a la izquierda desde la casilla 0 deja la cabeza allí.
 **Infinita en ambos sentidos** no tiene extremo en ningún lado.
-En los dos tipos, la entrada empieza en la celda 0, y el cabezal también.
+En los dos tipos, la entrada empieza en la casilla 0, y la cabeza también.
 
 Un archivo de máquina también puede pedir la regla de la aplicación de 2016.
-Entonces, un movimiento a la izquierda desde la celda 0 rechaza la entrada.
+Entonces, un movimiento a la izquierda desde la casilla 0 rechaza la entrada.
 Los ajustes muestran un aviso cuando una máquina usa esa regla.
 
 ## Cuándo se detiene la máquina
@@ -100,7 +100,7 @@ El simulador se detiene en cuatro casos:
 1. La máquina entra en un estado de aceptación. La línea de resultado dice "Aceptada".
 2. La máquina entra en un estado de rechazo. La línea de resultado dice "Rechazada".
 3. Ninguna regla sirve para el estado y el símbolo. La línea de resultado también dice "Rechazada".
-4. Solo con la regla de la aplicación de 2016, en una cinta con extremo izquierdo: una regla mueve el cabezal a la izquierda desde la celda 0. La línea de resultado también dice "Rechazada". Si esa misma regla entra en un estado de aceptación o de rechazo, valen los casos 1 y 2.
+4. Solo con la regla de la aplicación de 2016, en una cinta con extremo izquierdo: una regla mueve la cabeza a la izquierda desde la casilla 0. La línea de resultado también dice "Rechazada". Si esa misma regla entra en un estado de aceptación o de rechazo, valen los casos 1 y 2.
 
 Una máquina en el simulador todavía puede funcionar para siempre.
 Por eso, **Ejecutar** hace una pausa tras 10.000 pasos y pregunta si debe continuar.
@@ -165,5 +165,5 @@ Las próximas lecciones usan esto para mostrar que algunos problemas no tienen n
 
 ## Fuentes
 
-- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3.ª edición, Cengage Learning, 2013. La sección 3.1 da la definición formal. La sección 3.2 muestra que un cabezal que puede quedarse quieto no hace más poderosa a una máquina.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3.ª edición, Cengage Learning, 2013. La sección 3.1 da la definición formal. La sección 3.2 muestra que una cabeza que puede quedarse quieta no hace más poderosa a una máquina.
 - John E. Hopcroft, Rajeev Motwani y Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3.ª edición, Pearson/Addison-Wesley, 2007. Capítulo 8.

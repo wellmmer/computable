@@ -46,7 +46,7 @@
           "why": "Qualquer regra com S pode ser trocada por um movimento para a direita e um para a esquerda, com um estado a mais."
         },
         "two-cells": {
-          "text": "S move a cabeça duas células para a direita.",
+          "text": "S move a cabeça duas casas para a direita.",
           "why": "S quer dizer “ficar”: a cabeça não se move."
         }
       }

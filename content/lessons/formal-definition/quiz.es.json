@@ -35,10 +35,10 @@
       }
     },
     "stay": {
-      "text": "El δ de Sipser mueve el cabezal a la izquierda o a la derecha. ¿Y el movimiento S del simulador?",
+      "text": "El δ de Sipser mueve la cabeza a la izquierda o a la derecha. ¿Y el movimiento S del simulador?",
       "options": {
         "same-work": {
-          "text": "S deja el cabezal en su sitio. Un movimiento a la derecha y luego uno a la izquierda hacen el mismo trabajo.",
+          "text": "S deja la cabeza en su sitio. Un movimiento a la derecha y luego uno a la izquierda hacen el mismo trabajo.",
           "why": "Así que S hace más cortas algunas máquinas, pero no les permite hacer más cosas."
         },
         "more-power": {
@@ -46,8 +46,8 @@
           "why": "Cualquier regla con S se puede cambiar por un movimiento a la derecha y uno a la izquierda, con un estado más."
         },
         "two-cells": {
-          "text": "S mueve el cabezal dos celdas a la derecha.",
-          "why": "S significa “quedarse”: el cabezal no se mueve."
+          "text": "S mueve la cabeza dos casillas a la derecha.",
+          "why": "S significa “quedarse”: la cabeza no se mueve."
         }
       }
     },

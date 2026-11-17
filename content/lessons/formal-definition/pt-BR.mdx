@@ -53,7 +53,7 @@ Ele precisa ser exatamente um símbolo.
 
 Na definição de Sipser, uma entrada nunca contém o branco.
 O simulador não verifica isso.
-Um branco na entrada é só uma célula vazia.
+Um branco na entrada é só uma casa vazia.
 
 ## As regras: δ
 
@@ -76,18 +76,18 @@ O simulador é diferente do δ de Sipser em três pontos:
 ## A fita
 
 A fita de Sipser tem uma ponta à esquerda, mas nenhuma ponta à direita.
-A entrada começa na primeira célula, e a cabeça começa ali também.
-Todas as outras células têm o branco.
-Se a cabeça está na primeira célula e uma regra diz L, a cabeça fica na primeira célula.
+A entrada começa na primeira casa, e a cabeça começa ali também.
+Todas as outras casas têm o branco.
+Se a cabeça está na primeira casa e uma regra diz L, a cabeça fica na primeira casa.
 
 O simulador tem uma configuração **Fita** com duas opções.
 **Limitada à esquerda** funciona como a fita de Sipser.
-A primeira célula dela é a célula 0, e um movimento para a esquerda na célula 0 deixa a cabeça ali.
+A primeira casa dela é a casa 0, e um movimento para a esquerda na casa 0 deixa a cabeça ali.
 **Infinita nos dois lados** não tem ponta em nenhum lado.
-Nos dois tipos, a entrada começa na célula 0, e a cabeça também.
+Nos dois tipos, a entrada começa na casa 0, e a cabeça também.
 
 Um arquivo de máquina também pode pedir a regra do app de 2016.
-Nesse caso, um movimento para a esquerda na célula 0 rejeita a entrada.
+Nesse caso, um movimento para a esquerda na casa 0 rejeita a entrada.
 As configurações mostram um aviso quando uma máquina usa essa regra.
 
 ## Quando a máquina para
@@ -100,7 +100,7 @@ O simulador para em quatro casos:
 1. A máquina entra em um estado de aceitação. A linha de resultado diz "Aceita".
 2. A máquina entra em um estado de rejeição. A linha de resultado diz "Rejeitada".
 3. Nenhuma regra serve para o estado e o símbolo. A linha de resultado também diz "Rejeitada".
-4. Só com a regra do app de 2016, numa fita limitada à esquerda: uma regra move a cabeça para a esquerda na célula 0. A linha de resultado também diz "Rejeitada". Se essa mesma regra entra em um estado de aceitação ou de rejeição, valem os casos 1 e 2.
+4. Só com a regra do app de 2016, numa fita limitada à esquerda: uma regra move a cabeça para a esquerda na casa 0. A linha de resultado também diz "Rejeitada". Se essa mesma regra entra em um estado de aceitação ou de rejeição, valem os casos 1 e 2.
 
 Uma máquina no simulador ainda pode rodar para sempre.
 Por isso, **Rodar** pausa depois de 10.000 passos e pergunta se deve continuar.
