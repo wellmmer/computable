@@ -51,6 +51,9 @@ const BOOK_LINKS = [
 /** The DOI of Turing's 1936 paper. */
 const TURING_DOI = 'https://doi.org/10.1112/plms/s2-42.1.230';
 
+/** The lessons whose "Sources" list Turing's 1936 paper. A lesson that adds it must be named here. */
+const LESSONS_CITING_TURING = ['intuition'];
+
 /** The links of the last list in a lesson: its "Sources". */
 function sourceLinks(page: Element): { text: string; hrefs: string[] }[] {
   const lists = page.querySelectorAll('ul');
@@ -108,7 +111,16 @@ describe('lesson files (content/lessons)', () => {
     it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links each book in its sources to its page', (_, Content) => {
       const sources = sourceLinks(render(Content));
       expect(sources.flatMap((source) => source.hrefs)).toEqual(expect.arrayContaining(BOOK_LINKS));
-      for (const source of sources.filter((item) => item.text.includes('On Computable Numbers'))) expect(source.hrefs).toContain(TURING_DOI);
+    });
+
+    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links Turing’s 1936 paper to its DOI, if the lesson cites it', (_, Content) => {
+      const turing = sourceLinks(render(Content)).filter((item) => item.text.includes('On Computable Numbers'));
+      if (!LESSONS_CITING_TURING.includes(lesson)) {
+        expect(turing).toEqual([]);
+        return;
+      }
+      expect(turing).toHaveLength(1);
+      expect(turing[0].hrefs).toContain(TURING_DOI);
     });
 
     it('has the same headings, quotes, lists, machines and quiz in every language, in the same order', () => {
