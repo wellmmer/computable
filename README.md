@@ -7,10 +7,10 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: release 1 is live at https://computable-lac.vercel.app.** This repo held a 2016 capstone project built with jQuery. It is
-> now Computable, built release by release. Release 1 is the simulator. Release 2a, the first
-> lessons, is in progress; the roadmap below lists the rest. The 2016 version stays available at
-> the git tag `v1.0-tcc-2016`.
+> **Status: releases 1 and 2a are live at https://computable-lac.vercel.app.** This repo held a 2016 capstone project built with jQuery. It is
+> now Computable, built release by release. Release 1 is the simulator. Release 2a adds the first
+> two lessons. The roadmap below lists the rest. The 2016 version stays available at the git tag
+> `v1.0-tcc-2016`.
 
 ---
 
@@ -36,7 +36,7 @@ machine could do the same work.
 | Release | What you get | Status |
 | --- | --- | --- |
 | **R1** | The simulator, the guided tour, 5 languages, light and dark themes, About, Support the dev | Live. Support the dev shows its payment links once they are set. |
-| **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | In progress. The Learn page and lesson 1 are ready; lesson 2 comes next. |
+| **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
 | **R2b** | Lessons: the Entscheidungsproblem, the halting problem, Church–Turing, the universal machine | Planned |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Planned |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
@@ -72,12 +72,16 @@ machine could do the same work.
   Reset, or open the machine in the full simulator with one click.
 - **Lesson 1, "Intuition".** How Turing turned a person who computes with a pencil into a machine.
   It runs Turing's first machine and a machine that adds 1 to a binary number.
+- **Lesson 2, "The formal definition".** The seven parts of a Turing machine in Sipser's textbook.
+  Each part points to the place in the simulator that holds it. The lesson also says where the
+  simulator differs from the book. It runs a machine that checks palindromes.
 - **A quiz at the end of each lesson.** Every answer says why it is right or wrong. Your best score
   stays in your browser only, and "Reset my progress" clears it.
 - **All 5 languages.** The Spanish, French and German lesson texts are AI translations, marked as
   such on every page.
-- **Sources for every lesson.** Each lesson lists the books and papers it draws on. The texts are
-  under CC BY 4.0.
+- **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each book links
+  to the publisher's page for its edition, and Turing's paper links to its DOI. The texts are under
+  CC BY 4.0.
 
 ## The machine format
 
