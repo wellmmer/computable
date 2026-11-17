@@ -20,7 +20,13 @@ function PaperPartView({ block }: { block: PaperBlock }) {
   });
   return (
     // scroll-mt keeps a part's title below the sticky tape after a jump to #section-5.
-    <section id={block.id} data-paper-part="" aria-labelledby={titleId} className="mt-10 scroll-mt-64 border-t-2 border-ink pt-6">
+    // The tape sticks only on a window at least 35rem tall (see PaperTape), so the margin does too.
+    <section
+      id={block.id}
+      data-paper-part=""
+      aria-labelledby={titleId}
+      className="mt-10 border-t-2 border-ink pt-6 [@media(min-height:35rem)]:scroll-mt-64"
+    >
       <p className="text-sm font-semibold text-muted">{t('pages', { volume: block.volume, from: block.pages[0], to: block.pages[1] })}</p>
       <h2 id={titleId} className={`mt-1 ${sectionTitle} hyphens-auto break-words`}>
         {block.text.title}

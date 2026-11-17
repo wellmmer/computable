@@ -2,9 +2,18 @@ import type { SimulatorStore } from '@/simulator/store';
 
 /**
  * Where a part counts as reached: once its top has passed this share of the window's height. The
- * line sits below the sticky tape, which takes about 30% of a 390 × 844 phone screen.
+ * line sits below the sticky tape, which takes about 27% of a 390 × 844 phone screen.
  */
 export const READING_LINE = 0.5;
+
+/**
+ * The reading line in pixels from the top of the window. It is in the middle of the window, or at
+ * the bottom edge of the sticky tape if that edge is lower, so no part counts as reached while it
+ * is under the tape. `stickyTapeHeight` is null when the tape does not stick (a short window).
+ */
+export function readingLine({ windowHeight, stickyTapeHeight }: { windowHeight: number; stickyTapeHeight: number | null }): number {
+  return Math.max(windowHeight * READING_LINE, stickyTapeHeight ?? 0);
+}
 
 /**
  * How many parts the visitor has reached: the parts whose top is at or above the reading line. The
@@ -32,3 +41,4 @@ export function moveTo(store: SimulatorStore, step: number): void {
   while (run.history.length < step && run.status === 'running') store.getState().stepForward();
   while (run.history.length > step) store.getState().stepBack();
 }
+

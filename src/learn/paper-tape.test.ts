@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createSimulatorStore } from '@/simulator/store';
 import { createMemoryStorage } from '@/storage/machine-storage';
-import { moveTo, partsReached, tapeMode } from './paper-tape';
+import { moveTo, partsReached, readingLine, tapeMode } from './paper-tape';
 
 describe('partsReached (spec R2c 3: one step per part reached)', () => {
   it('counts the parts whose top has passed the reading line', () => {
@@ -17,6 +17,20 @@ describe('partsReached (spec R2c 3: one step per part reached)', () => {
   it('goes down again when the visitor scrolls back up', () => {
     expect(partsReached([-200, 200, 600], 400)).toBe(2);
     expect(partsReached([300, 700, 1100], 400)).toBe(1);
+  });
+});
+
+describe('readingLine (where a part counts as reached)', () => {
+  it('sits in the middle of the window when the tape does not stick, as on a phone held sideways', () => {
+    expect(readingLine({ windowHeight: 390, stickyTapeHeight: null })).toBe(195);
+  });
+
+  it('stays in the middle of the window when the sticky tape ends above it', () => {
+    expect(readingLine({ windowHeight: 844, stickyTapeHeight: 226 })).toBe(422);
+  });
+
+  it('moves down to the bottom edge of a sticky tape that reaches past the middle, so no part counts as reached under the tape', () => {
+    expect(readingLine({ windowHeight: 600, stickyTapeHeight: 340 })).toBe(340);
   });
 });
 

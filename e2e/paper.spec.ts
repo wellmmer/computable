@@ -92,6 +92,55 @@ test('on a 390 px phone the tape takes less than a third of the screen and ends 
   }
 });
 
+/** Waits two frames, so the browser has called the observer back after a scroll. */
+async function settle(page: Page) {
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await page.waitForTimeout(30);
+}
+
+/** The number on the tape's step counter. */
+async function stepShown(page: Page) {
+  return Number((await tape(page).getByText(/^Step \d+$/).textContent())?.replace('Step ', ''));
+}
+
+for (const viewport of [
+  { width: 844, height: 390 },
+  { width: 390, height: 844 },
+]) {
+  test(`at ${viewport.width}×${viewport.height} the tape never covers more than half the screen, and a part counts as reached only when its heading shows below the tape`, async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ viewport });
+    const page = await context.newPage();
+    await openPage(page, '/en/learn/paper');
+    // Section 4 moves up the window in steps of 2%, from the bottom edge to the top edge.
+    let reached = false;
+    for (let share = 1; share >= 0 && !reached; share -= 0.02) {
+      await scrollPartTo(page, 3, share);
+      await settle(page);
+      const { covered, headingTop, headingBottom, tapeBottom } = await page.evaluate(() => {
+        const tapeBox = document.querySelector('[data-testid="paper-tape"]')?.getBoundingClientRect() ?? new DOMRect();
+        const headingBox = document.querySelectorAll('[data-paper-part] h2')[3].getBoundingClientRect();
+        return {
+          covered: Math.max(0, Math.min(tapeBox.bottom, window.innerHeight) - Math.max(tapeBox.top, 0)),
+          headingTop: headingBox.top,
+          headingBottom: headingBox.bottom,
+          tapeBottom: tapeBox.bottom,
+        };
+      });
+      expect(covered, `share ${share.toFixed(2)}`).toBeLessThanOrEqual(viewport.height / 2);
+      if ((await stepShown(page)) >= 4) {
+        reached = true;
+        // The moment section 4 counts as reached, its whole heading is on screen and below the tape.
+        expect(headingTop, `share ${share.toFixed(2)}`).toBeGreaterThanOrEqual(Math.max(tapeBottom, 0));
+        expect(headingBottom, `share ${share.toFixed(2)}`).toBeLessThanOrEqual(viewport.height);
+      }
+    }
+    expect(reached).toBe(true);
+    await context.close();
+  });
+}
+
 test('the page does not shift while it loads, hydrates and scrolls (CLS under 0.05)', async ({ browser }) => {
   for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion });
