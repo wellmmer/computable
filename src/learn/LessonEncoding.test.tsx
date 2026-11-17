@@ -53,6 +53,23 @@ describe('LessonEncoding (spec R2b 2: lesson 3)', () => {
     expect(rows()[0].getAttribute('data-active')).toBeNull();
   });
 
+  it('goes back to the row with the focus when the pointer leaves another row', () => {
+    renderWithIntl(<LessonEncoding />);
+    fireEvent.focus(rows()[1]);
+    fireEvent.mouseEnter(rows()[2]);
+    expect(marked()).toEqual(['DAAADDCCRDAAAA;', '311133225311117']);
+    fireEvent.mouseLeave(rows()[2]);
+    expect(marked()).toEqual(['DAADDRDAAA;', '31133531117']);
+    expect(rows()[1].getAttribute('data-active')).toBe('true');
+  });
+
+  it('marks the part of a row that is tapped, with no pointer resting on it', () => {
+    renderWithIntl(<LessonEncoding />);
+    fireEvent.click(rows()[3]);
+    expect(marked()).toEqual(['DAAAADDRDA;', '31111335317']);
+    expect(rows()[3].getAttribute('data-active')).toBe('true');
+  });
+
   it('tells how to mark a row, in words', () => {
     renderWithIntl(<LessonEncoding />);
     expect(within(figure()).getByText(/^Point at a row, tap it, or move to it with Tab\./)).toBeTruthy();

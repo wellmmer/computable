@@ -30,7 +30,8 @@ function Parts({ parts, active, testId }: { parts: string[]; active: number | nu
 
 /**
  * Turing's first machine as a rule table, as its standard description and as its description number
- * (spec R2b 2, lesson 3). A row marks its part of both strings while it has the focus or the pointer.
+ * (spec R2b 2, lesson 3). A row marks its part of both strings while it has the focus or the pointer,
+ * or after a tap. When the pointer leaves a row, the row with the focus is marked again.
  * The last column also shows that part in words, so nothing depends on the mark. Nothing moves, so
  * reduced motion needs no special case.
  */
@@ -39,7 +40,17 @@ export function LessonEncoding() {
   const tTable = useTranslations('simulator.table');
   const captionId = useId();
   const [active, setActive] = useState<number | null>(null);
-  const leave = (index: number) => setActive((current) => (current === index ? null : current));
+  // The row with the focus, if any: when the pointer leaves a row, that row is marked again.
+  const [focused, setFocused] = useState<number | null>(null);
+  const focus = (index: number) => {
+    setFocused(index);
+    setActive(index);
+  };
+  const blur = (index: number) => {
+    setFocused((current) => (current === index ? null : current));
+    setActive((current) => (current === index ? null : current));
+  };
+  const leave = (index: number) => setActive((current) => (current === index ? focused : current));
 
   return (
     <figure aria-labelledby={captionId} className="mt-8 border-2 border-ink bg-cell px-3 pt-3 pb-5">
@@ -78,10 +89,11 @@ export function LessonEncoding() {
                 key={line.ruleIndex}
                 tabIndex={0}
                 data-active={isActive ? 'true' : undefined}
-                onFocus={() => setActive(index)}
-                onBlur={() => leave(index)}
+                onFocus={() => focus(index)}
+                onBlur={() => blur(index)}
                 onMouseEnter={() => setActive(index)}
                 onMouseLeave={() => leave(index)}
+                onClick={() => setActive(index)}
                 className={`cursor-default border-b border-soft align-top focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ink ${
                   isActive ? 'bg-row-now outline-2 outline-offset-[-2px] outline-ink' : ''
                 }`}
