@@ -40,6 +40,8 @@ describe('the reading guide to Turing’s paper (spec R2c 3)', () => {
     expect(first.getByText(/^Turing compares a person who computes a number with a machine\. The machine has/)).toBeTruthy();
     const last = within(parts()[12] as HTMLElement);
     expect(last.getByText('Volume 43, pages 544–546')).toBeTruthy();
+    // A summary that is true without reading the correction: when and where it came out, not what it corrects.
+    expect(last.getByText(/^In 1937, Turing published a short correction to the paper in the same journal\. /)).toBeTruthy();
     expect(last.getByRole('link', { name: 'Read the correction on the publisher’s site' }).getAttribute('href')).toBe(
       'https://doi.org/10.1112/plms/s2-43.6.544',
     );
