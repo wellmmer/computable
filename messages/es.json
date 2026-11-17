@@ -381,7 +381,7 @@
     "page": {
       "pageTitle": "Aprender",
       "title": "Aprender",
-      "lead": "Lecciones cortas sobre la máquina de Turing. Cada lección tiene máquinas que puedes ejecutar y un cuestionario al final.",
+      "lead": "Lecciones cortas sobre la máquina de Turing. La mayoría de las lecciones tiene máquinas que puedes ejecutar. Cada lección termina con un cuestionario.",
       "lesson": "Lección {number}",
       "minutes": "{minutes} min de lectura",
       "notStarted": "Sin empezar",

@@ -381,7 +381,7 @@
     "page": {
       "pageTitle": "Learn",
       "title": "Learn",
-      "lead": "Short lessons about the Turing machine. Each lesson has machines you can run, and a quiz at the end.",
+      "lead": "Short lessons about the Turing machine. Most lessons have machines you can run. Each lesson ends with a quiz.",
       "lesson": "Lesson {number}",
       "minutes": "{minutes} min read",
       "notStarted": "Not started",

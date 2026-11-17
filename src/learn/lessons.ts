@@ -1,6 +1,28 @@
 import type { MDXContent } from 'mdx/types';
 import type { Locale } from 'next-intl';
 import { z } from 'zod';
+import * as churchTuringDe from '../../content/lessons/church-turing/de.mdx';
+import * as churchTuringEn from '../../content/lessons/church-turing/en.mdx';
+import * as churchTuringEs from '../../content/lessons/church-turing/es.mdx';
+import * as churchTuringFr from '../../content/lessons/church-turing/fr.mdx';
+import * as churchTuringPtBR from '../../content/lessons/church-turing/pt-BR.mdx';
+import { quiz as churchTuringQuiz } from '../../content/lessons/church-turing/quiz';
+import churchTuringQuizDe from '../../content/lessons/church-turing/quiz.de.json';
+import churchTuringQuizEn from '../../content/lessons/church-turing/quiz.en.json';
+import churchTuringQuizEs from '../../content/lessons/church-turing/quiz.es.json';
+import churchTuringQuizFr from '../../content/lessons/church-turing/quiz.fr.json';
+import churchTuringQuizPtBR from '../../content/lessons/church-turing/quiz.pt-BR.json';
+import * as entscheidungsproblemDe from '../../content/lessons/entscheidungsproblem/de.mdx';
+import * as entscheidungsproblemEn from '../../content/lessons/entscheidungsproblem/en.mdx';
+import * as entscheidungsproblemEs from '../../content/lessons/entscheidungsproblem/es.mdx';
+import * as entscheidungsproblemFr from '../../content/lessons/entscheidungsproblem/fr.mdx';
+import * as entscheidungsproblemPtBR from '../../content/lessons/entscheidungsproblem/pt-BR.mdx';
+import { quiz as entscheidungsproblemQuiz } from '../../content/lessons/entscheidungsproblem/quiz';
+import entscheidungsproblemQuizDe from '../../content/lessons/entscheidungsproblem/quiz.de.json';
+import entscheidungsproblemQuizEn from '../../content/lessons/entscheidungsproblem/quiz.en.json';
+import entscheidungsproblemQuizEs from '../../content/lessons/entscheidungsproblem/quiz.es.json';
+import entscheidungsproblemQuizFr from '../../content/lessons/entscheidungsproblem/quiz.fr.json';
+import entscheidungsproblemQuizPtBR from '../../content/lessons/entscheidungsproblem/quiz.pt-BR.json';
 import * as formalDefinitionDe from '../../content/lessons/formal-definition/de.mdx';
 import * as formalDefinitionEn from '../../content/lessons/formal-definition/en.mdx';
 import * as formalDefinitionEs from '../../content/lessons/formal-definition/es.mdx';
@@ -133,6 +155,20 @@ export const LESSONS: readonly Lesson[] = [
     es: [haltingProblemEs, haltingProblemQuizEs],
     fr: [haltingProblemFr, haltingProblemQuizFr],
     de: [haltingProblemDe, haltingProblemQuizDe],
+  }),
+  lesson('entscheidungsproblem', entscheidungsproblemQuiz, {
+    en: [entscheidungsproblemEn, entscheidungsproblemQuizEn],
+    'pt-BR': [entscheidungsproblemPtBR, entscheidungsproblemQuizPtBR],
+    es: [entscheidungsproblemEs, entscheidungsproblemQuizEs],
+    fr: [entscheidungsproblemFr, entscheidungsproblemQuizFr],
+    de: [entscheidungsproblemDe, entscheidungsproblemQuizDe],
+  }),
+  lesson('church-turing', churchTuringQuiz, {
+    en: [churchTuringEn, churchTuringQuizEn],
+    'pt-BR': [churchTuringPtBR, churchTuringQuizPtBR],
+    es: [churchTuringEs, churchTuringQuizEs],
+    fr: [churchTuringFr, churchTuringQuizFr],
+    de: [churchTuringDe, churchTuringQuizDe],
   }),
 ];
 

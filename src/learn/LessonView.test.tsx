@@ -24,7 +24,7 @@ const before = (first: Element, then: Element) => Boolean(first.compareDocumentP
 describe('LessonView (spec 2.2)', () => {
   it('shows the place of the lesson, its title and its reading time', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={0} />);
-    expect(screen.getByText('Lesson 1 of 4')).toBeTruthy();
+    expect(screen.getByText('Lesson 1 of 6')).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Intuition: the human computer');
     expect(screen.getByText('7 min read')).toBeTruthy();
   });
@@ -44,7 +44,7 @@ describe('LessonView (spec 2.2)', () => {
 
   it('shows the palindrome machine and a quiz of 5 questions in lesson 2', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={1} />);
-    expect(screen.getByText('Lesson 2 of 4')).toBeTruthy();
+    expect(screen.getByText('Lesson 2 of 6')).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The formal definition');
     expect(screen.getAllByRole('figure')).toHaveLength(1);
     expect(screen.getByRole('figure', { name: 'Palindrome checker' })).toBeTruthy();
@@ -53,7 +53,7 @@ describe('LessonView (spec 2.2)', () => {
 
   it('shows Turing’s first machine, its encoding and a quiz of 5 questions in lesson 3', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={2} />);
-    expect(screen.getByText('Lesson 3 of 4')).toBeTruthy();
+    expect(screen.getByText('Lesson 3 of 6')).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The universal machine');
     expect(screen.getAllByRole('figure').map((figure) => figure.querySelector('figcaption')?.textContent)).toEqual([
       'Turing 1936: 0 1 0 1…',
@@ -64,10 +64,22 @@ describe('LessonView (spec 2.2)', () => {
 
   it('shows a machine that stops, one that runs forever, the diagonal tables and a quiz of 5 questions in lesson 4', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={3} />);
-    expect(screen.getByText('Lesson 4 of 4')).toBeTruthy();
+    expect(screen.getByText('Lesson 4 of 6')).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The halting problem');
     expect(screen.getAllByRole('figure').map((figure) => figure.querySelector('figcaption')?.textContent)).toEqual(['Binary +1', 'Turing 1936: 0 1 0 1…']);
     expect(screen.getAllByRole('table')).toHaveLength(2);
+    expect(screen.getAllByRole('group', { name: /^Question \d of 5/ })).toHaveLength(5);
+  });
+
+  it.each([
+    [5, 'Lesson 5 of 6', 'The Entscheidungsproblem'],
+    [6, 'Lesson 6 of 6', 'The Church–Turing thesis'],
+  ])('shows lesson %i with no machine, its quotes from the paper and a quiz of 5 questions', (number, position, title) => {
+    renderWithIntl(<LessonView lessons={LESSONS} index={number - 1} />);
+    expect(screen.getByText(position)).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe(title);
+    expect(screen.queryAllByRole('figure')).toEqual([]);
+    expect(document.querySelectorAll('blockquote').length).toBeGreaterThan(0);
     expect(screen.getAllByRole('group', { name: /^Question \d of 5/ })).toHaveLength(5);
   });
 
@@ -87,6 +99,15 @@ describe('LessonView (spec 2.2)', () => {
     cleanup();
     renderWithIntl(<LessonView lessons={LESSONS} index={3} />);
     expect(screen.getByRole('link', { name: 'Previous lesson: The universal machine' }).getAttribute('href')).toBe('/learn/universal-machine');
-    expect(screen.queryByRole('link', { name: /^Next lesson/ })).toBeNull();
+    expect(screen.getByRole('link', { name: 'Next lesson: The Entscheidungsproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
+  });
+
+  it('ends at lesson 6: it links lesson 5 and all lessons, and no next lesson', () => {
+    renderWithIntl(<LessonView lessons={LESSONS} index={5} />);
+    const nav = screen.getByRole('navigation', { name: 'Lessons' });
+    expect(within(nav).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['Previous lesson: The Entscheidungsproblem', '/learn/entscheidungsproblem'],
+      ['All lessons', '/learn'],
+    ]);
   });
 });

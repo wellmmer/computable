@@ -381,7 +381,7 @@
     "page": {
       "pageTitle": "Lernen",
       "title": "Lernen",
-      "lead": "Kurze Lektionen über die Turingmaschine. Jede Lektion hat Maschinen, die du laufen lassen kannst, und am Ende ein Quiz.",
+      "lead": "Kurze Lektionen über die Turingmaschine. Die meisten Lektionen haben Maschinen, die du laufen lassen kannst. Jede Lektion endet mit einem Quiz.",
       "lesson": "Lektion {number}",
       "minutes": "{minutes} Min. Lesezeit",
       "notStarted": "Nicht begonnen",
