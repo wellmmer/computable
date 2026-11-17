@@ -403,6 +403,7 @@
       "nav": "Lektionen",
       "previous": "Vorherige Lektion: {title}",
       "next": "Nächste Lektion: {title}",
+      "nextGuide": "Weiter: {title}",
       "all": "Alle Lektionen"
     },
     "paper": {

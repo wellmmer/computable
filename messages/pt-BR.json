@@ -403,6 +403,7 @@
       "nav": "Lições",
       "previous": "Lição anterior: {title}",
       "next": "Próxima lição: {title}",
+      "nextGuide": "Próximo: {title}",
       "all": "Todas as lições"
     },
     "paper": {

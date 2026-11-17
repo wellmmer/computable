@@ -128,7 +128,14 @@ for (const { path, link, title } of GUIDE_LINKS) {
   });
 }
 
-test('the previous and next links join the 6 lessons in order, and lesson 6 has no next lesson', async ({ page }) => {
+test('lesson 6 leads to the reading guide in the same language', async ({ page }) => {
+  await openPage(page, '/pt-br/learn/church-turing');
+  await page.getByRole('navigation', { name: 'Lições' }).getByRole('link', { name: 'Próximo: O artigo de Turing de 1936' }).click();
+  await expect(page).toHaveURL(/\/pt-br\/learn\/paper$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('O artigo de Turing de 1936');
+});
+
+test('the previous and next links join the 6 lessons in order, and lesson 6 leads to the reading guide', async ({ page }) => {
   await openPage(page, '/en/learn/intuition');
   const nav = page.getByRole('navigation', { name: 'Lessons' });
   await expect(nav.getByRole('link', { name: /^Previous lesson/ })).toHaveCount(0);
@@ -143,7 +150,7 @@ test('the previous and next links join the 6 lessons in order, and lesson 6 has 
   await nav.getByRole('link', { name: 'Next lesson: The Church–Turing thesis' }).click();
   await expect(page).toHaveURL(/\/en\/learn\/church-turing$/);
   await expect(nav.getByRole('link', { name: /^Next lesson/ })).toHaveCount(0);
-  await expect(nav.getByRole('link')).toHaveText(['Previous lesson: The Entscheidungsproblem', 'All lessons']);
+  await expect(nav.getByRole('link')).toHaveText(['Previous lesson: The Entscheidungsproblem', 'All lessons', 'Next: Turing’s 1936 paper']);
   await nav.getByRole('link', { name: 'Previous lesson: The Entscheidungsproblem' }).click();
   await nav.getByRole('link', { name: 'Previous lesson: The halting problem' }).click();
   await nav.getByRole('link', { name: 'Previous lesson: The universal machine' }).click();
