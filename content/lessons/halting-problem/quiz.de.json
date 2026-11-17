@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "step-limit": {
+      "text": "Starten pausiert Turings erste Maschine nach 10.000 Schritten. Was sagt dir die Pause?",
+      "options": {
+        "never-stops": {
+          "text": "Dass die Maschine nie anhält",
+          "why": "Das kann der Simulator nicht wissen. Er zählt nur Schritte."
+        },
+        "not-yet": {
+          "text": "Nur, dass die Maschine noch nicht angehalten hat",
+          "why": "Eine andere Maschine könnte bei Schritt 10.001 anhalten. Die Grenze ist eine Schätzung."
+        },
+        "error": {
+          "text": "Dass die Maschine einen Fehler hat",
+          "why": "Die Maschine arbeitet so, wie ihre Regeln sagen. Sie läuft einfach weiter."
+        }
+      }
+    },
+    "decider": {
+      "text": "Was müsste die Maschine H in dieser Lektion tun?",
+      "options": {
+        "run-and-wait": {
+          "text": "Die andere Maschine laufen lassen und warten, bis sie anhält",
+          "why": "Wenn die andere Maschine für immer läuft, würde H nie antworten."
+        },
+        "some-machines": {
+          "text": "Für die meisten Maschinen richtig antworten",
+          "why": "H muss bei jeder Maschine und jeder Eingabe recht haben."
+        },
+        "always-answer": {
+          "text": "Immer anhalten und richtig sagen, ob eine beliebige Maschine bei einer beliebigen Eingabe anhält",
+          "why": "Das ist die Aufgabe, und das Diagonalargument zeigt, dass keine Maschine sie lösen kann."
+        },
+        "print-zero": {
+          "text": "Eine 0 drucken, wenn die andere Maschine anhält",
+          "why": "Eine 0 zu drucken beantwortet nichts. H muss „hält“ oder „endlos“ sagen."
+        }
+      }
+    },
+    "diagonal": {
+      "text": "D tut das Gegenteil von dem, was H über jede Maschine mit ihrer eigenen Beschreibung sagt. Was passiert, wenn D ihre eigene Beschreibung bekommt?",
+      "options": {
+        "contradiction": {
+          "text": "Jede mögliche Antwort von H stellt sich als falsch heraus",
+          "why": "Sagt H „hält“, läuft D für immer. Sagt H „endlos“, hält D an. Also kann es H nicht geben."
+        },
+        "stops": {
+          "text": "D hält an, und H hat recht",
+          "why": "Wenn D anhält, hat H „endlos“ gesagt, also liegt H falsch."
+        },
+        "forever": {
+          "text": "D läuft für immer, und H hat recht",
+          "why": "Wenn D für immer läuft, hat H „hält“ gesagt, also liegt H falsch."
+        }
+      }
+    },
+    "turing-proved": {
+      "text": "Was hat Turing in Abschnitt 8 seines Aufsatzes von 1936 bewiesen?",
+      "options": {
+        "stops": {
+          "text": "Dass keine Maschine entscheiden kann, ob eine Maschine anhält",
+          "why": "Das ist die Form, die spätere Autoren benutzten. Turing stellte andere Fragen."
+        },
+        "every-machine-stops": {
+          "text": "Dass jede Maschine am Ende anhält",
+          "why": "Seine erste Maschine hält nie an."
+        },
+        "circle-free-and-zero": {
+          "text": "Dass keine Maschine entscheiden kann, ob eine Maschine zirkelfrei ist oder ob sie jemals 0 druckt",
+          "why": "Das sind seine zwei Ergebnisse, auf den Seiten 247 und 248."
+        }
+      }
+    },
+    "circular": {
+      "text": "Eine Maschine druckt 0, dann 1, und hält dann an. Wie nannte Turing sie?",
+      "options": {
+        "circular": {
+          "text": "Zirkulär",
+          "why": "Sie druckt nur eine endliche Zahl von Ziffern, also ist sie zirkulär, für Turing eine schlechte Maschine."
+        },
+        "circle-free": {
+          "text": "Zirkelfrei",
+          "why": "Eine zirkelfreie Maschine druckt Ziffern ohne Ende."
+        },
+        "universal": {
+          "text": "Universell",
+          "why": "Die universelle Maschine 𝒰 ist die Maschine aus Lektion 3, die die Arbeit jeder Maschine leisten kann."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,197 @@
+export const meta = {
+  title: 'Le problème de l’arrêt',
+  summary: 'Pourquoi aucune machine ne peut dire, pour toute machine et toute entrée, si elle va s’arrêter. L’argument diagonal pas à pas, et ce que Turing lui-même a prouvé.',
+  minutes: 7,
+};
+
+Certaines machines s’arrêtent.
+D’autres tournent sans fin.
+Peut-on toujours savoir lesquelles, avant de les lancer ?
+Cette leçon montre qu’aucune machine ne peut répondre à cette question pour toutes les machines.
+La preuve est courte, et elle utilise les descriptions de la leçon 3.
+À la fin, la leçon montre ce que Turing lui-même a prouvé en 1936.
+Son résultat est proche de celui de cette leçon, mais ce n’est pas le même.
+
+## Une machine qui s’arrête
+
+Voici Binaire +1, de la leçon 1.
+Appuyez sur **Lancer**.
+
+<Machine example="binary-plus-one" />
+
+La machine s’arrête en qA après 8 pas.
+La bande affiche 1100.
+Pour cette machine, la réponse est facile : elle s’arrête.
+
+## Une machine qui tourne sans fin
+
+Voici la première machine de Turing.
+Appuyez sur **Lancer**, puis sur **Pause** quand vous en avez assez vu.
+
+<Machine example="turing-1936" />
+
+La machine imprime 0 1 0 1 … et ne s’arrête jamais.
+Après 𝔨, elle revient toujours à 𝔟.
+Vous pouvez le voir à ses quatre règles.
+
+Le simulateur ne peut pas le savoir.
+Il ne fait que compter les pas.
+Sur cette page, Lancer fait un pas toutes les 0,7 secondes.
+Après 10 000 pas, environ deux heures plus tard, Lancer fait une pause.
+La ligne de résultat dit alors que la machine ne s’arrêtera peut-être jamais, et demande s’il faut continuer.
+Dans le simulateur complet, à la vitesse la plus rapide, la pause arrive après environ 3 secondes.
+
+La limite de 10 000 pas est une supposition.
+Une autre machine pourrait s’arrêter au pas 10 001.
+Un meilleur simulateur pourrait-il remplacer la supposition par une réponse sûre ?
+
+## La question
+
+Imaginez une machine H qui lit deux choses sur sa bande :
+
+- la description d’une machine M, comme dans la leçon 3 ;
+- une entrée pour M.
+
+H doit toujours s’arrêter, puis dire « s’arrête » ou « sans fin ».
+« S’arrête » veut dire que M s’arrête sur cette entrée.
+« Sans fin » veut dire que M tourne sans fin sur cette entrée.
+H doit avoir raison pour toute machine et toute entrée.
+
+H ne peut pas simplement lancer M et attendre.
+Si M tourne sans fin, H attendrait aussi sans fin, et ne répondrait jamais.
+H aurait besoin d’une méthode plus habile.
+La question « une telle machine H existe-t-elle ? » s’appelle le **problème de l’arrêt**.
+
+La réponse est non.
+La preuve suppose que H existe, puis trouve une contradiction.
+
+## L’argument diagonal, pas à pas
+
+**Étape 1. Lister toutes les machines.**
+La leçon 3 a montré que toute machine a un nombre de description.
+Triez les machines par leurs nombres : M1, M2, M3, et ainsi de suite.
+Toute machine se trouve quelque part dans cette liste.
+
+**Étape 2. Remplir une table avec les réponses de H.**
+Donnez à chaque machine, comme entrée, la description d’une autre machine.
+La ligne M1 montre ce que fait M1 sur la description de M1, de M2, de M3, et ainsi de suite.
+H remplit chaque case.
+Les réponses ci-dessous sont inventées.
+Seul le motif compte.
+
+| Machine | sur M1 | sur M2 | sur M3 | sur M4 |
+| --- | --- | --- | --- | --- |
+| M1 | **s’arrête** | sans fin | s’arrête | s’arrête |
+| M2 | s’arrête | **sans fin** | sans fin | s’arrête |
+| M3 | sans fin | s’arrête | **sans fin** | s’arrête |
+| M4 | s’arrête | s’arrête | sans fin | **s’arrête** |
+
+Les cases en gras forment la diagonale.
+Elles montrent chaque machine sur sa propre description : M1 sur M1, M2 sur M2, M3 sur M3, M4 sur M4.
+Ici, la diagonale se lit : s’arrête, sans fin, sans fin, s’arrête.
+
+**Étape 3. Construire une nouvelle machine, D.**
+D lit la description d’une machine M.
+Elle donne deux choses à H : la description de M, comme machine, et la même description, comme entrée.
+Puis D fait le contraire de la réponse de H :
+
+- Si H dit « s’arrête », D tourne sans fin.
+- Si H dit « sans fin », D s’arrête.
+
+D est une vraie machine, car H en est une.
+D n’a besoin que de quelques règles de plus : pour copier la description, et pour boucler sans fin.
+
+**Étape 4. Comparer D avec la liste.**
+Sur chaque description, D fait le contraire de la diagonale.
+
+| Machine | sur M1 | sur M2 | sur M3 | sur M4 |
+| --- | --- | --- | --- | --- |
+| Diagonale | s’arrête | sans fin | sans fin | s’arrête |
+| D | sans fin | s’arrête | s’arrête | sans fin |
+
+D diffère de M1 sur M1.
+Elle diffère de M2 sur M2, et ainsi de suite.
+Donc D diffère de toutes les machines de la liste.
+Mais la liste contient toutes les machines, donc D doit y être.
+
+**Étape 5. Demander ce que fait D sur sa propre description.**
+Disons que D est la machine numéro k de la liste.
+Regardez la case où la ligne k croise la colonne k.
+
+- Si D s’arrête sur sa propre description, alors H a dit « sans fin ». Mais alors D s’arrête, donc H s’est trompée.
+- Si D tourne sans fin sur sa propre description, alors H a dit « s’arrête ». Mais alors D tourne sans fin, donc H s’est trompée.
+
+Les deux cas sont impossibles.
+Chaque étape découle de la précédente.
+Une seule chose peut être fausse : l’hypothèse que H existe.
+Donc aucune machine H ne peut exister.
+Aucun simulateur ne peut remplacer sa limite de pas par une réponse sûre pour toutes les machines.
+
+## Ce que Turing a prouvé
+
+La preuve ci-dessus est la forme que les manuels utilisent aujourd’hui.
+L’article de Turing de 1936 pose une autre question.
+Voici pourquoi.
+
+Turing voulait des machines qui impriment les chiffres d’un nombre, sans fin.
+Dans la leçon 1, sa première machine fait exactement cela.
+Pour Turing, une bonne machine ne cesse jamais d’imprimer des chiffres.
+Il a appelé une telle machine « sans cercle » :
+
+> “If a computing machine never writes down more than a finite number of symbols of the first kind, it will be called circular. Otherwise it is said to be circle-free.” (Turing, 1936, page 233)
+>
+> En français : « Si une machine à calculer n’écrit jamais plus qu’un nombre fini de symboles de la première sorte, on l’appellera circulaire. Sinon, on dit qu’elle est sans cercle. »
+
+Les « symboles de la première sorte » sont les chiffres 0 et 1.
+Une machine qui imprime quelques chiffres puis s’arrête est donc circulaire.
+Pour Turing, c’est une mauvaise machine.
+
+À la section 8, Turing suppose une machine 𝔇 qui dit, pour toute description, si la machine est sans cercle.
+À partir de 𝔇 et de la machine universelle 𝒰 de la leçon 3, il construit une machine ℋ.
+ℋ parcourt les nombres 1, 2, 3, … dans l’ordre, et interroge 𝔇 sur chacun.
+Pour la première machine sans cercle qu’elle trouve, ℋ imprime le premier chiffre de cette machine.
+Pour la deuxième, elle imprime le deuxième chiffre de cette machine, et ainsi de suite.
+C’est une diagonale, comme dans les tables ci-dessus, et ℋ est sans cercle.
+Puis Turing demande ce que dit 𝔇 quand ℋ atteint son propre nombre.
+𝔇 ne peut pas dire « circulaire », car ℋ est sans cercle.
+Si 𝔇 dit « sans cercle », ℋ doit calculer son propre chiffre suivant.
+Pour le trouver, ℋ devrait d’abord trouver ce même chiffre.
+Donc le chiffre n’est jamais trouvé, et ℋ est finalement circulaire.
+Il conclut :
+
+> “Thus both verdicts are impossible and we conclude that there can be no machine 𝔇.” (Turing, 1936, page 247)
+>
+> En français : « Ainsi, les deux verdicts sont impossibles, et nous concluons qu’il ne peut exister aucune machine 𝔇. »
+
+À la page suivante, il prouve un second résultat :
+
+> “We can show further that there can be no machine ℰ which, when supplied with the S.D of an arbitrary machine ℳ, will determine whether ℳ ever prints a given symbol (0 say).” (Turing, 1936, page 248)
+>
+> En français : « Nous pouvons montrer en outre qu’il ne peut exister aucune machine ℰ qui, quand on lui donne la S.D d’une machine quelconque ℳ, déterminera si ℳ imprime un jour un symbole donné (0, par exemple). »
+
+Turing a donc prouvé deux choses.
+Aucune machine ne peut décider si une machine est sans cercle.
+Et aucune machine ne peut décider si une machine imprime un jour 0.
+Aucune des deux questions n’est « s’arrête-t-elle ? ».
+Des auteurs plus tardifs ont énoncé le résultat sous la forme « s’arrête-t-elle ? », et lui ont donné le nom de « problème de l’arrêt ».
+L’idée de la preuve, la diagonale, est la même.
+
+## Pourquoi c’est important
+
+La limite de pas du simulateur n’est pas un défaut qu’un meilleur programme pourrait corriger.
+Aucun programme ne peut décider, pour toute machine, si elle s’arrête.
+Cela vaut aussi pour les ordinateurs : aucun outil ne peut trouver, dans tous les programmes, les boucles qui ne finissent jamais.
+De tels outils peuvent aider dans beaucoup de cas, mais pas dans tous.
+
+Le résultat de Turing sur « imprime un jour 0 » a une autre utilité.
+Avec lui, il a répondu à la question qui a lancé son article, l’*Entscheidungsproblem*.
+Une leçon future raconte cette histoire.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, « [On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230) », *Proceedings of the London Mathematical Society*, série 2, volume 42, pages 230–265, 1936. Les machines sans cercle sont définies à la section 2. L’argument diagonal se trouve à la section 8, pages 246–248.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. Une visite guidée de tout l’article, ligne par ligne.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3e édition, Cengage Learning, 2013. Chapitres 4 et 5.
+- John E. Hopcroft, Rajeev Motwani et Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3e édition, Pearson/Addison-Wesley, 2007. Chapitre 9.

@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "step-limit": {
+      "text": "Rodar pausa a primeira máquina de Turing depois de 10.000 passos. O que a pausa diz a você?",
+      "options": {
+        "never-stops": {
+          "text": "Que a máquina nunca para",
+          "why": "O simulador não tem como saber isso. Ele só conta passos."
+        },
+        "not-yet": {
+          "text": "Só que a máquina ainda não parou",
+          "why": "Outra máquina poderia parar no passo 10.001. O limite é um palpite."
+        },
+        "error": {
+          "text": "Que a máquina tem um erro",
+          "why": "A máquina funciona como as regras dizem. Ela só continua."
+        }
+      }
+    },
+    "decider": {
+      "text": "O que a máquina H desta lição teria que fazer?",
+      "options": {
+        "run-and-wait": {
+          "text": "Rodar a outra máquina e esperar que ela pare",
+          "why": "Se a outra máquina roda para sempre, H nunca responderia."
+        },
+        "some-machines": {
+          "text": "Acertar para a maioria das máquinas",
+          "why": "H precisa acertar para toda máquina e toda entrada."
+        },
+        "always-answer": {
+          "text": "Sempre parar e dizer certo se qualquer máquina para com qualquer entrada",
+          "why": "Essa é a tarefa, e o argumento diagonal mostra que nenhuma máquina consegue cumpri-la."
+        },
+        "print-zero": {
+          "text": "Imprimir 0 quando a outra máquina para",
+          "why": "Imprimir 0 não responde nada. H precisa dizer “para” ou “nunca para”."
+        }
+      }
+    },
+    "diagonal": {
+      "text": "D faz o contrário do que H diz sobre cada máquina com a sua própria descrição. O que acontece quando D recebe a sua própria descrição?",
+      "options": {
+        "contradiction": {
+          "text": "Cada resposta possível de H acaba errada",
+          "why": "Se H diz “para”, D roda para sempre. Se H diz “nunca para”, D para. Então H não pode existir."
+        },
+        "stops": {
+          "text": "D para, e H acerta",
+          "why": "Se D para, H disse “nunca para”, então H errou."
+        },
+        "forever": {
+          "text": "D roda para sempre, e H acerta",
+          "why": "Se D roda para sempre, H disse “para”, então H errou."
+        }
+      }
+    },
+    "turing-proved": {
+      "text": "O que Turing provou na seção 8 do artigo de 1936?",
+      "options": {
+        "stops": {
+          "text": "Que nenhuma máquina consegue decidir se uma máquina para",
+          "why": "Essa é a forma que autores posteriores usaram. Turing fez outras perguntas."
+        },
+        "every-machine-stops": {
+          "text": "Que toda máquina para no fim",
+          "why": "A primeira máquina dele nunca para."
+        },
+        "circle-free-and-zero": {
+          "text": "Que nenhuma máquina consegue decidir se uma máquina é livre de círculos, ou se ela alguma vez imprime 0",
+          "why": "Esses são os dois resultados dele, nas páginas 247 e 248."
+        }
+      }
+    },
+    "circular": {
+      "text": "Uma máquina imprime 0, depois 1, e depois para. Como Turing a chamava?",
+      "options": {
+        "circular": {
+          "text": "Circular",
+          "why": "Ela imprime só um número finito de algarismos, então é circular, uma máquina ruim para Turing."
+        },
+        "circle-free": {
+          "text": "Livre de círculos",
+          "why": "Uma máquina livre de círculos imprime algarismos sem fim."
+        },
+        "universal": {
+          "text": "Universal",
+          "why": "A máquina universal 𝒰 é a máquina da lição 3, que faz o trabalho de qualquer máquina."
+        }
+      }
+    }
+  }
+}

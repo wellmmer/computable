@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "step-limit": {
+      "text": "Run pauses Turing’s first machine after 10,000 steps. What does the pause tell you?",
+      "options": {
+        "never-stops": {
+          "text": "That the machine never stops",
+          "why": "The simulator cannot know that. It only counts steps."
+        },
+        "not-yet": {
+          "text": "Only that the machine has not stopped yet",
+          "why": "Another machine might stop at step 10,001. The limit is a guess."
+        },
+        "error": {
+          "text": "That the machine has an error",
+          "why": "The machine works as its rules say. It just keeps going."
+        }
+      }
+    },
+    "decider": {
+      "text": "What would the machine H in this lesson have to do?",
+      "options": {
+        "run-and-wait": {
+          "text": "Run the other machine and wait for it to stop",
+          "why": "If the other machine runs forever, H would never answer."
+        },
+        "some-machines": {
+          "text": "Answer correctly for most machines",
+          "why": "H must be right for every machine and every input."
+        },
+        "always-answer": {
+          "text": "Always stop, and say correctly if any machine stops on any input",
+          "why": "That is the task, and the diagonal argument shows that no machine can do it."
+        },
+        "print-zero": {
+          "text": "Print 0 when the other machine stops",
+          "why": "Printing 0 answers nothing. H must say “stops” or “forever”."
+        }
+      }
+    },
+    "diagonal": {
+      "text": "D does the opposite of what H says about each machine on its own description. What happens when D gets its own description?",
+      "options": {
+        "contradiction": {
+          "text": "Each possible answer of H turns out wrong",
+          "why": "If H says “stops”, D runs forever. If H says “forever”, D stops. So H cannot exist."
+        },
+        "stops": {
+          "text": "D stops, and H is right",
+          "why": "If D stops, H said “forever”, so H is wrong."
+        },
+        "forever": {
+          "text": "D runs forever, and H is right",
+          "why": "If D runs forever, H said “stops”, so H is wrong."
+        }
+      }
+    },
+    "turing-proved": {
+      "text": "What did Turing prove in section 8 of his 1936 paper?",
+      "options": {
+        "stops": {
+          "text": "That no machine can decide if a machine stops",
+          "why": "That is the form later authors used. Turing asked other questions."
+        },
+        "every-machine-stops": {
+          "text": "That every machine stops in the end",
+          "why": "His first machine never stops."
+        },
+        "circle-free-and-zero": {
+          "text": "That no machine can decide if a machine is circle-free, or if it ever prints 0",
+          "why": "These are his two results, on pages 247 and 248."
+        }
+      }
+    },
+    "circular": {
+      "text": "A machine prints 0, then 1, and then stops. What did Turing call it?",
+      "options": {
+        "circular": {
+          "text": "Circular",
+          "why": "It prints only a finite number of digits, so it is circular, a bad machine for Turing."
+        },
+        "circle-free": {
+          "text": "Circle-free",
+          "why": "A circle-free machine prints digits without end."
+        },
+        "universal": {
+          "text": "Universal",
+          "why": "The universal machine 𝒰 is the machine of lesson 3, which can do the work of any machine."
+        }
+      }
+    }
+  }
+}
