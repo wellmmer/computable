@@ -1,0 +1,169 @@
+export const meta = {
+  title: 'The formal definition',
+  summary: 'The seven parts of a Turing machine in Sipser’s textbook, and where you find each part in this simulator.',
+  minutes: 7,
+};
+
+Lesson 1 described the Turing machine in words: a tape, a head, states and rules.
+Textbooks also give an exact definition, written with sets.
+This lesson follows the definition in Michael Sipser's textbook, *Introduction to the Theory of Computation*.
+It has seven parts.
+For each part, the lesson shows where you find it in this simulator.
+It also says where the simulator works differently from the book.
+
+## Seven parts
+
+Sipser writes a Turing machine as a list of seven parts, a 7-tuple:
+
+(Q, Σ, Γ, δ, q₀, q_accept, q_reject)
+
+- **Q** is the set of states.
+- **Σ** (sigma) is the input alphabet: the symbols that an input may use. The blank is not in Σ.
+- **Γ** (gamma) is the tape alphabet: every symbol that the tape may hold. It holds the blank and every symbol of Σ.
+- **δ** (delta) is the transition function. It holds the rules.
+- **q₀** is the start state.
+- **q_accept** is the accept state.
+- **q_reject** is the reject state. It must be a different state from q_accept.
+
+Q, Σ and Γ are finite sets.
+So a machine has a fixed number of states and symbols, as in Turing's picture of a person at work.
+
+## The states: Q, q₀, q_accept and q_reject
+
+The simulator has no field for Q.
+It finds the states in the rule table and in the machine settings.
+The settings have three fields for states: **Start state**, **Accept states** and **Reject states**.
+They match q₀, q_accept and q_reject.
+
+Sipser's machine has exactly one accept state and exactly one reject state.
+In this simulator, Accept states and Reject states are lists.
+A list may hold several states, or none.
+One rule stays: a state cannot both accept and reject.
+The machine stops as soon as it enters a state from one of the two lists.
+
+## The alphabets: Σ and Γ
+
+The simulator has no field for Σ or Γ either.
+The input and the rules show which symbols a machine uses.
+
+One symbol of Γ has its own setting: the **Blank**.
+Sipser writes the blank as ␣.
+In this simulator, you choose the blank symbol.
+It must be exactly one symbol.
+
+In Sipser's definition, an input never contains the blank.
+The simulator does not check this.
+A blank in the input is just an empty cell.
+
+## The rules: δ
+
+The transition function δ takes a state and a symbol.
+It gives back three things: the next state, the symbol to write, and the move.
+Sipser writes one rule like this: δ(q, a) = (r, b, R).
+It means: in state q, reading a, go to state r, write b, and move right.
+
+Each row of the simulator's rule table is one rule of δ.
+The columns **If in state** and **and reading** are the state and the symbol that δ takes.
+The columns **write**, **move** and **then go to** are the three things it gives back.
+The table shows them in a different order, but the meaning is the same.
+
+The simulator differs from Sipser's δ in three ways:
+
+- **A third move.** In Sipser's definition, the head moves left (L) or right (R) at every step. The simulator also has S, which leaves the head where it is. S does not let a machine do more. A move right and then a move left, with one extra state, does the same work.
+- **Missing rules.** Sipser's δ has a rule for every state and every tape symbol. The simulator lets you leave rules out. When no rule fits, the machine stops, and the simulator shows the run as rejected.
+- **Two rules for one case.** A function gives exactly one answer, so δ has exactly one rule for each state and symbol. The simulator allows at most one. If two rows have the same state and symbol, it shows an error and does not run.
+
+## The tape
+
+Sipser's tape has a left end, but no right end.
+The input starts in the first cell, and the head starts there too.
+Every other cell holds the blank.
+If the head is in the first cell and a rule says L, the head stays in the first cell.
+
+The simulator has a **Tape** setting with two choices.
+**One-sided** works like Sipser's tape.
+Its first cell is cell 0, and a move left from cell 0 leaves the head there.
+**Two-way** has no end on either side.
+On both kinds, the input starts in cell 0, and so does the head.
+
+A machine file can also ask for the rule of the 2016 app.
+Then a move left from cell 0 rejects the input.
+The settings show a note when a machine uses that rule.
+
+## When the machine stops
+
+In Sipser's definition, a machine stops only when it enters q_accept or q_reject.
+It may also never stop, and run forever.
+
+The simulator stops in four cases:
+
+1. The machine enters an accept state. The result line says "Accepted".
+2. The machine enters a reject state. The result line says "Rejected".
+3. No rule fits the state and the symbol. The result line also says "Rejected".
+4. Only with the rule of the 2016 app, on a one-sided tape: a rule moves the head left from cell 0. The result line also says "Rejected". If that same rule enters an accept or reject state, cases 1 and 2 apply instead.
+
+A machine in the simulator may still run forever.
+So **Run** pauses after 10,000 steps and asks if it should go on.
+
+## The palindrome machine
+
+A palindrome reads the same from both ends, like 0110 or 101.
+This machine decides if its input, made of 0s and 1s, is a palindrome.
+Here are its seven parts:
+
+- **Q** has eight states: q0, q1, q2, q3, q4, q5, qA and qR.
+- **Σ** has two symbols: 0 and 1.
+- **Γ** has three symbols: 0, 1 and the blank, written _.
+- **δ** has 18 rules. Open the machine in the simulator to see them all.
+- The start state is **q0**. The accept state is **qA**, and the reject state is **qR**.
+
+Six states are not qA or qR, and the tape has three symbols.
+Six times three is 18, so this machine has a rule for every state and symbol that can occur.
+It never stops for lack of a rule.
+
+It works like a person who checks a word from both ends:
+
+1. In q0, it erases the first symbol. It goes to q1 if the symbol was 0, and to q2 if it was 1. The state now remembers the symbol.
+2. In q1 or q2, it moves right to the blank after the input.
+3. It steps back onto the last symbol, in q3 or q4. If the last symbol differs from the first one, the machine goes to qR. If both are the same, it erases the last symbol and goes to q5.
+4. In q5, it moves left to the blank, steps right, and starts again in q0.
+5. If it finds a blank where it expects a symbol, nothing is left to check. It goes to qA.
+
+Press **Run**.
+With the input 0110, the machine accepts after 15 steps, and the whole tape is blank.
+
+<Machine example="palindrome" />
+
+Now open the machine in the simulator and change the input to 0111.
+The machine stops in qR after 6 steps.
+
+Five of the rules use the move S, and all five go to qA or qR.
+The machine stops right after them, so the move does not matter.
+In Sipser's definition, these rules would say L or R instead, and the result would be the same.
+
+## Another book, another list
+
+Not every book uses the same seven parts.
+Hopcroft, Motwani and Ullman also write a 7-tuple: (Q, Σ, Γ, δ, q₀, B, F).
+B is the blank symbol.
+F is a set of accepting states, and it may hold more than one state.
+There is no reject state.
+Their δ may leave out rules, and the machine stops when no rule fits.
+
+In some places, the simulator is closer to this form.
+Its Blank setting matches B.
+Its list of accept states matches F.
+The two books write the same idea in two ways.
+
+## Why this matters
+
+An exact definition turns a machine into a mathematical object.
+With it, you can prove facts about every possible machine, not only about one.
+Later lessons use this to show that some problems have no machine that solves them.
+
+<Quiz />
+
+## Sources
+
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3rd edition, Cengage Learning, 2013. Section 3.1 gives the formal definition. Section 3.2 shows that a head that may stay put does not make a machine more powerful.
+- John E. Hopcroft, Rajeev Motwani and Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3rd edition, Pearson/Addison-Wesley, 2007. Chapter 8.

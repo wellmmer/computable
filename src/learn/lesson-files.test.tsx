@@ -38,6 +38,31 @@ function skeleton(page: Element): string[] {
   );
 }
 
+/**
+ * The page of each book in the "Sources" list: the publisher's page for the 3rd edition. Checked on
+ * 2026-11-17: both answer 200 and show that edition and its ISBN (Sipser 978-1-133-18779-0,
+ * Hopcroft–Motwani–Ullman 978-0-321-45536-9).
+ */
+const BOOK_LINKS = [
+  'https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790',
+  'https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369',
+];
+
+/** The DOI of Turing's 1936 paper. */
+const TURING_DOI = 'https://doi.org/10.1112/plms/s2-42.1.230';
+
+/** The lessons whose "Sources" list Turing's 1936 paper. A lesson that adds it must be named here. */
+const LESSONS_CITING_TURING = ['intuition'];
+
+/** The links of the last list in a lesson: its "Sources". */
+function sourceLinks(page: Element): { text: string; hrefs: string[] }[] {
+  const lists = page.querySelectorAll('ul');
+  return [...lists[lists.length - 1].querySelectorAll('li')].map((item) => ({
+    text: item.textContent ?? '',
+    hrefs: [...item.querySelectorAll('a')].map((link) => link.getAttribute('href') ?? ''),
+  }));
+}
+
 const lessons = Object.keys(quizKeys).map((path) => lessonAndName(path)[0]);
 
 describe('lesson files (content/lessons)', () => {
@@ -81,6 +106,21 @@ describe('lesson files (content/lessons)', () => {
       for (const example of machines) expect(EXAMPLE_IDS).toContain(example);
       // Links leave the site: a link inside the site would need the visitor's language.
       for (const link of page.querySelectorAll('a')) expect(link.getAttribute('href')).toMatch(/^https:\/\//);
+    });
+
+    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links each book in its sources to its page', (_, Content) => {
+      const sources = sourceLinks(render(Content));
+      expect(sources.flatMap((source) => source.hrefs)).toEqual(expect.arrayContaining(BOOK_LINKS));
+    });
+
+    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links Turing’s 1936 paper to its DOI, if the lesson cites it', (_, Content) => {
+      const turing = sourceLinks(render(Content)).filter((item) => item.text.includes('On Computable Numbers'));
+      if (!LESSONS_CITING_TURING.includes(lesson)) {
+        expect(turing).toEqual([]);
+        return;
+      }
+      expect(turing).toHaveLength(1);
+      expect(turing[0].hrefs).toContain(TURING_DOI);
     });
 
     it('has the same headings, quotes, lists, machines and quiz in every language, in the same order', () => {

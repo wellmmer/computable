@@ -5,7 +5,7 @@ const props = (slug: string) => ({ params: Promise.resolve({ locale: 'en', slug 
 
 describe('the lesson page', () => {
   it('is built for every lesson (spec 3: the pages are static)', () => {
-    expect(generateStaticParams()).toEqual([{ slug: 'intuition' }]);
+    expect(generateStaticParams()).toEqual([{ slug: 'intuition' }, { slug: 'formal-definition' }]);
   });
 
   it('answers 404 for a lesson that does not exist', async () => {

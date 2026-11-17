@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "delta": {
+      "text": "¿Qué parte del simulador corresponde a la función de transición δ?",
+      "options": {
+        "tape": {
+          "text": "La cinta",
+          "why": "La cinta contiene los símbolos. δ dice qué hace la máquina con ellos."
+        },
+        "rule-table": {
+          "text": "La tabla de reglas",
+          "why": "Cada fila es una regla de δ: un estado y un símbolo, y después qué escribir, hacia dónde moverse y el estado siguiente."
+        },
+        "start-state": {
+          "text": "El ajuste Estado inicial",
+          "why": "El estado inicial es q₀, otra parte de la 7-tupla."
+        }
+      }
+    },
+    "blank": {
+      "text": "En la definición de Sipser, ¿qué alfabeto contiene el blanco?",
+      "options": {
+        "sigma": {
+          "text": "Σ, el alfabeto de entrada",
+          "why": "Una entrada nunca contiene el blanco, así que el blanco no está en Σ."
+        },
+        "neither": {
+          "text": "Ninguno de los dos alfabetos",
+          "why": "La cinta contiene blancos, así que el blanco es un símbolo de la cinta."
+        },
+        "gamma": {
+          "text": "Γ, el alfabeto de la cinta, pero no Σ",
+          "why": "La cinta contiene blancos, pero una entrada nunca contiene uno."
+        }
+      }
+    },
+    "stay": {
+      "text": "El δ de Sipser mueve la cabeza a la izquierda o a la derecha. ¿Y el movimiento S del simulador?",
+      "options": {
+        "same-work": {
+          "text": "S deja la cabeza en su sitio. Un movimiento a la derecha y luego uno a la izquierda hacen el mismo trabajo.",
+          "why": "Así que S hace más cortas algunas máquinas, pero no les permite hacer más cosas."
+        },
+        "more-power": {
+          "text": "S permite que una máquina resuelva problemas que las máquinas de Sipser no pueden resolver.",
+          "why": "Cualquier regla con S se puede cambiar por un movimiento a la derecha y uno a la izquierda, con un estado más."
+        },
+        "two-cells": {
+          "text": "S mueve la cabeza dos casillas a la derecha.",
+          "why": "S significa “quedarse”: la cabeza no se mueve."
+        }
+      }
+    },
+    "no-rule": {
+      "text": "En este simulador, ¿qué pasa cuando ninguna regla sirve para el estado y el símbolo?",
+      "options": {
+        "accepts": {
+          "text": "La máquina se detiene y acepta.",
+          "why": "Solo un estado de aceptación acepta."
+        },
+        "waits": {
+          "text": "La máquina se queda en su estado y espera.",
+          "why": "Nada podría cambiar, así que el simulador detiene la ejecución."
+        },
+        "error": {
+          "text": "El simulador muestra un error y no empieza.",
+          "why": "Eso pasa cuando dos reglas tienen el mismo estado y el mismo símbolo. Una regla que falta solo importa durante la ejecución."
+        },
+        "rejects": {
+          "text": "La máquina se detiene, y la línea de resultado dice “Rechazada”.",
+          "why": "El δ de Sipser tiene una regla para cada caso, así que esto solo pasa en el simulador."
+        }
+      }
+    },
+    "accept-states": {
+      "text": "En la definición de Sipser, ¿cuántos estados de aceptación tiene una máquina?",
+      "options": {
+        "any": {
+          "text": "Cualquier número, incluso ninguno",
+          "why": "Así funciona la lista Estados de aceptación del simulador. La definición de Sipser tiene uno: q_accept."
+        },
+        "exactly-one": {
+          "text": "Exactamente uno",
+          "why": "La 7-tupla nombra un estado de aceptación, q_accept, y un estado de rechazo, q_reject."
+        },
+        "none": {
+          "text": "Ninguno: la máquina acepta cuando se detiene",
+          "why": "La máquina solo acepta cuando entra en q_accept."
+        }
+      }
+    }
+  }
+}

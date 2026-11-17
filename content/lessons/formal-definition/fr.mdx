@@ -1,0 +1,169 @@
+export const meta = {
+  title: 'La définition formelle',
+  summary: 'Les sept parties d’une machine de Turing dans le livre de Sipser, et où vous trouvez chaque partie dans ce simulateur.',
+  minutes: 7,
+};
+
+La leçon 1 a décrit la machine de Turing avec des mots : une bande, une tête, des états et des règles.
+Les manuels donnent aussi une définition exacte, écrite avec des ensembles.
+Cette leçon suit la définition du manuel de Michael Sipser, *Introduction to the Theory of Computation*.
+Cette définition a sept parties.
+Pour chaque partie, la leçon montre où vous la trouvez dans ce simulateur.
+Elle dit aussi où le simulateur fonctionne autrement que le livre.
+
+## Sept parties
+
+Sipser écrit une machine de Turing comme une liste de sept parties, un 7-uplet :
+
+(Q, Σ, Γ, δ, q₀, q_accept, q_reject)
+
+- **Q** est l’ensemble des états.
+- **Σ** (sigma) est l’alphabet d’entrée : les symboles qu’une entrée peut utiliser. Le blanc n’est pas dans Σ.
+- **Γ** (gamma) est l’alphabet de la bande : tous les symboles que la bande peut contenir. Il contient le blanc et tous les symboles de Σ.
+- **δ** (delta) est la fonction de transition. Elle contient les règles.
+- **q₀** est l’état initial.
+- **q_accept** est l’état d’acceptation.
+- **q_reject** est l’état de rejet. Il doit être un autre état que q_accept.
+
+Q, Σ et Γ sont des ensembles finis.
+Une machine a donc un nombre fixe d’états et de symboles, comme dans l’image de Turing d’une personne au travail.
+
+## Les états : Q, q₀, q_accept et q_reject
+
+Le simulateur n’a pas de champ pour Q.
+Il trouve les états dans la table des règles et dans les réglages de la machine.
+Les réglages ont trois champs pour les états : **État initial**, **États d’acceptation** et **États de rejet**.
+Ils correspondent à q₀, q_accept et q_reject.
+
+La machine de Sipser a exactement un état d’acceptation et exactement un état de rejet.
+Dans ce simulateur, États d’acceptation et États de rejet sont des listes.
+Une liste peut contenir plusieurs états, ou aucun.
+Une règle reste : un état ne peut pas à la fois accepter et rejeter.
+La machine s’arrête dès qu’elle entre dans un état de l’une des deux listes.
+
+## Les alphabets : Σ et Γ
+
+Le simulateur n’a pas non plus de champ pour Σ ou Γ.
+L’entrée et les règles montrent quels symboles une machine utilise.
+
+Un symbole de Γ a son propre réglage : le **Blanc**.
+Sipser écrit le blanc ␣.
+Dans ce simulateur, vous choisissez le symbole du blanc.
+Ce doit être exactement un symbole.
+
+Dans la définition de Sipser, une entrée ne contient jamais le blanc.
+Le simulateur ne le vérifie pas.
+Un blanc dans l’entrée est simplement une case vide.
+
+## Les règles : δ
+
+La fonction de transition δ prend un état et un symbole.
+Elle rend trois choses : l’état suivant, le symbole à écrire et le déplacement.
+Sipser écrit une règle ainsi : δ(q, a) = (r, b, R).
+Cela veut dire : dans l’état q, en lisant a, passer à l’état r, écrire b et aller à droite.
+
+Chaque ligne de la table des règles du simulateur est une règle de δ.
+Les colonnes **Si dans l’état** et **et en lisant** sont l’état et le symbole que δ prend.
+Les colonnes **écrit**, **déplace** et **puis passe à** sont les trois choses qu’elle rend.
+La table les montre dans un autre ordre, mais le sens est le même.
+
+Le simulateur s’écarte du δ de Sipser sur trois points :
+
+- **Un troisième déplacement.** Dans la définition de Sipser, la tête va à gauche (L) ou à droite (R) à chaque pas. Le simulateur a aussi S, qui laisse la tête où elle est. S ne permet pas à une machine de faire plus de choses. Un déplacement à droite puis un déplacement à gauche, avec un état de plus, font le même travail.
+- **Des règles absentes.** Le δ de Sipser a une règle pour chaque état et chaque symbole de la bande. Le simulateur vous laisse omettre des règles. Quand aucune règle ne convient, la machine s’arrête, et le simulateur montre l’exécution comme rejetée.
+- **Deux règles pour le même cas.** Une fonction donne exactement une réponse, donc δ a exactement une règle pour chaque état et chaque symbole. Le simulateur en permet au plus une. Si deux lignes ont le même état et le même symbole, il montre une erreur et ne lance pas la machine.
+
+## La bande
+
+La bande de Sipser a un bout à gauche, mais pas de bout à droite.
+L’entrée commence dans la première case, et la tête commence là aussi.
+Toutes les autres cases contiennent le blanc.
+Si la tête est dans la première case et qu’une règle dit L, la tête reste dans la première case.
+
+Le simulateur a un réglage **Bande** avec deux choix.
+**Bornée à gauche** fonctionne comme la bande de Sipser.
+Sa première case est la case 0, et un déplacement à gauche depuis la case 0 laisse la tête là.
+**Infinie des deux côtés** n’a de bout d’aucun côté.
+Sur les deux sortes de bande, l’entrée commence dans la case 0, et la tête aussi.
+
+Un fichier de machine peut aussi demander la règle de l’application de 2016.
+Alors, un déplacement à gauche depuis la case 0 rejette l’entrée.
+Les réglages montrent une note quand une machine utilise cette règle.
+
+## Quand la machine s’arrête
+
+Dans la définition de Sipser, une machine s’arrête seulement quand elle entre dans q_accept ou dans q_reject.
+Elle peut aussi ne jamais s’arrêter, et tourner sans fin.
+
+Le simulateur s’arrête dans quatre cas :
+
+1. La machine entre dans un état d’acceptation. La ligne de résultat dit « Acceptée ».
+2. La machine entre dans un état de rejet. La ligne de résultat dit « Rejetée ».
+3. Aucune règle ne convient pour l’état et le symbole. La ligne de résultat dit aussi « Rejetée ».
+4. Seulement avec la règle de l’application de 2016, sur une bande bornée à gauche : une règle déplace la tête à gauche depuis la case 0. La ligne de résultat dit aussi « Rejetée ». Si cette même règle entre dans un état d’acceptation ou de rejet, ce sont les cas 1 et 2 qui s’appliquent.
+
+Une machine dans le simulateur peut quand même tourner sans fin.
+C’est pourquoi **Lancer** fait une pause après 10 000 pas et demande s’il faut continuer.
+
+## La machine des palindromes
+
+Un palindrome se lit de la même façon dans les deux sens, comme 0110 ou 101.
+Cette machine décide si son entrée, faite de 0 et de 1, est un palindrome.
+Voici ses sept parties :
+
+- **Q** a huit états : q0, q1, q2, q3, q4, q5, qA et qR.
+- **Σ** a deux symboles : 0 et 1.
+- **Γ** a trois symboles : 0, 1 et le blanc, écrit _.
+- **δ** a 18 règles. Ouvrez la machine dans le simulateur pour les voir toutes.
+- L’état initial est **q0**. L’état d’acceptation est **qA**, et l’état de rejet est **qR**.
+
+Six états ne sont ni qA ni qR, et la bande a trois symboles.
+Six fois trois font 18, donc cette machine a une règle pour chaque état et chaque symbole qui peuvent se présenter.
+Elle ne s’arrête jamais faute de règle.
+
+Elle travaille comme une personne qui vérifie un mot par les deux bouts :
+
+1. En q0, elle efface le premier symbole. Elle passe à q1 si le symbole était 0, et à q2 s’il était 1. L’état se souvient maintenant du symbole.
+2. En q1 ou q2, elle va à droite jusqu’au blanc qui suit l’entrée.
+3. Elle revient sur le dernier symbole, en q3 ou q4. Si le dernier symbole est différent du premier, la machine passe à qR. Si les deux sont identiques, elle efface le dernier symbole et passe à q5.
+4. En q5, elle va à gauche jusqu’au blanc, fait un pas à droite et recommence en q0.
+5. Si elle trouve un blanc là où elle attend un symbole, il ne reste rien à vérifier. Elle passe à qA.
+
+Appuyez sur **Lancer**.
+Avec l’entrée 0110, la machine accepte après 15 pas, et toute la bande est vide.
+
+<Machine example="palindrome" />
+
+Ouvrez maintenant la machine dans le simulateur et changez l’entrée en 0111.
+La machine s’arrête en qR après 6 pas.
+
+Cinq des règles utilisent le déplacement S, et les cinq vont à qA ou à qR.
+La machine s’arrête juste après elles, donc le déplacement ne compte pas.
+Dans la définition de Sipser, ces règles diraient L ou R, et le résultat serait le même.
+
+## Un autre livre, une autre liste
+
+Tous les livres n’utilisent pas les mêmes sept parties.
+Hopcroft, Motwani et Ullman écrivent aussi un 7-uplet : (Q, Σ, Γ, δ, q₀, B, F).
+B est le symbole blanc.
+F est un ensemble d’états d’acceptation, et il peut contenir plus d’un état.
+Il n’y a pas d’état de rejet.
+Leur δ peut omettre des règles, et la machine s’arrête quand aucune règle ne convient.
+
+Sur certains points, le simulateur est plus proche de cette forme.
+Son réglage Blanc correspond à B.
+Sa liste d’états d’acceptation correspond à F.
+Les deux livres écrivent la même idée de deux façons.
+
+## Pourquoi c’est important
+
+Une définition exacte fait d’une machine un objet mathématique.
+Avec elle, vous pouvez prouver des faits sur toutes les machines possibles, pas seulement sur une.
+Les leçons suivantes s’en servent pour montrer que certains problèmes n’ont aucune machine qui les résout.
+
+<Quiz />
+
+## Sources
+
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3e édition, Cengage Learning, 2013. La section 3.1 donne la définition formelle. La section 3.2 montre qu’une tête qui peut rester sur place ne rend pas une machine plus puissante.
+- John E. Hopcroft, Rajeev Motwani et Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3e édition, Pearson/Addison-Wesley, 2007. Chapitre 8.

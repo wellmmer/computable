@@ -1,0 +1,169 @@
+export const meta = {
+  title: 'A definição formal',
+  summary: 'As sete partes de uma máquina de Turing no livro de Sipser, e onde você encontra cada parte neste simulador.',
+  minutes: 7,
+};
+
+A lição 1 descreveu a máquina de Turing em palavras: uma fita, uma cabeça, estados e regras.
+Os livros também dão uma definição exata, escrita com conjuntos.
+Esta lição segue a definição do livro de Michael Sipser, *Introduction to the Theory of Computation*.
+A definição tem sete partes.
+Para cada parte, a lição mostra onde você a encontra neste simulador.
+Ela também diz onde o simulador funciona de um jeito diferente do livro.
+
+## Sete partes
+
+Sipser escreve uma máquina de Turing como uma lista de sete partes, uma 7-upla:
+
+(Q, Σ, Γ, δ, q₀, q_accept, q_reject)
+
+- **Q** é o conjunto de estados.
+- **Σ** (sigma) é o alfabeto de entrada: os símbolos que uma entrada pode usar. O branco não está em Σ.
+- **Γ** (gama) é o alfabeto da fita: todo símbolo que a fita pode guardar. Ele contém o branco e todos os símbolos de Σ.
+- **δ** (delta) é a função de transição. Ela contém as regras.
+- **q₀** é o estado inicial.
+- **q_accept** é o estado de aceitação.
+- **q_reject** é o estado de rejeição. Ele precisa ser um estado diferente de q_accept.
+
+Q, Σ e Γ são conjuntos finitos.
+Então uma máquina tem um número fixo de estados e de símbolos, como na imagem de Turing de uma pessoa trabalhando.
+
+## Os estados: Q, q₀, q_accept e q_reject
+
+O simulador não tem um campo para Q.
+Ele encontra os estados na tabela de regras e nas configurações da máquina.
+As configurações têm três campos para estados: **Estado inicial**, **Estados de aceitação** e **Estados de rejeição**.
+Eles correspondem a q₀, q_accept e q_reject.
+
+A máquina de Sipser tem exatamente um estado de aceitação e exatamente um estado de rejeição.
+Neste simulador, Estados de aceitação e Estados de rejeição são listas.
+Uma lista pode ter vários estados, ou nenhum.
+Uma regra continua: um estado não pode aceitar e rejeitar ao mesmo tempo.
+A máquina para assim que entra em um estado de uma das duas listas.
+
+## Os alfabetos: Σ e Γ
+
+O simulador também não tem um campo para Σ nem para Γ.
+A entrada e as regras mostram quais símbolos uma máquina usa.
+
+Um símbolo de Γ tem uma configuração própria: o **Branco**.
+Sipser escreve o branco como ␣.
+Neste simulador, você escolhe o símbolo do branco.
+Ele precisa ser exatamente um símbolo.
+
+Na definição de Sipser, uma entrada nunca contém o branco.
+O simulador não verifica isso.
+Um branco na entrada é só uma casa vazia.
+
+## As regras: δ
+
+A função de transição δ recebe um estado e um símbolo.
+Ela devolve três coisas: o próximo estado, o símbolo a escrever e o movimento.
+Sipser escreve uma regra assim: δ(q, a) = (r, b, R).
+Ela quer dizer: no estado q, lendo a, vá para o estado r, escreva b e mova para a direita.
+
+Cada linha da tabela de regras do simulador é uma regra de δ.
+As colunas **Se no estado** e **e lendo** são o estado e o símbolo que δ recebe.
+As colunas **escreve**, **move** e **então vai para** são as três coisas que ela devolve.
+A tabela mostra essas partes em outra ordem, mas o sentido é o mesmo.
+
+O simulador é diferente do δ de Sipser em três pontos:
+
+- **Um terceiro movimento.** Na definição de Sipser, a cabeça se move para a esquerda (L) ou para a direita (R) a cada passo. O simulador também tem S, que deixa a cabeça onde está. S não deixa uma máquina fazer mais coisas. Um movimento para a direita e depois um para a esquerda, com um estado a mais, fazem o mesmo trabalho.
+- **Regras que faltam.** O δ de Sipser tem uma regra para cada estado e cada símbolo da fita. O simulador deixa você omitir regras. Quando nenhuma regra serve, a máquina para, e o simulador mostra a execução como rejeitada.
+- **Duas regras para o mesmo caso.** Uma função dá exatamente uma resposta, então δ tem exatamente uma regra para cada estado e símbolo. O simulador permite no máximo uma. Se duas linhas têm o mesmo estado e o mesmo símbolo, ele mostra um erro e não roda.
+
+## A fita
+
+A fita de Sipser tem uma ponta à esquerda, mas nenhuma ponta à direita.
+A entrada começa na primeira casa, e a cabeça começa ali também.
+Todas as outras casas têm o branco.
+Se a cabeça está na primeira casa e uma regra diz L, a cabeça fica na primeira casa.
+
+O simulador tem uma configuração **Fita** com duas opções.
+**Limitada à esquerda** funciona como a fita de Sipser.
+A primeira casa dela é a casa 0, e um movimento para a esquerda na casa 0 deixa a cabeça ali.
+**Infinita nos dois lados** não tem ponta em nenhum lado.
+Nos dois tipos, a entrada começa na casa 0, e a cabeça também.
+
+Um arquivo de máquina também pode pedir a regra do app de 2016.
+Nesse caso, um movimento para a esquerda na casa 0 rejeita a entrada.
+As configurações mostram um aviso quando uma máquina usa essa regra.
+
+## Quando a máquina para
+
+Na definição de Sipser, uma máquina só para quando entra em q_accept ou em q_reject.
+Ela também pode nunca parar, e rodar para sempre.
+
+O simulador para em quatro casos:
+
+1. A máquina entra em um estado de aceitação. A linha de resultado diz "Aceita".
+2. A máquina entra em um estado de rejeição. A linha de resultado diz "Rejeitada".
+3. Nenhuma regra serve para o estado e o símbolo. A linha de resultado também diz "Rejeitada".
+4. Só com a regra do app de 2016, numa fita limitada à esquerda: uma regra move a cabeça para a esquerda na casa 0. A linha de resultado também diz "Rejeitada". Se essa mesma regra entra em um estado de aceitação ou de rejeição, valem os casos 1 e 2.
+
+Uma máquina no simulador ainda pode rodar para sempre.
+Por isso, **Rodar** pausa depois de 10.000 passos e pergunta se deve continuar.
+
+## A máquina de palíndromos
+
+Um palíndromo se lê igual dos dois lados, como 0110 ou 101.
+Esta máquina decide se a entrada dela, feita de 0s e 1s, é um palíndromo.
+Estas são as sete partes dela:
+
+- **Q** tem oito estados: q0, q1, q2, q3, q4, q5, qA e qR.
+- **Σ** tem dois símbolos: 0 e 1.
+- **Γ** tem três símbolos: 0, 1 e o branco, escrito _.
+- **δ** tem 18 regras. Abra a máquina no simulador para ver todas.
+- O estado inicial é **q0**. O estado de aceitação é **qA**, e o estado de rejeição é **qR**.
+
+Seis estados não são qA nem qR, e a fita tem três símbolos.
+Seis vezes três dá 18, então esta máquina tem uma regra para cada estado e símbolo que podem aparecer.
+Ela nunca para por falta de regra.
+
+Ela trabalha como uma pessoa que confere uma palavra pelas duas pontas:
+
+1. Em q0, ela apaga o primeiro símbolo. Ela vai para q1 se o símbolo era 0, e para q2 se era 1. O estado agora lembra o símbolo.
+2. Em q1 ou q2, ela anda para a direita até o branco depois da entrada.
+3. Ela volta para o último símbolo, em q3 ou q4. Se o último símbolo é diferente do primeiro, a máquina vai para qR. Se os dois são iguais, ela apaga o último símbolo e vai para q5.
+4. Em q5, ela anda para a esquerda até o branco, dá um passo para a direita e começa de novo em q0.
+5. Se ela encontra um branco onde espera um símbolo, não sobra nada para conferir. Ela vai para qA.
+
+Aperte **Rodar**.
+Com a entrada 0110, a máquina aceita depois de 15 passos, e a fita fica toda em branco.
+
+<Machine example="palindrome" />
+
+Agora abra a máquina no simulador e mude a entrada para 0111.
+A máquina para em qR depois de 6 passos.
+
+Cinco das regras usam o movimento S, e as cinco vão para qA ou qR.
+A máquina para logo depois delas, então o movimento não importa.
+Na definição de Sipser, essas regras diriam L ou R, e o resultado seria o mesmo.
+
+## Outro livro, outra lista
+
+Nem todo livro usa as mesmas sete partes.
+Hopcroft, Motwani e Ullman também escrevem uma 7-upla: (Q, Σ, Γ, δ, q₀, B, F).
+B é o símbolo branco.
+F é um conjunto de estados de aceitação, e pode ter mais de um estado.
+Não existe estado de rejeição.
+O δ deles pode omitir regras, e a máquina para quando nenhuma regra serve.
+
+Em alguns pontos, o simulador está mais perto dessa forma.
+A configuração Branco corresponde a B.
+A lista de estados de aceitação corresponde a F.
+Os dois livros escrevem a mesma ideia de dois jeitos.
+
+## Por que isso importa
+
+Uma definição exata transforma uma máquina em um objeto matemático.
+Com ela, você pode provar fatos sobre todas as máquinas possíveis, não só sobre uma.
+As próximas lições usam isso para mostrar que alguns problemas não têm nenhuma máquina que os resolva.
+
+<Quiz />
+
+## Fontes
+
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3ª edição, Cengage Learning, 2013. A seção 3.1 dá a definição formal. A seção 3.2 mostra que uma cabeça que pode ficar parada não torna uma máquina mais poderosa.
+- John E. Hopcroft, Rajeev Motwani e Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3ª edição, Pearson/Addison-Wesley, 2007. Capítulo 8.

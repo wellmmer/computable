@@ -1,0 +1,169 @@
+export const meta = {
+  title: 'Die formale Definition',
+  summary: 'Die sieben Teile einer Turingmaschine in Sipsers Lehrbuch, und wo du jeden Teil in diesem Simulator findest.',
+  minutes: 7,
+};
+
+Lektion 1 hat die Turingmaschine in Worten beschrieben: ein Band, ein Kopf, Zustände und Regeln.
+Lehrbücher geben auch eine genaue Definition, geschrieben mit Mengen.
+Diese Lektion folgt der Definition aus dem Lehrbuch von Michael Sipser, *Introduction to the Theory of Computation*.
+Die Definition hat sieben Teile.
+Für jeden Teil zeigt die Lektion, wo du ihn in diesem Simulator findest.
+Sie sagt auch, wo der Simulator anders arbeitet als das Buch.
+
+## Sieben Teile
+
+Sipser schreibt eine Turingmaschine als Liste von sieben Teilen, als 7-Tupel:
+
+(Q, Σ, Γ, δ, q₀, q_accept, q_reject)
+
+- **Q** ist die Menge der Zustände.
+- **Σ** (Sigma) ist das Eingabealphabet: die Symbole, die eine Eingabe benutzen darf. Das Leerzeichen ist nicht in Σ.
+- **Γ** (Gamma) ist das Bandalphabet: jedes Symbol, das auf dem Band stehen darf. Es enthält das Leerzeichen und jedes Symbol aus Σ.
+- **δ** (Delta) ist die Übergangsfunktion. Sie enthält die Regeln.
+- **q₀** ist der Startzustand.
+- **q_accept** ist der akzeptierende Zustand.
+- **q_reject** ist der ablehnende Zustand. Er muss ein anderer Zustand sein als q_accept.
+
+Q, Σ und Γ sind endliche Mengen.
+Eine Maschine hat also eine feste Zahl von Zuständen und Symbolen, wie in Turings Bild von einem Menschen bei der Arbeit.
+
+## Die Zustände: Q, q₀, q_accept und q_reject
+
+Der Simulator hat kein Feld für Q.
+Er findet die Zustände in der Regeltabelle und in den Einstellungen der Maschine.
+Die Einstellungen haben drei Felder für Zustände: **Startzustand**, **Akzeptierende Zustände** und **Ablehnende Zustände**.
+Sie entsprechen q₀, q_accept und q_reject.
+
+Sipsers Maschine hat genau einen akzeptierenden und genau einen ablehnenden Zustand.
+In diesem Simulator sind Akzeptierende Zustände und Ablehnende Zustände Listen.
+Eine Liste darf mehrere Zustände enthalten, oder keinen.
+Eine Regel bleibt: Ein Zustand kann nicht zugleich akzeptieren und ablehnen.
+Die Maschine hält an, sobald sie in einen Zustand aus einer der beiden Listen wechselt.
+
+## Die Alphabete: Σ und Γ
+
+Der Simulator hat auch kein Feld für Σ oder Γ.
+Die Eingabe und die Regeln zeigen, welche Symbole eine Maschine benutzt.
+
+Ein Symbol aus Γ hat eine eigene Einstellung: das **Leerzeichen**.
+Sipser schreibt das Leerzeichen als ␣.
+In diesem Simulator wählst du das Symbol für das Leerzeichen.
+Es muss genau ein Symbol sein.
+
+In Sipsers Definition enthält eine Eingabe nie das Leerzeichen.
+Der Simulator prüft das nicht.
+Ein Leerzeichen in der Eingabe ist einfach ein leeres Feld.
+
+## Die Regeln: δ
+
+Die Übergangsfunktion δ nimmt einen Zustand und ein Symbol.
+Sie gibt drei Dinge zurück: den nächsten Zustand, das Symbol zum Schreiben und die Bewegung.
+Sipser schreibt eine Regel so: δ(q, a) = (r, b, R).
+Das heißt: Im Zustand q, beim Lesen von a, wechsle in den Zustand r, schreibe b und gehe nach rechts.
+
+Jede Zeile der Regeltabelle im Simulator ist eine Regel von δ.
+Die Spalten **Wenn im Zustand** und **und liest** sind der Zustand und das Symbol, die δ nimmt.
+Die Spalten **schreibe**, **bewege** und **dann wechsle zu** sind die drei Dinge, die δ zurückgibt.
+Die Tabelle zeigt sie in einer anderen Reihenfolge, aber die Bedeutung ist dieselbe.
+
+Der Simulator weicht in drei Punkten von Sipsers δ ab:
+
+- **Eine dritte Bewegung.** In Sipsers Definition geht der Kopf bei jedem Schritt nach links (L) oder nach rechts (R). Der Simulator hat auch S, das den Kopf dort lässt, wo er ist. Mit S kann eine Maschine nicht mehr tun. Eine Bewegung nach rechts und dann eine nach links, mit einem zusätzlichen Zustand, leisten dasselbe.
+- **Fehlende Regeln.** Sipsers δ hat eine Regel für jeden Zustand und jedes Bandsymbol. Der Simulator lässt dich Regeln weglassen. Wenn keine Regel passt, hält die Maschine an, und der Simulator zeigt den Lauf als abgelehnt.
+- **Zwei Regeln für denselben Fall.** Eine Funktion gibt genau eine Antwort, also hat δ genau eine Regel für jeden Zustand und jedes Symbol. Der Simulator erlaubt höchstens eine. Haben zwei Zeilen denselben Zustand und dasselbe Symbol, zeigt er einen Fehler und startet die Maschine nicht.
+
+## Das Band
+
+Sipsers Band hat ein linkes Ende, aber kein rechtes Ende.
+Die Eingabe beginnt im ersten Feld, und der Kopf beginnt auch dort.
+Alle anderen Felder enthalten das Leerzeichen.
+Steht der Kopf im ersten Feld und sagt eine Regel L, bleibt der Kopf im ersten Feld.
+
+Der Simulator hat eine Einstellung **Band** mit zwei Möglichkeiten.
+**Einseitig** arbeitet wie Sipsers Band.
+Sein erstes Feld ist Feld 0, und eine Bewegung nach links von Feld 0 lässt den Kopf dort.
+**Beidseitig** hat auf keiner Seite ein Ende.
+Bei beiden Arten beginnt die Eingabe in Feld 0, und der Kopf auch.
+
+Eine Maschinendatei kann auch die Regel der App von 2016 verlangen.
+Dann lehnt eine Bewegung nach links von Feld 0 die Eingabe ab.
+Die Einstellungen zeigen einen Hinweis, wenn eine Maschine diese Regel benutzt.
+
+## Wann die Maschine anhält
+
+In Sipsers Definition hält eine Maschine nur an, wenn sie in q_accept oder q_reject wechselt.
+Sie kann auch nie anhalten und für immer laufen.
+
+Der Simulator hält in vier Fällen an:
+
+1. Die Maschine wechselt in einen akzeptierenden Zustand. Die Ergebniszeile sagt „Akzeptiert“.
+2. Die Maschine wechselt in einen ablehnenden Zustand. Die Ergebniszeile sagt „Abgelehnt“.
+3. Keine Regel passt zum Zustand und zum Symbol. Die Ergebniszeile sagt auch „Abgelehnt“.
+4. Nur mit der Regel der App von 2016, auf einem einseitigen Band: Eine Regel bewegt den Kopf nach links von Feld 0. Die Ergebniszeile sagt auch „Abgelehnt“. Wechselt dieselbe Regel in einen akzeptierenden oder ablehnenden Zustand, gelten stattdessen die Fälle 1 und 2.
+
+Eine Maschine im Simulator kann trotzdem für immer laufen.
+Deshalb pausiert **Starten** nach 10.000 Schritten und fragt, ob es weitergehen soll.
+
+## Die Palindrom-Maschine
+
+Ein Palindrom liest sich von beiden Enden gleich, wie 0110 oder 101.
+Diese Maschine entscheidet, ob ihre Eingabe aus 0 und 1 ein Palindrom ist.
+Das sind ihre sieben Teile:
+
+- **Q** hat acht Zustände: q0, q1, q2, q3, q4, q5, qA und qR.
+- **Σ** hat zwei Symbole: 0 und 1.
+- **Γ** hat drei Symbole: 0, 1 und das Leerzeichen, geschrieben _.
+- **δ** hat 18 Regeln. Öffne die Maschine im Simulator, um alle zu sehen.
+- Der Startzustand ist **q0**. Der akzeptierende Zustand ist **qA**, und der ablehnende Zustand ist **qR**.
+
+Sechs Zustände sind weder qA noch qR, und das Band hat drei Symbole.
+Sechs mal drei ist 18, also hat diese Maschine eine Regel für jeden Zustand und jedes Symbol, die vorkommen können.
+Sie hält nie an, weil eine Regel fehlt.
+
+Sie arbeitet wie ein Mensch, der ein Wort von beiden Enden her prüft:
+
+1. In q0 löscht sie das erste Symbol. Sie wechselt zu q1, wenn das Symbol 0 war, und zu q2, wenn es 1 war. Der Zustand merkt sich jetzt das Symbol.
+2. In q1 oder q2 geht sie nach rechts bis zum Leerzeichen nach der Eingabe.
+3. Sie geht zurück auf das letzte Symbol, in q3 oder q4. Ist das letzte Symbol anders als das erste, wechselt die Maschine zu qR. Sind beide gleich, löscht sie das letzte Symbol und wechselt zu q5.
+4. In q5 geht sie nach links bis zum Leerzeichen, macht einen Schritt nach rechts und beginnt wieder in q0.
+5. Findet sie ein Leerzeichen, wo sie ein Symbol erwartet, bleibt nichts mehr zu prüfen. Sie wechselt zu qA.
+
+Drücke **Starten**.
+Mit der Eingabe 0110 akzeptiert die Maschine nach 15 Schritten, und das ganze Band ist leer.
+
+<Machine example="palindrome" />
+
+Öffne die Maschine jetzt im Simulator und ändere die Eingabe in 0111.
+Die Maschine hält nach 6 Schritten in qR an.
+
+Fünf der Regeln benutzen die Bewegung S, und alle fünf führen zu qA oder qR.
+Die Maschine hält direkt danach an, also spielt die Bewegung keine Rolle.
+In Sipsers Definition würden diese Regeln L oder R sagen, und das Ergebnis wäre dasselbe.
+
+## Ein anderes Buch, eine andere Liste
+
+Nicht jedes Buch benutzt dieselben sieben Teile.
+Hopcroft, Motwani und Ullman schreiben auch ein 7-Tupel: (Q, Σ, Γ, δ, q₀, B, F).
+B ist das Leerzeichen.
+F ist eine Menge von akzeptierenden Zuständen, und sie darf mehr als einen Zustand enthalten.
+Es gibt keinen ablehnenden Zustand.
+Ihr δ darf Regeln weglassen, und die Maschine hält an, wenn keine Regel passt.
+
+In manchen Punkten ist der Simulator näher an dieser Form.
+Seine Einstellung Leerzeichen entspricht B.
+Seine Liste der akzeptierenden Zustände entspricht F.
+Die beiden Bücher schreiben dieselbe Idee auf zwei Arten auf.
+
+## Warum das wichtig ist
+
+Eine genaue Definition macht aus einer Maschine ein mathematisches Objekt.
+Damit kannst du Aussagen über alle möglichen Maschinen beweisen, nicht nur über eine.
+Spätere Lektionen nutzen das, um zu zeigen, dass es für manche Probleme keine Maschine gibt, die sie löst.
+
+<Quiz />
+
+## Quellen
+
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3. Auflage, Cengage Learning, 2013. Abschnitt 3.1 gibt die formale Definition. Abschnitt 3.2 zeigt, dass ein Kopf, der stehen bleiben darf, eine Maschine nicht mächtiger macht.
+- John E. Hopcroft, Rajeev Motwani und Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3. Auflage, Pearson/Addison-Wesley, 2007. Kapitel 8.

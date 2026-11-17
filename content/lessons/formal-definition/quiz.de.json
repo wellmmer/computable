@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "delta": {
+      "text": "Welcher Teil des Simulators entspricht der Übergangsfunktion δ?",
+      "options": {
+        "tape": {
+          "text": "Das Band",
+          "why": "Das Band enthält die Symbole. δ sagt, was die Maschine mit ihnen tut."
+        },
+        "rule-table": {
+          "text": "Die Regeltabelle",
+          "why": "Jede Zeile ist eine Regel von δ: ein Zustand und ein Symbol, dann was geschrieben wird, wohin der Kopf geht und der nächste Zustand."
+        },
+        "start-state": {
+          "text": "Die Einstellung Startzustand",
+          "why": "Der Startzustand ist q₀, ein anderer Teil des 7-Tupels."
+        }
+      }
+    },
+    "blank": {
+      "text": "Welches Alphabet enthält in Sipsers Definition das Leerzeichen?",
+      "options": {
+        "sigma": {
+          "text": "Σ, das Eingabealphabet",
+          "why": "Eine Eingabe enthält nie das Leerzeichen, also ist das Leerzeichen nicht in Σ."
+        },
+        "neither": {
+          "text": "Keines der beiden Alphabete",
+          "why": "Auf dem Band stehen Leerzeichen, also ist das Leerzeichen ein Bandsymbol."
+        },
+        "gamma": {
+          "text": "Γ, das Bandalphabet, aber nicht Σ",
+          "why": "Auf dem Band stehen Leerzeichen, aber eine Eingabe enthält nie eines."
+        }
+      }
+    },
+    "stay": {
+      "text": "Sipsers δ bewegt den Kopf nach links oder nach rechts. Und die Bewegung S im Simulator?",
+      "options": {
+        "same-work": {
+          "text": "S lässt den Kopf an seinem Platz. Eine Bewegung nach rechts und dann eine nach links leisten dasselbe.",
+          "why": "S macht also manche Maschinen kürzer, aber sie können damit nicht mehr tun."
+        },
+        "more-power": {
+          "text": "Mit S kann eine Maschine Probleme lösen, die Sipsers Maschinen nicht lösen können.",
+          "why": "Jede Regel mit S lässt sich durch eine Bewegung nach rechts und eine nach links ersetzen, mit einem zusätzlichen Zustand."
+        },
+        "two-cells": {
+          "text": "S bewegt den Kopf zwei Felder nach rechts.",
+          "why": "S heißt „stehen bleiben“: Der Kopf bewegt sich nicht."
+        }
+      }
+    },
+    "no-rule": {
+      "text": "Was passiert in diesem Simulator, wenn keine Regel zum Zustand und zum Symbol passt?",
+      "options": {
+        "accepts": {
+          "text": "Die Maschine hält an und akzeptiert.",
+          "why": "Nur ein akzeptierender Zustand akzeptiert."
+        },
+        "waits": {
+          "text": "Die Maschine bleibt in ihrem Zustand und wartet.",
+          "why": "Nichts könnte sich ändern, also beendet der Simulator den Lauf."
+        },
+        "error": {
+          "text": "Der Simulator zeigt einen Fehler und startet nicht.",
+          "why": "Das passiert, wenn zwei Regeln denselben Zustand und dasselbe Symbol haben. Eine fehlende Regel zählt erst während des Laufs."
+        },
+        "rejects": {
+          "text": "Die Maschine hält an, und die Ergebniszeile sagt „Abgelehnt“.",
+          "why": "Sipsers δ hat für jeden Fall eine Regel, also passiert das nur im Simulator."
+        }
+      }
+    },
+    "accept-states": {
+      "text": "Wie viele akzeptierende Zustände hat eine Maschine in Sipsers Definition?",
+      "options": {
+        "any": {
+          "text": "Beliebig viele, auch keinen",
+          "why": "So arbeitet die Liste Akzeptierende Zustände im Simulator. Sipsers Definition hat einen: q_accept."
+        },
+        "exactly-one": {
+          "text": "Genau einen",
+          "why": "Das 7-Tupel nennt einen akzeptierenden Zustand, q_accept, und einen ablehnenden Zustand, q_reject."
+        },
+        "none": {
+          "text": "Keinen: Die Maschine akzeptiert, wenn sie anhält",
+          "why": "Die Maschine akzeptiert nur, wenn sie in q_accept wechselt."
+        }
+      }
+    }
+  }
+}

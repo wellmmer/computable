@@ -1,6 +1,17 @@
 import type { MDXContent } from 'mdx/types';
 import type { Locale } from 'next-intl';
 import { z } from 'zod';
+import * as formalDefinitionDe from '../../content/lessons/formal-definition/de.mdx';
+import * as formalDefinitionEn from '../../content/lessons/formal-definition/en.mdx';
+import * as formalDefinitionEs from '../../content/lessons/formal-definition/es.mdx';
+import * as formalDefinitionFr from '../../content/lessons/formal-definition/fr.mdx';
+import * as formalDefinitionPtBR from '../../content/lessons/formal-definition/pt-BR.mdx';
+import { quiz as formalDefinitionQuiz } from '../../content/lessons/formal-definition/quiz';
+import formalDefinitionQuizDe from '../../content/lessons/formal-definition/quiz.de.json';
+import formalDefinitionQuizEn from '../../content/lessons/formal-definition/quiz.en.json';
+import formalDefinitionQuizEs from '../../content/lessons/formal-definition/quiz.es.json';
+import formalDefinitionQuizFr from '../../content/lessons/formal-definition/quiz.fr.json';
+import formalDefinitionQuizPtBR from '../../content/lessons/formal-definition/quiz.pt-BR.json';
 import * as intuitionDe from '../../content/lessons/intuition/de.mdx';
 import * as intuitionEn from '../../content/lessons/intuition/en.mdx';
 import * as intuitionEs from '../../content/lessons/intuition/es.mdx';
@@ -79,6 +90,13 @@ export const LESSONS: readonly Lesson[] = [
     es: [intuitionEs, intuitionQuizEs],
     fr: [intuitionFr, intuitionQuizFr],
     de: [intuitionDe, intuitionQuizDe],
+  }),
+  lesson('formal-definition', formalDefinitionQuiz, {
+    en: [formalDefinitionEn, formalDefinitionQuizEn],
+    'pt-BR': [formalDefinitionPtBR, formalDefinitionQuizPtBR],
+    es: [formalDefinitionEs, formalDefinitionQuizEs],
+    fr: [formalDefinitionFr, formalDefinitionQuizFr],
+    de: [formalDefinitionDe, formalDefinitionQuizDe],
   }),
 ];
 
