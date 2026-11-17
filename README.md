@@ -7,11 +7,10 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: releases 1, 2a and 2b are live at https://computable-lac.vercel.app.** This repo held a
+> **Status: releases 1 and 2 are live at https://computable-lac.vercel.app.** This repo held a
 > 2016 capstone project built with jQuery. It is now Computable, built release by release. Release 1
-> is the simulator. Releases 2a and 2b add lessons 1 to 6. Release 2c, a guide for reading Turing's
-> 1936 paper, comes next. The roadmap below lists the rest. The 2016 version stays available at the
-> git tag `v1.0-tcc-2016`.
+> is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. The
+> roadmap below lists the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -39,7 +38,7 @@ machine could do the same work.
 | **R1** | The simulator, the guided tour, 5 languages, light and dark themes, About, Support the dev | Live. Support the dev shows its payment links once they are set. |
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
-| **R2c** | Turing's 1936 paper, read alongside a running tape | Planned |
+| **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
@@ -104,6 +103,19 @@ machine could do the same work.
   appendix shows that his computable sequences and Church's λ-definable ones are the same.
 - **Quotes from the paper, with page numbers.** They stay in Turing's English. The other languages
   add a translation next to them.
+
+## What R2c brings
+
+- **A reading guide to Turing's 1936 paper.** One block for each part: sections 1 to 11, the
+  appendix and Turing's later correction. Each block gives the pages in the journal, a short summary
+  and links to the lessons that explain it.
+- **Short quotes, not the paper.** Each part has at most one quote, word for word, with its page.
+  The quotes stay in Turing's English, and the other languages add a translation. The page links to
+  the paper by its DOI.
+- **A tape that moves as you read.** Turing's first machine runs at the top of the screen. Each part
+  you reach moves it one step, and scrolling back moves it back. With reduced motion, Step and Reset
+  buttons move it instead.
+- **On the Learn page, after lesson 6.** The guide has no quiz.
 
 ## The machine format
 
