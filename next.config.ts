@@ -22,7 +22,8 @@ const nextConfig: NextConfig = {
 };
 
 // Compiles the lesson files (.mdx). They are imported by name, so pageExtensions stays as it is.
-const withMDX = createMDX({});
+// remark-gfm adds markdown tables (spec R2b 2). Turbopack takes plugins by name, not as functions.
+const withMDX = createMDX({ options: { remarkPlugins: ['remark-gfm'] } });
 // Reads src/i18n/request.ts, so every page gets its language and messages.
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(withMDX(nextConfig));

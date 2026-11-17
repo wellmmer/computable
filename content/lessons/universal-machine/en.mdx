@@ -1,0 +1,147 @@
+export const meta = {
+  title: 'The universal machine',
+  summary: 'How Turing wrote a whole machine as one line of letters, and described one machine that can do the work of any other.',
+  minutes: 6,
+};
+
+Each machine in lessons 1 and 2 does one job.
+Binary +1 adds one.
+The palindrome checker checks palindromes.
+For a new job, you need a new rule table.
+
+Turing's 1936 paper states that one machine can do the work of every machine.
+The idea is simple: write the rules of a machine on the tape.
+Then one fixed machine can read those rules and follow them.
+This lesson shows how Turing wrote rules as symbols, and what that machine does.
+It follows sections 5 and 6 of his 1936 paper.
+
+## Turing's first machine again
+
+Here is the machine from lesson 1.
+It prints 0 1 0 1 … without end.
+It has four states, 𝔟, 𝔠, 𝔢 and 𝔨, and one rule for each state.
+
+<Machine example="turing-1936" />
+
+To put this machine on a tape, Turing first writes each rule in a fixed form.
+
+## Numbers for states and symbols
+
+Turing gives each state a number.
+The start state is always q1.
+He writes:
+
+> “The initial m-configuration is always to be called q1.” (Turing, 1936, page 239)
+
+The other states get the next numbers.
+Turing also numbers the symbols.
+The blank is S0, the symbol 0 is S1, and the symbol 1 is S2.
+
+Then he writes each name with letters.
+A state is D, followed by A as many times as its number.
+A symbol is D, followed by C as many times as its number.
+
+| Name | Number | Letters |
+| --- | --- | --- |
+| 𝔟 | q1 | DA |
+| 𝔠 | q2 | DAA |
+| 𝔢 | q3 | DAAA |
+| 𝔨 | q4 | DAAAA |
+| blank | S0 | D |
+| 0 | S1 | DC |
+| 1 | S2 | DCC |
+
+## One rule in five parts
+
+Next, every rule gets the same shape.
+It prints one symbol and then moves once.
+A rule that only moves prints the symbol that is already there.
+So "in 𝔠, move right" becomes "in q2, reading S0, print S0, move right".
+
+Each rule then has five parts, in this order:
+
+1. The state, such as DA for q1.
+2. The symbol the head reads, such as D for the blank.
+3. The symbol the machine prints, such as DC for 0.
+4. The move: L for left, R for right, or N for no move.
+5. The next state, such as DAA for q2.
+
+A semicolon ends the rule.
+The first rule of the machine reads: in 𝔟, on a blank, print 0, move right, go to 𝔠.
+In numbers, that is q1 S0 S1 R q2.
+In letters, it is DA D DC R DAA, followed by a semicolon: DADDCRDAA;
+
+## The standard description
+
+Write the four rules one after another, and you get one line of letters.
+Turing calls it the **standard description** of the machine, or S.D for short.
+
+<Encoding />
+
+Turing prints the same description on page 241 of his paper, over two lines.
+This page computes it from the machine's rules, and it matches the paper letter for letter.
+
+## From letters to a number
+
+Turing goes one step further.
+He replaces each letter with a digit: A is 1, C is 2, D is 3, L is 4, R is 5, N is 6, and the semicolon is 7.
+The line of letters becomes one long number.
+
+> “The integer represented by this numeral may be called a description number (D.N) of the machine.” (Turing, 1936, page 240)
+
+For the first machine, the description number has 47 digits.
+The box above shows it under the standard description.
+
+A machine can have more than one description number.
+You could write its rules in another order.
+You could also add a rule that never runs.
+Turing gives a second, longer number for the same machine, with one extra rule.
+But each description number describes only one machine:
+
+> “The D.N determine the S.D and the structure of the machine uniquely.” (Turing, 1936, pages 240–241)
+
+So every machine has at least one number.
+You can list all machines in the order of their numbers.
+Lesson 4 uses this list.
+
+## The universal machine
+
+Now Turing describes one machine that can do the work of any other.
+
+> “It is possible to invent a single machine which can be used to compute any computable sequence.” (Turing, 1936, page 241)
+
+He calls it 𝒰, the universal machine.
+You give 𝒰 a tape that starts with the standard description of another machine.
+Then 𝒰 prints the same digits as that machine.
+
+𝒰 keeps a record of the other machine on its own tape: its symbols, the cell under its head, and its state.
+At each step, it looks for the rule that fits the state and the symbol.
+It does what the rule says, and updates its record.
+Then it looks for the next rule.
+
+𝒰 is slow.
+It needs many steps of its own for one step of the other machine.
+But speed does not matter here.
+What matters is that one fixed rule table is enough for every machine.
+Section 7 of the paper gives the complete table of 𝒰, on pages 243 to 246.
+
+## Why this matters
+
+Before 𝒰, each job needed its own machine.
+With 𝒰, a job is just a line of symbols on a tape.
+The computer you use today works in the same way.
+One machine runs many programs, and each program is data in its memory.
+
+The standard description has a second use.
+A machine can read the description of another machine, and even its own.
+So a machine can try to answer questions about machines.
+Lesson 4 asks one of these questions: will this machine ever stop?
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, series 2, volume 42, pages 230–265, 1936. The standard description and the description number are in section 5. The universal machine is in sections 6 and 7.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. A guided tour of the whole paper, line by line.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3rd edition, Cengage Learning, 2013. Chapter 4.
+- John E. Hopcroft, Rajeev Motwani and Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3rd edition, Pearson/Addison-Wesley, 2007. Chapter 9.

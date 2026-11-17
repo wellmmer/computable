@@ -26,7 +26,7 @@ describe('Learn page (spec 2.1)', () => {
   it('lists the live lessons with their number, title, summary and reading time', () => {
     renderWithIntl(<LearnPage />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Learn');
-    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+    expect(screen.getAllByRole('listitem')).toHaveLength(4);
     expect(within(lessonRow()).getByText('Lesson 1')).toBeTruthy();
     expect(within(lessonRow()).getByRole('link', { name: 'Intuition: the human computer' }).getAttribute('href')).toBe('/learn/intuition');
     expect(within(lessonRow()).getByText(/^How Turing turned a person/)).toBeTruthy();
@@ -35,6 +35,12 @@ describe('Learn page (spec 2.1)', () => {
     expect(within(lessonRow(2)).getByRole('link', { name: 'The formal definition' }).getAttribute('href')).toBe('/learn/formal-definition');
     expect(within(lessonRow(2)).getByText(/^The seven parts of a Turing machine/)).toBeTruthy();
     expect(within(lessonRow(2)).getByText('7 min read')).toBeTruthy();
+    expect(within(lessonRow(3)).getByText('Lesson 3')).toBeTruthy();
+    expect(within(lessonRow(3)).getByRole('link', { name: 'The universal machine' }).getAttribute('href')).toBe('/learn/universal-machine');
+    expect(within(lessonRow(3)).getByText('6 min read')).toBeTruthy();
+    expect(within(lessonRow(4)).getByText('Lesson 4')).toBeTruthy();
+    expect(within(lessonRow(4)).getByRole('link', { name: 'The halting problem' }).getAttribute('href')).toBe('/learn/halting-problem');
+    expect(within(lessonRow(4)).getByText('7 min read')).toBeTruthy();
     expect(screen.getByText('More lessons come later.')).toBeTruthy();
   });
 

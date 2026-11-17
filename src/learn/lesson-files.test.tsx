@@ -18,24 +18,33 @@ function lessonAndName(path: string): [string, string] {
   return [lesson, file.replace(/\.(mdx|ts|json)$/, '')];
 }
 
-/** The tags that markdown makes from headings, paragraphs, quotes, lists, links and emphasis (spec 3). */
-const MARKDOWN_TAGS = ['h2', 'h3', 'p', 'blockquote', 'ul', 'ol', 'li', 'a', 'strong', 'em'];
+/** The tags that markdown makes from headings, paragraphs, quotes, lists, links, emphasis (spec 3) and tables (spec R2b 2). */
+const MARKDOWN_TAGS = ['h2', 'h3', 'p', 'blockquote', 'ul', 'ol', 'li', 'a', 'strong', 'em', 'table', 'thead', 'tbody', 'tr', 'th', 'td'];
 
-/** Draws a lesson file with stand-ins for <Machine> and <Quiz>, and reads the HTML back. */
+/** Draws a lesson file with stand-ins for <Machine>, <Encoding> and <Quiz>, and reads the HTML back. */
 function render(Content: MDXContent): Element {
   const html = renderToStaticMarkup(
-    <Content components={{ Machine: ({ example }: { example: ExampleId }) => <div data-machine={example} />, Quiz: () => <div data-quiz="" /> }} />,
+    <Content
+      components={{
+        Machine: ({ example }: { example: ExampleId }) => <div data-machine={example} />,
+        Encoding: () => <div data-encoding="" />,
+        Quiz: () => <div data-quiz="" />,
+      }}
+    />,
   );
   const page = document.createElement('div');
   page.innerHTML = html;
   return page;
 }
 
-/** The parts a translation must keep, in order: headings, quotes, lists, machines and the quiz. */
+/** The parts a translation must keep, in order: headings, quotes, lists, tables, machines, the encoding and the quiz. */
 function skeleton(page: Element): string[] {
-  return [...page.querySelectorAll('h2, h3, blockquote, ul, ol, [data-machine], [data-quiz]')].map((element) =>
-    element.hasAttribute('data-machine') ? `machine:${element.getAttribute('data-machine')}` : element.tagName.toLowerCase().replace('div', 'quiz'),
-  );
+  return [...page.querySelectorAll('h2, h3, blockquote, ul, ol, table, tr, [data-machine], [data-encoding], [data-quiz]')].map((element) => {
+    if (element.hasAttribute('data-machine')) return `machine:${element.getAttribute('data-machine')}`;
+    if (element.hasAttribute('data-encoding')) return 'encoding';
+    if (element.hasAttribute('data-quiz')) return 'quiz';
+    return element.tagName.toLowerCase();
+  });
 }
 
 /**
@@ -52,7 +61,17 @@ const BOOK_LINKS = [
 const TURING_DOI = 'https://doi.org/10.1112/plms/s2-42.1.230';
 
 /** The lessons whose "Sources" list Turing's 1936 paper. A lesson that adds it must be named here. */
-const LESSONS_CITING_TURING = ['intuition'];
+const LESSONS_CITING_TURING = ['intuition', 'universal-machine', 'halting-problem'];
+
+/** The lessons whose "Sources" list Petzold's *The Annotated Turing*. A lesson that adds it must be named here. */
+const LESSONS_CITING_PETZOLD = ['universal-machine', 'halting-problem'];
+
+/**
+ * The publisher's page of Petzold's *The Annotated Turing* (Wiley, 2008, ISBN 978-0-470-22905-7).
+ * Wiley answers 403 to scripts; a browser opened it on 2026-11-17 and showed the book.
+ */
+const PETZOLD_LINK =
+  'https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057';
 
 /** The links of the last list in a lesson: its "Sources". */
 function sourceLinks(page: Element): { text: string; hrefs: string[] }[] {
@@ -96,9 +115,9 @@ describe('lesson files (content/lessons)', () => {
       expect(() => buildQuiz(key, data, `${lesson}/${name}.json`)).not.toThrow();
     });
 
-    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx holds only markdown, <Machine> and <Quiz>', (_, Content) => {
+    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx holds only markdown, <Machine>, <Encoding> and <Quiz>', (_, Content) => {
       const page = render(Content);
-      const tags = new Set([...page.querySelectorAll('*:not([data-machine]):not([data-quiz])')].map((element) => element.tagName.toLowerCase()));
+      const tags = new Set([...page.querySelectorAll('*:not([data-machine]):not([data-encoding]):not([data-quiz])')].map((element) => element.tagName.toLowerCase()));
       expect([...tags].filter((tag) => !MARKDOWN_TAGS.includes(tag))).toEqual([]);
       expect(page.querySelectorAll('[data-quiz]')).toHaveLength(1);
       const machines = [...page.querySelectorAll('[data-machine]')].map((machine) => machine.getAttribute('data-machine'));
@@ -121,6 +140,16 @@ describe('lesson files (content/lessons)', () => {
       }
       expect(turing).toHaveLength(1);
       expect(turing[0].hrefs).toContain(TURING_DOI);
+    });
+
+    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links The Annotated Turing to its page, if the lesson cites it', (_, Content) => {
+      const petzold = sourceLinks(render(Content)).filter((item) => item.text.includes('The Annotated Turing'));
+      if (!LESSONS_CITING_PETZOLD.includes(lesson)) {
+        expect(petzold).toEqual([]);
+        return;
+      }
+      expect(petzold).toHaveLength(1);
+      expect(petzold[0].hrefs).toContain(PETZOLD_LINK);
     });
 
     it('has the same headings, quotes, lists, machines and quiz in every language, in the same order', () => {

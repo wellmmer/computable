@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "standard-description": {
+      "text": "What is the standard description of a machine?",
+      "options": {
+        "steps": {
+          "text": "A list of the steps that the machine makes",
+          "why": "The steps depend on the input. The standard description holds only the rules."
+        },
+        "rules-as-letters": {
+          "text": "Its rules, written as one line of letters",
+          "why": "Each rule becomes five parts in letters, and a semicolon ends it."
+        },
+        "tape": {
+          "text": "The symbols on its tape at the end",
+          "why": "The tape holds what the machine prints. The standard description holds how it works."
+        }
+      }
+    },
+    "state-letters": {
+      "text": "How does Turing write the state q3 in letters?",
+      "options": {
+        "dccc": {
+          "text": "DCCC",
+          "why": "C counts symbols. A counts states."
+        },
+        "d3": {
+          "text": "D3",
+          "why": "The standard description uses only letters and the semicolon."
+        },
+        "daaa": {
+          "text": "DAAA",
+          "why": "A state is D, then A as many times as its number: three times for q3."
+        },
+        "aaa": {
+          "text": "AAA",
+          "why": "Every state and every symbol starts with D."
+        }
+      }
+    },
+    "description-number": {
+      "text": "How does a standard description become a description number?",
+      "options": {
+        "digits": {
+          "text": "Each letter is replaced by a digit, such as A by 1 and D by 3",
+          "why": "The line of letters then reads as one long number."
+        },
+        "count": {
+          "text": "The letters are counted",
+          "why": "Counting would give the same number to many machines."
+        },
+        "sum": {
+          "text": "The numbers of the states are added up",
+          "why": "A sum would lose the rules. The description number keeps every letter."
+        }
+      }
+    },
+    "universal-tape": {
+      "text": "What does the universal machine 𝒰 need at the start of its tape?",
+      "options": {
+        "description": {
+          "text": "The standard description of another machine",
+          "why": "𝒰 reads it and does the work of that machine."
+        },
+        "nothing": {
+          "text": "Nothing: it knows every machine already",
+          "why": "𝒰 has one fixed rule table. The other machine comes from the tape."
+        },
+        "own-table": {
+          "text": "A new rule table for 𝒰 itself",
+          "why": "𝒰 never changes. Only the tape changes."
+        }
+      }
+    },
+    "many-numbers": {
+      "text": "Can one machine have more than one description number?",
+      "options": {
+        "exactly-one": {
+          "text": "No, each machine has exactly one",
+          "why": "Another order of the rules gives another number for the same machine."
+        },
+        "only-if-stops": {
+          "text": "Only if the machine stops",
+          "why": "Every machine has a description number, whether it stops or not."
+        },
+        "yes": {
+          "text": "Yes, for example with its rules in another order",
+          "why": "Turing gives two numbers for his first machine. But each number describes only one machine."
+        }
+      }
+    }
+  }
+}

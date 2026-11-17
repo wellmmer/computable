@@ -1,0 +1,193 @@
+export const meta = {
+  title: 'The halting problem',
+  summary: 'Why no machine can tell, for every machine and input, whether it will stop. The diagonal argument step by step, and what Turing himself proved.',
+  minutes: 7,
+};
+
+Some machines stop.
+Others run forever.
+Can we always tell which, before we run them?
+This lesson shows that no machine can answer this question for every machine.
+The proof is short, and it uses the descriptions of lesson 3.
+At the end, the lesson shows what Turing himself proved in 1936.
+His result is close to the one in this lesson, but it is not the same.
+
+## A machine that stops
+
+Here is Binary +1 from lesson 1.
+Press **Run**.
+
+<Machine example="binary-plus-one" />
+
+The machine stops in qA after 8 steps.
+The tape reads 1100.
+For this machine, the answer is easy: it stops.
+
+## A machine that runs forever
+
+Here is Turing's first machine.
+Press **Run**, and then **Pause** when you have seen enough.
+
+<Machine example="turing-1936" />
+
+The machine prints 0 1 0 1 … and never stops.
+After 𝔨, it always goes back to 𝔟.
+You can tell from its four rules.
+
+The simulator cannot tell.
+It only counts steps.
+On this page, Run makes one step every 0.7 seconds.
+After 10,000 steps, about two hours later, Run pauses.
+The result line then says that the machine may never halt, and asks if it should continue.
+The two hours hold only while the tab stays visible.
+Browsers slow down hidden tabs.
+In the full simulator, at the fastest speed, the pause comes after about 3 seconds.
+
+The limit of 10,000 steps is a guess.
+Another machine might stop at step 10,001.
+Could a better simulator replace the guess with a sure answer?
+
+## The question
+
+Imagine a machine H that reads two things on its tape:
+
+- the description of a machine M, as in lesson 3;
+- an input for M.
+
+H must always stop, and then say "stops" or "forever".
+"Stops" means that M stops on that input.
+"Forever" means that M runs forever on it.
+H must be right for every machine and every input.
+
+H cannot simply run M and wait.
+If M runs forever, H would wait forever too, and never answer.
+H would need a smarter method.
+The question "does such an H exist?" is called the **halting problem**.
+
+The answer is no.
+The proof assumes that H exists, and then finds a contradiction.
+
+## The diagonal argument, step by step
+
+**Step 1. List every machine.**
+Lesson 3 showed that every machine has a description number.
+Sort the machines by their numbers: M1, M2, M3, and so on.
+Every machine is somewhere in this list.
+
+**Step 2. Fill a table with H's answers.**
+Give each machine, as its input, the description of a machine.
+Row M1 shows what M1 does on the description of M1, of M2, of M3, and so on.
+H fills in every cell.
+The answers below are made up.
+Only the pattern matters.
+
+| Machine | on M1 | on M2 | on M3 | on M4 |
+| --- | --- | --- | --- | --- |
+| M1 | **stops** | forever | stops | stops |
+| M2 | stops | **forever** | forever | stops |
+| M3 | forever | stops | **forever** | stops |
+| M4 | stops | stops | forever | **stops** |
+
+The cells in bold form the diagonal.
+They show each machine on its own description: M1 on M1, M2 on M2, M3 on M3, M4 on M4.
+Here the diagonal reads: stops, forever, forever, stops.
+
+**Step 3. Build a new machine, D.**
+D reads the description of a machine M.
+It gives H two things: the description of M, as the machine, and the same description, as the input.
+Then D does the opposite of H's answer:
+
+- If H says "stops", D runs forever.
+- If H says "forever", D stops.
+
+D is a real machine, because H is one.
+D only needs a few extra rules: to copy the description, and to loop forever.
+
+**Step 4. Compare D with the list.**
+On each description, D does the opposite of the diagonal.
+
+| Machine | on M1 | on M2 | on M3 | on M4 |
+| --- | --- | --- | --- | --- |
+| Diagonal | stops | forever | forever | stops |
+| D | forever | stops | stops | forever |
+
+D differs from M1 on M1.
+It differs from M2 on M2, and so on.
+So D differs from every machine in the list.
+But the list holds every machine, so D must be in it.
+
+**Step 5. Ask what D does on its own description.**
+Say D is machine number k in the list.
+Look at the cell where row k meets column k.
+
+- If D stops on its own description, then H said "forever". But then D stops, so H was wrong.
+- If D runs forever on its own description, then H said "stops". But then D runs forever, so H was wrong.
+
+Both cases are impossible.
+Each step follows from the one before.
+Only one thing can be wrong: the assumption that H exists.
+So no machine H can exist.
+No simulator can replace its step limit with a sure answer for every machine.
+
+## What Turing proved
+
+Many textbooks use a proof of this kind.
+Turing's 1936 paper asks a different question.
+Here is why.
+
+Turing wanted machines that print the digits of a number, without end.
+In lesson 1, his first machine does exactly that.
+For Turing, a good machine never stops printing digits.
+He called such a machine circle-free:
+
+> “If a computing machine never writes down more than a finite number of symbols of the first kind, it will be called circular. Otherwise it is said to be circle-free.” (Turing, 1936, page 233)
+
+"Symbols of the first kind" are the digits 0 and 1.
+So a machine that prints a few digits and then stops is circular.
+For Turing, it is a bad machine.
+
+In section 8, Turing assumes a machine 𝔇 that tells, for any description, if the machine is circle-free.
+From 𝔇 and the universal machine 𝒰 of lesson 3, he builds a machine ℋ.
+ℋ goes through the numbers 1, 2, 3, … in order, and asks 𝔇 about each one.
+For the first circle-free machine it finds, ℋ prints that machine's first digit.
+For the second, it prints that machine's second digit, and so on.
+This is a diagonal, as in the tables above, and ℋ is circle-free.
+Then Turing asks what 𝔇 says when ℋ reaches its own number.
+𝔇 cannot say "circular", because ℋ is circle-free.
+If 𝔇 says "circle-free", ℋ must compute its own next digit.
+To find it, ℋ would first have to find that same digit.
+So the digit is never found, and ℋ is circular after all.
+He concludes:
+
+> “Thus both verdicts are impossible and we conclude that there can be no machine 𝔇.” (Turing, 1936, page 247)
+
+On the next page, he proves a second result:
+
+> “We can show further that there can be no machine ℰ which, when supplied with the S.D of an arbitrary machine ℳ, will determine whether ℳ ever prints a given symbol (0 say).” (Turing, 1936, page 248)
+
+So Turing proved two things.
+No machine can decide if a machine is circle-free.
+And no machine can decide if a machine ever prints 0.
+Neither question is "does it stop?".
+Later authors stated the result in the form "does it stop?", and gave it the name "halting problem".
+The idea of the proof, the diagonal, is the same.
+
+## Why this matters
+
+The step limit in the simulator is not a flaw that a better program could fix.
+No program can decide, for every machine, if it stops.
+This holds for computers too: no tool can check every program for loops that never end.
+Such tools can help in many cases, but not in all of them.
+
+Turing's "ever prints 0" result has one more use.
+With it, he answered the question that started his paper, the *Entscheidungsproblem*.
+A later lesson tells that story.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, series 2, volume 42, pages 230–265, 1936. Circle-free machines are defined in section 2. The diagonal argument is in section 8, pages 246–248.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. A guided tour of the whole paper, line by line.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3rd edition, Cengage Learning, 2013. Chapters 4 and 5.
+- John E. Hopcroft, Rajeev Motwani and Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3rd edition, Pearson/Addison-Wesley, 2007. Chapter 9.

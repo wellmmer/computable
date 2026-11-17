@@ -1,0 +1,155 @@
+export const meta = {
+  title: 'Die universelle Maschine',
+  summary: 'Wie Turing eine ganze Maschine als eine Zeile aus Buchstaben schrieb, und eine Maschine beschrieb, die die Arbeit jeder anderen leisten kann.',
+  minutes: 6,
+};
+
+Jede Maschine in Lektion 1 und 2 erledigt eine Aufgabe.
+Binär +1 addiert eins.
+Der Palindrom-Prüfer prüft Palindrome.
+Für eine neue Aufgabe brauchst du eine neue Regeltabelle.
+
+Turings Aufsatz von 1936 sagt, dass eine Maschine die Arbeit jeder Maschine leisten kann.
+Die Idee ist einfach: Schreib die Regeln einer Maschine auf das Band.
+Dann kann eine feste Maschine diese Regeln lesen und ihnen folgen.
+Diese Lektion zeigt, wie Turing Regeln als Symbole schrieb, und was diese Maschine tut.
+Sie folgt den Abschnitten 5 und 6 seines Aufsatzes von 1936.
+
+## Noch einmal Turings erste Maschine
+
+Hier ist die Maschine aus Lektion 1.
+Sie druckt 0 1 0 1 … ohne Ende.
+Sie hat vier Zustände, 𝔟, 𝔠, 𝔢 und 𝔨, und eine Regel für jeden Zustand.
+
+<Machine example="turing-1936" />
+
+Um diese Maschine auf ein Band zu schreiben, bringt Turing zuerst jede Regel in eine feste Form.
+
+## Nummern für Zustände und Symbole
+
+Turing gibt jedem Zustand eine Nummer.
+Der Startzustand ist immer q1.
+Er schreibt:
+
+> “The initial m-configuration is always to be called q1.” (Turing, 1936, Seite 239)
+>
+> Auf Deutsch: „Die erste m-Konfiguration soll immer q1 heißen.“
+
+Die anderen Zustände bekommen die nächsten Nummern.
+Turing nummeriert auch die Symbole.
+Das Leerzeichen ist S0, das Symbol 0 ist S1, und das Symbol 1 ist S2.
+
+Dann schreibt er jeden Namen mit Buchstaben.
+Ein Zustand ist D, gefolgt von so vielen A, wie seine Nummer sagt.
+Ein Symbol ist D, gefolgt von so vielen C, wie seine Nummer sagt.
+
+| Name | Nummer | Buchstaben |
+| --- | --- | --- |
+| 𝔟 | q1 | DA |
+| 𝔠 | q2 | DAA |
+| 𝔢 | q3 | DAAA |
+| 𝔨 | q4 | DAAAA |
+| leer | S0 | D |
+| 0 | S1 | DC |
+| 1 | S2 | DCC |
+
+## Eine Regel in fünf Teilen
+
+Als Nächstes bekommt jede Regel dieselbe Form.
+Sie druckt ein Symbol und bewegt sich dann einmal.
+Eine Regel, die sich nur bewegt, druckt das Symbol, das schon dort steht.
+Aus „in 𝔠, gehe nach rechts“ wird also „in q2, beim Lesen von S0, drucke S0, gehe nach rechts“.
+
+Jede Regel hat dann fünf Teile, in dieser Reihenfolge:
+
+1. Der Zustand, zum Beispiel DA für q1.
+2. Das Symbol, das der Kopf liest, zum Beispiel D für das Leerzeichen.
+3. Das Symbol, das die Maschine druckt, zum Beispiel DC für 0.
+4. Die Bewegung: L für links, R für rechts oder N für keine Bewegung.
+5. Der nächste Zustand, zum Beispiel DAA für q2.
+
+Ein Semikolon beendet die Regel.
+Die erste Regel der Maschine lautet: In 𝔟, auf einem leeren Feld, drucke 0, gehe nach rechts, wechsle zu 𝔠.
+In Nummern ist das q1 S0 S1 R q2.
+In Buchstaben ist es DA D DC R DAA, gefolgt von einem Semikolon: DADDCRDAA;
+
+## Die Standardbeschreibung
+
+Schreib die vier Regeln hintereinander, und du bekommst eine Zeile aus Buchstaben.
+Turing nennt sie die **Standardbeschreibung** der Maschine, kurz S.D.
+
+<Encoding />
+
+Turing druckt dieselbe Beschreibung auf Seite 241 seines Aufsatzes, auf zwei Zeilen.
+Diese Seite berechnet sie aus den Regeln der Maschine, und sie stimmt Buchstabe für Buchstabe mit dem Aufsatz überein.
+
+## Von Buchstaben zu einer Zahl
+
+Turing geht noch einen Schritt weiter.
+Er ersetzt jeden Buchstaben durch eine Ziffer: A ist 1, C ist 2, D ist 3, L ist 4, R ist 5, N ist 6, und das Semikolon ist 7.
+Die Zeile aus Buchstaben wird zu einer langen Zahl.
+
+> “The integer represented by this numeral may be called a description number (D.N) of the machine.” (Turing, 1936, Seite 240)
+>
+> Auf Deutsch: „Die ganze Zahl, die diese Ziffernfolge darstellt, kann eine Beschreibungszahl (D.N) der Maschine heißen.“
+
+Bei der ersten Maschine hat die Beschreibungszahl 47 Ziffern.
+Der Kasten oben zeigt sie unter der Standardbeschreibung.
+
+Eine Maschine kann mehr als eine Beschreibungszahl haben.
+Du könntest ihre Regeln in einer anderen Reihenfolge schreiben.
+Du könntest auch eine Regel hinzufügen, die nie ausgeführt wird.
+Turing gibt eine zweite, längere Zahl für dieselbe Maschine an, mit einer zusätzlichen Regel.
+Aber jede Beschreibungszahl beschreibt nur eine Maschine:
+
+> “The D.N determine the S.D and the structure of the machine uniquely.” (Turing, 1936, Seiten 240–241)
+>
+> Auf Deutsch: „Die D.N bestimmen die S.D und den Aufbau der Maschine eindeutig.“
+
+Jede Maschine hat also mindestens eine Zahl.
+Du kannst alle Maschinen in der Reihenfolge ihrer Zahlen auflisten.
+Lektion 4 benutzt diese Liste.
+
+## Die universelle Maschine
+
+Jetzt beschreibt Turing eine Maschine, die die Arbeit jeder anderen leisten kann.
+
+> “It is possible to invent a single machine which can be used to compute any computable sequence.” (Turing, 1936, Seite 241)
+>
+> Auf Deutsch: „Es ist möglich, eine einzige Maschine zu erfinden, mit der man jede berechenbare Folge berechnen kann.“
+
+Er nennt sie 𝒰, die universelle Maschine.
+Du gibst 𝒰 ein Band, das mit der Standardbeschreibung einer anderen Maschine beginnt.
+Dann druckt 𝒰 dieselben Ziffern wie diese Maschine.
+
+𝒰 schreibt auf ihr eigenes Band Notizen über die andere Maschine: ihre Symbole, das Feld unter ihrem Kopf und ihren Zustand.
+Bei jedem Schritt sucht 𝒰 die Regel, die zum Zustand und zum Symbol passt.
+Sie tut, was die Regel sagt, und ändert ihre Notizen.
+Dann sucht sie die nächste Regel.
+
+𝒰 ist langsam.
+Sie braucht viele eigene Schritte für einen Schritt der anderen Maschine.
+Aber das Tempo spielt hier keine Rolle.
+Wichtig ist, dass eine feste Regeltabelle für jede Maschine genügt.
+Abschnitt 7 des Aufsatzes gibt die vollständige Tabelle von 𝒰, auf den Seiten 243 bis 246.
+
+## Warum das wichtig ist
+
+Vor 𝒰 brauchte jede Aufgabe ihre eigene Maschine.
+Mit 𝒰 ist eine Aufgabe nur eine Zeile aus Symbolen auf einem Band.
+Der Computer, den du heute benutzt, arbeitet auf dieselbe Weise.
+Eine Maschine führt viele Programme aus, und jedes Programm liegt als Daten in ihrem Speicher.
+
+Die Standardbeschreibung hat einen zweiten Nutzen.
+Eine Maschine kann die Beschreibung einer anderen Maschine lesen, und sogar ihre eigene.
+Also kann eine Maschine versuchen, Fragen über Maschinen zu beantworten.
+Lektion 4 stellt eine dieser Fragen: Wird diese Maschine jemals anhalten?
+
+<Quiz />
+
+## Quellen
+
+- A. M. Turing, „[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)“, *Proceedings of the London Mathematical Society*, Reihe 2, Band 42, Seiten 230–265, 1936. Die Standardbeschreibung und die Beschreibungszahl stehen in Abschnitt 5. Die universelle Maschine steht in den Abschnitten 6 und 7.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. Eine Erklärung des ganzen Aufsatzes, Zeile für Zeile.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3. Auflage, Cengage Learning, 2013. Kapitel 4.
+- John E. Hopcroft, Rajeev Motwani und Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3. Auflage, Pearson/Addison-Wesley, 2007. Kapitel 9.

@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { LOCALE_PATHS, openPage } from './helpers';
 
 /** Every page, after the language prefix. */
-const PATHS = ['', '/about', '/support', '/privacy', '/simulator', '/learn', '/learn/intuition', '/learn/formal-definition'];
+const PATHS = ['', '/about', '/support', '/privacy', '/simulator', '/learn', '/learn/intuition', '/learn/formal-definition', '/learn/universal-machine', '/learn/halting-problem'];
 
 async function axeViolations(page: Page) {
   return (await new AxeBuilder({ page }).analyze()).violations;
@@ -51,6 +51,32 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await machine.getByRole('button', { name: 'Run' }).click();
       // 15 steps, one every 700 ms at the default speed: about 10 seconds.
       await expect(machine.getByTestId('result-line')).toBeVisible({ timeout: 20_000 });
+      // The first option of each question: some answers are right and some are wrong, so both marks show.
+      for (let number = 1; number <= 5; number++) {
+        const question = page.getByRole('group', { name: new RegExp(`^Question ${number} of 5`) });
+        await question.getByRole('radio').first().check();
+        await question.getByRole('button', { name: 'Check' }).click();
+      }
+      await expect(page.getByRole('button', { name: 'Try again' })).toBeVisible();
+      expect(await axeViolations(page)).toEqual([]);
+    });
+
+    test('lesson 3 with a marked row of the encoding has no axe violations', async ({ page }) => {
+      await openPage(page, '/en/learn/universal-machine');
+      const encoding = page.getByRole('figure', { name: 'Turing’s first machine, written as a description' });
+      await encoding.getByRole('row').nth(2).focus();
+      await expect(encoding.locator('mark')).toHaveCount(2);
+      expect(await axeViolations(page)).toEqual([]);
+    });
+
+    test('lesson 4 with a stopped machine, a paused machine and a finished quiz has no axe violations', async ({ page }) => {
+      await openPage(page, '/en/learn/halting-problem');
+      const stops = page.getByRole('figure', { name: 'Binary +1' });
+      await stops.getByRole('button', { name: 'Run' }).click();
+      await expect(stops.getByTestId('result-line')).toBeVisible({ timeout: 10_000 });
+      const forever = page.getByRole('figure', { name: 'Turing 1936: 0 1 0 1…' });
+      await forever.getByRole('button', { name: 'Step' }).click();
+      await forever.getByRole('button', { name: 'Step' }).click();
       // The first option of each question: some answers are right and some are wrong, so both marks show.
       for (let number = 1; number <= 5; number++) {
         const question = page.getByRole('group', { name: new RegExp(`^Question ${number} of 5`) });

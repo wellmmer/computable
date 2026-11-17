@@ -37,7 +37,7 @@ machine could do the same work.
 | --- | --- | --- |
 | **R1** | The simulator, the guided tour, 5 languages, light and dark themes, About, Support the dev | Live. Support the dev shows its payment links once they are set. |
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
-| **R2b** | Lessons: the Entscheidungsproblem, the halting problem, Church–Turing, the universal machine | Planned |
+| **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | In progress: lessons 3 and 4 are live; 5 and 6 come next |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Planned |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
@@ -82,6 +82,18 @@ machine could do the same work.
 - **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each book links
   to the publisher's page for its edition, and Turing's paper links to its DOI. The texts are under
   CC BY 4.0.
+
+## What R2b brings
+
+- **Lesson 3, "The universal machine".** Turing wrote a whole machine as one line of letters, its
+  standard description. A table shows his first machine, its standard description and its
+  description number. Move to a row, and its part of both is marked. The strings match page 241 of
+  the paper.
+- **Lesson 4, "The halting problem".** One machine stops and one runs forever. The lesson explains
+  why no machine can tell which, for every machine. It shows the diagonal argument step by step,
+  with tables. It also says what Turing himself proved, and how that differs from today's form.
+- **Quotes from the paper, with page numbers.** They stay in Turing's English. The other languages
+  add a translation next to them.
 
 ## The machine format
 

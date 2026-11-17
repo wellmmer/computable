@@ -371,6 +371,13 @@
       "tape": "Fita de {name}",
       "open": "Abrir no simulador"
     },
+    "encoding": {
+      "caption": "A primeira máquina de Turing, escrita como descrição",
+      "hint": "Aponte para uma linha, toque nela ou chegue a ela com Tab. A parte dela na descrição e no número fica marcada.",
+      "column": "Em letras",
+      "sd": "Descrição padrão",
+      "dn": "Número de descrição"
+    },
     "page": {
       "pageTitle": "Aprender",
       "title": "Aprender",

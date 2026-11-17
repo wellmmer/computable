@@ -1,0 +1,199 @@
+export const meta = {
+  title: 'O problema da parada',
+  summary: 'Por que nenhuma máquina consegue dizer, para toda máquina e toda entrada, se ela vai parar. O argumento diagonal passo a passo, e o que o próprio Turing provou.',
+  minutes: 7,
+};
+
+Algumas máquinas param.
+Outras rodam para sempre.
+Dá para saber sempre qual é qual, antes de rodar?
+Esta lição mostra que nenhuma máquina consegue responder a essa pergunta para toda máquina.
+A prova é curta e usa as descrições da lição 3.
+No fim, a lição mostra o que o próprio Turing provou em 1936.
+O resultado dele é parecido com o desta lição, mas não é o mesmo.
+
+## Uma máquina que para
+
+Aqui está a Binário +1 da lição 1.
+Aperte **Rodar**.
+
+<Machine example="binary-plus-one" />
+
+A máquina para em qA depois de 8 passos.
+A fita mostra 1100.
+Para esta máquina, a resposta é fácil: ela para.
+
+## Uma máquina que roda para sempre
+
+Aqui está a primeira máquina de Turing.
+Aperte **Rodar** e depois **Pausar** quando tiver visto o bastante.
+
+<Machine example="turing-1936" />
+
+A máquina imprime 0 1 0 1 … e nunca para.
+Depois de 𝔨, ela sempre volta para 𝔟.
+Você percebe isso pelas quatro regras dela.
+
+O simulador não percebe.
+Ele só conta passos.
+Nesta página, Rodar faz um passo a cada 0,7 segundo.
+Depois de 10.000 passos, cerca de duas horas depois, Rodar pausa.
+A linha de resultado diz então que a máquina pode nunca parar, e pergunta se deve continuar.
+As duas horas valem só enquanto a aba fica visível.
+Os navegadores deixam as abas ocultas mais lentas.
+No simulador completo, na velocidade mais alta, a pausa vem depois de uns 3 segundos.
+
+O limite de 10.000 passos é um palpite.
+Outra máquina poderia parar no passo 10.001.
+Um simulador melhor poderia trocar o palpite por uma resposta certa?
+
+## A pergunta
+
+Imagine uma máquina H que lê duas coisas na fita:
+
+- a descrição de uma máquina M, como na lição 3;
+- uma entrada para M.
+
+H sempre precisa parar e então dizer "para" ou "nunca para".
+"Para" quer dizer que M para com aquela entrada.
+"Nunca para" quer dizer que M roda para sempre com ela.
+H precisa acertar para toda máquina e toda entrada.
+
+H não pode simplesmente rodar M e esperar.
+Se M roda para sempre, H também esperaria para sempre e nunca responderia.
+H precisaria de um método mais esperto.
+A pergunta "essa H existe?" se chama **problema da parada**.
+
+A resposta é não.
+A prova supõe que H existe e então encontra uma contradição.
+
+## O argumento diagonal, passo a passo
+
+**Passo 1. Liste todas as máquinas.**
+A lição 3 mostrou que toda máquina tem um número de descrição.
+Ordene as máquinas pelos seus números: M1, M2, M3, e assim por diante.
+Toda máquina está em algum lugar desta lista.
+
+**Passo 2. Preencha uma tabela com as respostas de H.**
+Dê a cada máquina, como entrada, a descrição de uma máquina.
+A linha M1 mostra o que M1 faz com a descrição de M1, de M2, de M3, e assim por diante.
+H preenche cada casa.
+As respostas abaixo são inventadas.
+Só o padrão importa.
+
+| Máquina | com M1 | com M2 | com M3 | com M4 |
+| --- | --- | --- | --- | --- |
+| M1 | **para** | nunca para | para | para |
+| M2 | para | **nunca para** | nunca para | para |
+| M3 | nunca para | para | **nunca para** | para |
+| M4 | para | para | nunca para | **para** |
+
+As casas em negrito formam a diagonal.
+Elas mostram cada máquina com a sua própria descrição: M1 com M1, M2 com M2, M3 com M3, M4 com M4.
+Aqui a diagonal diz: para, nunca para, nunca para, para.
+
+**Passo 3. Construa uma máquina nova, D.**
+D lê a descrição de uma máquina M.
+Ela dá duas coisas a H: a descrição de M, como a máquina, e a mesma descrição, como a entrada.
+Depois D faz o contrário da resposta de H:
+
+- Se H diz "para", D roda para sempre.
+- Se H diz "nunca para", D para.
+
+D é uma máquina de verdade, porque H é uma.
+D só precisa de algumas regras a mais: para copiar a descrição e para rodar sem fim.
+
+**Passo 4. Compare D com a lista.**
+Em cada descrição, D faz o contrário da diagonal.
+
+| Máquina | com M1 | com M2 | com M3 | com M4 |
+| --- | --- | --- | --- | --- |
+| Diagonal | para | nunca para | nunca para | para |
+| D | nunca para | para | para | nunca para |
+
+D difere de M1 com M1.
+Ela difere de M2 com M2, e assim por diante.
+Então D difere de todas as máquinas da lista.
+Mas a lista tem todas as máquinas, então D precisa estar nela.
+
+**Passo 5. Pergunte o que D faz com a sua própria descrição.**
+Digamos que D é a máquina número k da lista.
+Olhe a casa onde a linha k cruza a coluna k.
+
+- Se D para com a sua própria descrição, então H disse "nunca para". Mas D para, então H errou.
+- Se D roda para sempre com a sua própria descrição, então H disse "para". Mas D roda para sempre, então H errou.
+
+Os dois casos são impossíveis.
+Cada passo segue do anterior.
+Só uma coisa pode estar errada: a suposição de que H existe.
+Então nenhuma máquina H pode existir.
+Nenhum simulador pode trocar o seu limite de passos por uma resposta certa para toda máquina.
+
+## O que Turing provou
+
+Muitos livros usam uma prova deste tipo.
+O artigo de Turing de 1936 faz outra pergunta.
+Veja por quê.
+
+Turing queria máquinas que imprimem os algarismos de um número, sem fim.
+Na lição 1, a primeira máquina dele faz exatamente isso.
+Para Turing, uma máquina boa nunca para de imprimir algarismos.
+Ele chamou essa máquina de livre de círculos (circle-free):
+
+> “If a computing machine never writes down more than a finite number of symbols of the first kind, it will be called circular. Otherwise it is said to be circle-free.” (Turing, 1936, página 233)
+>
+> Em português: “Se uma máquina de computar nunca escreve mais do que um número finito de símbolos do primeiro tipo, ela será chamada de circular. Caso contrário, diz-se que ela é livre de círculos.”
+
+Os "símbolos do primeiro tipo" são os algarismos 0 e 1.
+Então uma máquina que imprime alguns algarismos e depois para é circular.
+Para Turing, é uma máquina ruim.
+
+Na seção 8, Turing supõe uma máquina 𝔇 que diz, para qualquer descrição, se a máquina é livre de círculos.
+Com 𝔇 e a máquina universal 𝒰 da lição 3, ele constrói uma máquina ℋ.
+ℋ percorre os números 1, 2, 3, … em ordem e pergunta a 𝔇 sobre cada um.
+Para a primeira máquina livre de círculos que encontra, ℋ imprime o primeiro algarismo dela.
+Para a segunda, imprime o segundo algarismo dela, e assim por diante.
+Isso é uma diagonal, como nas tabelas acima, e ℋ é livre de círculos.
+Então Turing pergunta o que 𝔇 diz quando ℋ chega ao seu próprio número.
+𝔇 não pode dizer "circular", porque ℋ é livre de círculos.
+Se 𝔇 diz "livre de círculos", ℋ precisa calcular o seu próprio próximo algarismo.
+Para achá-lo, ℋ teria que achar antes esse mesmo algarismo.
+Então o algarismo nunca é encontrado, e ℋ é circular afinal.
+Ele conclui:
+
+> “Thus both verdicts are impossible and we conclude that there can be no machine 𝔇.” (Turing, 1936, página 247)
+>
+> Em português: “Assim, os dois veredictos são impossíveis, e concluímos que não pode haver uma máquina 𝔇.”
+
+Na página seguinte, ele prova um segundo resultado:
+
+> “We can show further that there can be no machine ℰ which, when supplied with the S.D of an arbitrary machine ℳ, will determine whether ℳ ever prints a given symbol (0 say).” (Turing, 1936, página 248)
+>
+> Em português: “Podemos mostrar ainda que não pode haver uma máquina ℰ que, ao receber a S.D de uma máquina qualquer ℳ, determine se ℳ alguma vez imprime um dado símbolo (digamos, 0).”
+
+Então Turing provou duas coisas.
+Nenhuma máquina consegue decidir se uma máquina é livre de círculos.
+E nenhuma máquina consegue decidir se uma máquina alguma vez imprime 0.
+Nenhuma das duas perguntas é "ela para?".
+Autores posteriores escreveram o resultado na forma "ela para?" e deram a ele o nome "problema da parada".
+A ideia da prova, a diagonal, é a mesma.
+
+## Por que isso importa
+
+O limite de passos do simulador não é um defeito que um programa melhor poderia corrigir.
+Nenhum programa consegue decidir, para toda máquina, se ela para.
+Isso vale para computadores também: nenhuma ferramenta consegue checar todo programa em busca de laços que nunca terminam.
+Essas ferramentas ajudam em muitos casos, mas não em todos.
+
+O resultado de Turing sobre "alguma vez imprime 0" tem mais um uso.
+Com ele, Turing respondeu à pergunta que deu início ao artigo, o *Entscheidungsproblem*.
+Uma lição mais adiante conta essa história.
+
+<Quiz />
+
+## Fontes
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, série 2, volume 42, páginas 230–265, 1936. As máquinas livres de círculos são definidas na seção 2. O argumento diagonal está na seção 8, páginas 246–248.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. Um passeio guiado pelo artigo inteiro, linha por linha. Em inglês.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3ª edição, Cengage Learning, 2013. Capítulos 4 e 5.
+- John E. Hopcroft, Rajeev Motwani e Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3ª edição, Pearson/Addison-Wesley, 2007. Capítulo 9.

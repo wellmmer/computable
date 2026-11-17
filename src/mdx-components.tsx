@@ -3,7 +3,7 @@ import { sectionTitle, textLink } from '@/shell/page-styles';
 
 /**
  * How the lesson files (MDX) draw their markdown (spec 3). Next.js needs this file for MDX in the
- * App Router. Lessons hold only headings, paragraphs, quotes, lists and links, so only those get a style.
+ * App Router. Lessons hold only headings, paragraphs, quotes, lists, links and tables, so only those get a style.
  */
 const components: MDXComponents = {
   h2: (props) => <h2 {...props} className={`mt-12 ${sectionTitle}`} />,
@@ -14,6 +14,10 @@ const components: MDXComponents = {
   a: (props) => <a {...props} className={textLink} />,
   strong: (props) => <strong {...props} className="font-semibold" />,
   blockquote: (props) => <blockquote {...props} className="mt-6 border-l-4 border-pencil pl-4 font-display text-lg/snug italic" />,
+  // Tables stay narrow enough for a phone (390 px): lessons keep their cells to a word or two.
+  table: (props) => <table {...props} className="mt-6 w-full border-collapse text-left text-[15px]" />,
+  th: (props) => <th {...props} className="border-b-2 border-ink px-2 py-2 align-bottom font-semibold" />,
+  td: (props) => <td {...props} className="border-b border-soft px-2 py-2" />,
 };
 
 export function useMDXComponents(): MDXComponents {

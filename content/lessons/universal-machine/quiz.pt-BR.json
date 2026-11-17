@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "standard-description": {
+      "text": "O que é a descrição padrão de uma máquina?",
+      "options": {
+        "steps": {
+          "text": "Uma lista dos passos que a máquina dá",
+          "why": "Os passos dependem da entrada. A descrição padrão guarda só as regras."
+        },
+        "rules-as-letters": {
+          "text": "As regras dela, escritas como uma linha de letras",
+          "why": "Cada regra vira cinco partes em letras, e um ponto e vírgula a fecha."
+        },
+        "tape": {
+          "text": "Os símbolos que ficam na fita no fim",
+          "why": "A fita guarda o que a máquina imprime. A descrição padrão guarda como ela funciona."
+        }
+      }
+    },
+    "state-letters": {
+      "text": "Como Turing escreve o estado q3 em letras?",
+      "options": {
+        "dccc": {
+          "text": "DCCC",
+          "why": "C conta símbolos. A conta estados."
+        },
+        "d3": {
+          "text": "D3",
+          "why": "A descrição padrão usa só letras e o ponto e vírgula."
+        },
+        "daaa": {
+          "text": "DAAA",
+          "why": "Um estado é D, seguido de A tantas vezes quanto o seu número: três vezes para q3."
+        },
+        "aaa": {
+          "text": "AAA",
+          "why": "Todo estado e todo símbolo começam com D."
+        }
+      }
+    },
+    "description-number": {
+      "text": "Como uma descrição padrão vira um número de descrição?",
+      "options": {
+        "digits": {
+          "text": "Cada letra é trocada por um algarismo, como A por 1 e D por 3",
+          "why": "A linha de letras então se lê como um número comprido."
+        },
+        "count": {
+          "text": "As letras são contadas",
+          "why": "Contar daria o mesmo número a muitas máquinas."
+        },
+        "sum": {
+          "text": "Os números dos estados são somados",
+          "why": "Uma soma perderia as regras. O número de descrição guarda cada letra."
+        }
+      }
+    },
+    "universal-tape": {
+      "text": "Do que a máquina universal 𝒰 precisa no começo da fita?",
+      "options": {
+        "description": {
+          "text": "Da descrição padrão de outra máquina",
+          "why": "𝒰 a lê e faz o trabalho dessa máquina."
+        },
+        "nothing": {
+          "text": "De nada: ela já conhece todas as máquinas",
+          "why": "𝒰 tem uma tabela de regras fixa. A outra máquina vem da fita."
+        },
+        "own-table": {
+          "text": "De uma tabela de regras nova para a própria 𝒰",
+          "why": "𝒰 nunca muda. Só a fita muda."
+        }
+      }
+    },
+    "many-numbers": {
+      "text": "Uma máquina pode ter mais de um número de descrição?",
+      "options": {
+        "exactly-one": {
+          "text": "Não, cada máquina tem exatamente um",
+          "why": "Outra ordem das regras dá outro número para a mesma máquina."
+        },
+        "only-if-stops": {
+          "text": "Só se a máquina parar",
+          "why": "Toda máquina tem um número de descrição, pare ou não."
+        },
+        "yes": {
+          "text": "Sim, por exemplo com as regras em outra ordem",
+          "why": "Turing dá dois números para a primeira máquina dele. Mas cada número descreve uma só máquina."
+        }
+      }
+    }
+  }
+}

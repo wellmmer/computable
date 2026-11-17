@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "standard-description": {
+      "text": "Was ist die Standardbeschreibung einer Maschine?",
+      "options": {
+        "steps": {
+          "text": "Eine Liste der Schritte, die die Maschine macht",
+          "why": "Die Schritte hängen von der Eingabe ab. Die Standardbeschreibung enthält nur die Regeln."
+        },
+        "rules-as-letters": {
+          "text": "Ihre Regeln, geschrieben als eine Zeile aus Buchstaben",
+          "why": "Jede Regel wird zu fünf Teilen aus Buchstaben, und ein Semikolon beendet sie."
+        },
+        "tape": {
+          "text": "Die Symbole auf ihrem Band am Ende",
+          "why": "Das Band enthält, was die Maschine druckt. Die Standardbeschreibung enthält, wie sie arbeitet."
+        }
+      }
+    },
+    "state-letters": {
+      "text": "Wie schreibt Turing den Zustand q3 mit Buchstaben?",
+      "options": {
+        "dccc": {
+          "text": "DCCC",
+          "why": "C zählt Symbole. A zählt Zustände."
+        },
+        "d3": {
+          "text": "D3",
+          "why": "Die Standardbeschreibung benutzt nur Buchstaben und das Semikolon."
+        },
+        "daaa": {
+          "text": "DAAA",
+          "why": "Ein Zustand ist D, dann so viele A, wie seine Nummer sagt: dreimal für q3."
+        },
+        "aaa": {
+          "text": "AAA",
+          "why": "Jeder Zustand und jedes Symbol beginnt mit D."
+        }
+      }
+    },
+    "description-number": {
+      "text": "Wie wird aus einer Standardbeschreibung eine Beschreibungszahl?",
+      "options": {
+        "digits": {
+          "text": "Jeder Buchstabe wird durch eine Ziffer ersetzt, zum Beispiel A durch 1 und D durch 3",
+          "why": "Die Zeile aus Buchstaben liest sich dann als eine lange Zahl."
+        },
+        "count": {
+          "text": "Die Buchstaben werden gezählt",
+          "why": "Beim Zählen würden viele Maschinen dieselbe Zahl bekommen."
+        },
+        "sum": {
+          "text": "Die Nummern der Zustände werden addiert",
+          "why": "Eine Summe würde die Regeln verlieren. Die Beschreibungszahl behält jeden Buchstaben."
+        }
+      }
+    },
+    "universal-tape": {
+      "text": "Was braucht die universelle Maschine 𝒰 am Anfang ihres Bandes?",
+      "options": {
+        "description": {
+          "text": "Die Standardbeschreibung einer anderen Maschine",
+          "why": "𝒰 liest sie und leistet die Arbeit dieser Maschine."
+        },
+        "nothing": {
+          "text": "Nichts: Sie kennt schon jede Maschine",
+          "why": "𝒰 hat eine feste Regeltabelle. Die andere Maschine kommt vom Band."
+        },
+        "own-table": {
+          "text": "Eine neue Regeltabelle für 𝒰 selbst",
+          "why": "𝒰 ändert sich nie. Nur das Band ändert sich."
+        }
+      }
+    },
+    "many-numbers": {
+      "text": "Kann eine Maschine mehr als eine Beschreibungszahl haben?",
+      "options": {
+        "exactly-one": {
+          "text": "Nein, jede Maschine hat genau eine",
+          "why": "Eine andere Reihenfolge der Regeln gibt eine andere Zahl für dieselbe Maschine."
+        },
+        "only-if-stops": {
+          "text": "Nur wenn die Maschine anhält",
+          "why": "Jede Maschine hat eine Beschreibungszahl, ob sie anhält oder nicht."
+        },
+        "yes": {
+          "text": "Ja, zum Beispiel mit ihren Regeln in einer anderen Reihenfolge",
+          "why": "Turing gibt zwei Zahlen für seine erste Maschine an. Aber jede Zahl beschreibt nur eine Maschine."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,199 @@
+export const meta = {
+  title: 'El problema de la parada',
+  summary: 'Por qué ninguna máquina puede decir, para toda máquina y toda entrada, si se detendrá. El argumento diagonal paso a paso, y lo que el propio Turing demostró.',
+  minutes: 7,
+};
+
+Algunas máquinas se detienen.
+Otras funcionan para siempre.
+¿Podemos saber siempre cuál es cuál, antes de ejecutarlas?
+Esta lección muestra que ninguna máquina puede responder esta pregunta para toda máquina.
+La demostración es corta, y usa las descripciones de la lección 3.
+Al final, la lección muestra lo que el propio Turing demostró en 1936.
+Su resultado se parece al de esta lección, pero no es el mismo.
+
+## Una máquina que se detiene
+
+Esta es Binario +1, de la lección 1.
+Pulsa **Ejecutar**.
+
+<Machine example="binary-plus-one" />
+
+La máquina se detiene en qA después de 8 pasos.
+La cinta muestra 1100.
+Para esta máquina, la respuesta es fácil: se detiene.
+
+## Una máquina que funciona para siempre
+
+Esta es la primera máquina de Turing.
+Pulsa **Ejecutar**, y luego **Pausar** cuando hayas visto suficiente.
+
+<Machine example="turing-1936" />
+
+La máquina imprime 0 1 0 1 … y nunca se detiene.
+Después de 𝔨, siempre vuelve a 𝔟.
+Lo puedes saber por sus cuatro reglas.
+
+El simulador no lo puede saber.
+Solo cuenta pasos.
+En esta página, Ejecutar hace un paso cada 0,7 segundos.
+Tras 10.000 pasos, unas dos horas después, Ejecutar hace una pausa.
+La línea de resultado dice entonces que puede que la máquina nunca se detenga, y pregunta si debe continuar.
+Las dos horas valen solo mientras la pestaña está visible.
+Los navegadores hacen más lentas las pestañas ocultas.
+En el simulador completo, a la velocidad más rápida, la pausa llega tras unos 3 segundos.
+
+El límite de 10.000 pasos es una suposición.
+Otra máquina podría detenerse en el paso 10.001.
+¿Podría un simulador mejor cambiar la suposición por una respuesta segura?
+
+## La pregunta
+
+Imagina una máquina H que lee dos cosas en su cinta:
+
+- la descripción de una máquina M, como en la lección 3;
+- una entrada para M.
+
+H siempre debe detenerse, y luego decir "se detiene" o "para siempre".
+"Se detiene" significa que M se detiene con esa entrada.
+"Para siempre" significa que M funciona para siempre con ella.
+H debe acertar para toda máquina y toda entrada.
+
+H no puede simplemente ejecutar M y esperar.
+Si M funciona para siempre, H también esperaría para siempre, y nunca respondería.
+H necesitaría un método más listo.
+La pregunta "¿existe tal H?" se llama el **problema de la parada**.
+
+La respuesta es no.
+La demostración supone que H existe, y luego encuentra una contradicción.
+
+## El argumento diagonal, paso a paso
+
+**Paso 1. Lista todas las máquinas.**
+La lección 3 mostró que toda máquina tiene un número de descripción.
+Ordena las máquinas por sus números: M1, M2, M3, y así sucesivamente.
+Toda máquina está en algún lugar de esta lista.
+
+**Paso 2. Llena una tabla con las respuestas de H.**
+Dale a cada máquina, como entrada, la descripción de una máquina.
+La fila M1 muestra qué hace M1 con la descripción de M1, de M2, de M3, y así sucesivamente.
+H llena cada celda.
+Las respuestas de abajo son inventadas.
+Solo importa el patrón.
+
+| Máquina | con M1 | con M2 | con M3 | con M4 |
+| --- | --- | --- | --- | --- |
+| M1 | **se detiene** | para siempre | se detiene | se detiene |
+| M2 | se detiene | **para siempre** | para siempre | se detiene |
+| M3 | para siempre | se detiene | **para siempre** | se detiene |
+| M4 | se detiene | se detiene | para siempre | **se detiene** |
+
+Las celdas en negrita forman la diagonal.
+Muestran cada máquina con su propia descripción: M1 con M1, M2 con M2, M3 con M3, M4 con M4.
+Aquí la diagonal dice: se detiene, para siempre, para siempre, se detiene.
+
+**Paso 3. Construye una máquina nueva, D.**
+D lee la descripción de una máquina M.
+Le da a H dos cosas: la descripción de M, como la máquina, y la misma descripción, como la entrada.
+Después D hace lo contrario de la respuesta de H:
+
+- Si H dice "se detiene", D funciona para siempre.
+- Si H dice "para siempre", D se detiene.
+
+D es una máquina real, porque H lo es.
+D solo necesita unas pocas reglas más: para copiar la descripción, y para repetir un bucle para siempre.
+
+**Paso 4. Compara D con la lista.**
+Con cada descripción, D hace lo contrario de la diagonal.
+
+| Máquina | con M1 | con M2 | con M3 | con M4 |
+| --- | --- | --- | --- | --- |
+| Diagonal | se detiene | para siempre | para siempre | se detiene |
+| D | para siempre | se detiene | se detiene | para siempre |
+
+D es distinta de M1 con M1.
+Es distinta de M2 con M2, y así sucesivamente.
+Así que D es distinta de todas las máquinas de la lista.
+Pero la lista contiene todas las máquinas, así que D debe estar en ella.
+
+**Paso 5. Pregunta qué hace D con su propia descripción.**
+Digamos que D es la máquina número k de la lista.
+Mira la celda donde la fila k cruza la columna k.
+
+- Si D se detiene con su propia descripción, entonces H dijo "para siempre". Pero entonces D se detiene, así que H se equivocó.
+- Si D funciona para siempre con su propia descripción, entonces H dijo "se detiene". Pero entonces D funciona para siempre, así que H se equivocó.
+
+Los dos casos son imposibles.
+Cada paso se sigue del anterior.
+Solo una cosa puede estar mal: la suposición de que H existe.
+Así que ninguna máquina H puede existir.
+Ningún simulador puede cambiar su límite de pasos por una respuesta segura para toda máquina.
+
+## Lo que Turing demostró
+
+Muchos libros de texto usan una demostración de este tipo.
+El artículo de Turing de 1936 hace una pregunta distinta.
+Esta es la razón.
+
+Turing quería máquinas que imprimen las cifras de un número, sin fin.
+En la lección 1, su primera máquina hace exactamente eso.
+Para Turing, una buena máquina nunca deja de imprimir cifras.
+Llamó a esa máquina libre de círculos (en inglés, circle-free):
+
+> “If a computing machine never writes down more than a finite number of symbols of the first kind, it will be called circular. Otherwise it is said to be circle-free.” (Turing, 1936, página 233)
+>
+> En español: “Si una máquina de calcular nunca escribe más que un número finito de símbolos del primer tipo, se llamará circular. Si no, se dice que es libre de círculos.”
+
+Los "símbolos del primer tipo" son las cifras 0 y 1.
+Así, una máquina que imprime unas pocas cifras y luego se detiene es circular.
+Para Turing, es una mala máquina.
+
+En la sección 8, Turing supone una máquina 𝔇 que dice, para cualquier descripción, si la máquina es libre de círculos.
+A partir de 𝔇 y de la máquina universal 𝒰 de la lección 3, construye una máquina ℋ.
+ℋ recorre los números 1, 2, 3, … en orden, y le pregunta a 𝔇 por cada uno.
+Para la primera máquina libre de círculos que encuentra, ℋ imprime la primera cifra de esa máquina.
+Para la segunda, imprime la segunda cifra de esa máquina, y así sucesivamente.
+Esto es una diagonal, como en las tablas de arriba, y ℋ es libre de círculos.
+Después Turing pregunta qué dice 𝔇 cuando ℋ llega a su propio número.
+𝔇 no puede decir "circular", porque ℋ es libre de círculos.
+Si 𝔇 dice "libre de círculos", ℋ debe calcular su propia cifra siguiente.
+Para encontrarla, ℋ primero tendría que encontrar esa misma cifra.
+Así que la cifra nunca se encuentra, y ℋ es circular después de todo.
+Turing concluye:
+
+> “Thus both verdicts are impossible and we conclude that there can be no machine 𝔇.” (Turing, 1936, página 247)
+>
+> En español: “Así, los dos veredictos son imposibles y concluimos que no puede haber ninguna máquina 𝔇.”
+
+En la página siguiente, demuestra un segundo resultado:
+
+> “We can show further that there can be no machine ℰ which, when supplied with the S.D of an arbitrary machine ℳ, will determine whether ℳ ever prints a given symbol (0 say).” (Turing, 1936, página 248)
+>
+> En español: “Podemos mostrar además que no puede haber ninguna máquina ℰ que, cuando recibe la S.D de una máquina cualquiera ℳ, determine si ℳ imprime alguna vez un símbolo dado (por ejemplo, 0).”
+
+Así que Turing demostró dos cosas.
+Ninguna máquina puede decidir si una máquina es libre de círculos.
+Y ninguna máquina puede decidir si una máquina imprime 0 alguna vez.
+Ninguna de las dos preguntas es "¿se detiene?".
+Autores posteriores escribieron el resultado en la forma "¿se detiene?", y le dieron el nombre de "problema de la parada".
+La idea de la demostración, la diagonal, es la misma.
+
+## Por qué importa
+
+El límite de pasos del simulador no es un defecto que un programa mejor podría arreglar.
+Ningún programa puede decidir, para toda máquina, si se detiene.
+Esto también vale para los computadores: ninguna herramienta puede revisar todo programa en busca de bucles que nunca terminan.
+Esas herramientas pueden ayudar en muchos casos, pero no en todos.
+
+El resultado de Turing sobre "imprime 0 alguna vez" tiene un uso más.
+Con él, respondió a la pregunta con la que empezó su artículo, el *Entscheidungsproblem*.
+Una lección futura cuenta esa historia.
+
+<Quiz />
+
+## Fuentes
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, serie 2, volumen 42, páginas 230–265, 1936. Las máquinas libres de círculos se definen en la sección 2. El argumento diagonal está en la sección 8, páginas 246–248.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. Un recorrido guiado por todo el artículo, línea por línea.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3.ª edición, Cengage Learning, 2013. Capítulos 4 y 5.
+- John E. Hopcroft, Rajeev Motwani y Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3.ª edición, Pearson/Addison-Wesley, 2007. Capítulo 9.

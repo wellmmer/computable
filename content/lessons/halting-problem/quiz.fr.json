@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "step-limit": {
+      "text": "Lancer met en pause la première machine de Turing après 10 000 pas. Que vous dit cette pause ?",
+      "options": {
+        "never-stops": {
+          "text": "Que la machine ne s’arrête jamais",
+          "why": "Le simulateur ne peut pas le savoir. Il ne fait que compter les pas."
+        },
+        "not-yet": {
+          "text": "Seulement que la machine ne s’est pas encore arrêtée",
+          "why": "Une autre machine pourrait s’arrêter au pas 10 001. La limite est une supposition."
+        },
+        "error": {
+          "text": "Que la machine a une erreur",
+          "why": "La machine fonctionne comme ses règles le disent. Elle continue simplement."
+        }
+      }
+    },
+    "decider": {
+      "text": "Que devrait faire la machine H de cette leçon ?",
+      "options": {
+        "run-and-wait": {
+          "text": "Lancer l’autre machine et attendre qu’elle s’arrête",
+          "why": "Si l’autre machine tourne sans fin, H ne répondrait jamais."
+        },
+        "some-machines": {
+          "text": "Répondre correctement pour la plupart des machines",
+          "why": "H doit avoir raison pour toute machine et toute entrée."
+        },
+        "always-answer": {
+          "text": "Toujours s’arrêter, et dire correctement si n’importe quelle machine s’arrête sur n’importe quelle entrée",
+          "why": "C’est la tâche, et l’argument diagonal montre qu’aucune machine ne peut la faire."
+        },
+        "print-zero": {
+          "text": "Imprimer 0 quand l’autre machine s’arrête",
+          "why": "Imprimer 0 ne répond à rien. H doit dire « s’arrête » ou « sans fin »."
+        }
+      }
+    },
+    "diagonal": {
+      "text": "D fait le contraire de ce que H dit de chaque machine sur sa propre description. Que se passe-t-il quand D reçoit sa propre description ?",
+      "options": {
+        "contradiction": {
+          "text": "Chaque réponse possible de H se révèle fausse",
+          "why": "Si H dit « s’arrête », D tourne sans fin. Si H dit « sans fin », D s’arrête. Donc H ne peut pas exister."
+        },
+        "stops": {
+          "text": "D s’arrête, et H a raison",
+          "why": "Si D s’arrête, H a dit « sans fin », donc H s’est trompée."
+        },
+        "forever": {
+          "text": "D tourne sans fin, et H a raison",
+          "why": "Si D tourne sans fin, H a dit « s’arrête », donc H s’est trompée."
+        }
+      }
+    },
+    "turing-proved": {
+      "text": "Qu’a prouvé Turing à la section 8 de son article de 1936 ?",
+      "options": {
+        "stops": {
+          "text": "Qu’aucune machine ne peut décider si une machine s’arrête",
+          "why": "C’est la forme que des auteurs plus tardifs ont utilisée. Turing a posé d’autres questions."
+        },
+        "every-machine-stops": {
+          "text": "Que toute machine finit par s’arrêter",
+          "why": "Sa première machine ne s’arrête jamais."
+        },
+        "circle-free-and-zero": {
+          "text": "Qu’aucune machine ne peut décider si une machine est sans cercle, ou si elle imprime un jour 0",
+          "why": "Ce sont ses deux résultats, aux pages 247 et 248."
+        }
+      }
+    },
+    "circular": {
+      "text": "Une machine imprime 0, puis 1, puis s’arrête. Comment Turing l’a-t-il appelée ?",
+      "options": {
+        "circular": {
+          "text": "Circulaire",
+          "why": "Elle n’imprime qu’un nombre fini de chiffres, donc elle est circulaire, une mauvaise machine pour Turing."
+        },
+        "circle-free": {
+          "text": "Sans cercle",
+          "why": "Une machine sans cercle imprime des chiffres sans fin."
+        },
+        "universal": {
+          "text": "Universelle",
+          "why": "La machine universelle 𝒰 est la machine de la leçon 3, qui peut faire le travail de toute machine."
+        }
+      }
+    }
+  }
+}

@@ -371,6 +371,13 @@
       "tape": "Band von {name}",
       "open": "Im Simulator öffnen"
     },
+    "encoding": {
+      "caption": "Turings erste Maschine, als Beschreibung geschrieben",
+      "hint": "Zeige auf eine Zeile, tippe sie an oder gehe mit Tab zu ihr. Ihr Teil der Beschreibung und der Zahl wird markiert.",
+      "column": "In Buchstaben",
+      "sd": "Standardbeschreibung",
+      "dn": "Beschreibungszahl"
+    },
     "page": {
       "pageTitle": "Lernen",
       "title": "Lernen",

@@ -1,0 +1,199 @@
+export const meta = {
+  title: 'Das Halteproblem',
+  summary: 'Warum keine Maschine für jede Maschine und jede Eingabe sagen kann, ob sie anhält. Das Diagonalargument Schritt für Schritt, und was Turing selbst bewiesen hat.',
+  minutes: 7,
+};
+
+Manche Maschinen halten an.
+Andere laufen für immer.
+Können wir immer sagen, welche, bevor wir sie laufen lassen?
+Diese Lektion zeigt, dass keine Maschine diese Frage für jede Maschine beantworten kann.
+Der Beweis ist kurz, und er benutzt die Beschreibungen aus Lektion 3.
+Am Ende zeigt die Lektion, was Turing selbst 1936 bewiesen hat.
+Sein Ergebnis ist nah an dem in dieser Lektion, aber es ist nicht dasselbe.
+
+## Eine Maschine, die anhält
+
+Hier ist Binär +1 aus Lektion 1.
+Drücke **Starten**.
+
+<Machine example="binary-plus-one" />
+
+Die Maschine hält nach 8 Schritten in qA an.
+Auf dem Band steht 1100.
+Bei dieser Maschine ist die Antwort leicht: Sie hält an.
+
+## Eine Maschine, die für immer läuft
+
+Hier ist Turings erste Maschine.
+Drücke **Starten** und dann **Pause**, wenn du genug gesehen hast.
+
+<Machine example="turing-1936" />
+
+Die Maschine druckt 0 1 0 1 … und hält nie an.
+Nach 𝔨 geht sie immer zurück zu 𝔟.
+Das erkennst du an ihren vier Regeln.
+
+Der Simulator kann das nicht erkennen.
+Er zählt nur Schritte.
+Auf dieser Seite macht Starten alle 0,7 Sekunden einen Schritt.
+Nach 10.000 Schritten, etwa zwei Stunden später, pausiert Starten.
+Die Ergebniszeile sagt dann, dass die Maschine vielleicht nie anhält, und fragt, ob es weitergehen soll.
+Die zwei Stunden gelten nur, solange der Tab sichtbar bleibt.
+Browser verlangsamen versteckte Tabs.
+Im vollen Simulator, beim höchsten Tempo, kommt die Pause nach etwa 3 Sekunden.
+
+Die Grenze von 10.000 Schritten ist eine Schätzung.
+Eine andere Maschine könnte bei Schritt 10.001 anhalten.
+Könnte ein besserer Simulator die Schätzung durch eine sichere Antwort ersetzen?
+
+## Die Frage
+
+Stell dir eine Maschine H vor, die zwei Dinge auf ihrem Band liest:
+
+- die Beschreibung einer Maschine M, wie in Lektion 3;
+- eine Eingabe für M.
+
+H muss immer anhalten und dann „hält“ oder „endlos“ sagen.
+„Hält“ heißt, dass M bei dieser Eingabe anhält.
+„Endlos“ heißt, dass M bei dieser Eingabe für immer läuft.
+H muss bei jeder Maschine und jeder Eingabe recht haben.
+
+H kann M nicht einfach laufen lassen und warten.
+Wenn M für immer läuft, würde H auch für immer warten und nie antworten.
+H bräuchte eine klügere Methode.
+Die Frage „Gibt es so ein H?“ heißt **Halteproblem**.
+
+Die Antwort ist nein.
+Der Beweis nimmt an, dass H existiert, und findet dann einen Widerspruch.
+
+## Das Diagonalargument, Schritt für Schritt
+
+**Schritt 1. Liste jede Maschine auf.**
+Lektion 3 hat gezeigt, dass jede Maschine eine Beschreibungszahl hat.
+Sortiere die Maschinen nach ihren Zahlen: M1, M2, M3 und so weiter.
+Jede Maschine steht irgendwo in dieser Liste.
+
+**Schritt 2. Fülle eine Tabelle mit den Antworten von H.**
+Gib jeder Maschine als Eingabe die Beschreibung einer Maschine.
+Zeile M1 zeigt, was M1 mit der Beschreibung von M1, von M2, von M3 und so weiter tut.
+H füllt jede Zelle aus.
+Die Antworten unten sind ausgedacht.
+Nur das Muster zählt.
+
+| Maschine | mit M1 | mit M2 | mit M3 | mit M4 |
+| --- | --- | --- | --- | --- |
+| M1 | **hält** | endlos | hält | hält |
+| M2 | hält | **endlos** | endlos | hält |
+| M3 | endlos | hält | **endlos** | hält |
+| M4 | hält | hält | endlos | **hält** |
+
+Die fett gedruckten Zellen bilden die Diagonale.
+Sie zeigen jede Maschine mit ihrer eigenen Beschreibung: M1 mit M1, M2 mit M2, M3 mit M3, M4 mit M4.
+Hier lautet die Diagonale: hält, endlos, endlos, hält.
+
+**Schritt 3. Baue eine neue Maschine D.**
+D liest die Beschreibung einer Maschine M.
+D gibt H zwei Dinge: die Beschreibung von M als Maschine und dieselbe Beschreibung als Eingabe.
+Dann tut D das Gegenteil der Antwort von H:
+
+- Sagt H „hält“, läuft D für immer.
+- Sagt H „endlos“, hält D an.
+
+D ist eine echte Maschine, weil H eine ist.
+D braucht nur ein paar zusätzliche Regeln: um die Beschreibung zu kopieren und um für immer weiterzulaufen.
+
+**Schritt 4. Vergleiche D mit der Liste.**
+Bei jeder Beschreibung tut D das Gegenteil der Diagonale.
+
+| Maschine | mit M1 | mit M2 | mit M3 | mit M4 |
+| --- | --- | --- | --- | --- |
+| Diagonale | hält | endlos | endlos | hält |
+| D | endlos | hält | hält | endlos |
+
+D unterscheidet sich von M1 bei M1.
+D unterscheidet sich von M2 bei M2, und so weiter.
+Also unterscheidet sich D von jeder Maschine in der Liste.
+Aber die Liste enthält jede Maschine, also muss D darin stehen.
+
+**Schritt 5. Frag, was D mit ihrer eigenen Beschreibung tut.**
+Sagen wir, D ist Maschine Nummer k in der Liste.
+Sieh dir die Zelle an, in der Zeile k auf Spalte k trifft.
+
+- Wenn D mit ihrer eigenen Beschreibung anhält, dann hat H „endlos“ gesagt. Aber dann hält D an, also lag H falsch.
+- Wenn D mit ihrer eigenen Beschreibung für immer läuft, dann hat H „hält“ gesagt. Aber dann läuft D für immer, also lag H falsch.
+
+Beide Fälle sind unmöglich.
+Jeder Schritt folgt aus dem vorherigen.
+Nur eines kann falsch sein: die Annahme, dass H existiert.
+Also kann es keine Maschine H geben.
+Kein Simulator kann seine Schrittgrenze durch eine sichere Antwort für jede Maschine ersetzen.
+
+## Was Turing bewiesen hat
+
+Viele Lehrbücher benutzen einen Beweis dieser Art.
+Turings Aufsatz von 1936 stellt eine andere Frage.
+Hier ist der Grund.
+
+Turing wollte Maschinen, die die Ziffern einer Zahl drucken, ohne Ende.
+In Lektion 1 tut seine erste Maschine genau das.
+Für Turing hört eine gute Maschine nie auf, Ziffern zu drucken.
+Er nannte so eine Maschine zirkelfrei:
+
+> “If a computing machine never writes down more than a finite number of symbols of the first kind, it will be called circular. Otherwise it is said to be circle-free.” (Turing, 1936, Seite 233)
+>
+> Auf Deutsch: „Wenn eine Rechenmaschine nie mehr als eine endliche Zahl von Symbolen der ersten Art aufschreibt, wird sie zirkulär genannt. Andernfalls heißt sie zirkelfrei.“
+
+„Symbole der ersten Art“ sind die Ziffern 0 und 1.
+Eine Maschine, die ein paar Ziffern druckt und dann anhält, ist also zirkulär.
+Für Turing ist sie eine schlechte Maschine.
+
+In Abschnitt 8 nimmt Turing eine Maschine 𝔇 an, die für jede Beschreibung sagt, ob die Maschine zirkelfrei ist.
+Aus 𝔇 und der universellen Maschine 𝒰 aus Lektion 3 baut er eine Maschine ℋ.
+ℋ geht die Zahlen 1, 2, 3, … der Reihe nach durch und fragt 𝔇 nach jeder Zahl.
+Für die erste zirkelfreie Maschine, die sie findet, druckt ℋ die erste Ziffer dieser Maschine.
+Für die zweite druckt sie die zweite Ziffer dieser Maschine, und so weiter.
+Das ist eine Diagonale, wie in den Tabellen oben, und ℋ ist zirkelfrei.
+Dann fragt Turing, was 𝔇 sagt, wenn ℋ ihre eigene Zahl erreicht.
+𝔇 kann nicht „zirkulär“ sagen, weil ℋ zirkelfrei ist.
+Sagt 𝔇 „zirkelfrei“, muss ℋ ihre eigene nächste Ziffer berechnen.
+Um sie zu finden, müsste ℋ zuerst genau diese Ziffer finden.
+Also wird die Ziffer nie gefunden, und ℋ ist doch zirkulär.
+Er schließt:
+
+> “Thus both verdicts are impossible and we conclude that there can be no machine 𝔇.” (Turing, 1936, Seite 247)
+>
+> Auf Deutsch: „Also sind beide Urteile unmöglich, und wir schließen, dass es keine Maschine 𝔇 geben kann.“
+
+Auf der nächsten Seite beweist er ein zweites Ergebnis:
+
+> “We can show further that there can be no machine ℰ which, when supplied with the S.D of an arbitrary machine ℳ, will determine whether ℳ ever prints a given symbol (0 say).” (Turing, 1936, Seite 248)
+>
+> Auf Deutsch: „Wir können weiter zeigen, dass es keine Maschine ℰ geben kann, die, wenn man ihr die S.D einer beliebigen Maschine ℳ gibt, bestimmt, ob ℳ jemals ein gegebenes Symbol druckt (sagen wir 0).“
+
+Turing hat also zwei Dinge bewiesen.
+Keine Maschine kann entscheiden, ob eine Maschine zirkelfrei ist.
+Und keine Maschine kann entscheiden, ob eine Maschine jemals 0 druckt.
+Keine der beiden Fragen ist „Hält sie an?“.
+Spätere Autoren schrieben das Ergebnis in der Form „Hält sie an?“ und gaben ihm den Namen „Halteproblem“.
+Die Idee des Beweises, die Diagonale, ist dieselbe.
+
+## Warum das wichtig ist
+
+Die Schrittgrenze im Simulator ist kein Fehler, den ein besseres Programm beheben könnte.
+Kein Programm kann für jede Maschine entscheiden, ob sie anhält.
+Das gilt auch für Computer: Kein Werkzeug kann jedes Programm auf Schleifen prüfen, die nie enden.
+Solche Werkzeuge können in vielen Fällen helfen, aber nicht in allen.
+
+Turings Ergebnis „druckt jemals 0“ hat noch einen Nutzen.
+Damit beantwortete er die Frage, mit der sein Aufsatz begann, das *Entscheidungsproblem*.
+Eine spätere Lektion erzählt diese Geschichte.
+
+<Quiz />
+
+## Quellen
+
+- A. M. Turing, „[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)“, *Proceedings of the London Mathematical Society*, Reihe 2, Band 42, Seiten 230–265, 1936. Zirkelfreie Maschinen werden in Abschnitt 2 definiert. Das Diagonalargument steht in Abschnitt 8, Seiten 246–248.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. Eine Erklärung des ganzen Aufsatzes, Zeile für Zeile.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3. Auflage, Cengage Learning, 2013. Kapitel 4 und 5.
+- John E. Hopcroft, Rajeev Motwani und Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3. Auflage, Pearson/Addison-Wesley, 2007. Kapitel 9.

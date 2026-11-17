@@ -368,3 +368,28 @@ describe('the simulator store', () => {
     expect(store.getState().importWarnings).toEqual(examples['tcc-2016'].warnings);
   });
 });
+
+// Lesson 4 (content/lessons/halting-problem) quotes the numbers below.
+describe("Run on Turing's first machine, as a lesson machine runs it", () => {
+  it('steps every 700 ms and pauses after 10,000 steps: about 1 hour 57 minutes', () => {
+    const store = createSimulatorStore({ storage });
+    store.getState().loadExample('turing-1936');
+    expect(store.getState().speed).toBe(3);
+    store.getState().toggleRun();
+    // The first step comes at once, then one every 700 ms: 9,999 waits of 700 ms is 6,999.3 seconds.
+    vi.advanceTimersByTime(9_999 * 700 - 1);
+    expect(store.getState()).toMatchObject({ loop: 'running', run: { steps: 9_999 } });
+    vi.advanceTimersByTime(1);
+    expect(store.getState()).toMatchObject({ loop: 'limit', run: { steps: 10_000, status: 'running' } });
+  });
+
+  it('pauses after about 3 seconds at the fastest speed, in the full simulator', () => {
+    const store = createSimulatorStore({ storage });
+    store.getState().loadExample('turing-1936');
+    store.getState().setSpeed(5);
+    store.getState().toggleRun();
+    // 50 steps every 16 ms: the 200th batch comes 199 × 16 = 3,184 ms after Run.
+    vi.advanceTimersByTime(199 * 16);
+    expect(store.getState()).toMatchObject({ loop: 'limit', run: { steps: 10_000 } });
+  });
+});

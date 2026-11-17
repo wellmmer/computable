@@ -1,5 +1,6 @@
 import { compile } from '@mdx-js/mdx';
 import { fileURLToPath } from 'node:url';
+import remarkGfm from 'remark-gfm';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -10,7 +11,7 @@ export default defineConfig({
       enforce: 'pre',
       async transform(source, id) {
         if (!id.endsWith('.mdx')) return null;
-        return { code: String(await compile(source, { providerImportSource: '@/mdx-components' })), map: null };
+        return { code: String(await compile(source, { providerImportSource: '@/mdx-components', remarkPlugins: [remarkGfm] })), map: null };
       },
     },
   ],
