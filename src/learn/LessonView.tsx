@@ -24,8 +24,8 @@ export function LessonView({ lessons, index }: { lessons: readonly Lesson[]; ind
   return (
     <main className={pageMain}>
       <p className="text-sm font-semibold text-muted">{t('position', { number: index + 1, total: lessons.length })}</p>
-      {/* A long word such as "Entscheidungsproblem" is wider than a phone at 40 px: let it break. */}
-      <h1 className={`mt-2 ${pageTitle} hyphens-auto break-words`}>{meta.title}</h1>
+      {/* "Entscheidungsproblem" is wider than a phone at 40 px. Its title has a soft hyphen, so it breaks after "Entscheidungs". */}
+      <h1 className={`mt-2 ${pageTitle} break-words`}>{meta.title}</h1>
       <p className="mt-3 text-muted">{tPage('minutes', { minutes: meta.minutes })}</p>
 
       {/* About 68 characters per line: `ch` follows the 17 px text size set here. */}

@@ -44,7 +44,7 @@ describe('Learn page (spec 2.1)', () => {
     expect(within(lessonRow(4)).getByRole('link', { name: 'The halting problem' }).getAttribute('href')).toBe('/learn/halting-problem');
     expect(within(lessonRow(4)).getByText('7 min read')).toBeTruthy();
     expect(within(lessonRow(5)).getByText('Lesson 5')).toBeTruthy();
-    expect(within(lessonRow(5)).getByRole('link', { name: 'The Entscheidungsproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
+    expect(within(lessonRow(5)).getByRole('link', { name: 'The Entscheidungs\u00ADproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
     expect(within(lessonRow(5)).getByText('6 min read')).toBeTruthy();
     expect(within(lessonRow(6)).getByText('Lesson 6')).toBeTruthy();
     expect(within(lessonRow(6)).getByRole('link', { name: 'The Church–Turing thesis' }).getAttribute('href')).toBe('/learn/church-turing');

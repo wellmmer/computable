@@ -55,7 +55,7 @@ describe('LESSONS (spec 3)', () => {
 
   it('reads the English meta of lesson 5', () => {
     expect(LESSONS[4].text.en.meta).toEqual({
-      title: 'The Entscheidungsproblem',
+      title: 'The Entscheidungs\u00ADproblem',
       summary: 'Is there one method that decides, for every formula of logic, whether it can be proved? How Church and Turing answered no in 1936, and how Turing used the “ever prints 0” result.',
       minutes: 6,
     });

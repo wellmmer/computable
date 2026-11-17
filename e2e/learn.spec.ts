@@ -95,6 +95,8 @@ for (const { path, learn, lessons } of LANGUAGES) {
       await page.getByRole('link', { name: title }).click();
       await expect(page).toHaveURL(new RegExp(`${path}/learn/${slug}$`));
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+      // The tab shows the title without the soft hyphen of lesson 5.
+      expect(await page.title(), slug).toContain(title);
       await expect(page.getByText(position)).toBeVisible();
       await expect(page.locator('figure')).toHaveCount(machines);
     }
@@ -231,7 +233,40 @@ test('lesson 6 end to end: answer the quiz, then the score shows on the Learn pa
   await expect(page.getByText('More lessons come later.')).toBeVisible();
 });
 
-test('lessons 3 to 6 fit a 390 px phone screen in every language, tables included', async ({ page }) => {
+/**
+ * Where the lesson title breaks onto a new line inside a word: the title with a "|" at each such
+ * break. A break is fine after a space, a dash or a soft hyphen (U+00AD), and nowhere else.
+ */
+function titleBreaksInsideWords(page: Page) {
+  return page.locator('main h1').evaluate((title) => {
+    const chars: { char: string; top: number | null }[] = [];
+    const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode() as Text | null; node !== null; node = walker.nextNode() as Text | null) {
+      for (let i = 0; i < node.data.length; i++) {
+        const range = document.createRange();
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        // A letter right after a break also gets an empty box at the end of the line before: skip it.
+        const box = [...range.getClientRects()].filter(({ width }) => width > 0).at(-1);
+        chars.push({ char: node.data[i], top: box === undefined ? null : Math.round(box.top) });
+      }
+    }
+    const text = chars.map(({ char }) => char).join('');
+    const breaks: string[] = [];
+    let previous = -1;
+    chars.forEach(({ top }, i) => {
+      if (top === null) return;
+      const previousTop = previous >= 0 ? chars[previous].top : null;
+      if (previousTop !== null && top > previousTop && !/[\s\u00AD–-]/.test(text.slice(previous, i))) {
+        breaks.push(`${text.slice(0, i)}|${text.slice(i)}`);
+      }
+      previous = i;
+    });
+    return breaks;
+  });
+}
+
+test('lessons 3 to 6 fit a 390 px phone screen in every language, tables and titles included', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const path of LOCALE_PATHS) {
     for (const slug of ['universal-machine', 'halting-problem', 'entscheidungsproblem', 'church-turing']) {
@@ -240,7 +275,9 @@ test('lessons 3 to 6 fit a 390 px phone screen in every language, tables include
         page: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         tables: [...document.querySelectorAll('main table')].filter((table) => table.getBoundingClientRect().right > document.documentElement.clientWidth).length,
       }));
-      expect(overflow, `${path}/learn/${slug}`).toEqual({ page: 0, tables: 0 });
+      // "Entscheidungsproblem" is wider than the phone at 40 px. It may break only after "Entscheidungs".
+      const titleBreaks = await titleBreaksInsideWords(page);
+      expect({ ...overflow, titleBreaks }, `${path}/learn/${slug}`).toEqual({ page: 0, tables: 0, titleBreaks: [] });
     }
   }
 });

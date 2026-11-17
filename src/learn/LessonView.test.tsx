@@ -72,7 +72,7 @@ describe('LessonView (spec 2.2)', () => {
   });
 
   it.each([
-    [5, 'Lesson 5 of 6', 'The Entscheidungsproblem'],
+    [5, 'Lesson 5 of 6', 'The Entscheidungs\u00ADproblem'],
     [6, 'Lesson 6 of 6', 'The Church–Turing thesis'],
   ])('shows lesson %i with no machine, its quotes from the paper and a quiz of 5 questions', (number, position, title) => {
     renderWithIntl(<LessonView lessons={LESSONS} index={number - 1} />);
@@ -99,14 +99,14 @@ describe('LessonView (spec 2.2)', () => {
     cleanup();
     renderWithIntl(<LessonView lessons={LESSONS} index={3} />);
     expect(screen.getByRole('link', { name: 'Previous lesson: The universal machine' }).getAttribute('href')).toBe('/learn/universal-machine');
-    expect(screen.getByRole('link', { name: 'Next lesson: The Entscheidungsproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
+    expect(screen.getByRole('link', { name: 'Next lesson: The Entscheidungs\u00ADproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
   });
 
   it('ends at lesson 6: it links lesson 5 and all lessons, and no next lesson', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={5} />);
     const nav = screen.getByRole('navigation', { name: 'Lessons' });
     expect(within(nav).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
-      ['Previous lesson: The Entscheidungsproblem', '/learn/entscheidungsproblem'],
+      ['Previous lesson: The Entscheidungs\u00ADproblem', '/learn/entscheidungsproblem'],
       ['All lessons', '/learn'],
     ]);
   });
