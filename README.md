@@ -107,8 +107,8 @@ machine could do the same work.
 ## What R2c brings
 
 - **A reading guide to Turing's 1936 paper.** One block for each part: sections 1 to 11, the
-  appendix and Turing's later correction. Each block gives the pages in the journal, a short summary
-  and links to the lessons that explain it.
+  appendix and Turing's later correction. Each block gives the pages in the journal and a short
+  summary. It links to the lessons that explain it, where there is one: 10 of the 13 blocks have one.
 - **Short quotes, not the paper.** Each part has at most one quote, word for word, with its page.
   The quotes stay in Turing's English, and the other languages add a translation. The page links to
   the paper by its DOI.
