@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "standard-description": {
+      "text": "Qu’est-ce que la description standard d’une machine ?",
+      "options": {
+        "steps": {
+          "text": "Une liste des pas que fait la machine",
+          "why": "Les pas dépendent de l’entrée. La description standard ne contient que les règles."
+        },
+        "rules-as-letters": {
+          "text": "Ses règles, écrites comme une seule ligne de lettres",
+          "why": "Chaque règle devient cinq parties en lettres, et un point-virgule la termine."
+        },
+        "tape": {
+          "text": "Les symboles sur sa bande à la fin",
+          "why": "La bande contient ce que la machine imprime. La description standard contient la façon dont elle fonctionne."
+        }
+      }
+    },
+    "state-letters": {
+      "text": "Comment Turing écrit-il l’état q3 en lettres ?",
+      "options": {
+        "dccc": {
+          "text": "DCCC",
+          "why": "C compte les symboles. A compte les états."
+        },
+        "d3": {
+          "text": "D3",
+          "why": "La description standard n’utilise que des lettres et le point-virgule."
+        },
+        "daaa": {
+          "text": "DAAA",
+          "why": "Un état est D, puis A autant de fois que son numéro : trois fois pour q3."
+        },
+        "aaa": {
+          "text": "AAA",
+          "why": "Chaque état et chaque symbole commence par D."
+        }
+      }
+    },
+    "description-number": {
+      "text": "Comment une description standard devient-elle un nombre de description ?",
+      "options": {
+        "digits": {
+          "text": "Chaque lettre est remplacée par un chiffre, comme A par 1 et D par 3",
+          "why": "La ligne de lettres se lit alors comme un seul long nombre."
+        },
+        "count": {
+          "text": "On compte les lettres",
+          "why": "Un comptage donnerait le même nombre à beaucoup de machines."
+        },
+        "sum": {
+          "text": "On additionne les numéros des états",
+          "why": "Une somme perdrait les règles. Le nombre de description garde chaque lettre."
+        }
+      }
+    },
+    "universal-tape": {
+      "text": "De quoi la machine universelle 𝒰 a-t-elle besoin au début de sa bande ?",
+      "options": {
+        "description": {
+          "text": "La description standard d’une autre machine",
+          "why": "𝒰 la lit et fait le travail de cette machine."
+        },
+        "nothing": {
+          "text": "Rien : elle connaît déjà toutes les machines",
+          "why": "𝒰 a une seule table de règles fixe. L’autre machine vient de la bande."
+        },
+        "own-table": {
+          "text": "Une nouvelle table de règles pour 𝒰 elle-même",
+          "why": "𝒰 ne change jamais. Seule la bande change."
+        }
+      }
+    },
+    "many-numbers": {
+      "text": "Une machine peut-elle avoir plus d’un nombre de description ?",
+      "options": {
+        "exactly-one": {
+          "text": "Non, chaque machine en a exactement un",
+          "why": "Un autre ordre des règles donne un autre nombre pour la même machine."
+        },
+        "only-if-stops": {
+          "text": "Seulement si la machine s’arrête",
+          "why": "Toute machine a un nombre de description, qu’elle s’arrête ou non."
+        },
+        "yes": {
+          "text": "Oui, par exemple avec ses règles dans un autre ordre",
+          "why": "Turing donne deux nombres pour sa première machine. Mais chaque nombre décrit une seule machine."
+        }
+      }
+    }
+  }
+}

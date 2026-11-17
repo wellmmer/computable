@@ -1,0 +1,156 @@
+export const meta = {
+  title: 'A máquina universal',
+  summary: 'Como Turing escreveu uma máquina inteira como uma linha de letras, e descreveu uma máquina que faz o trabalho de qualquer outra.',
+  minutes: 6,
+};
+
+Cada máquina das lições 1 e 2 faz um só trabalho.
+A Binário +1 soma um.
+O verificador de palíndromos verifica palíndromos.
+Para um trabalho novo, você precisa de uma tabela de regras nova.
+
+Turing perguntou se uma máquina poderia fazer o trabalho de todas as máquinas.
+A resposta dele foi sim.
+A ideia é simples: escrever as regras de uma máquina na fita.
+Então uma máquina fixa pode ler essas regras e segui-las.
+Esta lição mostra como Turing escreveu regras como símbolos, e o que essa máquina faz.
+Ela segue as seções 5 e 6 do artigo de 1936.
+
+## De novo a primeira máquina de Turing
+
+Aqui está a máquina da lição 1.
+Ela imprime 0 1 0 1 … sem fim.
+Ela tem quatro estados, 𝔟, 𝔠, 𝔢 e 𝔨, e uma regra para cada estado.
+
+<Machine example="turing-1936" />
+
+Para pôr essa máquina numa fita, Turing primeiro escreve cada regra numa forma fixa.
+
+## Números para estados e símbolos
+
+Turing dá um número a cada estado.
+O estado inicial é sempre q1.
+Ele escreve:
+
+> “The initial m-configuration is always to be called q1.” (Turing, 1936, página 239)
+>
+> Em português: “A m-configuração inicial sempre se chamará q1.”
+
+Os outros estados recebem os números seguintes.
+Turing também numera os símbolos.
+O branco é S0, o símbolo 0 é S1 e o símbolo 1 é S2.
+
+Depois ele escreve cada nome com letras.
+Um estado é D, seguido de A tantas vezes quanto o seu número.
+Um símbolo é D, seguido de C tantas vezes quanto o seu número.
+
+| Nome | Número | Letras |
+| --- | --- | --- |
+| 𝔟 | q1 | DA |
+| 𝔠 | q2 | DAA |
+| 𝔢 | q3 | DAAA |
+| 𝔨 | q4 | DAAAA |
+| branco | S0 | D |
+| 0 | S1 | DC |
+| 1 | S2 | DCC |
+
+## Uma regra em cinco partes
+
+Em seguida, toda regra ganha a mesma forma.
+Ela imprime um símbolo e depois se move uma vez.
+Uma regra que só se move imprime o símbolo que já está lá.
+Assim, "em 𝔠, mova para a direita" vira "em q2, lendo S0, imprima S0, mova para a direita".
+
+Cada regra tem então cinco partes, nesta ordem:
+
+1. O estado, como DA para q1.
+2. O símbolo que a cabeça lê, como D para o branco.
+3. O símbolo que a máquina imprime, como DC para 0.
+4. O movimento: L para a esquerda, R para a direita, ou N para nenhum movimento.
+5. O próximo estado, como DAA para q2.
+
+Um ponto e vírgula fecha a regra.
+A primeira regra da máquina diz: em 𝔟, num branco, imprima 0, mova para a direita, vá para 𝔠.
+Em números, isso é q1 S0 S1 R q2.
+Em letras, é DA D DC R DAA, seguido de um ponto e vírgula: DADDCRDAA;
+
+## A descrição padrão
+
+Escreva as quatro regras uma depois da outra, e você tem uma linha de letras.
+Turing a chama de **descrição padrão** da máquina, ou S.D, em inglês.
+
+<Encoding />
+
+Turing imprime exatamente esta linha na página 241 do artigo.
+Esta página a calcula a partir das regras da máquina, e ela bate com o artigo letra por letra.
+
+## De letras para um número
+
+Turing vai um passo além.
+Ele troca cada letra por um algarismo: A é 1, C é 2, D é 3, L é 4, R é 5, N é 6, e o ponto e vírgula é 7.
+A linha de letras vira um número comprido.
+
+> “The integer represented by this numeral may be called a description number (D.N) of the machine.” (Turing, 1936, página 240)
+>
+> Em português: “O inteiro representado por este numeral pode ser chamado de número de descrição (D.N) da máquina.”
+
+Para a primeira máquina, o número de descrição tem 47 algarismos.
+O quadro acima o mostra abaixo da descrição padrão.
+
+Uma máquina pode ter mais de um número de descrição.
+Você poderia escrever as regras em outra ordem.
+Você também poderia acrescentar uma regra que nunca roda.
+Turing dá um segundo número, mais comprido, para a mesma máquina, com uma regra a mais.
+Mas cada número de descrição descreve uma só máquina:
+
+> “The D.N determine the S.D and the structure of the machine uniquely.” (Turing, 1936, páginas 240–241)
+>
+> Em português: “O D.N determina de modo único a S.D e a estrutura da máquina.”
+
+Então toda máquina tem pelo menos um número.
+Você pode listar todas as máquinas na ordem dos seus números.
+A lição 4 usa essa lista.
+
+## A máquina universal
+
+Agora Turing descreve uma máquina que faz o trabalho de qualquer outra.
+
+> “It is possible to invent a single machine which can be used to compute any computable sequence.” (Turing, 1936, página 241)
+>
+> Em português: “É possível inventar uma única máquina que pode ser usada para calcular qualquer sequência computável.”
+
+Ele a chama de 𝒰, a máquina universal.
+Você dá a 𝒰 uma fita que começa com a descrição padrão de outra máquina.
+Então 𝒰 imprime os mesmos algarismos que essa máquina.
+
+𝒰 guarda na própria fita um registro da outra máquina: os símbolos dela, a casa sob a cabeça dela e o estado dela.
+A cada passo, ela procura a regra que serve para o estado e o símbolo.
+Ela faz o que a regra diz e atualiza o registro.
+Depois procura a próxima regra.
+
+𝒰 é lenta.
+Ela precisa de muitos passos próprios para um passo da outra máquina.
+Mas a velocidade não importa aqui.
+O que importa é que uma tabela de regras fixa basta para todas as máquinas.
+A seção 7 do artigo dá a tabela completa de 𝒰, nas páginas 243 a 246.
+
+## Por que isso importa
+
+Antes de 𝒰, cada trabalho precisava da sua própria máquina.
+Com 𝒰, um trabalho é só uma linha de símbolos numa fita.
+O computador que você usa hoje funciona do mesmo jeito.
+Uma máquina roda muitos programas, e cada programa é um dado na memória dela.
+
+A descrição padrão tem um segundo uso.
+Uma máquina pode ler a descrição de outra máquina, e até a sua própria.
+Então uma máquina pode tentar responder perguntas sobre máquinas.
+A lição 4 faz uma dessas perguntas: esta máquina vai parar algum dia?
+
+<Quiz />
+
+## Fontes
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, série 2, volume 42, páginas 230–265, 1936. A descrição padrão e o número de descrição estão na seção 5. A máquina universal está nas seções 6 e 7.
+- Charles Petzold, [*The Annotated Turing*](https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057), Wiley, 2008. Um passeio guiado pelo artigo inteiro, linha por linha. Em inglês.
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3ª edição, Cengage Learning, 2013. Capítulo 4.
+- John E. Hopcroft, Rajeev Motwani e Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3ª edição, Pearson/Addison-Wesley, 2007. Capítulo 9.
