@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "thesis": {
+      "text": "Was sagt die Church-Turing-These?",
+      "options": {
+        "every-problem": {
+          "text": "Eine Turingmaschine kann jedes Problem lösen",
+          "why": "Die Lektionen 4 und 5 zeigen Probleme, die keine Maschine lösen kann. Die These handelt von Verfahren, denen ein Mensch folgen kann."
+        },
+        "person-and-machine": {
+          "text": "Was ein Mensch nach einem festen Verfahren berechnen kann, kann eine Turingmaschine berechnen",
+          "why": "Das ist die These. Sie verbindet ein Verfahren, dem ein Mensch folgt, mit einer Maschine."
+        },
+        "speed": {
+          "text": "Eine Turingmaschine rechnet schneller als ein Mensch",
+          "why": "Die These sagt nichts über Tempo. Sie handelt davon, was sich überhaupt berechnen lässt."
+        }
+      }
+    },
+    "why-thesis": {
+      "text": "Warum ist sie eine These und kein Theorem?",
+      "options": {
+        "believed-false": {
+          "text": "Weil sie wahrscheinlich falsch ist",
+          "why": "Das ist nicht der Grund. Ein Theorem braucht einen Beweis, und ein Beweis braucht genaue Definitionen."
+        },
+        "proof-too-long": {
+          "text": "Weil ihr Beweis zu lang zum Aufschreiben ist",
+          "why": "Es gibt keinen Beweis, weder lang noch kurz. Eine Seite der Behauptung hat keine genaue Definition."
+        },
+        "no-exact-definition": {
+          "text": "Weil „ein festes Verfahren, dem ein Mensch folgen kann“ keine genaue Definition hat, also kann kein Beweis es mit Turingmaschinen verbinden",
+          "why": "Turing sagt das auf Seite 249: Alle Argumente dafür sind am Ende Appelle an die Intuition."
+        }
+      }
+    },
+    "appendix": {
+      "text": "Was zeigt Turings Anhang?",
+      "options": {
+        "same-sequences": {
+          "text": "Dass die λ-definierbaren Folgen und die berechenbaren Folgen dieselben sind",
+          "why": "Turing beweist beide Richtungen, in Grundzügen, auf den Seiten 263 bis 265."
+        },
+        "church-wrong": {
+          "text": "Dass Churchs Definition falsch ist",
+          "why": "Turing nennt Churchs Idee gleichwertig mit seiner eigenen (Seite 231)."
+        },
+        "thesis-proved": {
+          "text": "Dass die These bewiesen ist",
+          "why": "Er zeigt, dass zwei genaue Definitionen übereinstimmen. Die Idee eines Verfahrens, dem ein Mensch folgen kann, hat immer noch keine genaue Definition."
+        }
+      }
+    },
+    "lambda": {
+      "text": "Wann ist eine Folge λ-definierbar?",
+      "options": {
+        "circle-free-machine": {
+          "text": "Wenn eine zirkelfreie Maschine sie druckt",
+          "why": "Das ist Turings Definition einer berechenbaren Folge (Seite 233). Der Anhang zeigt, dass beide dieselben Folgen liefern, aber die Definitionen sind verschieden."
+        },
+        "one-formula": {
+          "text": "Wenn eine einzige Formel von Church jede Ziffer der Folge liefert, durch Konversion",
+          "why": "Wende die Formel auf die Zahl n an und konvertiere. Das Ergebnis nennt die n-te Ziffer (Seite 263)."
+        },
+        "no-rule": {
+          "text": "Wenn ihre Ziffern keiner Regel folgen",
+          "why": "Beide Definitionen brauchen feste Regeln. Eine Folge ohne Regel ist weder λ-definierbar noch berechenbar."
+        }
+      }
+    },
+    "no-method": {
+      "text": "Turing hat bewiesen, dass keine Maschine für jede Formel entscheidet, ob sie beweisbar ist. Was macht daraus „überhaupt kein Verfahren“?",
+      "options": {
+        "more-steps": {
+          "text": "Die Maschine mehr Schritte laufen lassen",
+          "why": "Mehr Schritte helfen nicht. Die Frage ist, ob jedes Verfahren von einer Maschine ausgeführt werden kann."
+        },
+        "appendix-alone": {
+          "text": "Der Anhang allein",
+          "why": "Der Anhang vergleicht zwei genaue Definitionen. Er deckt nicht jedes Verfahren ab, dem ein Mensch folgen könnte."
+        },
+        "thesis": {
+          "text": "Die These: Jedes feste Verfahren kann von einer Maschine ausgeführt werden",
+          "why": "Turing sagt das auf Seite 249. Sobald man die These zugibt, wäre ein Verfahren für das Entscheidungsproblem eine Maschine, und so eine Maschine gibt es nicht."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "thesis": {
+      "text": "¿Qué dice la tesis de Church–Turing?",
+      "options": {
+        "every-problem": {
+          "text": "Una máquina de Turing puede resolver todo problema",
+          "why": "Las lecciones 4 y 5 muestran problemas que ninguna máquina puede resolver. La tesis trata de métodos que una persona puede seguir."
+        },
+        "person-and-machine": {
+          "text": "Lo que una persona puede calcular siguiendo un método fijo, una máquina de Turing lo puede calcular",
+          "why": "Esa es la tesis. Conecta un método que sigue una persona con una máquina."
+        },
+        "speed": {
+          "text": "Una máquina de Turing calcula más rápido que una persona",
+          "why": "La tesis no dice nada sobre la velocidad. Trata solo de qué se puede calcular."
+        }
+      }
+    },
+    "why-thesis": {
+      "text": "¿Por qué es una tesis y no un teorema?",
+      "options": {
+        "believed-false": {
+          "text": "Porque probablemente es falsa",
+          "why": "Esa no es la razón. Un teorema necesita una demostración, y una demostración necesita definiciones exactas."
+        },
+        "proof-too-long": {
+          "text": "Porque su demostración es demasiado larga para escribirla",
+          "why": "No existe ninguna demostración, ni larga ni corta. Un lado de la afirmación no tiene una definición exacta."
+        },
+        "no-exact-definition": {
+          "text": "Porque “un método fijo que una persona puede seguir” no tiene una definición exacta, así que ninguna demostración puede conectarlo con las máquinas de Turing",
+          "why": "Turing lo dice en la página 249: todos los argumentos a su favor son, al final, apelaciones a la intuición."
+        }
+      }
+    },
+    "appendix": {
+      "text": "¿Qué muestra el apéndice de Turing?",
+      "options": {
+        "same-sequences": {
+          "text": "Que las sucesiones λ-definibles y las sucesiones computables son las mismas",
+          "why": "Turing demuestra las dos direcciones, a grandes rasgos, en las páginas 263 a 265."
+        },
+        "church-wrong": {
+          "text": "Que la definición de Church está mal",
+          "why": "Turing dice que la idea de Church es equivalente a la suya (página 231)."
+        },
+        "thesis-proved": {
+          "text": "Que la tesis está demostrada",
+          "why": "Muestra que dos definiciones exactas coinciden. La idea de un método que una persona puede seguir sigue sin tener una definición exacta."
+        }
+      }
+    },
+    "lambda": {
+      "text": "¿Cuándo es λ-definible una sucesión?",
+      "options": {
+        "circle-free-machine": {
+          "text": "Cuando una máquina libre de círculos la imprime",
+          "why": "Esa es la definición de Turing de una sucesión computable (página 233). El apéndice muestra que las dos dan las mismas sucesiones, pero las definiciones son distintas."
+        },
+        "one-formula": {
+          "text": "Cuando una fórmula de Church da todas sus cifras, por conversión",
+          "why": "Aplica la fórmula al número n y convierte. El resultado nombra la n-ésima cifra (página 263)."
+        },
+        "no-rule": {
+          "text": "Cuando sus cifras no siguen ninguna regla",
+          "why": "Las dos definiciones necesitan reglas fijas. Una sucesión sin regla no es λ-definible ni computable."
+        }
+      }
+    },
+    "no-method": {
+      "text": "Turing demostró que ninguna máquina decide, para toda fórmula, si es demostrable. ¿Qué convierte esto en “ningún método en absoluto”?",
+      "options": {
+        "more-steps": {
+          "text": "Ejecutar la máquina durante más pasos",
+          "why": "Más pasos no ayudan. La pregunta es si una máquina puede llevar a cabo todo método."
+        },
+        "appendix-alone": {
+          "text": "Solo el apéndice",
+          "why": "El apéndice compara dos definiciones exactas. No cubre todos los métodos que una persona podría seguir."
+        },
+        "thesis": {
+          "text": "La tesis: una máquina puede llevar a cabo todo método fijo",
+          "why": "Turing lo dice en la página 249. Una vez aceptada la tesis, un método para el Entscheidungsproblem sería una máquina, y no existe ninguna máquina así."
+        }
+      }
+    }
+  }
+}

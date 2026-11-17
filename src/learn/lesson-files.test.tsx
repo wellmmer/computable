@@ -48,7 +48,7 @@ function skeleton(page: Element): string[] {
 }
 
 /** The lessons without a <Machine>: lessons 5 and 6 have a quiz only (spec R2b 2). Every other lesson runs at least one machine. */
-const LESSONS_WITHOUT_MACHINES: readonly string[] = ['entscheidungsproblem'];
+const LESSONS_WITHOUT_MACHINES: readonly string[] = ['entscheidungsproblem', 'church-turing'];
 
 /**
  * The sources that lessons link, each with the text that finds it in a "Sources" list, its link, and
@@ -60,19 +60,19 @@ const LINKED_SOURCES: readonly { name: string; link: string; lessons: readonly s
     // Sipser, 3rd edition, ISBN 978-1-133-18779-0: the publisher's page answered 200 on 2026-11-17.
     name: 'Introduction to the Theory of Computation',
     link: 'https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790',
-    lessons: ['intuition', 'formal-definition', 'universal-machine', 'halting-problem'],
+    lessons: ['intuition', 'formal-definition', 'universal-machine', 'halting-problem', 'church-turing'],
   },
   {
     // Hopcroft–Motwani–Ullman, 3rd edition, ISBN 978-0-321-45536-9: the publisher's page answered 200 on 2026-11-17.
     name: 'Introduction to Automata Theory',
     link: 'https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369',
-    lessons: ['intuition', 'formal-definition', 'universal-machine', 'halting-problem'],
+    lessons: ['intuition', 'formal-definition', 'universal-machine', 'halting-problem', 'church-turing'],
   },
   {
     // Turing's 1936 paper, by its DOI.
     name: 'On Computable Numbers',
     link: 'https://doi.org/10.1112/plms/s2-42.1.230',
-    lessons: ['intuition', 'universal-machine', 'halting-problem', 'entscheidungsproblem'],
+    lessons: ['intuition', 'universal-machine', 'halting-problem', 'entscheidungsproblem', 'church-turing'],
   },
   {
     // Petzold, The Annotated Turing (Wiley, 2008, ISBN 978-0-470-22905-7). Wiley answers 403 to scripts; a browser opened it on 2026-11-17.
@@ -91,6 +91,12 @@ const LINKED_SOURCES: readonly { name: string; link: string; lessons: readonly s
     name: 'Grundzüge der theoretischen Logik',
     link: 'https://openlibrary.org/books/OL6723331M',
     lessons: ['entscheidungsproblem'],
+  },
+  {
+    // Church's paper, Amer. J. Math. 58(2), 345–363, where Turing finds "effective calculability" (page 231). The DOI answered 200 (JSTOR) on 2026-11-17.
+    name: 'An Unsolvable Problem of Elementary Number Theory',
+    link: 'https://doi.org/10.2307/2371045',
+    lessons: ['church-turing'],
   },
 ];
 

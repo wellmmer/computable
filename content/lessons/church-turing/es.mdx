@@ -1,0 +1,134 @@
+export const meta = {
+  title: 'La tesis de Church–Turing',
+  summary: 'Lo que una persona puede calcular siguiendo un método fijo, una máquina de Turing lo puede calcular. Por qué esto es una tesis y no un teorema, y cómo Turing mostró que su idea y la de Church coinciden.',
+  minutes: 6,
+};
+
+La lección 5 terminó con una laguna.
+Turing demostró que ninguna máquina puede decidir, para toda fórmula, si es demostrable.
+Pero Hilbert y Ackermann preguntaron por cualquier método, no solo por máquinas.
+Esta lección trata de la afirmación que cierra esta laguna.
+Sigue la sección 9 y el apéndice del artículo de Turing de 1936.
+
+## La afirmación
+
+La lección 1 mostró cómo Turing imaginó a una persona que calcula con un lápiz.
+Quitó todos los detalles que un método no necesita.
+Lo que quedó fue una máquina con una cinta, una cabeza, estados y reglas.
+
+De esta imagen sale una afirmación:
+
+**Lo que una persona puede calcular siguiendo un método fijo, una máquina de Turing lo puede calcular.**
+
+Un método fijo es un conjunto de reglas que dicen exactamente qué hacer en cada paso.
+La persona no necesita ideas nuevas, solo cuidado y tiempo.
+La división larga es un método así.
+La persona puede usar tanto papel y tanto tiempo como el método necesite.
+
+Hoy esta afirmación se llama tesis de Church–Turing.
+
+## Por qué es una tesis y no un teorema
+
+Un teorema es una afirmación con una demostración.
+Una demostración necesita una definición exacta para cada idea de la afirmación.
+"Máquina de Turing" tiene una definición exacta: la lección 2 la dio.
+"Un método fijo que una persona puede seguir" no tiene ninguna.
+Describe algo que hace la gente.
+Así que ninguna demostración puede conectar los dos lados.
+
+El propio Turing lo dijo, al principio de la sección 9:
+
+> “No attempt has yet been made to show that the ‘computable’ numbers include all numbers which would naturally be regarded as computable. All arguments which can be given are bound to be, fundamentally, appeals to intuition, and for this reason rather unsatisfactory mathematically.” (Turing, 1936, página 249)
+>
+> En español: “Todavía no se ha intentado mostrar que los números ‘computables’ incluyen todos los números que se considerarían naturalmente computables. Todos los argumentos que se pueden dar tienen que ser, en el fondo, apelaciones a la intuición, y por esta razón bastante insatisfactorios desde el punto de vista matemático.”
+
+En lugar de una demostración, Turing da argumentos de tres tipos (página 249):
+
+- **Una apelación directa a la intuición.** Es la persona con un lápiz, de la lección 1.
+- **Una demostración de que dos definiciones son la misma.** Esto ayuda cuando una de las definiciones parece más natural.
+- **Ejemplos.** Turing muestra grandes clases de números que las máquinas pueden calcular.
+
+Una tesis todavía puede ser falsa.
+Si alguien encontrara un método fijo que una persona puede seguir, pero que ninguna máquina de Turing puede ejecutar, la tesis sería falsa.
+
+## Qué calculan las máquinas de Turing
+
+Las máquinas de Turing imprimen las cifras 0 y 1.
+Las cifras que imprime una máquina, en orden, forman la sucesión que calcula (página 232).
+Una sucesión es computable si una máquina libre de círculos la calcula (página 233).
+Por ejemplo, la primera máquina de Turing imprime 0 1 0 1 …, así que la sucesión 010101… es computable.
+Turing dice que hablará más a menudo de sucesiones que de números (página 233).
+
+## La idea de Church
+
+Alonzo Church trabajaba en la Universidad de Princeton.
+Dio su propia definición de lo que es "efectivamente calculable".
+No tiene cinta ni cabeza.
+Trabaja con fórmulas, escritas con la letra griega λ (lambda).
+Reglas fijas convierten una fórmula en otra, un paso cada vez.
+Turing llama a estos pasos "conversión" (página 263).
+
+Una sucesión es λ-definible si una fórmula da todas sus cifras (página 263).
+Aplica la fórmula al número n, y convierte.
+El resultado nombra la n-ésima cifra de la sucesión.
+
+Turing vio que la idea de Church y la suya describen lo mismo:
+
+> “In a recent paper Alonzo Church has introduced an idea of ‘effective calculability’, which is equivalent to my ‘computability’, but is very differently defined.” (Turing, 1936, página 231)
+>
+> En español: “En un artículo reciente, Alonzo Church ha introducido una idea de ‘calculabilidad efectiva’, que es equivalente a mi ‘computabilidad’, pero se define de forma muy distinta.”
+
+## El apéndice de Turing
+
+Turing demuestra esta afirmación en un apéndice al final de su artículo:
+
+> “The theorem that all effectively calculable (λ-definable) sequences are computable and its converse are proved below in outline.” (Turing, 1936, página 263)
+>
+> En español: “El teorema de que todas las sucesiones efectivamente calculables (λ-definibles) son computables, y su recíproco, se demuestran abajo a grandes rasgos.”
+
+El apéndice tiene dos partes:
+
+- **De Church a Turing.** Turing describe una máquina que recibe la fórmula de Church para una sucesión. La máquina convierte la fórmula, paso a paso, e imprime las cifras de la sucesión (páginas 263–264). Así que toda sucesión λ-definible es computable.
+- **De Turing a Church.** Para cualquier máquina libre de círculos, Turing muestra cómo encontrar una fórmula que da la misma sucesión (páginas 264–265). Así que toda sucesión computable es λ-definible. Este es el "recíproco".
+
+Juntas, las dos partes muestran que las dos definiciones dan exactamente las mismas sucesiones.
+Aquí importan tres detalles:
+
+- Turing habla de sucesiones, no de funciones.
+- Da la demostración "a grandes rasgos". Se salta algunos pasos, y lo dice.
+- La revista recibió el artículo el 28 de mayo de 1936 (página 230). El apéndice lleva la nota "Added 28 August, 1936" ("añadido el 28 de agosto de 1936", página 263).
+
+El apéndice demuestra que dos definiciones son la misma.
+Ese es el segundo tipo de argumento de la sección 9.
+Apoya la tesis, pero no la demuestra.
+Las dos definiciones son exactas.
+"Un método fijo que una persona puede seguir" sigue sin serlo.
+
+## Por qué importa
+
+Ahora se cierra la laguna de la lección 5.
+En la sección 9, Turing escribió:
+
+> “Once it is granted that computable numbers are all ‘computable’, several other propositions of the same character follow. In particular, it follows that, if there is a general process for determining whether a formula of the Hilbert function calculus is provable, then the determination can be carried out by a machine.” (Turing, 1936, página 249)
+>
+> En español: “Una vez que se acepta que los números computables son todos ‘computables’, se siguen varias otras proposiciones del mismo tipo. En particular, se sigue que, si existe un proceso general para determinar si una fórmula del cálculo funcional de Hilbert es demostrable, entonces una máquina puede llevar a cabo esa determinación.”
+
+Así que, si la tesis es cierta, una máquina puede llevar a cabo todo método fijo.
+La lección 5 mostró que ninguna máquina puede decidir, para toda fórmula, si es demostrable.
+Así que ningún método fijo puede decidirlo tampoco.
+
+La tesis también explica por qué una máquina tan simple importa tanto.
+Si es cierta, las máquinas de este simulador pueden hacer todo cálculo que una persona puede hacer con un método fijo.
+Solo necesitan suficiente cinta y suficiente tiempo.
+
+Esta es la última lección.
+Para leer las palabras del propio Turing, sigue el enlace a su artículo en las fuentes.
+
+<Quiz />
+
+## Fuentes
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, serie 2, volumen 42, páginas 230–265, 1936. Las sucesiones computables se definen en la sección 2. Los tres tipos de argumento están en la sección 9, páginas 249–254. El apéndice está en las páginas 263–265.
+- Alonzo Church, "[An Unsolvable Problem of Elementary Number Theory](https://doi.org/10.2307/2371045)", *American Journal of Mathematics*, volumen 58, número 2, páginas 345–363, 1936. En inglés. Turing lo cita por la idea de calculabilidad efectiva de Church (página 231).
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3.ª edición, Cengage Learning, 2013. Sección 3.3.
+- John E. Hopcroft, Rajeev Motwani y Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3.ª edición, Pearson/Addison-Wesley, 2007. Capítulo 8.

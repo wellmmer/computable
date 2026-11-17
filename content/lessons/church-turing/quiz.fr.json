@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "thesis": {
+      "text": "Que dit la thèse de Church–Turing ?",
+      "options": {
+        "every-problem": {
+          "text": "Une machine de Turing peut résoudre tous les problèmes",
+          "why": "Les leçons 4 et 5 montrent des problèmes qu’aucune machine ne peut résoudre. La thèse porte sur les méthodes qu’une personne peut suivre."
+        },
+        "person-and-machine": {
+          "text": "Ce qu’une personne peut calculer en suivant une méthode fixe, une machine de Turing peut le calculer",
+          "why": "C’est la thèse. Elle relie une méthode qu’une personne suit à une machine."
+        },
+        "speed": {
+          "text": "Une machine de Turing calcule plus vite qu’une personne",
+          "why": "La thèse ne dit rien de la vitesse. Elle porte sur ce qui peut être calculé tout court."
+        }
+      }
+    },
+    "why-thesis": {
+      "text": "Pourquoi est-ce une thèse et non un théorème ?",
+      "options": {
+        "believed-false": {
+          "text": "Parce qu’elle est probablement fausse",
+          "why": "Ce n’est pas la raison. Un théorème demande une preuve, et une preuve demande des définitions exactes."
+        },
+        "proof-too-long": {
+          "text": "Parce que sa preuve est trop longue à écrire",
+          "why": "Aucune preuve n’existe, longue ou courte. Un côté de l’affirmation n’a pas de définition exacte."
+        },
+        "no-exact-definition": {
+          "text": "Parce que « une méthode fixe qu’une personne peut suivre » n’a pas de définition exacte, donc aucune preuve ne peut la relier aux machines de Turing",
+          "why": "Turing le dit à la page 249 : tous les arguments en sa faveur sont, au fond, des appels à l’intuition."
+        }
+      }
+    },
+    "appendix": {
+      "text": "Que montre l’annexe de Turing ?",
+      "options": {
+        "same-sequences": {
+          "text": "Que les suites λ-définissables et les suites calculables sont les mêmes",
+          "why": "Turing prouve les deux sens, dans les grandes lignes, aux pages 263 à 265."
+        },
+        "church-wrong": {
+          "text": "Que la définition de Church est fausse",
+          "why": "Turing dit que l’idée de Church est équivalente à la sienne (page 231)."
+        },
+        "thesis-proved": {
+          "text": "Que la thèse est prouvée",
+          "why": "Elle montre que deux définitions exactes s’accordent. L’idée d’une méthode qu’une personne peut suivre n’a toujours pas de définition exacte."
+        }
+      }
+    },
+    "lambda": {
+      "text": "Quand une suite est-elle λ-définissable ?",
+      "options": {
+        "circle-free-machine": {
+          "text": "Quand une machine sans cercle l’imprime",
+          "why": "C’est la définition de Turing d’une suite calculable (page 233). L’annexe montre que les deux donnent les mêmes suites, mais les définitions sont différentes."
+        },
+        "one-formula": {
+          "text": "Quand une seule formule de Church donne tous ses chiffres, par conversion",
+          "why": "Appliquez la formule au nombre n, et convertissez. Le résultat désigne le n-ième chiffre (page 263)."
+        },
+        "no-rule": {
+          "text": "Quand ses chiffres ne suivent aucune règle",
+          "why": "Les deux définitions demandent des règles fixes. Une suite sans règle n’est ni λ-définissable ni calculable."
+        }
+      }
+    },
+    "no-method": {
+      "text": "Turing a prouvé qu’aucune machine ne décide, pour toute formule, si elle est démontrable. Qu’est-ce qui transforme cela en « aucune méthode du tout » ?",
+      "options": {
+        "more-steps": {
+          "text": "Faire tourner la machine plus de pas",
+          "why": "Plus de pas n’aident pas. La question est de savoir si toute méthode peut être exécutée par une machine."
+        },
+        "appendix-alone": {
+          "text": "L’annexe à elle seule",
+          "why": "L’annexe compare deux définitions exactes. Elle ne couvre pas toutes les méthodes qu’une personne pourrait suivre."
+        },
+        "thesis": {
+          "text": "La thèse : toute méthode fixe peut être exécutée par une machine",
+          "why": "Turing le dit à la page 249. Une fois la thèse admise, une méthode pour l’Entscheidungsproblem serait une machine, et une telle machine n’existe pas."
+        }
+      }
+    }
+  }
+}

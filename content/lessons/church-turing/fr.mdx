@@ -1,0 +1,134 @@
+export const meta = {
+  title: 'La thèse de Church–Turing',
+  summary: 'Ce qu’une personne peut calculer en suivant une méthode fixe, une machine de Turing peut le calculer. Pourquoi c’est une thèse et non un théorème, et comment Turing a montré que son idée et celle de Church s’accordent.',
+  minutes: 6,
+};
+
+La leçon 5 s’est terminée sur une lacune.
+Turing a prouvé qu’aucune machine ne peut décider, pour toute formule, si elle est démontrable.
+Mais Hilbert et Ackermann posaient la question pour n’importe quelle méthode, pas seulement pour les machines.
+Cette leçon porte sur l’affirmation qui comble cette lacune.
+Elle suit la section 9 et l’annexe de l’article de Turing de 1936.
+
+## L’affirmation
+
+La leçon 1 a montré comment Turing imaginait une personne qui calcule avec un crayon.
+Il a retiré tous les détails dont une méthode n’a pas besoin.
+Il restait une machine avec une bande, une tête, des états et des règles.
+
+De cette image vient une affirmation :
+
+**Ce qu’une personne peut calculer en suivant une méthode fixe, une machine de Turing peut le calculer.**
+
+Une méthode fixe est un ensemble de règles qui disent exactement quoi faire à chaque pas.
+La personne n’a besoin d’aucune idée nouvelle, seulement de soin et de temps.
+La division posée est une telle méthode.
+La personne peut utiliser autant de papier et de temps que la méthode en demande.
+
+Aujourd’hui, cette affirmation s’appelle la thèse de Church–Turing.
+
+## Pourquoi c’est une thèse et non un théorème
+
+Un théorème est une affirmation qui a une preuve.
+Une preuve demande une définition exacte pour chaque idée de l’affirmation.
+« Machine de Turing » a une définition exacte : la leçon 2 l’a donnée.
+« Une méthode fixe qu’une personne peut suivre » n’en a pas.
+Cela décrit quelque chose que les gens font.
+Donc aucune preuve ne peut relier les deux côtés.
+
+Turing l’a dit lui-même, au début de la section 9 :
+
+> “No attempt has yet been made to show that the ‘computable’ numbers include all numbers which would naturally be regarded as computable. All arguments which can be given are bound to be, fundamentally, appeals to intuition, and for this reason rather unsatisfactory mathematically.” (Turing, 1936, page 249)
+>
+> En français : « Aucune tentative n’a encore été faite pour montrer que les nombres “calculables” incluent tous les nombres que l’on considérerait naturellement comme calculables. Tous les arguments que l’on peut donner sont forcément, au fond, des appels à l’intuition, et pour cette raison assez peu satisfaisants du point de vue mathématique. »
+
+Au lieu d’une preuve, Turing donne des arguments de trois sortes (page 249) :
+
+- **Un appel direct à l’intuition.** C’est la personne au crayon, de la leçon 1.
+- **Une preuve que deux définitions reviennent au même.** Cela aide quand l’une des définitions semble plus naturelle.
+- **Des exemples.** Turing montre de grandes classes de nombres que des machines peuvent calculer.
+
+Une thèse peut quand même être fausse.
+Si quelqu’un trouvait une méthode fixe qu’une personne peut suivre, mais qu’aucune machine de Turing ne peut exécuter, la thèse serait fausse.
+
+## Ce que calculent les machines de Turing
+
+Les machines de Turing impriment les chiffres 0 et 1.
+Les chiffres qu’une machine imprime, dans l’ordre, forment la suite qu’elle calcule (page 232).
+Une suite est calculable si une machine sans cercle la calcule (page 233).
+Par exemple, la première machine de Turing imprime 0 1 0 1 …, donc la suite 010101… est calculable.
+Turing dit qu’il parlera plus souvent de suites que de nombres (page 233).
+
+## L’idée de Church
+
+Alonzo Church travaillait à l’université de Princeton.
+Il a donné sa propre définition de ce qui est « effectivement calculable ».
+Elle n’a ni bande ni tête.
+Elle travaille avec des formules, écrites avec la lettre grecque λ (lambda).
+Des règles fixes transforment une formule en une autre, un pas à la fois.
+Turing appelle ces pas « conversion » (page 263).
+
+Une suite est λ-définissable si une seule formule donne tous ses chiffres (page 263).
+Appliquez la formule au nombre n, et convertissez.
+Le résultat désigne le n-ième chiffre de la suite.
+
+Turing a vu que l’idée de Church et la sienne décrivent la même chose :
+
+> “In a recent paper Alonzo Church has introduced an idea of ‘effective calculability’, which is equivalent to my ‘computability’, but is very differently defined.” (Turing, 1936, page 231)
+>
+> En français : « Dans un article récent, Alonzo Church a introduit une idée de “calculabilité effective”, qui est équivalente à ma “calculabilité”, mais qui est définie de façon très différente. »
+
+## L’annexe de Turing
+
+Turing prouve cette affirmation dans une annexe, à la fin de son article :
+
+> “The theorem that all effectively calculable (λ-definable) sequences are computable and its converse are proved below in outline.” (Turing, 1936, page 263)
+>
+> En français : « Le théorème selon lequel toutes les suites effectivement calculables (λ-définissables) sont calculables, ainsi que sa réciproque, sont démontrés ci-dessous dans les grandes lignes. »
+
+L’annexe a deux parties :
+
+- **De Church à Turing.** Turing décrit une machine qui reçoit la formule de Church pour une suite. La machine convertit la formule, pas à pas, et imprime les chiffres de la suite (pages 263–264). Donc toute suite λ-définissable est calculable.
+- **De Turing à Church.** Pour toute machine sans cercle, Turing montre comment trouver une formule qui donne la même suite (pages 264–265). Donc toute suite calculable est λ-définissable. C’est la « réciproque ».
+
+Ensemble, les deux parties montrent que les deux définitions donnent exactement les mêmes suites.
+Trois détails comptent ici :
+
+- Turing parle de suites, pas de fonctions.
+- Il donne la preuve « dans les grandes lignes ». Il saute certaines étapes, et il le dit.
+- La revue a reçu l’article le 28 mai 1936 (page 230). L’annexe porte la mention « Added 28 August, 1936 » (« ajouté le 28 août 1936 », page 263).
+
+L’annexe prouve que deux définitions reviennent au même.
+C’est la deuxième sorte d’argument de la section 9.
+Elle soutient la thèse, mais elle ne la prouve pas.
+Les deux définitions sont exactes.
+« Une méthode fixe qu’une personne peut suivre » ne l’est toujours pas.
+
+## Pourquoi c’est important
+
+Maintenant, la lacune de la leçon 5 se comble.
+À la section 9, Turing a écrit :
+
+> “Once it is granted that computable numbers are all ‘computable’, several other propositions of the same character follow. In particular, it follows that, if there is a general process for determining whether a formula of the Hilbert function calculus is provable, then the determination can be carried out by a machine.” (Turing, 1936, page 249)
+>
+> En français : « Une fois admis que les nombres calculables sont tous “calculables”, plusieurs autres propositions du même genre s’ensuivent. En particulier, il s’ensuit que, s’il existe un processus général pour déterminer si une formule du calcul fonctionnel de Hilbert est démontrable, alors cette détermination peut être effectuée par une machine. »
+
+Donc, si la thèse est vraie, toute méthode fixe peut être exécutée par une machine.
+La leçon 5 a montré qu’aucune machine ne peut décider, pour toute formule, si elle est démontrable.
+Donc aucune méthode fixe ne peut le décider non plus.
+
+La thèse explique aussi pourquoi une machine si simple compte autant.
+Si elle est vraie, les machines de ce simulateur peuvent faire tout calcul qu’une personne peut faire avec une méthode fixe.
+Elles ont seulement besoin d’assez de bande et d’assez de temps.
+
+C’est la dernière leçon.
+Pour lire les mots de Turing lui-même, suivez le lien vers son article dans les sources.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, « [On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230) », *Proceedings of the London Mathematical Society*, série 2, volume 42, pages 230–265, 1936. Les suites calculables sont définies à la section 2. Les trois sortes d’argument se trouvent à la section 9, pages 249–254. L’annexe se trouve aux pages 263–265.
+- Alonzo Church, « [An Unsolvable Problem of Elementary Number Theory](https://doi.org/10.2307/2371045) », *American Journal of Mathematics*, volume 58, numéro 2, pages 345–363, 1936. En anglais. Turing cite cet article pour l’idée de calculabilité effective de Church (page 231).
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3e édition, Cengage Learning, 2013. Section 3.3.
+- John E. Hopcroft, Rajeev Motwani et Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3e édition, Pearson/Addison-Wesley, 2007. Chapitre 8.
