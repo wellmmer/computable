@@ -24,7 +24,7 @@ const before = (first: Element, then: Element) => Boolean(first.compareDocumentP
 describe('LessonView (spec 2.2)', () => {
   it('shows the place of the lesson, its title and its reading time', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={0} />);
-    expect(screen.getByText('Lesson 1 of 2')).toBeTruthy();
+    expect(screen.getByText('Lesson 1 of 4')).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Intuition: the human computer');
     expect(screen.getByText('7 min read')).toBeTruthy();
   });
@@ -44,10 +44,30 @@ describe('LessonView (spec 2.2)', () => {
 
   it('shows the palindrome machine and a quiz of 5 questions in lesson 2', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={1} />);
-    expect(screen.getByText('Lesson 2 of 2')).toBeTruthy();
+    expect(screen.getByText('Lesson 2 of 4')).toBeTruthy();
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The formal definition');
     expect(screen.getAllByRole('figure')).toHaveLength(1);
     expect(screen.getByRole('figure', { name: 'Palindrome checker' })).toBeTruthy();
+    expect(screen.getAllByRole('group', { name: /^Question \d of 5/ })).toHaveLength(5);
+  });
+
+  it('shows Turing’s first machine, its encoding and a quiz of 5 questions in lesson 3', () => {
+    renderWithIntl(<LessonView lessons={LESSONS} index={2} />);
+    expect(screen.getByText('Lesson 3 of 4')).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The universal machine');
+    expect(screen.getAllByRole('figure').map((figure) => figure.querySelector('figcaption')?.textContent)).toEqual([
+      'Turing 1936: 0 1 0 1…',
+      'Turing’s first machine, written as a description',
+    ]);
+    expect(screen.getAllByRole('group', { name: /^Question \d of 5/ })).toHaveLength(5);
+  });
+
+  it('shows a machine that stops, one that runs forever, the diagonal tables and a quiz of 5 questions in lesson 4', () => {
+    renderWithIntl(<LessonView lessons={LESSONS} index={3} />);
+    expect(screen.getByText('Lesson 4 of 4')).toBeTruthy();
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The halting problem');
+    expect(screen.getAllByRole('figure').map((figure) => figure.querySelector('figcaption')?.textContent)).toEqual(['Binary +1', 'Turing 1936: 0 1 0 1…']);
+    expect(screen.getAllByRole('table')).toHaveLength(2);
     expect(screen.getAllByRole('group', { name: /^Question \d of 5/ })).toHaveLength(5);
   });
 
@@ -63,6 +83,10 @@ describe('LessonView (spec 2.2)', () => {
     cleanup();
     renderWithIntl(<LessonView lessons={LESSONS} index={1} />);
     expect(screen.getByRole('link', { name: 'Previous lesson: Intuition: the human computer' }).getAttribute('href')).toBe('/learn/intuition');
+    expect(screen.getByRole('link', { name: 'Next lesson: The universal machine' }).getAttribute('href')).toBe('/learn/universal-machine');
+    cleanup();
+    renderWithIntl(<LessonView lessons={LESSONS} index={3} />);
+    expect(screen.getByRole('link', { name: 'Previous lesson: The universal machine' }).getAttribute('href')).toBe('/learn/universal-machine');
     expect(screen.queryByRole('link', { name: /^Next lesson/ })).toBeNull();
   });
 });

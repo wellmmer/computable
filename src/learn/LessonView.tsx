@@ -2,6 +2,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { CC_BY_URL } from '@/config/links';
 import { Link } from '@/i18n/navigation';
 import { pageMain, pageTitle, textLink } from '@/shell/page-styles';
+import { LessonEncoding } from './LessonEncoding';
 import { LessonMachine } from './LessonMachine';
 import type { Lesson } from './lessons';
 import { Quiz } from './Quiz';
@@ -28,7 +29,7 @@ export function LessonView({ lessons, index }: { lessons: readonly Lesson[]; ind
 
       {/* About 68 characters per line: `ch` follows the 17 px text size set here. */}
       <div className="mt-8 max-w-[68ch] text-[17px]">
-        <Content components={{ Machine: LessonMachine, Quiz: () => <Quiz slug={lesson.slug} questions={quiz} /> }} />
+        <Content components={{ Machine: LessonMachine, Encoding: LessonEncoding, Quiz: () => <Quiz slug={lesson.slug} questions={quiz} /> }} />
       </div>
 
       <p className="mt-10 text-sm text-muted">

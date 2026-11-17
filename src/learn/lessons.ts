@@ -12,6 +12,17 @@ import formalDefinitionQuizEn from '../../content/lessons/formal-definition/quiz
 import formalDefinitionQuizEs from '../../content/lessons/formal-definition/quiz.es.json';
 import formalDefinitionQuizFr from '../../content/lessons/formal-definition/quiz.fr.json';
 import formalDefinitionQuizPtBR from '../../content/lessons/formal-definition/quiz.pt-BR.json';
+import * as haltingProblemDe from '../../content/lessons/halting-problem/de.mdx';
+import * as haltingProblemEn from '../../content/lessons/halting-problem/en.mdx';
+import * as haltingProblemEs from '../../content/lessons/halting-problem/es.mdx';
+import * as haltingProblemFr from '../../content/lessons/halting-problem/fr.mdx';
+import * as haltingProblemPtBR from '../../content/lessons/halting-problem/pt-BR.mdx';
+import { quiz as haltingProblemQuiz } from '../../content/lessons/halting-problem/quiz';
+import haltingProblemQuizDe from '../../content/lessons/halting-problem/quiz.de.json';
+import haltingProblemQuizEn from '../../content/lessons/halting-problem/quiz.en.json';
+import haltingProblemQuizEs from '../../content/lessons/halting-problem/quiz.es.json';
+import haltingProblemQuizFr from '../../content/lessons/halting-problem/quiz.fr.json';
+import haltingProblemQuizPtBR from '../../content/lessons/halting-problem/quiz.pt-BR.json';
 import * as intuitionDe from '../../content/lessons/intuition/de.mdx';
 import * as intuitionEn from '../../content/lessons/intuition/en.mdx';
 import * as intuitionEs from '../../content/lessons/intuition/es.mdx';
@@ -23,6 +34,17 @@ import intuitionQuizEn from '../../content/lessons/intuition/quiz.en.json';
 import intuitionQuizEs from '../../content/lessons/intuition/quiz.es.json';
 import intuitionQuizFr from '../../content/lessons/intuition/quiz.fr.json';
 import intuitionQuizPtBR from '../../content/lessons/intuition/quiz.pt-BR.json';
+import * as universalMachineDe from '../../content/lessons/universal-machine/de.mdx';
+import * as universalMachineEn from '../../content/lessons/universal-machine/en.mdx';
+import * as universalMachineEs from '../../content/lessons/universal-machine/es.mdx';
+import * as universalMachineFr from '../../content/lessons/universal-machine/fr.mdx';
+import * as universalMachinePtBR from '../../content/lessons/universal-machine/pt-BR.mdx';
+import { quiz as universalMachineQuiz } from '../../content/lessons/universal-machine/quiz';
+import universalMachineQuizDe from '../../content/lessons/universal-machine/quiz.de.json';
+import universalMachineQuizEn from '../../content/lessons/universal-machine/quiz.en.json';
+import universalMachineQuizEs from '../../content/lessons/universal-machine/quiz.es.json';
+import universalMachineQuizFr from '../../content/lessons/universal-machine/quiz.fr.json';
+import universalMachineQuizPtBR from '../../content/lessons/universal-machine/quiz.pt-BR.json';
 import { buildQuiz, type QuizKey, type QuizQuestion } from './quiz-data';
 
 /** What each lesson file exports as `meta`: the Learn page and the page title read it (spec 3). */
@@ -97,6 +119,20 @@ export const LESSONS: readonly Lesson[] = [
     es: [formalDefinitionEs, formalDefinitionQuizEs],
     fr: [formalDefinitionFr, formalDefinitionQuizFr],
     de: [formalDefinitionDe, formalDefinitionQuizDe],
+  }),
+  lesson('universal-machine', universalMachineQuiz, {
+    en: [universalMachineEn, universalMachineQuizEn],
+    'pt-BR': [universalMachinePtBR, universalMachineQuizPtBR],
+    es: [universalMachineEs, universalMachineQuizEs],
+    fr: [universalMachineFr, universalMachineQuizFr],
+    de: [universalMachineDe, universalMachineQuizDe],
+  }),
+  lesson('halting-problem', haltingProblemQuiz, {
+    en: [haltingProblemEn, haltingProblemQuizEn],
+    'pt-BR': [haltingProblemPtBR, haltingProblemQuizPtBR],
+    es: [haltingProblemEs, haltingProblemQuizEs],
+    fr: [haltingProblemFr, haltingProblemQuizFr],
+    de: [haltingProblemDe, haltingProblemQuizDe],
   }),
 ];
 
