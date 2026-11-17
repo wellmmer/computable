@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "question": {
+      "text": "Que demandait l’Entscheidungsproblem ?",
+      "options": {
+        "prove-every-formula": {
+          "text": "Une preuve de chaque formule de la logique",
+          "why": "Beaucoup de formules ne peuvent pas être démontrées. La question demandait une méthode qui dit lesquelles peuvent l’être."
+        },
+        "fast-computer": {
+          "text": "Un ordinateur rapide pour la logique",
+          "why": "La question porte sur les méthodes. La vitesse n’y joue aucun rôle."
+        },
+        "decide-provable": {
+          "text": "Une méthode qui décide, pour toute formule, si elle est démontrable",
+          "why": "C’est la question. La méthode doit fonctionner pour toute formule et toujours s’arrêter."
+        }
+      }
+    },
+    "list-of-proofs": {
+      "text": "Une machine liste toutes les formules démontrables, l’une après l’autre. Pourquoi cela ne répond-il pas à la question ?",
+      "options": {
+        "never-says-no": {
+          "text": "Pour une formule qui n’est pas démontrable, la machine ne dit jamais « non »",
+          "why": "Cette formule n’apparaît jamais dans la liste, donc la machine tourne sans fin."
+        },
+        "misses-some": {
+          "text": "La liste oublie certaines formules démontrables",
+          "why": "Toute formule démontrable apparaît tôt ou tard dans la liste. Le problème, ce sont les autres formules."
+        },
+        "too-long": {
+          "text": "La liste est trop longue pour être imprimée",
+          "why": "La longueur n’est pas le problème. La machine ne s’arrête jamais pour une formule qui n’est pas démontrable."
+        }
+      }
+    },
+    "un-m": {
+      "text": "Que veut dire la formule Un(ℳ) de Turing ?",
+      "options": {
+        "stops": {
+          "text": "Que ℳ s’arrête",
+          "why": "La démarche de Turing n’utilise pas l’arrêt. Elle utilise « imprime un jour 0 », comme dans la leçon 4."
+        },
+        "zero-on-tape": {
+          "text": "Qu’à un certain instant, le chiffre 0 est sur la bande de ℳ",
+          "why": "Turing donne ce sens à la page 260. Il écrit le chiffre 0 comme S1."
+        },
+        "circle-free": {
+          "text": "Que ℳ est sans cercle",
+          "why": "La section 11 utilise le second résultat de la section 8, « imprime un jour 0 », pas les machines sans cercle."
+        }
+      }
+    },
+    "route": {
+      "text": "Supposez qu’une machine décide, pour toute formule, si elle est démontrable. Qu’en découle-t-il ?",
+      "options": {
+        "every-formula-provable": {
+          "text": "Toute formule devient démontrable",
+          "why": "Une décision ne change pas les formules qui sont démontrables. Elle dit seulement lesquelles le sont."
+        },
+        "nothing": {
+          "text": "Rien, car la logique et les machines sont des sujets séparés",
+          "why": "Un(ℳ) les relie. Elle transforme une question sur une machine en une question sur une formule."
+        },
+        "decides-zero": {
+          "text": "Une machine pourrait décider si n’importe quelle machine imprime un jour 0, ce qui est impossible",
+          "why": "Donnez-lui Un(ℳ). Sa réponse dit si ℳ imprime un jour 0, et la leçon 4 a montré qu’aucune machine ne peut décider cela."
+        }
+      }
+    },
+    "church": {
+      "text": "Qui d’autre a répondu à l’Entscheidungsproblem en 1936 ?",
+      "options": {
+        "hilbert": {
+          "text": "Hilbert, avec une méthode pour toute formule",
+          "why": "Hilbert et Ackermann ont posé la question. La réponse, non, est venue de Church et de Turing."
+        },
+        "church": {
+          "text": "Church, avec sa propre idée de ce qui est « effectivement calculable »",
+          "why": "Sa réponse est une courte note dans le Journal of Symbolic Logic. Turing la cite à la page 231."
+        },
+        "nobody": {
+          "text": "Personne : Turing était le seul",
+          "why": "Church a répondu aussi, dans une courte note. L’article de Turing la cite à la page 231."
+        }
+      }
+    }
+  }
+}

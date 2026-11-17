@@ -1,0 +1,132 @@
+export const meta = {
+  title: 'The Entscheidungsproblem',
+  summary: 'Is there one method that decides, for every formula of logic, whether it can be proved? How Church and Turing answered no in 1936, and how Turing used the “ever prints 0” result.',
+  minutes: 6,
+};
+
+Lesson 1 named the question that started Turing's paper.
+Its German name is the *Entscheidungsproblem*, the "decision problem".
+Lesson 4 gave Turing the tool he needed: no machine can decide if a machine ever prints 0.
+This lesson puts the two together.
+It follows section 11 of Turing's 1936 paper.
+
+## The question
+
+David Hilbert and Wilhelm Ackermann wrote a book on logic, first published in 1928.
+For the exact form of the question, Turing sends his readers to chapter 3 of that book.
+
+The question is about formulas of logic.
+A formula can say, for example: "If every person is mortal, and Socrates is a person, then Socrates is mortal."
+A formula is provable if a proof of it exists.
+A proof starts from fixed axioms and uses fixed rules, one step at a time.
+
+The question asks for a method with three properties:
+
+- It works for every formula.
+- It always stops, after a finite number of steps.
+- It then says correctly whether the formula is provable.
+
+Turing calls this logic "the functional calculus K".
+Today it is called first-order logic.
+At the start of section 11, he says what he will show:
+
+> “I propose, therefore, to show that there can be no general process for determining whether a given formula 𝔄 of the functional calculus K is provable, i.e. that there can be no machine which, supplied with any one 𝔄 of these formulae, will eventually say whether 𝔄 is provable.” (Turing, 1936, page 259)
+
+𝔄 is Turing's name for any formula.
+Look at this sentence again.
+Turing reads "general process" as "machine".
+Lesson 6 explains why he may do that.
+
+## Why a list of proofs is not enough
+
+Turing notes that a machine can list every provable formula, one after another (page 259).
+Could this list answer the question?
+
+- If a formula is provable, it appears in the list sooner or later. Then the machine can say "yes".
+- If a formula is not provable, it never appears. The machine runs forever and never says "no".
+
+This is the problem of lesson 4 again.
+To run and wait gives no answer when the answer is "no".
+A method must always stop.
+
+## A formula for each machine
+
+Turing's idea is to turn a question about machines into a question about formulas.
+
+For each machine ℳ, he writes one formula of logic.
+He calls it Un(ℳ).
+He builds it from the rule table of ℳ, written in the standard form of lesson 3 (page 260).
+
+At each moment, a machine has a tape, a cell under its head and a state.
+Turing calls these three things together a "complete configuration" (page 232).
+Un(ℳ) means: at some moment, the figure 0 is on the tape of ℳ (page 260).
+Turing writes the figure 0 as S1 here, as in lesson 3.
+
+Then Turing proves two lemmas, on pages 260 to 262:
+
+- If 0 is on the tape of ℳ at some moment, then Un(ℳ) is provable.
+- If Un(ℳ) is provable, then 0 is on the tape of ℳ at some moment.
+
+So, for every machine ℳ, two questions have the same answer:
+
+- Is Un(ℳ) provable?
+- Does ℳ ever print 0?
+
+## The proof in five steps
+
+1. Assume that a machine decides, for every formula, whether it is provable.
+2. Take any machine ℳ, and write its formula Un(ℳ).
+3. Give Un(ℳ) to the deciding machine. It says "provable" or "not provable".
+4. By the two lemmas, this answer also says whether ℳ ever prints 0.
+5. But lesson 4 showed that no machine can decide whether a machine ever prints 0 (page 248). So the deciding machine cannot exist.
+
+In Turing's words:
+
+> “We are now in a position to show that the Entscheidungsproblem cannot be solved. Let us suppose the contrary. Then there is a general (mechanical) process for determining whether Un(ℳ) is provable. By Lemmas 1 and 2, this implies that there is a process for determining whether ℳ ever prints 0, and this is impossible, by § 8. Hence the Entscheidungsproblem cannot be solved.” (Turing, 1936, page 262)
+
+Section 8 is the section of lesson 4.
+Its second result, "ever prints 0", is the one Turing needs here.
+
+## Church's answer
+
+Turing was not the only one to answer the question in 1936.
+Alonzo Church, at Princeton University, answered it too.
+He did not use machines.
+He used his own idea of what is "effectively calculable".
+Lesson 6 compares his idea with Turing's.
+
+Church's answer is a note of two pages in the *Journal of Symbolic Logic*.
+In it, he extends an earlier result of his to the logic of Hilbert and Ackermann's book.
+Turing's paper cites this note, and says that Church reached similar conclusions (page 231).
+
+## What "no" means
+
+The answer is no: no single method decides, for every formula, whether it is provable.
+This does not mean that no formula can be decided.
+For some kinds of formulas, methods exist.
+Turing himself mentions many such special cases (page 262).
+What cannot exist is one method that works for every formula.
+
+There is one more point.
+Turing proved that no **machine** can decide.
+Hilbert and Ackermann asked about any **method**.
+To go from "no machine" to "no method", Turing needs a claim that links machines and methods.
+Lesson 6 is about that claim.
+
+## Why this matters
+
+The full title of Turing's paper is "On Computable Numbers, with an Application to the Entscheidungsproblem".
+This lesson is that application.
+To give his answer, Turing first had to say exactly what a method is.
+His definition is the Turing machine, the machine that every lesson on this site is about.
+
+Lesson 4 showed one question about machines that no machine can decide.
+This lesson shows a question about logic with the same answer.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, series 2, volume 42, pages 230–265, 1936. The Entscheidungsproblem is in section 11, pages 259–263. Church's note is cited on page 231.
+- Alonzo Church, "[A Note on the Entscheidungsproblem](https://doi.org/10.2307/2269326)", *Journal of Symbolic Logic*, volume 1, number 1, pages 40–41, 1936.
+- David Hilbert and Wilhelm Ackermann, [*Grundzüge der theoretischen Logik*](https://openlibrary.org/books/OL6723331M), J. Springer, Berlin, 1928. In German. Turing refers to chapter 3 (page 259).

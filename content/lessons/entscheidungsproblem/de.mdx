@@ -1,0 +1,136 @@
+export const meta = {
+  title: 'Das Entscheidungsproblem',
+  summary: 'Gibt es ein einziges Verfahren, das für jede Formel der Logik entscheidet, ob sie bewiesen werden kann? Wie Church und Turing 1936 mit Nein antworteten, und wie Turing das Ergebnis „druckt jemals 0“ benutzte.',
+  minutes: 6,
+};
+
+Lektion 1 hat die Frage genannt, mit der Turings Aufsatz begann.
+Ihr Name ist deutsch: *Entscheidungsproblem*.
+Lektion 4 hat Turing das Werkzeug gegeben, das er brauchte: Keine Maschine kann entscheiden, ob eine Maschine jemals 0 druckt.
+Diese Lektion bringt beides zusammen.
+Sie folgt Abschnitt 11 von Turings Aufsatz von 1936.
+
+## Die Frage
+
+David Hilbert und Wilhelm Ackermann schrieben ein Buch über Logik, das 1928 zum ersten Mal erschien.
+Für die genaue Form der Frage verweist Turing seine Leser auf Kapitel 3 dieses Buches.
+
+Die Frage handelt von Formeln der Logik.
+Eine Formel kann zum Beispiel sagen: „Wenn jeder Mensch sterblich ist und Sokrates ein Mensch ist, dann ist Sokrates sterblich.“
+Eine Formel ist beweisbar, wenn es einen Beweis für sie gibt.
+Ein Beweis beginnt bei festen Axiomen und benutzt feste Regeln, einen Schritt nach dem anderen.
+
+Die Frage verlangt ein Verfahren mit drei Eigenschaften:
+
+- Es funktioniert für jede Formel.
+- Es hält immer an, nach endlich vielen Schritten.
+- Dann sagt es richtig, ob die Formel beweisbar ist.
+
+Turing nennt diese Logik „den Funktionenkalkül K“.
+Heute heißt sie Prädikatenlogik erster Stufe.
+Am Anfang von Abschnitt 11 sagt er, was er zeigen wird:
+
+> “I propose, therefore, to show that there can be no general process for determining whether a given formula 𝔄 of the functional calculus K is provable, i.e. that there can be no machine which, supplied with any one 𝔄 of these formulae, will eventually say whether 𝔄 is provable.” (Turing, 1936, Seite 259)
+>
+> Auf Deutsch: „Ich habe daher vor zu zeigen, dass es kein allgemeines Verfahren geben kann, mit dem man bestimmt, ob eine gegebene Formel 𝔄 des Funktionenkalküls K beweisbar ist, d. h. dass es keine Maschine geben kann, die, wenn man ihr irgendeine 𝔄 dieser Formeln gibt, am Ende sagt, ob 𝔄 beweisbar ist.“
+
+𝔄 ist Turings Name für eine beliebige Formel.
+Sieh dir diesen Satz noch einmal an.
+Turing liest „allgemeines Verfahren“ als „Maschine“.
+Lektion 6 erklärt, warum er das darf.
+
+## Warum eine Liste der Beweise nicht genügt
+
+Turing bemerkt, dass eine Maschine jede beweisbare Formel auflisten kann, eine nach der anderen (Seite 259).
+Könnte diese Liste die Frage beantworten?
+
+- Wenn eine Formel beweisbar ist, erscheint sie früher oder später in der Liste. Dann kann die Maschine „ja“ sagen.
+- Wenn eine Formel nicht beweisbar ist, erscheint sie nie. Die Maschine läuft für immer und sagt nie „nein“.
+
+Das ist wieder das Problem aus Lektion 4.
+Laufen lassen und warten gibt keine Antwort, wenn die Antwort „nein“ ist.
+Ein Verfahren muss immer anhalten.
+
+## Eine Formel für jede Maschine
+
+Turings Idee ist, eine Frage über Maschinen in eine Frage über Formeln zu verwandeln.
+
+Für jede Maschine ℳ schreibt er eine Formel der Logik.
+Er nennt sie Un(ℳ).
+Er baut sie aus der Regeltabelle von ℳ, geschrieben in der Standardform aus Lektion 3 (Seite 260).
+
+In jedem Moment hat eine Maschine ein Band, ein Feld unter ihrem Kopf und einen Zustand.
+Turing nennt diese drei Dinge zusammen eine „vollständige Konfiguration“ (Seite 232).
+Un(ℳ) bedeutet: In irgendeinem Moment steht die Ziffer 0 auf dem Band von ℳ (Seite 260).
+Turing schreibt die Ziffer 0 hier als S1, wie in Lektion 3.
+
+Dann beweist Turing zwei Lemmata, auf den Seiten 260 bis 262:
+
+- Wenn 0 in irgendeinem Moment auf dem Band von ℳ steht, dann ist Un(ℳ) beweisbar.
+- Wenn Un(ℳ) beweisbar ist, dann steht 0 in irgendeinem Moment auf dem Band von ℳ.
+
+Für jede Maschine ℳ haben also zwei Fragen dieselbe Antwort:
+
+- Ist Un(ℳ) beweisbar?
+- Druckt ℳ jemals 0?
+
+## Der Beweis in fünf Schritten
+
+1. Nimm an, dass eine Maschine für jede Formel entscheidet, ob sie beweisbar ist.
+2. Nimm eine beliebige Maschine ℳ und schreib ihre Formel Un(ℳ) auf.
+3. Gib Un(ℳ) der entscheidenden Maschine. Sie sagt „beweisbar“ oder „nicht beweisbar“.
+4. Nach den zwei Lemmata sagt diese Antwort auch, ob ℳ jemals 0 druckt.
+5. Aber Lektion 4 hat gezeigt, dass keine Maschine entscheiden kann, ob eine Maschine jemals 0 druckt (Seite 248). Also kann die entscheidende Maschine nicht existieren.
+
+Mit Turings Worten:
+
+> “We are now in a position to show that the Entscheidungsproblem cannot be solved. Let us suppose the contrary. Then there is a general (mechanical) process for determining whether Un(ℳ) is provable. By Lemmas 1 and 2, this implies that there is a process for determining whether ℳ ever prints 0, and this is impossible, by § 8. Hence the Entscheidungsproblem cannot be solved.” (Turing, 1936, Seite 262)
+>
+> Auf Deutsch: „Wir sind jetzt in der Lage zu zeigen, dass das Entscheidungsproblem nicht gelöst werden kann. Nehmen wir das Gegenteil an. Dann gibt es ein allgemeines (mechanisches) Verfahren, mit dem man bestimmt, ob Un(ℳ) beweisbar ist. Nach Lemma 1 und 2 folgt daraus, dass es ein Verfahren gibt, mit dem man bestimmt, ob ℳ jemals 0 druckt, und das ist nach § 8 unmöglich. Also kann das Entscheidungsproblem nicht gelöst werden.“
+
+Abschnitt 8 ist der Abschnitt aus Lektion 4.
+Sein zweites Ergebnis, „druckt jemals 0“, ist das, was Turing hier braucht.
+
+## Churchs Antwort
+
+Turing war 1936 nicht der Einzige, der die Frage beantwortete.
+Alonzo Church, an der Universität Princeton, beantwortete sie auch.
+Er benutzte keine Maschinen.
+Er benutzte seine eigene Vorstellung davon, was „effektiv berechenbar“ ist.
+Lektion 6 vergleicht seine Vorstellung mit der von Turing.
+
+Churchs Antwort ist eine Notiz von zwei Seiten im *Journal of Symbolic Logic*.
+Darin überträgt er ein früheres Ergebnis von sich auf die Logik aus dem Buch von Hilbert und Ackermann.
+Turings Aufsatz zitiert diese Notiz und sagt, dass Church zu ähnlichen Schlüssen kam (Seite 231).
+
+## Was „nein“ bedeutet
+
+Die Antwort ist nein: Kein einzelnes Verfahren entscheidet für jede Formel, ob sie beweisbar ist.
+Das heißt nicht, dass sich keine Formel entscheiden lässt.
+Für manche Arten von Formeln gibt es Verfahren.
+Turing selbst nennt viele solche Sonderfälle (Seite 262).
+Was es nicht geben kann, ist ein Verfahren, das für jede Formel funktioniert.
+
+Es gibt noch einen Punkt.
+Turing hat bewiesen, dass keine **Maschine** entscheiden kann.
+Hilbert und Ackermann fragten nach irgendeinem **Verfahren**.
+Um von „keine Maschine“ zu „kein Verfahren“ zu kommen, braucht Turing eine Behauptung, die Maschinen und Verfahren verbindet.
+Lektion 6 handelt von dieser Behauptung.
+
+## Warum das wichtig ist
+
+Der volle Titel von Turings Aufsatz ist „On Computable Numbers, with an Application to the Entscheidungsproblem“ („Über berechenbare Zahlen, mit einer Anwendung auf das Entscheidungsproblem“).
+Diese Lektion ist diese Anwendung.
+Um seine Antwort zu geben, musste Turing zuerst genau sagen, was ein Verfahren ist.
+Seine Definition ist die Turingmaschine, die Maschine, um die es in jeder Lektion auf dieser Website geht.
+
+Lektion 4 hat eine Frage über Maschinen gezeigt, die keine Maschine entscheiden kann.
+Diese Lektion zeigt eine Frage über Logik mit derselben Antwort.
+
+<Quiz />
+
+## Quellen
+
+- A. M. Turing, „[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)“, *Proceedings of the London Mathematical Society*, Reihe 2, Band 42, Seiten 230–265, 1936. Das Entscheidungsproblem steht in Abschnitt 11, Seiten 259–263. Churchs Notiz wird auf Seite 231 zitiert.
+- Alonzo Church, „[A Note on the Entscheidungsproblem](https://doi.org/10.2307/2269326)“, *Journal of Symbolic Logic*, Band 1, Nummer 1, Seiten 40–41, 1936. Auf Englisch.
+- David Hilbert und Wilhelm Ackermann, [*Grundzüge der theoretischen Logik*](https://openlibrary.org/books/OL6723331M), J. Springer, Berlin, 1928. Turing verweist auf Kapitel 3 (Seite 259).

@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "question": {
+      "text": "O que o Entscheidungsproblem pedia?",
+      "options": {
+        "prove-every-formula": {
+          "text": "Uma prova de toda fórmula da lógica",
+          "why": "Muitas fórmulas não podem ser provadas. A pergunta pedia um método que diga quais podem."
+        },
+        "fast-computer": {
+          "text": "Um computador rápido para lógica",
+          "why": "A pergunta é sobre métodos. A velocidade não tem papel nela."
+        },
+        "decide-provable": {
+          "text": "Um método que decide, para toda fórmula, se ela é demonstrável",
+          "why": "Essa é a pergunta. O método precisa funcionar para toda fórmula e sempre parar."
+        }
+      }
+    },
+    "list-of-proofs": {
+      "text": "Uma máquina lista toda fórmula demonstrável, uma depois da outra. Por que isso não responde à pergunta?",
+      "options": {
+        "never-says-no": {
+          "text": "Para uma fórmula que não é demonstrável, a máquina nunca diz “não”",
+          "why": "Essa fórmula nunca aparece na lista, então a máquina roda para sempre."
+        },
+        "misses-some": {
+          "text": "A lista deixa de fora algumas fórmulas demonstráveis",
+          "why": "Toda fórmula demonstrável aparece na lista mais cedo ou mais tarde. O problema são as outras fórmulas."
+        },
+        "too-long": {
+          "text": "A lista é longa demais para imprimir",
+          "why": "O tamanho não é o problema. A máquina nunca para quando a fórmula não é demonstrável."
+        }
+      }
+    },
+    "un-m": {
+      "text": "O que a fórmula Un(ℳ) de Turing quer dizer?",
+      "options": {
+        "stops": {
+          "text": "Que ℳ para",
+          "why": "O caminho de Turing não usa parada. Ele usa “alguma vez imprime 0”, como na lição 4."
+        },
+        "zero-on-tape": {
+          "text": "Que em algum momento o algarismo 0 está na fita de ℳ",
+          "why": "Turing dá esse significado na página 260. Ele escreve o algarismo 0 como S1."
+        },
+        "circle-free": {
+          "text": "Que ℳ é livre de círculos",
+          "why": "A seção 11 usa o segundo resultado da seção 8, “alguma vez imprime 0”, e não as máquinas livres de círculos."
+        }
+      }
+    },
+    "route": {
+      "text": "Suponha que uma máquina decide, para toda fórmula, se ela é demonstrável. O que vem disso?",
+      "options": {
+        "every-formula-provable": {
+          "text": "Toda fórmula passa a ser demonstrável",
+          "why": "Decidir não muda quais fórmulas são demonstráveis. Só diz quais são."
+        },
+        "nothing": {
+          "text": "Nada, porque lógica e máquinas são assuntos separados",
+          "why": "Un(ℳ) liga os dois. Ela transforma uma pergunta sobre uma máquina em uma pergunta sobre uma fórmula."
+        },
+        "decides-zero": {
+          "text": "Uma máquina conseguiria decidir se qualquer máquina alguma vez imprime 0, o que é impossível",
+          "why": "Dê Un(ℳ) a ela. A resposta diz se ℳ alguma vez imprime 0, e a lição 4 mostrou que nenhuma máquina consegue decidir isso."
+        }
+      }
+    },
+    "church": {
+      "text": "Quem mais respondeu ao Entscheidungsproblem em 1936?",
+      "options": {
+        "hilbert": {
+          "text": "Hilbert, com um método para toda fórmula",
+          "why": "Hilbert e Ackermann fizeram a pergunta. A resposta, não, veio de Church e de Turing."
+        },
+        "church": {
+          "text": "Church, com a sua própria ideia do que é “efetivamente calculável”",
+          "why": "A resposta dele é uma nota curta no Journal of Symbolic Logic. Turing a cita na página 231."
+        },
+        "nobody": {
+          "text": "Ninguém: Turing foi o único",
+          "why": "Church também respondeu, em uma nota curta. O artigo de Turing a cita na página 231."
+        }
+      }
+    }
+  }
+}

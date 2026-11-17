@@ -48,7 +48,7 @@ function skeleton(page: Element): string[] {
 }
 
 /** The lessons without a <Machine>: lessons 5 and 6 have a quiz only (spec R2b 2). Every other lesson runs at least one machine. */
-const LESSONS_WITHOUT_MACHINES: readonly string[] = [];
+const LESSONS_WITHOUT_MACHINES: readonly string[] = ['entscheidungsproblem'];
 
 /**
  * The sources that lessons link, each with the text that finds it in a "Sources" list, its link, and
@@ -72,13 +72,25 @@ const LINKED_SOURCES: readonly { name: string; link: string; lessons: readonly s
     // Turing's 1936 paper, by its DOI.
     name: 'On Computable Numbers',
     link: 'https://doi.org/10.1112/plms/s2-42.1.230',
-    lessons: ['intuition', 'universal-machine', 'halting-problem'],
+    lessons: ['intuition', 'universal-machine', 'halting-problem', 'entscheidungsproblem'],
   },
   {
     // Petzold, The Annotated Turing (Wiley, 2008, ISBN 978-0-470-22905-7). Wiley answers 403 to scripts; a browser opened it on 2026-11-17.
     name: 'The Annotated Turing',
     link: 'https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057',
     lessons: ['universal-machine', 'halting-problem'],
+  },
+  {
+    // Church's note, J. Symbolic Logic 1(1), 40–41. The DOI is registered (Crossref answered 200 on 2026-11-17); Cambridge answers 429 to scripts.
+    name: 'A Note on the Entscheidungsproblem',
+    link: 'https://doi.org/10.2307/2269326',
+    lessons: ['entscheidungsproblem'],
+  },
+  {
+    // Hilbert and Ackermann, 1st edition, J. Springer, 1928. It has no DOI; Open Library's record of that edition (its JSON answered 200 on 2026-11-17).
+    name: 'Grundzüge der theoretischen Logik',
+    link: 'https://openlibrary.org/books/OL6723331M',
+    lessons: ['entscheidungsproblem'],
   },
 ];
 

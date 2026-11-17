@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "question": {
+      "text": "What did the Entscheidungsproblem ask for?",
+      "options": {
+        "prove-every-formula": {
+          "text": "A proof of every formula of logic",
+          "why": "Many formulas cannot be proved. The question asked for a method that tells which ones can."
+        },
+        "fast-computer": {
+          "text": "A fast computer for logic",
+          "why": "The question is about methods. Speed plays no part in it."
+        },
+        "decide-provable": {
+          "text": "A method that decides, for every formula, whether it is provable",
+          "why": "That is the question. The method must work for every formula and always stop."
+        }
+      }
+    },
+    "list-of-proofs": {
+      "text": "A machine lists every provable formula, one after another. Why does this not answer the question?",
+      "options": {
+        "never-says-no": {
+          "text": "For a formula that is not provable, the machine never says “no”",
+          "why": "That formula never appears in the list, so the machine runs forever."
+        },
+        "misses-some": {
+          "text": "The list misses some provable formulas",
+          "why": "Every provable formula appears in the list sooner or later. The problem is the other formulas."
+        },
+        "too-long": {
+          "text": "The list is too long to print",
+          "why": "Length is not the problem. The machine never stops for a formula that is not provable."
+        }
+      }
+    },
+    "un-m": {
+      "text": "What does Turing’s formula Un(ℳ) mean?",
+      "options": {
+        "stops": {
+          "text": "That ℳ stops",
+          "why": "Turing’s route does not use stopping. It uses “ever prints 0”, as in lesson 4."
+        },
+        "zero-on-tape": {
+          "text": "That at some moment, the figure 0 is on the tape of ℳ",
+          "why": "Turing gives this meaning on page 260. He writes the figure 0 as S1."
+        },
+        "circle-free": {
+          "text": "That ℳ is circle-free",
+          "why": "Section 11 uses the second result of section 8, “ever prints 0”, not circle-free machines."
+        }
+      }
+    },
+    "route": {
+      "text": "Assume that a machine decides, for every formula, whether it is provable. What follows?",
+      "options": {
+        "every-formula-provable": {
+          "text": "Every formula becomes provable",
+          "why": "A decision does not change which formulas are provable. It only tells which ones are."
+        },
+        "nothing": {
+          "text": "Nothing, because logic and machines are separate subjects",
+          "why": "Un(ℳ) links them. It turns a question about a machine into a question about a formula."
+        },
+        "decides-zero": {
+          "text": "A machine could decide whether any machine ever prints 0, which is impossible",
+          "why": "Give it Un(ℳ). Its answer says whether ℳ ever prints 0, and lesson 4 showed that no machine can decide that."
+        }
+      }
+    },
+    "church": {
+      "text": "Who else answered the Entscheidungsproblem in 1936?",
+      "options": {
+        "hilbert": {
+          "text": "Hilbert, with a method for every formula",
+          "why": "Hilbert and Ackermann asked the question. The answer, no, came from Church and Turing."
+        },
+        "church": {
+          "text": "Church, with his own idea of what is “effectively calculable”",
+          "why": "His answer is a short note in the Journal of Symbolic Logic. Turing cites it on page 231."
+        },
+        "nobody": {
+          "text": "Nobody: Turing was the only one",
+          "why": "Church answered too, in a short note. Turing’s paper cites it on page 231."
+        }
+      }
+    }
+  }
+}

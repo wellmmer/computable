@@ -1,0 +1,136 @@
+export const meta = {
+  title: 'O Entscheidungsproblem',
+  summary: 'Existe um método que decide, para toda fórmula da lógica, se ela pode ser provada? Como Church e Turing responderam que não em 1936, e como Turing usou o resultado “alguma vez imprime 0”.',
+  minutes: 6,
+};
+
+A lição 1 deu nome à pergunta que deu início ao artigo de Turing.
+O nome dela em alemão é *Entscheidungsproblem*, o "problema da decisão".
+A lição 4 deu a Turing a ferramenta de que ele precisava: nenhuma máquina consegue decidir se uma máquina alguma vez imprime 0.
+Esta lição junta as duas coisas.
+Ela segue a seção 11 do artigo de Turing de 1936.
+
+## A pergunta
+
+David Hilbert e Wilhelm Ackermann escreveram um livro de lógica, publicado pela primeira vez em 1928.
+Para a forma exata da pergunta, Turing manda o leitor ao capítulo 3 desse livro.
+
+A pergunta é sobre fórmulas da lógica.
+Uma fórmula pode dizer, por exemplo: "Se toda pessoa é mortal, e Sócrates é uma pessoa, então Sócrates é mortal."
+Uma fórmula é demonstrável se existe uma prova dela.
+Uma prova parte de axiomas fixos e usa regras fixas, um passo de cada vez.
+
+A pergunta pede um método com três propriedades:
+
+- Ele funciona para toda fórmula.
+- Ele sempre para, depois de um número finito de passos.
+- Então ele diz corretamente se a fórmula é demonstrável.
+
+Turing chama essa lógica de "o cálculo funcional K".
+Hoje ela se chama lógica de primeira ordem.
+No começo da seção 11, ele diz o que vai mostrar:
+
+> “I propose, therefore, to show that there can be no general process for determining whether a given formula 𝔄 of the functional calculus K is provable, i.e. that there can be no machine which, supplied with any one 𝔄 of these formulae, will eventually say whether 𝔄 is provable.” (Turing, 1936, página 259)
+>
+> Em português: “Proponho, portanto, mostrar que não pode haver um processo geral para determinar se uma dada fórmula 𝔄 do cálculo funcional K é demonstrável, isto é, que não pode haver uma máquina que, ao receber qualquer uma 𝔄 dessas fórmulas, acabe dizendo se 𝔄 é demonstrável.”
+
+𝔄 é o nome que Turing dá a uma fórmula qualquer.
+Olhe essa frase de novo.
+Turing lê "processo geral" como "máquina".
+A lição 6 explica por que ele pode fazer isso.
+
+## Por que uma lista de provas não basta
+
+Turing observa que uma máquina consegue listar toda fórmula demonstrável, uma depois da outra (página 259).
+Essa lista poderia responder à pergunta?
+
+- Se uma fórmula é demonstrável, ela aparece na lista mais cedo ou mais tarde. Então a máquina pode dizer "sim".
+- Se uma fórmula não é demonstrável, ela nunca aparece. A máquina roda para sempre e nunca diz "não".
+
+É o problema da lição 4 de novo.
+Rodar e esperar não dá resposta quando a resposta é "não".
+Um método precisa sempre parar.
+
+## Uma fórmula para cada máquina
+
+A ideia de Turing é transformar uma pergunta sobre máquinas em uma pergunta sobre fórmulas.
+
+Para cada máquina ℳ, ele escreve uma fórmula da lógica.
+Ele a chama de Un(ℳ).
+Ele a constrói a partir da tabela de regras de ℳ, escrita na forma padrão da lição 3 (página 260).
+
+A cada momento, uma máquina tem uma fita, uma célula sob a cabeça e um estado.
+Turing chama essas três coisas juntas de "configuração completa" (página 232).
+Un(ℳ) quer dizer: em algum momento, o algarismo 0 está na fita de ℳ (página 260).
+Aqui Turing escreve o algarismo 0 como S1, como na lição 3.
+
+Depois Turing prova dois lemas, nas páginas 260 a 262:
+
+- Se 0 está na fita de ℳ em algum momento, então Un(ℳ) é demonstrável.
+- Se Un(ℳ) é demonstrável, então 0 está na fita de ℳ em algum momento.
+
+Então, para toda máquina ℳ, duas perguntas têm a mesma resposta:
+
+- Un(ℳ) é demonstrável?
+- ℳ alguma vez imprime 0?
+
+## A prova em cinco passos
+
+1. Suponha que uma máquina decide, para toda fórmula, se ela é demonstrável.
+2. Pegue uma máquina ℳ qualquer e escreva a fórmula Un(ℳ) dela.
+3. Dê Un(ℳ) à máquina que decide. Ela diz "demonstrável" ou "não demonstrável".
+4. Pelos dois lemas, essa resposta também diz se ℳ alguma vez imprime 0.
+5. Mas a lição 4 mostrou que nenhuma máquina consegue decidir se uma máquina alguma vez imprime 0 (página 248). Então a máquina que decide não pode existir.
+
+Nas palavras de Turing:
+
+> “We are now in a position to show that the Entscheidungsproblem cannot be solved. Let us suppose the contrary. Then there is a general (mechanical) process for determining whether Un(ℳ) is provable. By Lemmas 1 and 2, this implies that there is a process for determining whether ℳ ever prints 0, and this is impossible, by § 8. Hence the Entscheidungsproblem cannot be solved.” (Turing, 1936, página 262)
+>
+> Em português: “Agora estamos em condições de mostrar que o Entscheidungsproblem não pode ser resolvido. Suponhamos o contrário. Então existe um processo geral (mecânico) para determinar se Un(ℳ) é demonstrável. Pelos Lemas 1 e 2, isso implica que existe um processo para determinar se ℳ alguma vez imprime 0, e isso é impossível, pelo § 8. Portanto, o Entscheidungsproblem não pode ser resolvido.”
+
+A seção 8 é a seção da lição 4.
+O segundo resultado dela, "alguma vez imprime 0", é o que Turing precisa aqui.
+
+## A resposta de Church
+
+Turing não foi o único a responder à pergunta em 1936.
+Alonzo Church, da Universidade de Princeton, também respondeu.
+Ele não usou máquinas.
+Ele usou a sua própria ideia do que é "efetivamente calculável".
+A lição 6 compara a ideia dele com a de Turing.
+
+A resposta de Church é uma nota de duas páginas no *Journal of Symbolic Logic*.
+Nela, ele estende um resultado anterior seu à lógica do livro de Hilbert e Ackermann.
+O artigo de Turing cita essa nota e diz que Church chegou a conclusões parecidas (página 231).
+
+## O que o "não" quer dizer
+
+A resposta é não: nenhum método único decide, para toda fórmula, se ela é demonstrável.
+Isso não quer dizer que nenhuma fórmula pode ser decidida.
+Para alguns tipos de fórmulas, existem métodos.
+O próprio Turing menciona muitos desses casos especiais (página 262).
+O que não pode existir é um método que funcione para toda fórmula.
+
+Há mais um ponto.
+Turing provou que nenhuma **máquina** consegue decidir.
+Hilbert e Ackermann perguntaram sobre qualquer **método**.
+Para ir de "nenhuma máquina" a "nenhum método", Turing precisa de uma afirmação que ligue máquinas e métodos.
+A lição 6 é sobre essa afirmação.
+
+## Por que isso importa
+
+O título completo do artigo de Turing é "On Computable Numbers, with an Application to the Entscheidungsproblem" ("Sobre números computáveis, com uma aplicação ao Entscheidungsproblem").
+Esta lição é essa aplicação.
+Para dar a resposta, Turing primeiro precisou dizer exatamente o que é um método.
+A definição dele é a máquina de Turing, a máquina de que tratam todas as lições deste site.
+
+A lição 4 mostrou uma pergunta sobre máquinas que nenhuma máquina consegue decidir.
+Esta lição mostra uma pergunta sobre lógica com a mesma resposta.
+
+<Quiz />
+
+## Fontes
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, série 2, volume 42, páginas 230–265, 1936. O Entscheidungsproblem está na seção 11, páginas 259–263. A nota de Church é citada na página 231.
+- Alonzo Church, "[A Note on the Entscheidungsproblem](https://doi.org/10.2307/2269326)", *Journal of Symbolic Logic*, volume 1, número 1, páginas 40–41, 1936. Em inglês.
+- David Hilbert e Wilhelm Ackermann, [*Grundzüge der theoretischen Logik*](https://openlibrary.org/books/OL6723331M), J. Springer, Berlim, 1928. Em alemão. Turing se refere ao capítulo 3 (página 259).

@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "question": {
+      "text": "Wonach fragte das Entscheidungsproblem?",
+      "options": {
+        "prove-every-formula": {
+          "text": "Nach einem Beweis für jede Formel der Logik",
+          "why": "Viele Formeln lassen sich nicht beweisen. Die Frage verlangte ein Verfahren, das sagt, welche sich beweisen lassen."
+        },
+        "fast-computer": {
+          "text": "Nach einem schnellen Computer für Logik",
+          "why": "Die Frage handelt von Verfahren. Tempo spielt darin keine Rolle."
+        },
+        "decide-provable": {
+          "text": "Nach einem Verfahren, das für jede Formel entscheidet, ob sie beweisbar ist",
+          "why": "Das ist die Frage. Das Verfahren muss für jede Formel funktionieren und immer anhalten."
+        }
+      }
+    },
+    "list-of-proofs": {
+      "text": "Eine Maschine listet jede beweisbare Formel auf, eine nach der anderen. Warum beantwortet das die Frage nicht?",
+      "options": {
+        "never-says-no": {
+          "text": "Bei einer Formel, die nicht beweisbar ist, sagt die Maschine nie „nein“",
+          "why": "Diese Formel erscheint nie in der Liste, also läuft die Maschine für immer."
+        },
+        "misses-some": {
+          "text": "Der Liste fehlen manche beweisbaren Formeln",
+          "why": "Jede beweisbare Formel erscheint früher oder später in der Liste. Das Problem sind die anderen Formeln."
+        },
+        "too-long": {
+          "text": "Die Liste ist zu lang zum Drucken",
+          "why": "Die Länge ist nicht das Problem. Die Maschine hält bei einer Formel, die nicht beweisbar ist, nie an."
+        }
+      }
+    },
+    "un-m": {
+      "text": "Was bedeutet Turings Formel Un(ℳ)?",
+      "options": {
+        "stops": {
+          "text": "Dass ℳ anhält",
+          "why": "Turings Weg benutzt das Anhalten nicht. Er benutzt „druckt jemals 0“, wie in Lektion 4."
+        },
+        "zero-on-tape": {
+          "text": "Dass in irgendeinem Moment die Ziffer 0 auf dem Band von ℳ steht",
+          "why": "Diese Bedeutung gibt Turing auf Seite 260. Er schreibt die Ziffer 0 als S1."
+        },
+        "circle-free": {
+          "text": "Dass ℳ zirkelfrei ist",
+          "why": "Abschnitt 11 benutzt das zweite Ergebnis von Abschnitt 8, „druckt jemals 0“, nicht zirkelfreie Maschinen."
+        }
+      }
+    },
+    "route": {
+      "text": "Nimm an, dass eine Maschine für jede Formel entscheidet, ob sie beweisbar ist. Was folgt daraus?",
+      "options": {
+        "every-formula-provable": {
+          "text": "Jede Formel wird beweisbar",
+          "why": "Eine Entscheidung ändert nicht, welche Formeln beweisbar sind. Sie sagt nur, welche es sind."
+        },
+        "nothing": {
+          "text": "Nichts, weil Logik und Maschinen getrennte Themen sind",
+          "why": "Un(ℳ) verbindet sie. Die Formel macht aus einer Frage über eine Maschine eine Frage über eine Formel."
+        },
+        "decides-zero": {
+          "text": "Eine Maschine könnte entscheiden, ob eine beliebige Maschine jemals 0 druckt, und das ist unmöglich",
+          "why": "Gib ihr Un(ℳ). Ihre Antwort sagt, ob ℳ jemals 0 druckt, und Lektion 4 hat gezeigt, dass keine Maschine das entscheiden kann."
+        }
+      }
+    },
+    "church": {
+      "text": "Wer hat das Entscheidungsproblem 1936 noch beantwortet?",
+      "options": {
+        "hilbert": {
+          "text": "Hilbert, mit einem Verfahren für jede Formel",
+          "why": "Hilbert und Ackermann stellten die Frage. Die Antwort, nein, kam von Church und Turing."
+        },
+        "church": {
+          "text": "Church, mit seiner eigenen Vorstellung davon, was „effektiv berechenbar“ ist",
+          "why": "Seine Antwort ist eine kurze Notiz im Journal of Symbolic Logic. Turing zitiert sie auf Seite 231."
+        },
+        "nobody": {
+          "text": "Niemand: Turing war der Einzige",
+          "why": "Church hat auch geantwortet, in einer kurzen Notiz. Turings Aufsatz zitiert sie auf Seite 231."
+        }
+      }
+    }
+  }
+}
