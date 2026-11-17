@@ -6,6 +6,9 @@ import { findLesson } from './lessons';
 import { PAPER, type PaperBlock } from './paper';
 import { PaperTape } from './PaperTape';
 
+/** The soft hyphen that lets a long lesson title break on a phone. A short link line does not need it. */
+const SOFT_HYPHEN = /\u00AD/g;
+
 /** One part of the paper: its pages, title and summary, its quote with a translation, and its lessons. */
 function PaperPartView({ block }: { block: PaperBlock }) {
   const t = useTranslations('learn.paper');
@@ -13,7 +16,7 @@ function PaperPartView({ block }: { block: PaperBlock }) {
   const titleId = `${block.id}-title`;
   const lessons = block.lessons.flatMap((slug) => {
     const found = findLesson(slug);
-    return found === null ? [] : [{ slug, number: found.index + 1, title: found.lesson.text[locale].meta.title }];
+    return found === null ? [] : [{ slug, number: found.index + 1, title: found.lesson.text[locale].meta.title.replace(SOFT_HYPHEN, '') }];
   });
   return (
     // scroll-mt keeps a part's title below the sticky tape after a jump to #section-5.
