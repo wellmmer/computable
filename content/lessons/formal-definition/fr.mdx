@@ -95,11 +95,12 @@ Les réglages montrent une note quand une machine utilise cette règle.
 Dans la définition de Sipser, une machine s’arrête seulement quand elle entre dans q_accept ou dans q_reject.
 Elle peut aussi ne jamais s’arrêter, et tourner sans fin.
 
-Le simulateur s’arrête dans trois cas :
+Le simulateur s’arrête dans quatre cas :
 
 1. La machine entre dans un état d’acceptation. La ligne de résultat dit « Acceptée ».
 2. La machine entre dans un état de rejet. La ligne de résultat dit « Rejetée ».
 3. Aucune règle ne convient pour l’état et le symbole. La ligne de résultat dit aussi « Rejetée ».
+4. Seulement avec la règle de l’application de 2016, sur une bande bornée à gauche : une règle déplace la tête à gauche depuis la case 0. La ligne de résultat dit aussi « Rejetée ». Si cette même règle entre dans un état d’acceptation ou de rejet, ce sont les cas 1 et 2 qui s’appliquent.
 
 Une machine dans le simulateur peut quand même tourner sans fin.
 C’est pourquoi **Lancer** fait une pause après 10 000 pas et demande s’il faut continuer.

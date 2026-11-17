@@ -95,11 +95,12 @@ Los ajustes muestran un aviso cuando una máquina usa esa regla.
 En la definición de Sipser, una máquina solo se detiene cuando entra en q_accept o en q_reject.
 También puede no detenerse nunca, y funcionar para siempre.
 
-El simulador se detiene en tres casos:
+El simulador se detiene en cuatro casos:
 
 1. La máquina entra en un estado de aceptación. La línea de resultado dice "Aceptada".
 2. La máquina entra en un estado de rechazo. La línea de resultado dice "Rechazada".
 3. Ninguna regla sirve para el estado y el símbolo. La línea de resultado también dice "Rechazada".
+4. Solo con la regla de la aplicación de 2016, en una cinta con extremo izquierdo: una regla mueve el cabezal a la izquierda desde la celda 0. La línea de resultado también dice "Rechazada". Si esa misma regla entra en un estado de aceptación o de rechazo, valen los casos 1 y 2.
 
 Una máquina en el simulador todavía puede funcionar para siempre.
 Por eso, **Ejecutar** hace una pausa tras 10.000 pasos y pregunta si debe continuar.

@@ -95,11 +95,12 @@ Die Einstellungen zeigen einen Hinweis, wenn eine Maschine diese Regel benutzt.
 In Sipsers Definition hält eine Maschine nur an, wenn sie in q_accept oder q_reject wechselt.
 Sie kann auch nie anhalten und für immer laufen.
 
-Der Simulator hält in drei Fällen an:
+Der Simulator hält in vier Fällen an:
 
 1. Die Maschine wechselt in einen akzeptierenden Zustand. Die Ergebniszeile sagt „Akzeptiert“.
 2. Die Maschine wechselt in einen ablehnenden Zustand. Die Ergebniszeile sagt „Abgelehnt“.
 3. Keine Regel passt zum Zustand und zum Symbol. Die Ergebniszeile sagt auch „Abgelehnt“.
+4. Nur mit der Regel der App von 2016, auf einem einseitigen Band: Eine Regel bewegt den Kopf nach links von Feld 0. Die Ergebniszeile sagt auch „Abgelehnt“. Wechselt dieselbe Regel in einen akzeptierenden oder ablehnenden Zustand, gelten stattdessen die Fälle 1 und 2.
 
 Eine Maschine im Simulator kann trotzdem für immer laufen.
 Deshalb pausiert **Starten** nach 10.000 Schritten und fragt, ob es weitergehen soll.

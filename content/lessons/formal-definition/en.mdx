@@ -95,11 +95,12 @@ The settings show a note when a machine uses that rule.
 In Sipser's definition, a machine stops only when it enters q_accept or q_reject.
 It may also never stop, and run forever.
 
-The simulator stops in three cases:
+The simulator stops in four cases:
 
 1. The machine enters an accept state. The result line says "Accepted".
 2. The machine enters a reject state. The result line says "Rejected".
 3. No rule fits the state and the symbol. The result line also says "Rejected".
+4. Only with the rule of the 2016 app, on a one-sided tape: a rule moves the head left from cell 0. The result line also says "Rejected". If that same rule enters an accept or reject state, cases 1 and 2 apply instead.
 
 A machine in the simulator may still run forever.
 So **Run** pauses after 10,000 steps and asks if it should go on.

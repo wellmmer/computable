@@ -95,11 +95,12 @@ As configurações mostram um aviso quando uma máquina usa essa regra.
 Na definição de Sipser, uma máquina só para quando entra em q_accept ou em q_reject.
 Ela também pode nunca parar, e rodar para sempre.
 
-O simulador para em três casos:
+O simulador para em quatro casos:
 
 1. A máquina entra em um estado de aceitação. A linha de resultado diz "Aceita".
 2. A máquina entra em um estado de rejeição. A linha de resultado diz "Rejeitada".
 3. Nenhuma regra serve para o estado e o símbolo. A linha de resultado também diz "Rejeitada".
+4. Só com a regra do app de 2016, numa fita limitada à esquerda: uma regra move a cabeça para a esquerda na célula 0. A linha de resultado também diz "Rejeitada". Se essa mesma regra entra em um estado de aceitação ou de rejeição, valem os casos 1 e 2.
 
 Uma máquina no simulador ainda pode rodar para sempre.
 Por isso, **Rodar** pausa depois de 10.000 passos e pergunta se deve continuar.
