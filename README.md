@@ -7,10 +7,11 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: releases 1 and 2a are live at https://computable-lac.vercel.app.** This repo held a 2016 capstone project built with jQuery. It is
-> now Computable, built release by release. Release 1 is the simulator. Release 2a adds the first
-> two lessons. The roadmap below lists the rest. The 2016 version stays available at the git tag
-> `v1.0-tcc-2016`.
+> **Status: releases 1, 2a and 2b are live at https://computable-lac.vercel.app.** This repo held a
+> 2016 capstone project built with jQuery. It is now Computable, built release by release. Release 1
+> is the simulator. Releases 2a and 2b add lessons 1 to 6. Release 2c, a guide for reading Turing's
+> 1936 paper, comes next. The roadmap below lists the rest. The 2016 version stays available at the
+> git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -79,8 +80,9 @@ machine could do the same work.
   stays in your browser only, and "Reset my progress" clears it.
 - **All 5 languages.** The Spanish, French and German lesson texts are AI translations, marked as
   such on every page.
-- **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each book links
-  to the publisher's page for its edition, and Turing's paper links to its DOI. The texts are under
+- **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each textbook links
+  to the publisher's page for its edition. Hilbert and Ackermann's 1928 book links to its Open
+  Library page. Turing's and Church's papers link to their DOIs. The texts are under
   CC BY 4.0.
 
 ## What R2b brings
