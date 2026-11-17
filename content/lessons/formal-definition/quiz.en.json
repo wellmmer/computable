@@ -1,0 +1,93 @@
+{
+  "questions": {
+    "delta": {
+      "text": "Which part of the simulator matches the transition function δ?",
+      "options": {
+        "tape": {
+          "text": "The tape",
+          "why": "The tape holds the symbols. δ says what the machine does with them."
+        },
+        "rule-table": {
+          "text": "The rule table",
+          "why": "Each row is one rule of δ: a state and a symbol, then what to write, where to move and the next state."
+        },
+        "start-state": {
+          "text": "The Start state setting",
+          "why": "The start state is q₀, another part of the 7-tuple."
+        }
+      }
+    },
+    "blank": {
+      "text": "In Sipser’s definition, which alphabet holds the blank?",
+      "options": {
+        "sigma": {
+          "text": "Σ, the input alphabet",
+          "why": "An input never contains the blank, so the blank is not in Σ."
+        },
+        "neither": {
+          "text": "Neither alphabet",
+          "why": "The tape holds blanks, so the blank is a tape symbol."
+        },
+        "gamma": {
+          "text": "Γ, the tape alphabet, but not Σ",
+          "why": "The tape holds blanks, but an input never contains one."
+        }
+      }
+    },
+    "stay": {
+      "text": "Sipser’s δ moves the head left or right. What about the simulator’s move S?",
+      "options": {
+        "same-work": {
+          "text": "S leaves the head in place. A move right and then a move left can do the same work.",
+          "why": "So S makes some machines shorter, but it does not let them do more."
+        },
+        "more-power": {
+          "text": "S lets a machine solve problems that Sipser’s machines cannot solve.",
+          "why": "Any rule with S can be replaced by a move right and a move left, with one extra state."
+        },
+        "two-cells": {
+          "text": "S moves the head two cells to the right.",
+          "why": "S means “stay”: the head does not move."
+        }
+      }
+    },
+    "no-rule": {
+      "text": "In this simulator, what happens when no rule fits the state and the symbol?",
+      "options": {
+        "accepts": {
+          "text": "The machine stops and accepts.",
+          "why": "Only an accept state accepts."
+        },
+        "waits": {
+          "text": "The machine stays in its state and waits.",
+          "why": "Nothing could change, so the simulator stops the run."
+        },
+        "error": {
+          "text": "The simulator shows an error and does not start.",
+          "why": "That happens when two rules have the same state and symbol. A missing rule only matters during the run."
+        },
+        "rejects": {
+          "text": "The machine stops, and the result line says “Rejected”.",
+          "why": "Sipser’s δ has a rule for every case, so this only happens in the simulator."
+        }
+      }
+    },
+    "accept-states": {
+      "text": "In Sipser’s definition, how many accept states does a machine have?",
+      "options": {
+        "any": {
+          "text": "Any number, even none",
+          "why": "That is how the simulator’s Accept states list works. Sipser’s definition has one: q_accept."
+        },
+        "exactly-one": {
+          "text": "Exactly one",
+          "why": "The 7-tuple names one accept state, q_accept, and one reject state, q_reject."
+        },
+        "none": {
+          "text": "None: the machine accepts when it stops",
+          "why": "The machine accepts only when it enters q_accept."
+        }
+      }
+    }
+  }
+}
