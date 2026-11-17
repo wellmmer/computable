@@ -402,6 +402,11 @@
       "previous": "Lección anterior: {title}",
       "next": "Lección siguiente: {title}",
       "all": "Todas las lecciones"
+    },
+    "paper": {
+      "tape": {
+        "step": "Paso {step}"
+      }
     }
   }
 }
