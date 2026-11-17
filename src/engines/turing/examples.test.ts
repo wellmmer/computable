@@ -41,6 +41,30 @@ describe('Palindrome checker', () => {
       }),
     );
   });
+
+  // Lesson 2 (content/lessons/formal-definition) quotes the numbers below.
+  it('accepts its own input 0110 after 15 steps, with a blank tape', () => {
+    const run = createRun(m);
+    runUntilHalt(run);
+    expect(run).toMatchObject({ status: 'accepted', steps: 15, reason: { kind: 'accept-state', state: 'qA' } });
+    expect(run.tape.toString()).toBe('');
+  });
+
+  it('rejects 0111 in qR after 6 steps', () => {
+    const run = createRun(m, '0111');
+    runUntilHalt(run);
+    expect(run).toMatchObject({ status: 'rejected', steps: 6, reason: { kind: 'reject-state', state: 'qR' } });
+  });
+
+  it('has one rule for each of its 6 other states and each of its 3 tape symbols, and S only into qA or qR', () => {
+    const machine = fromJson(palindrome);
+    const rules = machine.rules.flatMap((rule) => ('move' in rule ? [rule] : []));
+    expect(rules).toHaveLength(machine.rules.length);
+    const states = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5'];
+    const pairs = rules.map((rule) => `${rule.state} ${rule.read}`).sort();
+    expect(pairs).toEqual(states.flatMap((state) => ['0', '1', '_'].map((symbol) => `${state} ${symbol}`)).sort());
+    expect(rules.filter((rule) => rule.move === 'S').map((rule) => rule.next)).toEqual(['qA', 'qR', 'qA', 'qR', 'qA']);
+  });
 });
 
 describe("Turing's first machine (1936)", () => {
