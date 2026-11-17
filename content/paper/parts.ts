@@ -26,7 +26,7 @@ export const PAPER_PARTS: readonly PaperPart[] = [
     pages: [231, 232],
     quote: {
       page: 231,
-      text: 'The machine is supplied with a ‘tape’ (the analogue of paper) running through it, and divided into sections (called ‘squares’) each capable of bearing a ‘symbol’.',
+      text: 'The machine is supplied with a “tape” (the analogue of paper) running through it, and divided into sections (called “squares”) each capable of bearing a “symbol”.',
     },
     lessons: ['intuition'],
   },
@@ -89,7 +89,7 @@ export const PAPER_PARTS: readonly PaperPart[] = [
     id: 'section-9',
     volume: 42,
     pages: [249, 254],
-    quote: { page: 249, text: 'The real question at issue is ‘What are the possible processes which can be carried out in computing a number?’' },
+    quote: { page: 249, text: 'The real question at issue is “What are the possible processes which can be carried out in computing a number?”' },
     lessons: ['intuition', 'church-turing'],
   },
   {

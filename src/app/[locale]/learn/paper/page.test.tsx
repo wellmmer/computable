@@ -62,6 +62,16 @@ describe('the reading guide to Turing’s paper (spec R2c 3)', () => {
     expect(screen.queryByText(/^Translation:/)).toBeNull();
   });
 
+  it('keeps Turing’s own double quotation marks inside the quotes of sections 1 and 9, word for word', () => {
+    renderWithIntl(<PaperPage />);
+    expect(within(parts()[0] as HTMLElement).getByRole('blockquote').textContent).toBe(
+      '“The machine is supplied with a “tape” (the analogue of paper) running through it, and divided into sections (called “squares”) each capable of bearing a “symbol”.”',
+    );
+    expect(within(parts()[8] as HTMLElement).getByRole('blockquote').textContent).toBe(
+      '“The real question at issue is “What are the possible processes which can be carried out in computing a number?””',
+    );
+  });
+
   it.each(routing.locales.filter((locale) => locale !== 'en'))('in %s, keeps every quote in the same English and adds a translation', (locale) => {
     renderWithIntl(<PaperPage />);
     const english = screen.getAllByRole('blockquote').map((quote) => quote.textContent);

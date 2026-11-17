@@ -40,7 +40,7 @@ for (const { path, title, translation, start } of LANGUAGES) {
     await expect(page.locator('main a[href="https://doi.org/10.1112/plms/s2-42.1.230"]')).toHaveCount(1);
     await expect(page.locator('blockquote[lang="en"]')).toHaveCount(12);
     await expect(page.locator('blockquote').first()).toHaveText(
-      '“The machine is supplied with a ‘tape’ (the analogue of paper) running through it, and divided into sections (called ‘squares’) each capable of bearing a ‘symbol’.”',
+      '“The machine is supplied with a “tape” (the analogue of paper) running through it, and divided into sections (called “squares”) each capable of bearing a “symbol”.”',
     );
     if (translation !== null) await expect(page.getByText(translation, { exact: false })).toHaveCount(12);
     await expect(tape(page).getByText(start)).toBeVisible();
