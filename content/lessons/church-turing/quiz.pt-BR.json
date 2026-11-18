@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "thesis": {
+      "text": "O que diz a tese de Church–Turing?",
+      "options": {
+        "every-problem": {
+          "text": "Uma máquina de Turing consegue resolver todo problema",
+          "why": "As lições 4 e 5 mostram problemas que nenhuma máquina consegue resolver. A tese é sobre métodos que uma pessoa consegue seguir."
+        },
+        "person-and-machine": {
+          "text": "O que uma pessoa consegue calcular seguindo um método fixo, uma máquina de Turing consegue calcular",
+          "why": "Essa é a tese. Ela liga um método que uma pessoa segue a uma máquina."
+        },
+        "speed": {
+          "text": "Uma máquina de Turing calcula mais rápido que uma pessoa",
+          "why": "A tese não diz nada sobre velocidade. Ela é sobre o que pode ser calculado."
+        }
+      }
+    },
+    "why-thesis": {
+      "text": "Por que ela é uma tese e não um teorema?",
+      "options": {
+        "believed-false": {
+          "text": "Porque ela provavelmente é falsa",
+          "why": "Esse não é o motivo. Um teorema precisa de uma prova, e uma prova precisa de definições exatas."
+        },
+        "proof-too-long": {
+          "text": "Porque a prova dela é longa demais para escrever",
+          "why": "Não existe prova, nem longa nem curta. Um dos lados da afirmação não tem definição exata."
+        },
+        "no-exact-definition": {
+          "text": "Porque “um método fixo que uma pessoa consegue seguir” não tem definição exata, então nenhuma prova consegue ligá-lo às máquinas de Turing",
+          "why": "Turing diz isso na página 249: todos os argumentos a favor dela são, no fundo, apelos à intuição."
+        }
+      }
+    },
+    "appendix": {
+      "text": "O que o apêndice de Turing mostra?",
+      "options": {
+        "same-sequences": {
+          "text": "Que as sequências λ-definíveis e as sequências computáveis são as mesmas",
+          "why": "Turing prova os dois sentidos, em linhas gerais, nas páginas 263 a 265."
+        },
+        "church-wrong": {
+          "text": "Que a definição de Church está errada",
+          "why": "Turing chama a ideia de Church de equivalente à dele (página 231)."
+        },
+        "thesis-proved": {
+          "text": "Que a tese está provada",
+          "why": "Ele mostra que duas definições exatas coincidem. A ideia de um método que uma pessoa consegue seguir continua sem definição exata."
+        }
+      }
+    },
+    "lambda": {
+      "text": "Quando uma sequência é λ-definível?",
+      "options": {
+        "circle-free-machine": {
+          "text": "Quando uma máquina livre de círculos a imprime",
+          "why": "Essa é a definição de Turing de sequência computável (página 233). O apêndice mostra que as duas dão as mesmas sequências, mas as definições são diferentes."
+        },
+        "one-formula": {
+          "text": "Quando uma única fórmula de Church dá todos os algarismos dela, por conversão",
+          "why": "Aplique a fórmula ao número n e converta. O resultado indica o n-ésimo algarismo (página 263)."
+        },
+        "no-rule": {
+          "text": "Quando os algarismos dela não seguem regra nenhuma",
+          "why": "As duas definições precisam de regras fixas. Uma sequência sem regra não é λ-definível nem computável."
+        }
+      }
+    },
+    "no-method": {
+      "text": "Turing provou que nenhuma máquina decide, para toda fórmula, se ela é demonstrável. O que transforma isso em “nenhum método”?",
+      "options": {
+        "more-steps": {
+          "text": "Rodar a máquina por mais passos",
+          "why": "Mais passos não ajudam. A pergunta é se todo método pode ser executado por uma máquina."
+        },
+        "appendix-alone": {
+          "text": "Só o apêndice",
+          "why": "O apêndice compara duas definições exatas. Ele não cobre todo método que uma pessoa poderia seguir."
+        },
+        "thesis": {
+          "text": "A tese: todo método fixo pode ser executado por uma máquina",
+          "why": "Turing diz isso na página 249. Aceita a tese, um método para o Entscheidungsproblem seria uma máquina, e essa máquina não existe."
+        }
+      }
+    }
+  }
+}

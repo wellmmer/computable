@@ -7,10 +7,11 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: releases 1 and 2a are live at https://computable-lac.vercel.app.** This repo held a 2016 capstone project built with jQuery. It is
-> now Computable, built release by release. Release 1 is the simulator. Release 2a adds the first
-> two lessons. The roadmap below lists the rest. The 2016 version stays available at the git tag
-> `v1.0-tcc-2016`.
+> **Status: releases 1, 2a and 2b are live at https://computable-lac.vercel.app.** This repo held a
+> 2016 capstone project built with jQuery. It is now Computable, built release by release. Release 1
+> is the simulator. Releases 2a and 2b add lessons 1 to 6. Release 2c, a guide for reading Turing's
+> 1936 paper, comes next. The roadmap below lists the rest. The 2016 version stays available at the
+> git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -37,7 +38,7 @@ machine could do the same work.
 | --- | --- | --- |
 | **R1** | The simulator, the guided tour, 5 languages, light and dark themes, About, Support the dev | Live. Support the dev shows its payment links once they are set. |
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
-| **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | In progress: lessons 3 and 4 are live; 5 and 6 come next |
+| **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Planned |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
@@ -79,8 +80,9 @@ machine could do the same work.
   stays in your browser only, and "Reset my progress" clears it.
 - **All 5 languages.** The Spanish, French and German lesson texts are AI translations, marked as
   such on every page.
-- **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each book links
-  to the publisher's page for its edition, and Turing's paper links to its DOI. The texts are under
+- **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each textbook links
+  to the publisher's page for its edition. Hilbert and Ackermann's 1928 book links to its Open
+  Library page. Turing's and Church's papers link to their DOIs. The texts are under
   CC BY 4.0.
 
 ## What R2b brings
@@ -92,6 +94,14 @@ machine could do the same work.
 - **Lesson 4, "The halting problem".** One machine stops and one runs forever. The lesson explains
   why no machine can tell which, for every machine. It shows the diagonal argument step by step,
   with tables. It also says what Turing himself proved, and how that differs from today's form.
+- **Lesson 5, "The Entscheidungsproblem".** Hilbert and Ackermann asked for one method that decides,
+  for every formula of logic, whether it is valid. Turing asks whether it can be proved. For this
+  logic, the two questions come to the same thing (Gödel, 1930). The lesson gives Turing's answer,
+  no, in five steps. His proof uses the "ever prints 0" result of lesson 4. Church also answered no,
+  in 1936.
+- **Lesson 6, "The Church–Turing thesis".** What a person can compute by following a fixed method, a
+  Turing machine can compute. The lesson explains why this is a thesis and not a theorem. Turing's
+  appendix shows that his computable sequences and Church's λ-definable ones are the same.
 - **Quotes from the paper, with page numbers.** They stay in Turing's English. The other languages
   add a translation next to them.
 

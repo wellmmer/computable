@@ -3,7 +3,20 @@ import { expect, test, type Page } from '@playwright/test';
 import { LOCALE_PATHS, openPage } from './helpers';
 
 /** Every page, after the language prefix. */
-const PATHS = ['', '/about', '/support', '/privacy', '/simulator', '/learn', '/learn/intuition', '/learn/formal-definition', '/learn/universal-machine', '/learn/halting-problem'];
+const PATHS = [
+  '',
+  '/about',
+  '/support',
+  '/privacy',
+  '/simulator',
+  '/learn',
+  '/learn/intuition',
+  '/learn/formal-definition',
+  '/learn/universal-machine',
+  '/learn/halting-problem',
+  '/learn/entscheidungsproblem',
+  '/learn/church-turing',
+];
 
 async function axeViolations(page: Page) {
   return (await new AxeBuilder({ page }).analyze()).violations;
@@ -85,6 +98,20 @@ for (const colorScheme of ['light', 'dark'] as const) {
       }
       await expect(page.getByRole('button', { name: 'Try again' })).toBeVisible();
       expect(await axeViolations(page)).toEqual([]);
+    });
+
+    test('lessons 5 and 6 with a finished quiz have no axe violations', async ({ page }) => {
+      for (const slug of ['entscheidungsproblem', 'church-turing']) {
+        await openPage(page, `/en/learn/${slug}`);
+        // The first option of each question: some answers are right and some are wrong, so both marks show.
+        for (let number = 1; number <= 5; number++) {
+          const question = page.getByRole('group', { name: new RegExp(`^Question ${number} of 5`) });
+          await question.getByRole('radio').first().check();
+          await question.getByRole('button', { name: 'Check' }).click();
+        }
+        await expect(page.getByRole('button', { name: 'Try again' })).toBeVisible();
+        expect(await axeViolations(page), slug).toEqual([]);
+      }
     });
 
     test("the Learn page's reset question has no axe violations", async ({ page }) => {

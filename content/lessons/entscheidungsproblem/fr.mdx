@@ -1,0 +1,141 @@
+export const meta = {
+  title: 'L’Entscheidungs\u00ADproblem',
+  summary: 'Existe-t-il une méthode qui décide, pour toute formule de la logique, si elle peut être démontrée ? Comment Church et Turing ont répondu non en 1936, et comment Turing a utilisé le résultat « imprime un jour 0 ».',
+  minutes: 6,
+};
+
+La leçon 1 a nommé la question qui a lancé l’article de Turing.
+Son nom allemand est *Entscheidungsproblem*, le « problème de la décision ».
+La leçon 4 a donné à Turing l’outil dont il avait besoin : aucune machine ne peut décider si une machine imprime un jour 0.
+Cette leçon réunit les deux.
+Elle suit la section 11 de l’article de Turing de 1936.
+
+## La question
+
+David Hilbert et Wilhelm Ackermann ont écrit un livre de logique, publié pour la première fois en 1928.
+Pour la forme exacte de la question, Turing renvoie ses lecteurs au chapitre 3 de ce livre.
+
+La question porte sur les formules de la logique.
+Une formule peut dire, par exemple : « Si toute personne est mortelle, et si Socrate est une personne, alors Socrate est mortel. »
+Une formule est démontrable s’il en existe une preuve.
+Une preuve part d’axiomes fixes et utilise des règles fixes, un pas à la fois.
+
+La question demande une méthode qui a trois propriétés :
+
+- Elle fonctionne pour toute formule.
+- Elle s’arrête toujours, après un nombre fini de pas.
+- Elle dit alors correctement si la formule est démontrable.
+
+Hilbert et Ackermann demandaient si une formule est valide, c’est-à-dire vraie dans tous les cas.
+Turing demande si elle est démontrable.
+Pour cette logique, les deux questions reviennent au même.
+Kurt Gödel l’a montré en 1930, avec son théorème de complétude.
+
+Turing appelle cette logique « le calcul fonctionnel K ».
+Aujourd’hui, on l’appelle la logique du premier ordre.
+Au début de la section 11, il dit ce qu’il va montrer :
+
+> “I propose, therefore, to show that there can be no general process for determining whether a given formula 𝔄 of the functional calculus K is provable, i.e. that there can be no machine which, supplied with any one 𝔄 of these formulae, will eventually say whether 𝔄 is provable.” (Turing, 1936, page 259)
+>
+> En français : « Je me propose donc de montrer qu’il ne peut exister aucun processus général pour déterminer si une formule donnée 𝔄 du calcul fonctionnel K est démontrable, c’est-à-dire qu’il ne peut exister aucune machine qui, quand on lui donne n’importe laquelle 𝔄 de ces formules, finira par dire si 𝔄 est démontrable. »
+
+𝔄 est le nom que Turing donne à une formule quelconque.
+Relisez cette phrase.
+Turing lit « processus général » comme « machine ».
+La leçon 6 explique pourquoi il peut le faire.
+
+## Pourquoi une liste de preuves ne suffit pas
+
+Turing note qu’une machine peut lister toutes les formules démontrables, l’une après l’autre (page 259).
+Cette liste pourrait-elle répondre à la question ?
+
+- Si une formule est démontrable, elle apparaît tôt ou tard dans la liste. Alors la machine peut dire « oui ».
+- Si une formule n’est pas démontrable, elle n’apparaît jamais. La machine tourne sans fin et ne dit jamais « non ».
+
+C’est de nouveau le problème de la leçon 4.
+Lancer et attendre ne donne aucune réponse quand la réponse est « non ».
+Une méthode doit toujours s’arrêter.
+
+## Une formule pour chaque machine
+
+L’idée de Turing est de transformer une question sur les machines en une question sur les formules.
+
+Pour chaque machine ℳ, il écrit une formule de la logique.
+Il l’appelle Un(ℳ).
+Il la construit à partir de la table de règles de ℳ, écrite sous la forme standard de la leçon 3 (page 260).
+
+À chaque instant, une machine a une bande, une case sous sa tête et un état.
+Turing appelle ces trois choses ensemble une « configuration complète » (page 232).
+Un(ℳ) veut dire : à un certain instant, le chiffre 0 est sur la bande de ℳ (page 260).
+Ici, Turing écrit le chiffre 0 comme S1, comme dans la leçon 3.
+
+Puis Turing démontre deux lemmes, aux pages 260 à 262 :
+
+- Si 0 est sur la bande de ℳ à un certain instant, alors Un(ℳ) est démontrable.
+- Si Un(ℳ) est démontrable, alors 0 est sur la bande de ℳ à un certain instant.
+
+Donc, pour toute machine ℳ, deux questions ont la même réponse :
+
+- Un(ℳ) est-elle démontrable ?
+- ℳ imprime-t-elle un jour 0 ?
+
+## La preuve en cinq étapes
+
+1. Supposez qu’une machine décide, pour toute formule, si elle est démontrable.
+2. Prenez une machine ℳ quelconque, et écrivez sa formule Un(ℳ).
+3. Donnez Un(ℳ) à la machine qui décide. Elle dit « démontrable » ou « non démontrable ».
+4. D’après les deux lemmes, cette réponse dit aussi si ℳ imprime un jour 0.
+5. Mais la leçon 4 a montré qu’aucune machine ne peut décider si une machine imprime un jour 0 (page 248). Donc la machine qui décide ne peut pas exister.
+
+Turing l’écrit ainsi :
+
+> “We are now in a position to show that the Entscheidungsproblem cannot be solved. Let us suppose the contrary. Then there is a general (mechanical) process for determining whether Un(ℳ) is provable. By Lemmas 1 and 2, this implies that there is a process for determining whether ℳ ever prints 0, and this is impossible, by § 8. Hence the Entscheidungsproblem cannot be solved.” (Turing, 1936, page 262)
+>
+> En français : « Nous sommes maintenant en mesure de montrer que l’Entscheidungsproblem ne peut pas être résolu. Supposons le contraire. Alors il existe un processus général (mécanique) pour déterminer si Un(ℳ) est démontrable. D’après les lemmes 1 et 2, cela implique qu’il existe un processus pour déterminer si ℳ imprime un jour 0, et cela est impossible, d’après le § 8. Donc l’Entscheidungsproblem ne peut pas être résolu. »
+
+La section 8 est la section de la leçon 4.
+Son second résultat, « imprime un jour 0 », est celui dont Turing a besoin ici.
+
+## La réponse de Church
+
+Turing n’est pas le seul à avoir répondu à la question en 1936.
+Alonzo Church, à l’université de Princeton, y a répondu aussi.
+Il n’a pas utilisé de machines.
+Il a utilisé sa propre idée de ce qui est « effectivement calculable ».
+La leçon 6 compare son idée à celle de Turing.
+
+La réponse de Church est une note de deux pages dans le *Journal of Symbolic Logic*.
+Dans cette note, il étend un de ses résultats antérieurs à la logique du livre de Hilbert et Ackermann.
+L’article de Turing cite cette note, et dit que Church est arrivé à des conclusions semblables (page 231).
+
+## Ce que « non » veut dire
+
+La réponse est non : aucune méthode unique ne décide, pour toute formule, si elle est démontrable.
+Cela ne veut pas dire qu’aucune formule ne peut être décidée.
+Pour certains types de formules, des méthodes existent.
+Turing lui-même note que beaucoup de cas particuliers étaient déjà résolus (page 262).
+Ce qui ne peut pas exister, c’est une seule méthode qui fonctionne pour toute formule.
+
+Il reste un point.
+Turing a prouvé qu’aucune **machine** ne peut décider.
+Hilbert et Ackermann posaient la question pour n’importe quelle **méthode**.
+Pour passer de « aucune machine » à « aucune méthode », Turing a besoin d’une affirmation qui relie les machines et les méthodes.
+La leçon 6 porte sur cette affirmation.
+
+## Pourquoi c’est important
+
+Le titre complet de l’article de Turing est « On Computable Numbers, with an Application to the Entscheidungsproblem » (« Sur les nombres calculables, avec une application à l’Entscheidungsproblem »).
+Cette leçon est cette application.
+Pour donner sa réponse, Turing a d’abord dû dire exactement ce qu’est une méthode.
+Sa définition est la machine de Turing, la machine dont parlent toutes les leçons de ce site.
+
+La leçon 4 a montré une question sur les machines qu’aucune machine ne peut décider.
+Cette leçon montre une question de logique qui a la même réponse.
+
+<Quiz />
+
+## Sources
+
+- A. M. Turing, « [On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230) », *Proceedings of the London Mathematical Society*, série 2, volume 42, pages 230–265, 1936. L’Entscheidungsproblem se trouve à la section 11, pages 259–263. La note de Church est citée à la page 231.
+- Alonzo Church, « [A Note on the Entscheidungsproblem](https://doi.org/10.2307/2269326) », *Journal of Symbolic Logic*, volume 1, numéro 1, pages 40–41, 1936. En anglais.
+- David Hilbert et Wilhelm Ackermann, [*Grundzüge der theoretischen Logik*](https://openlibrary.org/books/OL6723331M), J. Springer, Berlin, 1928. En allemand. Turing renvoie au chapitre 3 (page 259).

@@ -47,31 +47,58 @@ function skeleton(page: Element): string[] {
   });
 }
 
+/** The lessons without a <Machine>: lessons 5 and 6 have a quiz only (spec R2b 2). Every other lesson runs at least one machine. */
+const LESSONS_WITHOUT_MACHINES: readonly string[] = ['entscheidungsproblem', 'church-turing'];
+
 /**
- * The page of each book in the "Sources" list: the publisher's page for the 3rd edition. Checked on
- * 2026-11-17: both answer 200 and show that edition and its ISBN (Sipser 978-1-133-18779-0,
- * Hopcroft–Motwani–Ullman 978-0-321-45536-9).
+ * The sources that lessons link, each with the text that finds it in a "Sources" list, its link, and
+ * the lessons that cite it. A lesson that cites a source must be named here, and a lesson named here
+ * must cite it, once.
  */
-const BOOK_LINKS = [
-  'https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790',
-  'https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369',
+const LINKED_SOURCES: readonly { name: string; link: string; lessons: readonly string[] }[] = [
+  {
+    // Sipser, 3rd edition, ISBN 978-1-133-18779-0: the publisher's page answered 200 on 2026-11-17.
+    name: 'Introduction to the Theory of Computation',
+    link: 'https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790',
+    lessons: ['intuition', 'formal-definition', 'universal-machine', 'halting-problem', 'church-turing'],
+  },
+  {
+    // Hopcroft–Motwani–Ullman, 3rd edition, ISBN 978-0-321-45536-9: the publisher's page answered 200 on 2026-11-17.
+    name: 'Introduction to Automata Theory',
+    link: 'https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369',
+    lessons: ['intuition', 'formal-definition', 'universal-machine', 'halting-problem', 'church-turing'],
+  },
+  {
+    // Turing's 1936 paper, by its DOI.
+    name: 'On Computable Numbers',
+    link: 'https://doi.org/10.1112/plms/s2-42.1.230',
+    lessons: ['intuition', 'universal-machine', 'halting-problem', 'entscheidungsproblem', 'church-turing'],
+  },
+  {
+    // Petzold, The Annotated Turing (Wiley, 2008, ISBN 978-0-470-22905-7). Wiley answers 403 to scripts; a browser opened it on 2026-11-17.
+    name: 'The Annotated Turing',
+    link: 'https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057',
+    lessons: ['universal-machine', 'halting-problem'],
+  },
+  {
+    // Church's note, J. Symbolic Logic 1(1), 40–41. The DOI is registered (Crossref answered 200 on 2026-11-17); Cambridge answers 429 to scripts.
+    name: 'A Note on the Entscheidungsproblem',
+    link: 'https://doi.org/10.2307/2269326',
+    lessons: ['entscheidungsproblem'],
+  },
+  {
+    // Hilbert and Ackermann, 1st edition, J. Springer, 1928. It has no DOI; Open Library's record of that edition (its JSON answered 200 on 2026-11-17).
+    name: 'Grundzüge der theoretischen Logik',
+    link: 'https://openlibrary.org/books/OL6723331M',
+    lessons: ['entscheidungsproblem'],
+  },
+  {
+    // Church's paper, Amer. J. Math. 58(2), 345–363, where Turing finds "effective calculability" (page 231). The DOI answered 200 (JSTOR) on 2026-11-17.
+    name: 'An Unsolvable Problem of Elementary Number Theory',
+    link: 'https://doi.org/10.2307/2371045',
+    lessons: ['church-turing'],
+  },
 ];
-
-/** The DOI of Turing's 1936 paper. */
-const TURING_DOI = 'https://doi.org/10.1112/plms/s2-42.1.230';
-
-/** The lessons whose "Sources" list Turing's 1936 paper. A lesson that adds it must be named here. */
-const LESSONS_CITING_TURING = ['intuition', 'universal-machine', 'halting-problem'];
-
-/** The lessons whose "Sources" list Petzold's *The Annotated Turing*. A lesson that adds it must be named here. */
-const LESSONS_CITING_PETZOLD = ['universal-machine', 'halting-problem'];
-
-/**
- * The publisher's page of Petzold's *The Annotated Turing* (Wiley, 2008, ISBN 978-0-470-22905-7).
- * Wiley answers 403 to scripts; a browser opened it on 2026-11-17 and showed the book.
- */
-const PETZOLD_LINK =
-  'https://www.wiley.com/en-us/The+Annotated+Turing%3A+A+Guided+Tour+Through+Alan+Turing%27s+Historic+Paper+on+Computability+and+the+Turing+Machine-p-9780470229057';
 
 /** The links of the last list in a lesson: its "Sources". */
 function sourceLinks(page: Element): { text: string; hrefs: string[] }[] {
@@ -87,6 +114,11 @@ const lessons = Object.keys(quizKeys).map((path) => lessonAndName(path)[0]);
 describe('lesson files (content/lessons)', () => {
   it('has at least one lesson', () => {
     expect(lessons.length).toBeGreaterThan(0);
+  });
+
+  it('names only lessons that exist in its lists', () => {
+    const named = [...LESSONS_WITHOUT_MACHINES, ...LINKED_SOURCES.flatMap((source) => source.lessons)];
+    expect(named.filter((slug) => !lessons.includes(slug))).toEqual([]);
   });
 
   describe.each(lessons)('%s', (lesson) => {
@@ -121,35 +153,20 @@ describe('lesson files (content/lessons)', () => {
       expect([...tags].filter((tag) => !MARKDOWN_TAGS.includes(tag))).toEqual([]);
       expect(page.querySelectorAll('[data-quiz]')).toHaveLength(1);
       const machines = [...page.querySelectorAll('[data-machine]')].map((machine) => machine.getAttribute('data-machine'));
-      expect(machines.length).toBeGreaterThan(0);
+      if (LESSONS_WITHOUT_MACHINES.includes(lesson)) expect(machines).toEqual([]);
+      else expect(machines.length).toBeGreaterThan(0);
       for (const example of machines) expect(EXAMPLE_IDS).toContain(example);
       // Links leave the site: a link inside the site would need the visitor's language.
       for (const link of page.querySelectorAll('a')) expect(link.getAttribute('href')).toMatch(/^https:\/\//);
     });
 
-    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links each book in its sources to its page', (_, Content) => {
+    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx cites the sources its lesson cites, each once, with its link', (_, Content) => {
       const sources = sourceLinks(render(Content));
-      expect(sources.flatMap((source) => source.hrefs)).toEqual(expect.arrayContaining(BOOK_LINKS));
-    });
-
-    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links Turing’s 1936 paper to its DOI, if the lesson cites it', (_, Content) => {
-      const turing = sourceLinks(render(Content)).filter((item) => item.text.includes('On Computable Numbers'));
-      if (!LESSONS_CITING_TURING.includes(lesson)) {
-        expect(turing).toEqual([]);
-        return;
+      for (const { name, link, lessons: citing } of LINKED_SOURCES) {
+        const items = sources.filter((item) => item.text.includes(name));
+        expect(items, name).toHaveLength(citing.includes(lesson) ? 1 : 0);
+        for (const item of items) expect(item.hrefs, name).toContain(link);
       }
-      expect(turing).toHaveLength(1);
-      expect(turing[0].hrefs).toContain(TURING_DOI);
-    });
-
-    it.each(files.map(([path, module]) => [lessonAndName(path)[1], module.default] as const))('%s.mdx links The Annotated Turing to its page, if the lesson cites it', (_, Content) => {
-      const petzold = sourceLinks(render(Content)).filter((item) => item.text.includes('The Annotated Turing'));
-      if (!LESSONS_CITING_PETZOLD.includes(lesson)) {
-        expect(petzold).toEqual([]);
-        return;
-      }
-      expect(petzold).toHaveLength(1);
-      expect(petzold[0].hrefs).toContain(PETZOLD_LINK);
     });
 
     it('has the same headings, quotes, lists, machines and quiz in every language, in the same order', () => {

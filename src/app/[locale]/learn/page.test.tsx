@@ -26,7 +26,9 @@ describe('Learn page (spec 2.1)', () => {
   it('lists the live lessons with their number, title, summary and reading time', () => {
     renderWithIntl(<LearnPage />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Learn');
-    expect(screen.getAllByRole('listitem')).toHaveLength(4);
+    // Lessons 5 and 6 have no machine (spec R2b 2), so the lead says "most lessons".
+    expect(screen.getByText('Short lessons about the Turing machine. Most lessons have machines you can run. Each lesson ends with a quiz.')).toBeTruthy();
+    expect(screen.getAllByRole('listitem')).toHaveLength(6);
     expect(within(lessonRow()).getByText('Lesson 1')).toBeTruthy();
     expect(within(lessonRow()).getByRole('link', { name: 'Intuition: the human computer' }).getAttribute('href')).toBe('/learn/intuition');
     expect(within(lessonRow()).getByText(/^How Turing turned a person/)).toBeTruthy();
@@ -41,6 +43,13 @@ describe('Learn page (spec 2.1)', () => {
     expect(within(lessonRow(4)).getByText('Lesson 4')).toBeTruthy();
     expect(within(lessonRow(4)).getByRole('link', { name: 'The halting problem' }).getAttribute('href')).toBe('/learn/halting-problem');
     expect(within(lessonRow(4)).getByText('7 min read')).toBeTruthy();
+    expect(within(lessonRow(5)).getByText('Lesson 5')).toBeTruthy();
+    expect(within(lessonRow(5)).getByRole('link', { name: 'The Entscheidungs\u00ADproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
+    expect(within(lessonRow(5)).getByText('6 min read')).toBeTruthy();
+    expect(within(lessonRow(6)).getByText('Lesson 6')).toBeTruthy();
+    expect(within(lessonRow(6)).getByRole('link', { name: 'The Church–Turing thesis' }).getAttribute('href')).toBe('/learn/church-turing');
+    expect(within(lessonRow(6)).getByText('6 min read')).toBeTruthy();
+    // R2c, the reading guide to Turing's paper, still comes later.
     expect(screen.getByText('More lessons come later.')).toBeTruthy();
   });
 

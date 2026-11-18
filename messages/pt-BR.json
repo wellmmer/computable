@@ -381,7 +381,7 @@
     "page": {
       "pageTitle": "Aprender",
       "title": "Aprender",
-      "lead": "Lições curtas sobre a máquina de Turing. Cada lição tem máquinas que você pode rodar e um quiz no fim.",
+      "lead": "Lições curtas sobre a máquina de Turing. A maioria das lições tem máquinas que você pode rodar. Toda lição termina com um quiz.",
       "lesson": "Lição {number}",
       "minutes": "{minutes} min de leitura",
       "notStarted": "Não iniciada",

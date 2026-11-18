@@ -4,8 +4,8 @@ import { LESSON_SLUGS } from './lesson-slugs';
 import { findLesson, LESSONS } from './lessons';
 
 describe('LESSONS (spec 3)', () => {
-  it('lists the live lessons in order: intuition, the formal definition, the universal machine, the halting problem', () => {
-    expect(LESSONS.map((lesson) => lesson.slug)).toEqual(['intuition', 'formal-definition', 'universal-machine', 'halting-problem']);
+  it('lists the 6 live lessons in Turing’s order (spec R2b 1)', () => {
+    expect(LESSONS.map((lesson) => lesson.slug)).toEqual(['intuition', 'formal-definition', 'universal-machine', 'halting-problem', 'entscheidungsproblem', 'church-turing']);
   });
 
   it('has the same slugs, in the same order, as the list the proxy reads', () => {
@@ -53,6 +53,22 @@ describe('LESSONS (spec 3)', () => {
     });
   });
 
+  it('reads the English meta of lesson 5', () => {
+    expect(LESSONS[4].text.en.meta).toEqual({
+      title: 'The Entscheidungs\u00ADproblem',
+      summary: 'Is there one method that decides, for every formula of logic, whether it can be proved? How Church and Turing answered no in 1936, and how Turing used the “ever prints 0” result.',
+      minutes: 6,
+    });
+  });
+
+  it('reads the English meta of lesson 6', () => {
+    expect(LESSONS[5].text.en.meta).toEqual({
+      title: 'The Church–Turing thesis',
+      summary: 'What a person can compute by following a fixed method, a Turing machine can compute. Why this is a thesis and not a theorem, and how Turing showed that his idea and Church’s agree.',
+      minutes: 6,
+    });
+  });
+
   it.each(routing.locales)('gives the quiz in %s the same questions and right answers as in English', (locale) => {
     for (const lesson of LESSONS) {
       const answers = (questions: typeof lesson.text.en.quiz) => questions.map(({ id, answer, options }) => [id, answer, options.map((option) => option.id)]);
@@ -67,6 +83,8 @@ describe('findLesson', () => {
     expect(findLesson('formal-definition')).toEqual({ lesson: LESSONS[1], index: 1 });
     expect(findLesson('universal-machine')).toEqual({ lesson: LESSONS[2], index: 2 });
     expect(findLesson('halting-problem')).toEqual({ lesson: LESSONS[3], index: 3 });
+    expect(findLesson('entscheidungsproblem')).toEqual({ lesson: LESSONS[4], index: 4 });
+    expect(findLesson('church-turing')).toEqual({ lesson: LESSONS[5], index: 5 });
   });
 
   it('finds nothing for an unknown slug', () => {

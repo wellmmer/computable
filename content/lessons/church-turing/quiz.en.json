@@ -1,0 +1,89 @@
+{
+  "questions": {
+    "thesis": {
+      "text": "What does the Church–Turing thesis say?",
+      "options": {
+        "every-problem": {
+          "text": "A Turing machine can solve every problem",
+          "why": "Lessons 4 and 5 show problems that no machine can solve. The thesis is about methods that a person can follow."
+        },
+        "person-and-machine": {
+          "text": "What a person can compute by following a fixed method, a Turing machine can compute",
+          "why": "That is the thesis. It links a method that a person follows with a machine."
+        },
+        "speed": {
+          "text": "A Turing machine computes faster than a person",
+          "why": "The thesis says nothing about speed. It is about what can be computed at all."
+        }
+      }
+    },
+    "why-thesis": {
+      "text": "Why is it a thesis and not a theorem?",
+      "options": {
+        "believed-false": {
+          "text": "Because it is probably false",
+          "why": "That is not the reason. A theorem needs a proof, and a proof needs exact definitions."
+        },
+        "proof-too-long": {
+          "text": "Because its proof is too long to write down",
+          "why": "No proof exists, long or short. One side of the claim has no exact definition."
+        },
+        "no-exact-definition": {
+          "text": "Because “a fixed method that a person can follow” has no exact definition, so no proof can link it to Turing machines",
+          "why": "Turing says so on page 249: all arguments for it are, in the end, appeals to intuition."
+        }
+      }
+    },
+    "appendix": {
+      "text": "What does Turing’s appendix show?",
+      "options": {
+        "same-sequences": {
+          "text": "That the λ-definable sequences and the computable sequences are the same",
+          "why": "Turing proves both directions, in outline, on pages 263 to 265."
+        },
+        "church-wrong": {
+          "text": "That Church’s definition is wrong",
+          "why": "Turing calls Church’s idea equivalent to his own (page 231)."
+        },
+        "thesis-proved": {
+          "text": "That the thesis is proved",
+          "why": "It shows that two exact definitions agree. The idea of a method that a person can follow still has no exact definition."
+        }
+      }
+    },
+    "lambda": {
+      "text": "When is a sequence λ-definable?",
+      "options": {
+        "circle-free-machine": {
+          "text": "When a circle-free machine prints it",
+          "why": "That is Turing’s definition of a computable sequence (page 233). The appendix shows that both give the same sequences, but the definitions differ."
+        },
+        "one-formula": {
+          "text": "When one formula of Church gives every figure of it, by conversion",
+          "why": "Apply the formula to the number n and convert. The result names the n-th figure (page 263)."
+        },
+        "no-rule": {
+          "text": "When its figures follow no rule",
+          "why": "Both definitions need fixed rules. A sequence with no rule is neither λ-definable nor computable."
+        }
+      }
+    },
+    "no-method": {
+      "text": "Turing proved that no machine decides, for every formula, whether it is provable. What turns this into “no method at all”?",
+      "options": {
+        "more-steps": {
+          "text": "Running the machine for more steps",
+          "why": "More steps do not help. The question is whether every method can be carried out by a machine."
+        },
+        "appendix-alone": {
+          "text": "The appendix alone",
+          "why": "The appendix compares two exact definitions. It does not cover every method that a person might follow."
+        },
+        "thesis": {
+          "text": "The thesis: every fixed method can be carried out by a machine",
+          "why": "Turing says this on page 249. Once the thesis is granted, a method for the Entscheidungsproblem would be a machine, and no such machine exists."
+        }
+      }
+    }
+  }
+}

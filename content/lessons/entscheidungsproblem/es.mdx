@@ -1,0 +1,141 @@
+export const meta = {
+  title: 'El Entscheidungs\u00ADproblem',
+  summary: '¿Existe un método que decide, para toda fórmula de la lógica, si se puede demostrar? Cómo Church y Turing respondieron que no en 1936, y cómo Turing usó el resultado “imprime 0 alguna vez”.',
+  minutes: 6,
+};
+
+La lección 1 nombró la pregunta con la que empezó el artículo de Turing.
+Su nombre en alemán es *Entscheidungsproblem*, el "problema de la decisión".
+La lección 4 le dio a Turing la herramienta que necesitaba: ninguna máquina puede decidir si una máquina imprime 0 alguna vez.
+Esta lección junta las dos cosas.
+Sigue la sección 11 del artículo de Turing de 1936.
+
+## La pregunta
+
+David Hilbert y Wilhelm Ackermann escribieron un libro de lógica, publicado por primera vez en 1928.
+Para la forma exacta de la pregunta, Turing envía a sus lectores al capítulo 3 de ese libro.
+
+La pregunta trata de fórmulas de la lógica.
+Una fórmula puede decir, por ejemplo: "Si toda persona es mortal, y Sócrates es una persona, entonces Sócrates es mortal."
+Una fórmula es demostrable si existe una demostración de ella.
+Una demostración parte de axiomas fijos y usa reglas fijas, un paso cada vez.
+
+La pregunta pide un método con tres propiedades:
+
+- Funciona para toda fórmula.
+- Siempre se detiene, después de un número finito de pasos.
+- Después dice correctamente si la fórmula es demostrable.
+
+Hilbert y Ackermann preguntaron si una fórmula es válida, es decir, verdadera en todos los casos.
+Turing pregunta si es demostrable.
+Para esta lógica, las dos preguntas vienen a ser lo mismo.
+Kurt Gödel lo demostró en 1930, con su teorema de completitud.
+
+Turing llama a esta lógica "el cálculo funcional K".
+Hoy se llama lógica de primer orden.
+Al principio de la sección 11, dice lo que va a mostrar:
+
+> “I propose, therefore, to show that there can be no general process for determining whether a given formula 𝔄 of the functional calculus K is provable, i.e. that there can be no machine which, supplied with any one 𝔄 of these formulae, will eventually say whether 𝔄 is provable.” (Turing, 1936, página 259)
+>
+> En español: “Me propongo, por tanto, mostrar que no puede haber ningún proceso general para determinar si una fórmula dada 𝔄 del cálculo funcional K es demostrable, es decir, que no puede haber ninguna máquina que, al recibir cualquiera 𝔄 de estas fórmulas, diga al final si 𝔄 es demostrable.”
+
+𝔄 es el nombre que Turing da a una fórmula cualquiera.
+Mira esta frase otra vez.
+Turing lee "proceso general" como "máquina".
+La lección 6 explica por qué puede hacerlo.
+
+## Por qué una lista de demostraciones no basta
+
+Turing señala que una máquina puede listar todas las fórmulas demostrables, una tras otra (página 259).
+¿Podría esta lista responder a la pregunta?
+
+- Si una fórmula es demostrable, aparece en la lista tarde o temprano. Entonces la máquina puede decir "sí".
+- Si una fórmula no es demostrable, nunca aparece. La máquina funciona para siempre y nunca dice "no".
+
+Este es otra vez el problema de la lección 4.
+Ejecutar y esperar no da ninguna respuesta cuando la respuesta es "no".
+Un método siempre debe detenerse.
+
+## Una fórmula para cada máquina
+
+La idea de Turing es convertir una pregunta sobre máquinas en una pregunta sobre fórmulas.
+
+Para cada máquina ℳ, escribe una fórmula de la lógica.
+La llama Un(ℳ).
+La construye a partir de la tabla de reglas de ℳ, escrita en la forma estándar de la lección 3 (página 260).
+
+En cada momento, una máquina tiene una cinta, una casilla bajo su cabeza y un estado.
+Turing llama a estas tres cosas juntas una "configuración completa" (página 232).
+Un(ℳ) significa: en algún momento, la cifra 0 está en la cinta de ℳ (página 260).
+Aquí Turing escribe la cifra 0 como S1, como en la lección 3.
+
+Después Turing demuestra dos lemas, en las páginas 260 a 262:
+
+- Si 0 está en la cinta de ℳ en algún momento, entonces Un(ℳ) es demostrable.
+- Si Un(ℳ) es demostrable, entonces 0 está en la cinta de ℳ en algún momento.
+
+Así que, para toda máquina ℳ, dos preguntas tienen la misma respuesta:
+
+- ¿Es Un(ℳ) demostrable?
+- ¿Imprime ℳ 0 alguna vez?
+
+## La demostración en cinco pasos
+
+1. Supón que una máquina decide, para toda fórmula, si es demostrable.
+2. Toma una máquina ℳ cualquiera, y escribe su fórmula Un(ℳ).
+3. Dale Un(ℳ) a la máquina que decide. Dice "demostrable" o "no demostrable".
+4. Por los dos lemas, esta respuesta también dice si ℳ imprime 0 alguna vez.
+5. Pero la lección 4 mostró que ninguna máquina puede decidir si una máquina imprime 0 alguna vez (página 248). Así que la máquina que decide no puede existir.
+
+En palabras de Turing:
+
+> “We are now in a position to show that the Entscheidungsproblem cannot be solved. Let us suppose the contrary. Then there is a general (mechanical) process for determining whether Un(ℳ) is provable. By Lemmas 1 and 2, this implies that there is a process for determining whether ℳ ever prints 0, and this is impossible, by § 8. Hence the Entscheidungsproblem cannot be solved.” (Turing, 1936, página 262)
+>
+> En español: “Ahora estamos en condiciones de mostrar que el Entscheidungsproblem no se puede resolver. Supongamos lo contrario. Entonces existe un proceso general (mecánico) para determinar si Un(ℳ) es demostrable. Por los Lemas 1 y 2, esto implica que existe un proceso para determinar si ℳ imprime 0 alguna vez, y esto es imposible, por el § 8. Por tanto, el Entscheidungsproblem no se puede resolver.”
+
+La sección 8 es la sección de la lección 4.
+Su segundo resultado, "imprime 0 alguna vez", es el que Turing necesita aquí.
+
+## La respuesta de Church
+
+Turing no fue el único que respondió a la pregunta en 1936.
+Alonzo Church, de la Universidad de Princeton, también respondió.
+No usó máquinas.
+Usó su propia idea de lo que es "efectivamente calculable".
+La lección 6 compara su idea con la de Turing.
+
+La respuesta de Church es una nota de dos páginas en el *Journal of Symbolic Logic*.
+En ella, extiende un resultado anterior suyo a la lógica del libro de Hilbert y Ackermann.
+El artículo de Turing cita esta nota, y dice que Church llegó a conclusiones parecidas (página 231).
+
+## Qué significa el "no"
+
+La respuesta es no: ningún método único decide, para toda fórmula, si es demostrable.
+Esto no significa que ninguna fórmula se pueda decidir.
+Para algunos tipos de fórmulas, existen métodos.
+El propio Turing señala que muchos casos especiales ya estaban resueltos (página 262).
+Lo que no puede existir es un método que funcione para toda fórmula.
+
+Hay un punto más.
+Turing demostró que ninguna **máquina** puede decidir.
+Hilbert y Ackermann preguntaron por cualquier **método**.
+Para pasar de "ninguna máquina" a "ningún método", Turing necesita una afirmación que conecte máquinas y métodos.
+La lección 6 trata de esa afirmación.
+
+## Por qué importa
+
+El título completo del artículo de Turing es "On Computable Numbers, with an Application to the Entscheidungsproblem" ("Sobre los números computables, con una aplicación al Entscheidungsproblem").
+Esta lección es esa aplicación.
+Para dar su respuesta, Turing primero tuvo que decir con exactitud qué es un método.
+Su definición es la máquina de Turing, la máquina de la que tratan todas las lecciones de este sitio.
+
+La lección 4 mostró una pregunta sobre máquinas que ninguna máquina puede decidir.
+Esta lección muestra una pregunta sobre la lógica con la misma respuesta.
+
+<Quiz />
+
+## Fuentes
+
+- A. M. Turing, "[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)", *Proceedings of the London Mathematical Society*, serie 2, volumen 42, páginas 230–265, 1936. El Entscheidungsproblem está en la sección 11, páginas 259–263. La nota de Church se cita en la página 231.
+- Alonzo Church, "[A Note on the Entscheidungsproblem](https://doi.org/10.2307/2269326)", *Journal of Symbolic Logic*, volumen 1, número 1, páginas 40–41, 1936. En inglés.
+- David Hilbert y Wilhelm Ackermann, [*Grundzüge der theoretischen Logik*](https://openlibrary.org/books/OL6723331M), J. Springer, Berlín, 1928. En alemán. Turing se refiere al capítulo 3 (página 259).

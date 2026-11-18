@@ -2,58 +2,68 @@ import { expect, test, type Page } from '@playwright/test';
 import { LOCALE_PATHS, openPage } from './helpers';
 
 /**
- * The Learn page and the 4 lessons in each language (spec R2a 2.1 and 2.2, spec R2b 2): each lesson's
- * title, its place, and its number of figures (lesson 3 has a machine and the encoding).
+ * The Learn page and the 6 lessons in each language (spec R2a 2.1 and 2.2, spec R2b 2): each lesson's
+ * title, its place, and its number of figures (lesson 3 has a machine and the encoding; lessons 5 and 6 have none).
  */
 const LANGUAGES = [
   {
     path: '/en',
     learn: 'Learn',
     lessons: [
-      { slug: 'intuition', title: 'Intuition: the human computer', position: 'Lesson 1 of 4', machines: 2 },
-      { slug: 'formal-definition', title: 'The formal definition', position: 'Lesson 2 of 4', machines: 1 },
-      { slug: 'universal-machine', title: 'The universal machine', position: 'Lesson 3 of 4', machines: 2 },
-      { slug: 'halting-problem', title: 'The halting problem', position: 'Lesson 4 of 4', machines: 2 },
+      { slug: 'intuition', title: 'Intuition: the human computer', position: 'Lesson 1 of 6', machines: 2 },
+      { slug: 'formal-definition', title: 'The formal definition', position: 'Lesson 2 of 6', machines: 1 },
+      { slug: 'universal-machine', title: 'The universal machine', position: 'Lesson 3 of 6', machines: 2 },
+      { slug: 'halting-problem', title: 'The halting problem', position: 'Lesson 4 of 6', machines: 2 },
+      { slug: 'entscheidungsproblem', title: 'The Entscheidungsproblem', position: 'Lesson 5 of 6', machines: 0 },
+      { slug: 'church-turing', title: 'The Church–Turing thesis', position: 'Lesson 6 of 6', machines: 0 },
     ],
   },
   {
     path: '/pt-br',
     learn: 'Aprender',
     lessons: [
-      { slug: 'intuition', title: 'Intuição: o computador humano', position: 'Lição 1 de 4', machines: 2 },
-      { slug: 'formal-definition', title: 'A definição formal', position: 'Lição 2 de 4', machines: 1 },
-      { slug: 'universal-machine', title: 'A máquina universal', position: 'Lição 3 de 4', machines: 2 },
-      { slug: 'halting-problem', title: 'O problema da parada', position: 'Lição 4 de 4', machines: 2 },
+      { slug: 'intuition', title: 'Intuição: o computador humano', position: 'Lição 1 de 6', machines: 2 },
+      { slug: 'formal-definition', title: 'A definição formal', position: 'Lição 2 de 6', machines: 1 },
+      { slug: 'universal-machine', title: 'A máquina universal', position: 'Lição 3 de 6', machines: 2 },
+      { slug: 'halting-problem', title: 'O problema da parada', position: 'Lição 4 de 6', machines: 2 },
+      { slug: 'entscheidungsproblem', title: 'O Entscheidungsproblem', position: 'Lição 5 de 6', machines: 0 },
+      { slug: 'church-turing', title: 'A tese de Church–Turing', position: 'Lição 6 de 6', machines: 0 },
     ],
   },
   {
     path: '/es',
     learn: 'Aprender',
     lessons: [
-      { slug: 'intuition', title: 'Intuición: el computador humano', position: 'Lección 1 de 4', machines: 2 },
-      { slug: 'formal-definition', title: 'La definición formal', position: 'Lección 2 de 4', machines: 1 },
-      { slug: 'universal-machine', title: 'La máquina universal', position: 'Lección 3 de 4', machines: 2 },
-      { slug: 'halting-problem', title: 'El problema de la parada', position: 'Lección 4 de 4', machines: 2 },
+      { slug: 'intuition', title: 'Intuición: el computador humano', position: 'Lección 1 de 6', machines: 2 },
+      { slug: 'formal-definition', title: 'La definición formal', position: 'Lección 2 de 6', machines: 1 },
+      { slug: 'universal-machine', title: 'La máquina universal', position: 'Lección 3 de 6', machines: 2 },
+      { slug: 'halting-problem', title: 'El problema de la parada', position: 'Lección 4 de 6', machines: 2 },
+      { slug: 'entscheidungsproblem', title: 'El Entscheidungsproblem', position: 'Lección 5 de 6', machines: 0 },
+      { slug: 'church-turing', title: 'La tesis de Church–Turing', position: 'Lección 6 de 6', machines: 0 },
     ],
   },
   {
     path: '/fr',
     learn: 'Apprendre',
     lessons: [
-      { slug: 'intuition', title: 'Intuition : le calculateur humain', position: 'Leçon 1 sur 4', machines: 2 },
-      { slug: 'formal-definition', title: 'La définition formelle', position: 'Leçon 2 sur 4', machines: 1 },
-      { slug: 'universal-machine', title: 'La machine universelle', position: 'Leçon 3 sur 4', machines: 2 },
-      { slug: 'halting-problem', title: 'Le problème de l’arrêt', position: 'Leçon 4 sur 4', machines: 2 },
+      { slug: 'intuition', title: 'Intuition : le calculateur humain', position: 'Leçon 1 sur 6', machines: 2 },
+      { slug: 'formal-definition', title: 'La définition formelle', position: 'Leçon 2 sur 6', machines: 1 },
+      { slug: 'universal-machine', title: 'La machine universelle', position: 'Leçon 3 sur 6', machines: 2 },
+      { slug: 'halting-problem', title: 'Le problème de l’arrêt', position: 'Leçon 4 sur 6', machines: 2 },
+      { slug: 'entscheidungsproblem', title: 'L’Entscheidungsproblem', position: 'Leçon 5 sur 6', machines: 0 },
+      { slug: 'church-turing', title: 'La thèse de Church–Turing', position: 'Leçon 6 sur 6', machines: 0 },
     ],
   },
   {
     path: '/de',
     learn: 'Lernen',
     lessons: [
-      { slug: 'intuition', title: 'Intuition: der menschliche Rechner', position: 'Lektion 1 von 4', machines: 2 },
-      { slug: 'formal-definition', title: 'Die formale Definition', position: 'Lektion 2 von 4', machines: 1 },
-      { slug: 'universal-machine', title: 'Die universelle Maschine', position: 'Lektion 3 von 4', machines: 2 },
-      { slug: 'halting-problem', title: 'Das Halteproblem', position: 'Lektion 4 von 4', machines: 2 },
+      { slug: 'intuition', title: 'Intuition: der menschliche Rechner', position: 'Lektion 1 von 6', machines: 2 },
+      { slug: 'formal-definition', title: 'Die formale Definition', position: 'Lektion 2 von 6', machines: 1 },
+      { slug: 'universal-machine', title: 'Die universelle Maschine', position: 'Lektion 3 von 6', machines: 2 },
+      { slug: 'halting-problem', title: 'Das Halteproblem', position: 'Lektion 4 von 6', machines: 2 },
+      { slug: 'entscheidungsproblem', title: 'Das Entscheidungsproblem', position: 'Lektion 5 von 6', machines: 0 },
+      { slug: 'church-turing', title: 'Die Church-Turing-These', position: 'Lektion 6 von 6', machines: 0 },
     ],
   },
 ] as const;
@@ -67,13 +77,16 @@ const RIGHT_OPTIONS_2 = [1, 2, 0, 3, 1];
 /** The same for lesson 4 (content/lessons/halting-problem/quiz.ts). */
 const RIGHT_OPTIONS_4 = [1, 2, 0, 2, 0];
 
+/** The same for lesson 6 (content/lessons/church-turing/quiz.ts). */
+const RIGHT_OPTIONS_6 = [1, 2, 0, 1, 2];
+
 const question = (page: Page, number: number) => page.getByRole('group', { name: new RegExp(`^Question ${number} of 5`) });
 
 /** The row of one lesson on the Learn page. */
 const lessonRow = (page: Page, title: string) => page.getByRole('listitem').filter({ has: page.getByRole('link', { name: title }) });
 
 for (const { path, learn, lessons } of LANGUAGES) {
-  test(`${path}/learn lists the 4 lessons in order and opens each one`, async ({ page }) => {
+  test(`${path}/learn lists the 6 lessons in order and opens each one`, async ({ page }) => {
     await openPage(page, `${path}/learn`);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(learn);
     await expect(page.getByRole('main').getByRole('listitem').getByRole('heading', { level: 2 })).toHaveText(lessons.map(({ title }) => title));
@@ -82,13 +95,15 @@ for (const { path, learn, lessons } of LANGUAGES) {
       await page.getByRole('link', { name: title }).click();
       await expect(page).toHaveURL(new RegExp(`${path}/learn/${slug}$`));
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+      // The tab shows the title without the soft hyphen of lesson 5.
+      expect(await page.title(), slug).toContain(title);
       await expect(page.getByText(position)).toBeVisible();
       await expect(page.locator('figure')).toHaveCount(machines);
     }
   });
 }
 
-test('the previous and next links join the 4 lessons in order', async ({ page }) => {
+test('the previous and next links join the 6 lessons in order, and lesson 6 has no next lesson', async ({ page }) => {
   await openPage(page, '/en/learn/intuition');
   const nav = page.getByRole('navigation', { name: 'Lessons' });
   await expect(nav.getByRole('link', { name: /^Previous lesson/ })).toHaveCount(0);
@@ -98,7 +113,14 @@ test('the previous and next links join the 4 lessons in order', async ({ page })
   await expect(page).toHaveURL(/\/en\/learn\/universal-machine$/);
   await nav.getByRole('link', { name: 'Next lesson: The halting problem' }).click();
   await expect(page).toHaveURL(/\/en\/learn\/halting-problem$/);
+  await nav.getByRole('link', { name: 'Next lesson: The Entscheidungsproblem' }).click();
+  await expect(page).toHaveURL(/\/en\/learn\/entscheidungsproblem$/);
+  await nav.getByRole('link', { name: 'Next lesson: The Church–Turing thesis' }).click();
+  await expect(page).toHaveURL(/\/en\/learn\/church-turing$/);
   await expect(nav.getByRole('link', { name: /^Next lesson/ })).toHaveCount(0);
+  await expect(nav.getByRole('link')).toHaveText(['Previous lesson: The Entscheidungsproblem', 'All lessons']);
+  await nav.getByRole('link', { name: 'Previous lesson: The Entscheidungsproblem' }).click();
+  await nav.getByRole('link', { name: 'Previous lesson: The halting problem' }).click();
   await nav.getByRole('link', { name: 'Previous lesson: The universal machine' }).click();
   await expect(page).toHaveURL(/\/en\/learn\/universal-machine$/);
   await nav.getByRole('link', { name: 'Previous lesson: The formal definition' }).click();
@@ -190,16 +212,72 @@ test('lesson 4 end to end: one machine stops, one keeps running, then the quiz s
   await expect(lessonRow(page, 'The universal machine').getByText('Not started')).toBeVisible();
 });
 
-test('lessons 3 and 4 fit a 390 px phone screen in every language, tables included', async ({ page }) => {
+test('lesson 6 end to end: answer the quiz, then the score shows on the Learn page', async ({ page }) => {
+  await openPage(page, '/en/learn/church-turing');
+  await expect(page.locator('figure')).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 2, name: 'Sources' })).toBeVisible();
+
+  // Four right answers, and a wrong one for question 4.
+  for (const [index, right] of RIGHT_OPTIONS_6.entries()) {
+    const group = question(page, index + 1);
+    const choice = index === 3 ? 0 : right;
+    await group.getByRole('radio').nth(choice).check();
+    await group.getByRole('button', { name: 'Check' }).click();
+    await expect(group.getByText(index === 3 ? 'Not quite.' : 'Right.', { exact: true })).toBeVisible();
+  }
+  await expect(page.getByRole('status').filter({ hasText: 'You got' })).toHaveText('You got 4 of 5 right. Your result is saved in this browser only.');
+
+  await page.getByRole('navigation', { name: 'Lessons' }).getByRole('link', { name: 'All lessons' }).click();
+  await expect(lessonRow(page, 'The Church–Turing thesis').getByText('Quiz: 4 of 5')).toBeVisible();
+  await expect(lessonRow(page, 'The Entscheidungsproblem').getByText('Not started')).toBeVisible();
+  await expect(page.getByText('More lessons come later.')).toBeVisible();
+});
+
+/**
+ * Where the lesson title breaks onto a new line inside a word: the title with a "|" at each such
+ * break. A break is fine after a space, a dash or a soft hyphen (U+00AD), and nowhere else.
+ */
+function titleBreaksInsideWords(page: Page) {
+  return page.locator('main h1').evaluate((title) => {
+    const chars: { char: string; top: number | null }[] = [];
+    const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode() as Text | null; node !== null; node = walker.nextNode() as Text | null) {
+      for (let i = 0; i < node.data.length; i++) {
+        const range = document.createRange();
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        // A letter right after a break also gets an empty box at the end of the line before: skip it.
+        const box = [...range.getClientRects()].filter(({ width }) => width > 0).at(-1);
+        chars.push({ char: node.data[i], top: box === undefined ? null : Math.round(box.top) });
+      }
+    }
+    const text = chars.map(({ char }) => char).join('');
+    const breaks: string[] = [];
+    let previous = -1;
+    chars.forEach(({ top }, i) => {
+      if (top === null) return;
+      const previousTop = previous >= 0 ? chars[previous].top : null;
+      if (previousTop !== null && top > previousTop && !/[\s\u00AD–-]/.test(text.slice(previous, i))) {
+        breaks.push(`${text.slice(0, i)}|${text.slice(i)}`);
+      }
+      previous = i;
+    });
+    return breaks;
+  });
+}
+
+test('lessons 3 to 6 fit a 390 px phone screen in every language, tables and titles included', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   for (const path of LOCALE_PATHS) {
-    for (const slug of ['universal-machine', 'halting-problem']) {
+    for (const slug of ['universal-machine', 'halting-problem', 'entscheidungsproblem', 'church-turing']) {
       await openPage(page, `${path}/learn/${slug}`);
       const overflow = await page.evaluate(() => ({
         page: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         tables: [...document.querySelectorAll('main table')].filter((table) => table.getBoundingClientRect().right > document.documentElement.clientWidth).length,
       }));
-      expect(overflow, `${path}/learn/${slug}`).toEqual({ page: 0, tables: 0 });
+      // "Entscheidungsproblem" is wider than the phone at 40 px. It may break only after "Entscheidungs".
+      const titleBreaks = await titleBreaksInsideWords(page);
+      expect({ ...overflow, titleBreaks }, `${path}/learn/${slug}`).toEqual({ page: 0, tables: 0, titleBreaks: [] });
     }
   }
 });
@@ -229,8 +307,8 @@ test('one lesson end to end: run a machine, answer the quiz, see the score on th
 
   await page.getByRole('button', { name: 'Reset my progress' }).click();
   await page.getByRole('button', { name: 'Yes, clear them' }).click();
-  // All 4 lessons: lessons 2 to 4 were never started.
-  await expect(page.getByText('Not started')).toHaveCount(4);
+  // All 6 lessons: lessons 2 to 6 were never started.
+  await expect(page.getByText('Not started')).toHaveCount(6);
   await expect(page.getByText('Your quiz results are cleared.')).toBeVisible();
 });
 

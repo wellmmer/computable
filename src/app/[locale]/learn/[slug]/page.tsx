@@ -12,7 +12,8 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<'/[locale]/learn/[slug]'>): Promise<Metadata> {
   const found = findLesson((await params).slug);
   if (found === null) return {};
-  return { title: found.lesson.text[await getLocale()].meta.title };
+  // The soft hyphen in a title only helps the heading break on a phone. The tab title needs none.
+  return { title: found.lesson.text[await getLocale()].meta.title.replaceAll('\u00AD', '') };
 }
 
 export default async function LessonPage({ params }: PageProps<'/[locale]/learn/[slug]'>) {

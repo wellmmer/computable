@@ -1,0 +1,135 @@
+export const meta = {
+  title: 'Die Church-Turing-These',
+  summary: 'Was ein Mensch nach einem festen Verfahren berechnen kann, kann eine Turingmaschine berechnen. Warum das eine These ist und kein Theorem, und wie Turing zeigte, dass seine Idee und die von Church übereinstimmen.',
+  minutes: 6,
+};
+
+Lektion 5 endete mit einer Lücke.
+Turing hat bewiesen, dass keine Maschine für jede Formel entscheiden kann, ob sie beweisbar ist.
+Aber Hilbert und Ackermann fragten nach jedem Verfahren, nicht nur nach Maschinen.
+Diese Lektion handelt von der Behauptung, die diese Lücke schließt.
+Sie folgt Abschnitt 9 und dem Anhang von Turings Aufsatz von 1936.
+
+## Die Behauptung
+
+Lektion 1 hat gezeigt, wie Turing sich einen Menschen vorstellte, der mit einem Bleistift rechnet.
+Er nahm jedes Detail weg, das ein Verfahren nicht braucht.
+Übrig blieb eine Maschine mit Band, Kopf, Zuständen und Regeln.
+
+Aus diesem Bild kommt eine Behauptung:
+
+**Was ein Mensch nach einem festen Verfahren berechnen kann, kann eine Turingmaschine berechnen.**
+
+Ein festes Verfahren ist eine Menge von Regeln, die bei jedem Schritt genau sagen, was zu tun ist.
+Der Mensch braucht keine neuen Ideen, nur Sorgfalt und Zeit.
+Die schriftliche Division ist so ein Verfahren.
+Der Mensch darf so viel Papier und Zeit benutzen, wie das Verfahren braucht.
+
+Heute heißt diese Behauptung Church-Turing-These.
+
+## Warum es eine These ist und kein Theorem
+
+Ein Theorem ist eine Behauptung mit einem Beweis.
+Ein Beweis braucht eine genaue Definition für jede Idee in der Behauptung.
+„Turingmaschine“ hat eine genaue Definition: Lektion 2 hat sie gegeben.
+„Ein festes Verfahren, dem ein Mensch folgen kann“ hat keine.
+Es beschreibt etwas, das Menschen tun.
+Also kann kein Beweis die beiden Seiten verbinden.
+
+Turing sagte das selbst, am Anfang von Abschnitt 9:
+
+> “No attempt has yet been made to show that the ‘computable’ numbers include all numbers which would naturally be regarded as computable. All arguments which can be given are bound to be, fundamentally, appeals to intuition, and for this reason rather unsatisfactory mathematically.” (Turing, 1936, Seite 249)
+>
+> Auf Deutsch: „Bisher wurde nicht versucht zu zeigen, dass die ‚berechenbaren‘ Zahlen alle Zahlen umfassen, die man natürlicherweise als berechenbar ansehen würde. Alle Argumente, die man geben kann, sind im Grunde zwangsläufig Appelle an die Intuition und deshalb mathematisch eher unbefriedigend.“
+
+Statt eines Beweises gibt Turing Argumente von drei Arten (Seite 249):
+
+- **Ein direkter Appell an die Intuition.** Das ist der Mensch mit dem Bleistift aus Lektion 1.
+- **Ein Beweis, dass zwei Definitionen dasselbe sind.** Das hilft, wenn eine der Definitionen natürlicher wirkt.
+- **Beispiele.** Turing zeigt große Klassen von Zahlen, die Maschinen berechnen können.
+
+Eine These kann trotzdem falsch sein.
+Wenn jemand ein festes Verfahren fände, dem ein Mensch folgen kann, das aber keine Turingmaschine ausführen kann, dann wäre die These falsch.
+
+## Was Turings Maschinen berechnen
+
+Turings Maschinen drucken die Ziffern 0 und 1.
+Die Ziffern, die eine Maschine der Reihe nach druckt, bilden die Folge, die sie berechnet (Seite 232).
+Eine Folge ist berechenbar, wenn eine zirkelfreie Maschine sie berechnet (Seite 233).
+Zum Beispiel druckt Turings erste Maschine 0 1 0 1 …, also ist die Folge 010101… berechenbar.
+Turing sagt, dass er öfter von Folgen sprechen wird als von Zahlen (Seite 233).
+
+## Churchs Idee
+
+Alonzo Church arbeitete an der Universität Princeton.
+Er gab seine eigene Definition davon, was „effektiv berechenbar“ ist.
+Sie hat kein Band und keinen Kopf.
+Sie arbeitet mit Formeln, die mit dem griechischen Buchstaben λ (Lambda) geschrieben werden.
+Feste Regeln machen aus einer Formel eine andere, einen Schritt nach dem anderen.
+Church und sein Schüler Stephen Kleene nennen diese Schritte „Konversion“.
+Turing übernimmt ihr Wort und sagt das auch (Seite 263).
+
+Eine Folge ist λ-definierbar, wenn eine einzige Formel jede Ziffer der Folge liefert (Seite 263).
+Wende die Formel auf die Zahl n an und konvertiere.
+Das Ergebnis nennt die n-te Ziffer der Folge.
+
+Turing sah, dass Churchs Idee und seine eigene dasselbe beschreiben:
+
+> “In a recent paper Alonzo Church has introduced an idea of ‘effective calculability’, which is equivalent to my ‘computability’, but is very differently defined.” (Turing, 1936, Seite 231)
+>
+> Auf Deutsch: „In einer neueren Arbeit hat Alonzo Church eine Idee der ‚effektiven Berechenbarkeit‘ eingeführt, die meiner ‚Berechenbarkeit‘ gleichwertig ist, aber ganz anders definiert ist.“
+
+## Turings Anhang
+
+Turing beweist diese Behauptung in einem Anhang am Ende seines Aufsatzes:
+
+> “The theorem that all effectively calculable (λ-definable) sequences are computable and its converse are proved below in outline.” (Turing, 1936, Seite 263)
+>
+> Auf Deutsch: „Das Theorem, dass alle effektiv berechenbaren (λ-definierbaren) Folgen berechenbar sind, und seine Umkehrung werden unten in Grundzügen bewiesen.“
+
+Der Anhang hat zwei Teile:
+
+- **Von Church zu Turing.** Turing beschreibt eine Maschine, die Churchs Formel für eine Folge bekommt. Die Maschine konvertiert die Formel, Schritt für Schritt, und druckt die Ziffern der Folge (Seiten 263–264). Also ist jede λ-definierbare Folge berechenbar.
+- **Von Turing zu Church.** Für jede zirkelfreie Maschine zeigt Turing, wie man eine Formel findet, die dieselbe Folge liefert (Seiten 264–265). Also ist jede berechenbare Folge λ-definierbar. Das ist die „Umkehrung“.
+
+Zusammen zeigen die zwei Teile, dass beide Definitionen genau dieselben Folgen liefern.
+Drei Details sind hier wichtig:
+
+- Turing spricht von Folgen, nicht von Funktionen.
+- Er gibt den Beweis „in Grundzügen“. Er lässt einige Schritte aus und sagt das.
+- Die Zeitschrift erhielt den Aufsatz am 28. Mai 1936 (Seite 230). Der Anhang ist mit „Added 28 August, 1936“ („hinzugefügt am 28. August 1936“, Seite 263) markiert.
+
+Der Anhang beweist, dass zwei Definitionen dasselbe sind.
+Das ist die zweite Art von Argument aus Abschnitt 9.
+Er stützt die These, aber er beweist sie nicht.
+Beide Definitionen sind genau.
+„Ein festes Verfahren, dem ein Mensch folgen kann“ ist es immer noch nicht.
+
+## Warum das wichtig ist
+
+Jetzt schließt sich die Lücke aus Lektion 5.
+In Abschnitt 9 schrieb Turing:
+
+> “Once it is granted that computable numbers are all ‘computable’, several other propositions of the same character follow. In particular, it follows that, if there is a general process for determining whether a formula of the Hilbert function calculus is provable, then the determination can be carried out by a machine.” (Turing, 1936, Seite 249)
+>
+> Auf Deutsch: „Sobald man zugibt, dass die berechenbaren Zahlen alle ‚berechenbar‘ sind, folgen mehrere andere Aussagen derselben Art. Insbesondere folgt: Wenn es ein allgemeines Verfahren gibt, mit dem man bestimmt, ob eine Formel des Hilbertschen Funktionenkalküls beweisbar ist, dann kann diese Bestimmung von einer Maschine ausgeführt werden.“
+
+Wenn die These gilt, kann also jedes feste Verfahren von einer Maschine ausgeführt werden.
+Lektion 5 hat gezeigt, dass keine Maschine für jede Formel entscheiden kann, ob sie beweisbar ist.
+Also kann auch kein festes Verfahren das entscheiden.
+
+Die These erklärt auch, warum eine so einfache Maschine so wichtig ist.
+Wenn sie gilt, können die Maschinen in diesem Simulator jede Rechnung leisten, die ein Mensch nach einem festen Verfahren ausführen kann.
+Sie brauchen nur genug Band und genug Zeit.
+
+Das ist die letzte Lektion.
+Um Turings eigene Worte zu lesen, folge dem Link zu seinem Aufsatz in den Quellen.
+
+<Quiz />
+
+## Quellen
+
+- A. M. Turing, „[On Computable Numbers, with an Application to the Entscheidungsproblem](https://doi.org/10.1112/plms/s2-42.1.230)“, *Proceedings of the London Mathematical Society*, Reihe 2, Band 42, Seiten 230–265, 1936. Berechenbare Folgen werden in Abschnitt 2 definiert. Abschnitt 9, Seiten 249–254, nennt die drei Arten von Argumenten und bringt die ersten beiden. Die dritte Art, die Beispiele, ist Abschnitt 10, Seiten 254–258. Der Anhang steht auf den Seiten 263–265.
+- Alonzo Church, „[An Unsolvable Problem of Elementary Number Theory](https://doi.org/10.2307/2371045)“, *American Journal of Mathematics*, Band 58, Nummer 2, Seiten 345–363, 1936. Auf Englisch. Turing zitiert diesen Aufsatz für Churchs Idee der effektiven Berechenbarkeit (Seite 231).
+- Michael Sipser, [*Introduction to the Theory of Computation*](https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790), 3. Auflage, Cengage Learning, 2013. Abschnitt 3.3.
+- John E. Hopcroft, Rajeev Motwani und Jeffrey D. Ullman, [*Introduction to Automata Theory, Languages, and Computation*](https://www.pearson.com/en-us/subject-catalog/p/introduction-to-automata-theory-languages-and-computation/P200000003517/9780321455369), 3. Auflage, Pearson/Addison-Wesley, 2007. Kapitel 8.

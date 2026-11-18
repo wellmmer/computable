@@ -63,6 +63,8 @@ describe('a lesson address that does not exist (spec R2a 3)', () => {
     expect(visit('/pt-br/learn/intuition').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/intuition');
     expect(visit('/en/learn/formal-definition').headers.get('x-middleware-rewrite')).toBeNull();
     expect(visit('/pt-br/learn/formal-definition').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/formal-definition');
+    expect(visit('/en/learn/church-turing').headers.get('x-middleware-rewrite')).toBeNull();
+    expect(visit('/pt-br/learn/entscheidungsproblem').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/entscheidungsproblem');
     expect(visit('/en/learn').headers.get('x-middleware-rewrite')).toBeNull();
   });
 
