@@ -56,6 +56,17 @@ describe('SiteFooter', () => {
     }
   });
 
+  it('on the reading guide, links the guide file of that language, where its text lives', () => {
+    navigation.pathname = '/learn/paper';
+    for (const locale of ['es', 'fr', 'de'] as const) {
+      renderWithIntl(<SiteFooter />, locale);
+      expect(screen.getByRole('link', { name: 'Help improve the translation' }).getAttribute('href')).toBe(
+        `https://github.com/wellmmer/computable/edit/master/content/paper/${locale}.json`,
+      );
+      cleanup();
+    }
+  });
+
   it('on the Learn page and on an unknown lesson address, links the language file', () => {
     for (const pathname of ['/learn', '/learn/nope']) {
       navigation.pathname = pathname;

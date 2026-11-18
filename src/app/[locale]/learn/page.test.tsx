@@ -22,6 +22,9 @@ afterEach(() => {
 
 const lessonRow = (number = 1) => screen.getAllByRole('listitem')[number - 1];
 
+/** True when `first` comes before `then` in the page. */
+const before = (first: Element, then: Element) => Boolean(first.compareDocumentPosition(then) & Node.DOCUMENT_POSITION_FOLLOWING);
+
 describe('Learn page (spec 2.1)', () => {
   it('lists the live lessons with their number, title, summary and reading time', () => {
     renderWithIntl(<LearnPage />);
@@ -49,8 +52,18 @@ describe('Learn page (spec 2.1)', () => {
     expect(within(lessonRow(6)).getByText('Lesson 6')).toBeTruthy();
     expect(within(lessonRow(6)).getByRole('link', { name: 'The Church–Turing thesis' }).getAttribute('href')).toBe('/learn/church-turing');
     expect(within(lessonRow(6)).getByText('6 min read')).toBeTruthy();
-    // R2c, the reading guide to Turing's paper, still comes later.
-    expect(screen.getByText('More lessons come later.')).toBeTruthy();
+  });
+
+  it('lists the reading guide to Turing’s paper after lesson 6, with no quiz status, in place of “more lessons later”', () => {
+    renderWithIntl(<LearnPage />);
+    const guide = screen.getByRole('link', { name: 'Read Turing’s 1936 paper' });
+    expect(guide.getAttribute('href')).toBe('/learn/paper');
+    expect(before(lessonRow(6), guide)).toBe(true);
+    const entry = guide.closest('section') as HTMLElement;
+    expect(within(entry).getByText('Reading guide')).toBeTruthy();
+    expect(within(entry).getByText(/^The paper behind these lessons, part by part/)).toBeTruthy();
+    expect(within(entry).queryByText('Not started')).toBeNull();
+    expect(screen.queryByText('More lessons come later.')).toBeNull();
   });
 
   it('shows the quiz status of each lesson', () => {

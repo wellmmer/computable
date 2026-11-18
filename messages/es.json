@@ -386,7 +386,9 @@
       "minutes": "{minutes} min de lectura",
       "notStarted": "Sin empezar",
       "score": "Cuestionario: {best} de {total}",
-      "more": "Más lecciones llegarán después."
+      "guide": "Guía de lectura",
+      "guideTitle": "Lee el artículo de Turing de 1936",
+      "guideSummary": "El artículo detrás de estas lecciones, parte por parte: páginas, resúmenes breves y citas, con una cinta que avanza mientras lees. Sin cuestionario."
     },
     "reset": {
       "button": "Borrar mi progreso",
@@ -401,7 +403,27 @@
       "nav": "Lecciones",
       "previous": "Lección anterior: {title}",
       "next": "Lección siguiente: {title}",
+      "nextGuide": "Siguiente: {title}",
       "all": "Todas las lecciones"
+    },
+    "paper": {
+      "tape": {
+        "step": "Paso {step}"
+      },
+      "pageTitle": "El artículo de Turing de 1936",
+      "title": "El artículo de Turing de 1936",
+      "lead": "Una guía de lectura del artículo de Turing “On Computable Numbers”, parte por parte. Cada parte tiene sus páginas en la revista y un resumen breve. La mayoría de las partes también tiene una cita y enlaces a las lecciones que la explican.",
+      "source": "El artículo: A. M. Turing, “On Computable Numbers, with an Application to the Entscheidungsproblem”, Proceedings of the London Mathematical Society, serie 2, volumen 42, páginas 230–265. <link>doi.org/10.1112/plms/s2-42.1.230</link>",
+      "notice": "Esta guía cita el artículo y no lo reproduce. Las citas quedan en el inglés de Turing, con una traducción al lado.",
+      "tapeIntro": "La cinta de arriba ejecuta la primera máquina de Turing, de la sección 3. Cada parte que alcanzas la mueve un paso. Si tu dispositivo pide menos movimiento, usa los botones Paso y Reiniciar.",
+      "tapeNoScript": "La cinta necesita JavaScript para moverse.",
+      "pages": "Volumen {volume}, páginas {from}–{to}",
+      "quotePage": "(Turing, 1936, página {page})",
+      "translation": "Traducción: “{text}”",
+      "lessons": "Se explica en",
+      "lessonLink": "Lección {number}: {title}",
+      "readCorrection": "Leer la corrección en el sitio de la editorial",
+      "license": "El texto de esta guía está bajo la licencia <link>CC BY 4.0</link>. Las citas del artículo de Turing no lo están."
     }
   }
 }

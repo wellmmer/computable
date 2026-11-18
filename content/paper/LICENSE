@@ -1,0 +1,19 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Wellmmer Lucas de Oliveira Pinto
+
+The texts of the reading guide in this folder (the <language>.json files), in
+every language, are licensed under the Creative Commons Attribution 4.0
+International License. You may share and adapt them for any purpose, even
+commercially, if you give credit, link to the license, and say what you changed.
+
+The quotes from Turing's paper in parts.ts are not covered by this license.
+They are short quotes from A. M. Turing, "On Computable Numbers, with an
+Application to the Entscheidungsproblem", Proceedings of the London
+Mathematical Society, series 2, volume 42 (https://doi.org/10.1112/plms/s2-42.1.230).
+
+Summary: https://creativecommons.org/licenses/by/4.0/
+Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+The code in this folder (parts.ts, apart from the quotes) is under the MIT
+License in the LICENSE file at the root of the repository.

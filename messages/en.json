@@ -386,7 +386,9 @@
       "minutes": "{minutes} min read",
       "notStarted": "Not started",
       "score": "Quiz: {best} of {total}",
-      "more": "More lessons come later."
+      "guide": "Reading guide",
+      "guideTitle": "Read Turing’s 1936 paper",
+      "guideSummary": "The paper behind these lessons, part by part: pages, short summaries and quotes, with a tape that runs as you read. No quiz."
     },
     "reset": {
       "button": "Reset my progress",
@@ -401,7 +403,27 @@
       "nav": "Lessons",
       "previous": "Previous lesson: {title}",
       "next": "Next lesson: {title}",
+      "nextGuide": "Next: {title}",
       "all": "All lessons"
+    },
+    "paper": {
+      "tape": {
+        "step": "Step {step}"
+      },
+      "pageTitle": "Turing’s 1936 paper",
+      "title": "Turing’s 1936 paper",
+      "lead": "A reading guide to Turing’s paper “On Computable Numbers”, one part at a time. Each part has its pages in the journal and a short summary. Most parts also have a quote and links to the lessons that explain them.",
+      "source": "The paper: A. M. Turing, “On Computable Numbers, with an Application to the Entscheidungsproblem”, Proceedings of the London Mathematical Society, series 2, volume 42, pages 230–265. <link>doi.org/10.1112/plms/s2-42.1.230</link>",
+      "notice": "This guide quotes the paper and does not reproduce it.",
+      "tapeIntro": "The tape at the top runs Turing’s first machine, from section 3. Each part you reach moves it one step. If your device asks for less motion, use the Step and Reset buttons instead.",
+      "tapeNoScript": "The tape needs JavaScript to move.",
+      "pages": "Volume {volume}, pages {from}–{to}",
+      "quotePage": "(Turing, 1936, page {page})",
+      "translation": "Translation: “{text}”",
+      "lessons": "Explained in",
+      "lessonLink": "Lesson {number}: {title}",
+      "readCorrection": "Read the correction on the publisher’s site",
+      "license": "The text of this guide is under the <link>CC BY 4.0</link> license. The quotes from Turing’s paper are not."
     }
   }
 }

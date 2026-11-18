@@ -16,6 +16,7 @@ const PATHS = [
   '/learn/halting-problem',
   '/learn/entscheidungsproblem',
   '/learn/church-turing',
+  '/learn/paper',
 ];
 
 async function axeViolations(page: Page) {
@@ -111,6 +112,20 @@ for (const colorScheme of ['light', 'dark'] as const) {
         }
         await expect(page.getByRole('button', { name: 'Try again' })).toBeVisible();
         expect(await axeViolations(page), slug).toEqual([]);
+      }
+    });
+
+    test('the reading guide with a moved tape has no axe violations, with and without reduced motion', async ({ browser }) => {
+      for (const reducedMotion of ['no-preference', 'reduce'] as const) {
+        const context = await browser.newContext({ colorScheme, reducedMotion });
+        const page = await context.newPage();
+        await openPage(page, '/en/learn/paper');
+        const tape = page.getByTestId('paper-tape');
+        if (reducedMotion === 'reduce') await tape.getByRole('button', { name: 'Step' }).click();
+        else await page.evaluate(() => document.querySelectorAll('[data-paper-part]')[1].scrollIntoView());
+        await expect(tape.getByText('Step 0')).toHaveCount(0);
+        expect(await axeViolations(page), reducedMotion).toEqual([]);
+        await context.close();
       }
     });
 

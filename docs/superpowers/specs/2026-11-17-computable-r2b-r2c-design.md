@@ -40,8 +40,9 @@ languages, CC BY 4.0, Sources lists with links. This spec covers only what is ne
   holds the page numbers in the *Proceedings of the London Mathematical Society*, a plain summary of 2
   to 4 sentences, at most one short quote, and links to the lessons that explain it.
 - **The scroll-driven tape.** A tape stays on screen while the visitor reads. It runs Turing's first
-  machine. Each block the visitor reaches moves the machine one step. With reduced motion, or without
-  script, the tape shows Step and Reset buttons instead.
+  machine. Each block the visitor reaches moves the machine one step. With reduced motion, or in a
+  browser that cannot watch the blocks, the tape shows Step and Reset buttons instead. Without script,
+  the tape shows its first step and a short note that it needs JavaScript to move, with no buttons.
 - At the top: the DOI link `https://doi.org/10.1112/plms/s2-42.1.230`, and one line that says the
   guide quotes the paper and does not reproduce it.
 - R2c ships as 1 PR.

@@ -10,11 +10,12 @@ import { Quiz } from './Quiz';
 /**
  * A lesson (spec 2.2): its place in the list, the title and the reading time, then the text with
  * its machines and quiz. The text ends with its sources; the license note and the links to the
- * other lessons follow.
+ * other lessons follow. The last lesson leads on to the reading guide to Turing's paper.
  */
 export function LessonView({ lessons, index }: { lessons: readonly Lesson[]; index: number }) {
   const t = useTranslations('learn.lesson');
   const tPage = useTranslations('learn.page');
+  const tPaper = useTranslations('learn.paper');
   const locale = useLocale();
   const lesson = lessons[index];
   const { Content, meta, quiz } = lesson.text[locale];
@@ -52,9 +53,13 @@ export function LessonView({ lessons, index }: { lessons: readonly Lesson[]; ind
         <Link href="/learn" className={textLink}>
           {t('all')}
         </Link>
-        {next !== undefined && (
+        {next !== undefined ? (
           <Link href={`/learn/${next.slug}`} className={textLink}>
             {t('next', { title: next.text[locale].meta.title })}
+          </Link>
+        ) : (
+          <Link href="/learn/paper" className={textLink}>
+            {t('nextGuide', { title: tPaper('title') })}
           </Link>
         )}
       </nav>

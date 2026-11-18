@@ -1,4 +1,4 @@
-import { isLessonSlug } from '@/learn/lesson-slugs';
+import { isLessonSlug, PAPER_SLUG } from '@/learn/lesson-slugs';
 
 /** The public repo. The footer, About and Privacy link to it. */
 export const REPO_URL = 'https://github.com/wellmmer/computable';
@@ -20,14 +20,19 @@ const LESSON_PAGE = /^\/learn\/([^/]+)\/?$/;
 /**
  * GitHub's page to edit the file that holds this page's text. For a visitor who cannot write to the
  * repo, GitHub forks it and opens a pull request (checked: GitHub Docs, "Editing files").
- * A lesson's text lives in its own file, content/lessons/<slug>/<locale>.mdx. Every other page reads
- * messages/<locale>.json. `pathname` is the address without the language, like /learn/intuition.
+ * A lesson's text lives in its own file, content/lessons/<slug>/<locale>.mdx, and the reading guide's
+ * in content/paper/<locale>.json. Every other page reads messages/<locale>.json. `pathname` is the
+ * address without the language, like /learn/intuition.
  */
 export function translationEditUrl(locale: string, pathname: string): string {
   const lesson = LESSON_PAGE.exec(pathname);
   if (lesson !== null && isLessonSlug(lesson[1])) return `${REPO_URL}/edit/master/content/lessons/${lesson[1]}/${locale}.mdx`;
+  if (lesson !== null && lesson[1] === PAPER_SLUG) return `${REPO_URL}/edit/master/content/paper/${locale}.json`;
   return `${REPO_URL}/edit/master/messages/${locale}.json`;
 }
+
+/** Turing's 1936 paper, by its DOI (spec R2c 3). */
+export const TURING_1936_DOI_URL = 'https://doi.org/10.1112/plms/s2-42.1.230';
 
 /** The license of the lesson texts (spec 1, "License"). */
 export const CC_BY_URL = 'https://creativecommons.org/licenses/by/4.0/';

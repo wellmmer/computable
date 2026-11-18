@@ -68,6 +68,11 @@ describe('a lesson address that does not exist (spec R2a 3)', () => {
     expect(visit('/en/learn').headers.get('x-middleware-rewrite')).toBeNull();
   });
 
+  it('leaves the reading guide to Turing’s paper as it is (spec R2c 3)', () => {
+    expect(visit('/en/learn/paper').headers.get('x-middleware-rewrite')).toBeNull();
+    expect(visit('/pt-br/learn/paper').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/paper');
+  });
+
   it('still sends /pt-BR to /pt-br first', () => {
     expect(visit('/pt-BR/learn/nope').headers.get('location')).toBe('http://localhost/pt-br/learn/nope');
   });

@@ -1,7 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse, type NextRequest } from 'next/server';
 import { routing } from './i18n/routing';
-import { isLessonSlug } from './learn/lesson-slugs';
+import { isLearnSlug } from './learn/lesson-slugs';
 
 /** Sends a visitor without a language in the URL to one, for example "/" to "/en". */
 const handleLocale = createMiddleware(routing);
@@ -13,7 +13,7 @@ const handleLocale = createMiddleware(routing);
  */
 const UNKNOWN_LESSON = '_unknown-lesson';
 
-/** A lesson address after the language step: /en/learn/intuition, or /pt-BR/learn/intuition. */
+/** A page under /learn after the language step: /en/learn/intuition, /pt-BR/learn/intuition or /en/learn/paper. */
 const LESSON_PATH = /^\/([^/]+)\/learn\/([^/]+)\/?$/;
 
 export default function proxy(request: NextRequest) {
@@ -24,7 +24,7 @@ export default function proxy(request: NextRequest) {
   const rewrite = response.headers.get('x-middleware-rewrite');
   const path = rewrite === null ? request.nextUrl.pathname : new URL(rewrite).pathname;
   const lesson = LESSON_PATH.exec(path);
-  if (lesson === null || isLessonSlug(lesson[2])) return response;
+  if (lesson === null || isLearnSlug(lesson[2])) return response;
 
   // Keep the language cookie and headers, but send the request to the address no page answers.
   const headers = new Headers(response.headers);

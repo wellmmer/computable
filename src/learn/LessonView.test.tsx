@@ -83,10 +83,13 @@ describe('LessonView (spec 2.2)', () => {
     expect(screen.getAllByRole('group', { name: /^Question \d of 5/ })).toHaveLength(5);
   });
 
-  it('links all the lessons, and no previous or next lesson when there is only one', () => {
+  it('links all the lessons and the reading guide, and no previous or next lesson when there is only one', () => {
     renderWithIntl(<LessonView lessons={[LESSONS[0]]} index={0} />);
     const nav = screen.getByRole('navigation', { name: 'Lessons' });
-    expect(within(nav).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([['All lessons', '/learn']]);
+    expect(within(nav).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
+      ['All lessons', '/learn'],
+      ['Next: Turing’s 1936 paper', '/learn/paper'],
+    ]);
   });
 
   it('links the previous and the next lesson', () => {
@@ -102,12 +105,13 @@ describe('LessonView (spec 2.2)', () => {
     expect(screen.getByRole('link', { name: 'Next lesson: The Entscheidungs\u00ADproblem' }).getAttribute('href')).toBe('/learn/entscheidungsproblem');
   });
 
-  it('ends at lesson 6: it links lesson 5 and all lessons, and no next lesson', () => {
+  it('ends at lesson 6: it links lesson 5, all lessons, and next the reading guide to Turing’s paper', () => {
     renderWithIntl(<LessonView lessons={LESSONS} index={5} />);
     const nav = screen.getByRole('navigation', { name: 'Lessons' });
     expect(within(nav).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
       ['Previous lesson: The Entscheidungs\u00ADproblem', '/learn/entscheidungsproblem'],
       ['All lessons', '/learn'],
+      ['Next: Turing’s 1936 paper', '/learn/paper'],
     ]);
   });
 });
