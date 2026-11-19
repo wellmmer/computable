@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { isCurrentPage, MENU_ITEMS } from './menu';
 
 describe('MENU_ITEMS (spec 4.2)', () => {
-  it('lists Learn, Simulator, Enigma and Bombe, and Learn and the simulator have a page (spec R2a 2.1)', () => {
+  it('lists Learn, Simulator, Enigma and Bombe, and all but Bombe have a page (spec R3 3)', () => {
     expect(MENU_ITEMS).toEqual([
       { id: 'learn', href: '/learn' },
       { id: 'simulator', href: '/simulator' },
-      { id: 'enigma', href: null },
+      { id: 'enigma', href: '/enigma' },
       { id: 'bombe', href: null },
     ]);
   });

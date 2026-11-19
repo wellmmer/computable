@@ -6,11 +6,11 @@ export interface MenuItem {
   href: string | null;
 }
 
-/** The menu's sections (spec 4.2). Learn opened in R2a; Enigma comes in R3 and Bombe in R4. */
+/** The menu's sections (spec 4.2). Learn opened in R2a and Enigma in R3a; Bombe comes in R4. */
 export const MENU_ITEMS: readonly MenuItem[] = [
   { id: 'learn', href: '/learn' },
   { id: 'simulator', href: '/simulator' },
-  { id: 'enigma', href: null },
+  { id: 'enigma', href: '/enigma' },
   { id: 'bombe', href: null },
 ];
 

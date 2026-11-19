@@ -40,17 +40,22 @@ describe('SiteHeader', () => {
     expect(screen.getByRole('button', { name: 'Night paper' })).toBeTruthy();
   });
 
-  it('shows Enigma and Bombe as coming soon, without a link', () => {
+  it('links Enigma, and shows Bombe as coming soon, without a link (spec R3 3)', () => {
     navigation.pathname = '/';
     renderWithIntl(<SiteHeader />);
     const menu = screen.getByRole('navigation', { name: 'Main menu' });
     expect(within(menu).getAllByRole('link').map((link) => [link.textContent, link.getAttribute('href')])).toEqual([
       ['Learn', '/learn'],
       ['Simulator', '/simulator'],
+      ['Enigma', '/enigma'],
     ]);
-    for (const name of ['Enigma', 'Bombe']) {
-      expect(within(menu).getByText(name).textContent).toBe(`${name}, coming soon`);
-    }
+    expect(within(menu).getByText('Bombe').textContent).toBe('Bombe, coming soon');
+  });
+
+  it('marks Enigma as the current page in the lab', () => {
+    navigation.pathname = '/enigma';
+    renderWithIntl(<SiteHeader />);
+    expect(within(screen.getByRole('navigation', { name: 'Main menu' })).getByRole('link', { name: 'Enigma' }).getAttribute('aria-current')).toBe('page');
   });
 
   it('marks Learn as the current page on a lesson', () => {
