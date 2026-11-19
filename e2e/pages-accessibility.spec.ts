@@ -17,6 +17,7 @@ const PATHS = [
   '/learn/entscheidungsproblem',
   '/learn/church-turing',
   '/learn/paper',
+  '/enigma',
 ];
 
 async function axeViolations(page: Page) {
@@ -128,6 +129,26 @@ for (const colorScheme of ['light', 'dark'] as const) {
         await context.close();
       }
     });
+
+    // After typing, the lamps, the strips and the path show; then the settings dialog opens.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/enigma with typed letters, the path and the settings dialog has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openPage(page, `${locale}/enigma`);
+          await page.keyboard.type('WETTERBERICHT');
+          await expect(page.getByRole('status')).not.toBeEmpty();
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
+          // The first region of the page is the settings line, with its one button: "Change settings".
+          await page.getByRole('main').getByRole('region').first().getByRole('button').click();
+          await expect(page.getByRole('dialog')).toBeVisible();
+          expect(await axeViolations(page), `${viewport.width} px, dialog`).toEqual([]);
+        }
+      });
+    }
 
     test("the Learn page's reset question has no axe violations", async ({ page }) => {
       await openPage(page, '/en/learn');

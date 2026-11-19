@@ -479,6 +479,27 @@
       "clears": "Speichern löscht die Buchstaben, die du getippt hast.",
       "save": "Speichern",
       "cancel": "Abbrechen"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Tippe einen Buchstaben auf deiner Tastatur oder drücke eine Taste. Eine Lampe zeigt den geheimen Buchstaben."
+    },
+    "lab": {
+      "settings": "Einstellungen",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {keine Steckerpaare} one {# Steckerpaar} other {# Steckerpaare}}",
+      "change": "Ändern",
+      "changeSettings": "Einstellungen ändern",
+      "typed": "Du hast getippt",
+      "lit": "Leuchtende Lampen",
+      "backToStart": "Zurück zum Start ({start})",
+      "copy": "Leuchtbuchstaben kopieren",
+      "copied": "Kopiert",
+      "copyFailed": "Kopieren ging nicht",
+      "clear": "Löschen",
+      "hint": "Zum Entschlüsseln: zurück zum Start, dann die Leuchtbuchstaben tippen. Die Lampen zeigen wieder die Nachricht.",
+      "previousLit": "Lampen vor dem Zurückgehen: {letters}",
+      "litNews": "Lampe {letter}",
+      "removedNews": "{letter} entfernt"
     }
   }
 }

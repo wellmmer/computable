@@ -73,6 +73,11 @@ describe('a lesson address that does not exist (spec R2a 3)', () => {
     expect(visit('/pt-br/learn/paper').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/learn/paper');
   });
 
+  it('leaves the Enigma lab as it is (spec R3 3)', () => {
+    expect(visit('/en/enigma').headers.get('x-middleware-rewrite')).toBeNull();
+    expect(visit('/pt-br/enigma').headers.get('x-middleware-rewrite')).toBe('http://localhost/pt-BR/enigma');
+  });
+
   it('still sends /pt-BR to /pt-br first', () => {
     expect(visit('/pt-BR/learn/nope').headers.get('location')).toBe('http://localhost/pt-br/learn/nope');
   });

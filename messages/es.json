@@ -479,6 +479,27 @@
       "clears": "Al guardar se borran las letras que escribiste.",
       "save": "Guardar",
       "cancel": "Cancelar"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Escribe una letra en tu teclado o toca una tecla. Una lámpara ilumina la letra secreta."
+    },
+    "lab": {
+      "settings": "Configuración",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {ningún par de clavijas} one {# par de clavijas} other {# pares de clavijas}}",
+      "change": "Cambiar",
+      "changeSettings": "Cambiar la configuración",
+      "typed": "Escribiste",
+      "lit": "Lámparas encendidas",
+      "backToStart": "Volver al inicio ({start})",
+      "copy": "Copiar las letras encendidas",
+      "copied": "Copiado",
+      "copyFailed": "No se pudo copiar",
+      "clear": "Borrar",
+      "hint": "Para descifrar: vuelve al inicio y escribe las letras encendidas. Las lámparas muestran el mensaje otra vez.",
+      "previousLit": "Lámparas encendidas antes de volver: {letters}",
+      "litNews": "Lámpara {letter}",
+      "removedNews": "{letter} borrada"
     }
   }
 }

@@ -479,6 +479,27 @@
       "clears": "Enregistrer efface les lettres que vous avez tapées.",
       "save": "Enregistrer",
       "cancel": "Annuler"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Tapez une lettre sur votre clavier ou touchez une touche. Une lampe allume la lettre secrète."
+    },
+    "lab": {
+      "settings": "Réglages",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {aucune paire de fiches} one {# paire de fiches} other {# paires de fiches}}",
+      "change": "Changer",
+      "changeSettings": "Changer les réglages",
+      "typed": "Vous avez tapé",
+      "lit": "Lampes allumées",
+      "backToStart": "Retour au début ({start})",
+      "copy": "Copier les lettres allumées",
+      "copied": "Copié",
+      "copyFailed": "Copie impossible",
+      "clear": "Effacer",
+      "hint": "Pour déchiffrer : revenez au début, puis tapez les lettres allumées. Les lampes montrent à nouveau le message.",
+      "previousLit": "Lampes allumées avant le retour : {letters}",
+      "litNews": "Lampe {letter}",
+      "removedNews": "{letter} effacée"
     }
   }
 }

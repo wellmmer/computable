@@ -479,6 +479,27 @@
       "clears": "Saving clears the letters you typed.",
       "save": "Save",
       "cancel": "Cancel"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Type a letter on your keyboard or tap a key. A lamp lights the secret letter."
+    },
+    "lab": {
+      "settings": "Settings",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {no plug pairs} one {# plug pair} other {# plug pairs}}",
+      "change": "Change",
+      "changeSettings": "Change settings",
+      "typed": "You typed",
+      "lit": "Lamps lit",
+      "backToStart": "Back to start ({start})",
+      "copy": "Copy lit letters",
+      "copied": "Copied",
+      "copyFailed": "Could not copy",
+      "clear": "Clear",
+      "hint": "To decrypt: go back to the start, then type the lit letters. The lamps show the message again.",
+      "previousLit": "Lamps lit before you went back: {letters}",
+      "litNews": "Lamp {letter}",
+      "removedNews": "Removed {letter}"
     }
   }
 }

@@ -1,0 +1,120 @@
+import { expect, test, type Page } from '@playwright/test';
+import { openPage } from './helpers';
+
+const strip = (page: Page, name: string) => page.getByRole('region', { name }).locator('[data-strip]');
+const rotorWindow = (page: Page, rotor: string) => page.getByText(new RegExp(`^${rotor}, rotor [IV]+, shows [A-Z]$`));
+
+test.describe('the Enigma lab (spec R3 3)', () => {
+  test('types WETTERBERICHT on the physical keyboard and lights PBJGOLIZQMQGZ', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.keyboard.type('wetterbericht');
+    await expect(strip(page, 'You typed')).toHaveText('WETTE RBERI CHT');
+    await expect(strip(page, 'Lamps lit')).toHaveText('PBJGO LIZQM QGZ');
+    await expect(rotorWindow(page, 'Right rotor')).toHaveText('Right rotor, rotor III, shows N');
+    await expect(page.getByRole('status')).toHaveText('Lamp Z');
+    await expect(page.getByRole('heading', { name: 'Where the current went for T' })).toBeVisible();
+    await expect(page.getByText('The plug pair HZ turned H into Z (red ring).')).toBeVisible();
+  });
+
+  test('Backspace removes the last letter and turns the rotors back', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.keyboard.type('WET');
+    await page.keyboard.press('Backspace');
+    await expect(strip(page, 'You typed')).toHaveText('WE');
+    await expect(rotorWindow(page, 'Right rotor')).toHaveText('Right rotor, rotor III, shows C');
+    await expect(page.getByRole('status')).toHaveText('Removed T');
+  });
+
+  test('"Back to start" and the lit letters decrypt the message', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.keyboard.type('WETTERBERICHT');
+    await page.getByRole('button', { name: 'Back to start (B L A)' }).click();
+    await expect(page.getByText('Lamps lit before you went back: PBJGO LIZQM QGZ')).toBeVisible();
+    await page.keyboard.type('PBJGOLIZQMQGZ');
+    await expect(strip(page, 'Lamps lit')).toHaveText('WETTE RBERI CHT');
+  });
+
+  test('the on-screen keys and the ▲ and ▼ buttons work', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.getByRole('button', { name: 'Left rotor: previous letter' }).click();
+    await page.getByRole('button', { name: 'Right rotor: next letter' }).click();
+    await expect(page.getByRole('button', { name: 'Back to start (A L B)' })).toBeVisible();
+    const keyboard = page.getByRole('group', { name: 'Keyboard' });
+    await keyboard.getByRole('button', { name: 'Q' }).click();
+    // Keys still type from the physical keyboard after a click on an on-screen key.
+    await page.keyboard.type('Q');
+    await expect(strip(page, 'You typed')).toHaveText('QQ');
+  });
+
+  test('copies the lit letters', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await openPage(page, '/en/enigma');
+    await page.keyboard.type('WETTERBERICHT');
+    await page.getByRole('button', { name: 'Copy lit letters' }).click();
+    await expect(page.getByRole('button', { name: 'Copied' })).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('PBJGO LIZQM QGZ');
+  });
+
+  test('the settings dialog changes the rotors and plug pairs, shows errors, and closes with Esc', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    const change = page.getByRole('button', { name: 'Change settings' });
+    await change.click();
+    const dialog = page.getByRole('dialog', { name: 'Change settings' });
+    await dialog.getByRole('combobox', { name: 'Right rotor' }).selectOption('I');
+    await expect(dialog.getByText('Rotor I is there twice. Use each rotor only once.')).toBeVisible();
+    await dialog.getByRole('combobox', { name: 'Right rotor' }).selectOption('VIII');
+    const plugs = dialog.getByRole('group', { name: 'Plug pairs' });
+    await plugs.getByRole('button', { name: 'E', exact: true }).click();
+    await plugs.getByRole('button', { name: 'J', exact: true }).click();
+    await plugs.getByRole('button', { name: 'A, joined to V' }).click();
+    await dialog.getByRole('button', { name: 'Save' }).click();
+    await expect(dialog).toBeHidden();
+    await expect(change).toBeFocused();
+    await expect(strip(page, 'You typed')).toHaveText('');
+    const settings = page.getByRole('region', { name: 'Settings' });
+    await expect(settings.getByText('I II VIII', { exact: true })).toBeVisible();
+    await expect(settings.getByText('BS CG DL FU HZ IN KM OW RX EJ', { exact: true })).toBeVisible();
+
+    await change.click();
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+    await expect(change).toBeFocused();
+  });
+});
+
+const LANGUAGES = [
+  { path: '/en', lit: 'Lamps lit', change: 'Change settings' },
+  { path: '/pt-br', lit: 'Lâmpadas acesas', change: 'Mudar as configurações' },
+  { path: '/es', lit: 'Lámparas encendidas', change: 'Cambiar la configuración' },
+  { path: '/fr', lit: 'Lampes allumées', change: 'Changer les réglages' },
+  { path: '/de', lit: 'Leuchtende Lampen', change: 'Einstellungen ändern' },
+] as const;
+
+for (const { path, lit, change } of LANGUAGES) {
+  test(`${path}/enigma types and lights the same letters`, async ({ page }) => {
+    await openPage(page, `${path}/enigma`);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.getByRole('button', { name: change })).toBeVisible();
+    await page.keyboard.type('WETTERBERICHT');
+    await expect(strip(page, lit)).toHaveText('PBJGO LIZQM QGZ');
+  });
+}
+
+test.describe('on a phone, 390 × 844', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('puts "Lamps lit" above the machine, draws the path top to bottom, and fits the width', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.getByRole('group', { name: 'Keyboard' }).getByRole('button', { name: 'W' }).click();
+    const litBox = await strip(page, 'Lamps lit').boundingBox();
+    const machineBox = await page.getByRole('region', { name: 'The machine' }).boundingBox();
+    if (litBox === null || machineBox === null) throw new Error('no strip or machine');
+    expect(litBox.y + litBox.height).toBeLessThan(machineBox.y);
+    await expect(page.getByRole('button', { name: 'Change', exact: true })).toBeVisible();
+    // CSS hides the drawing across, so only the drawing top to bottom is left.
+    const drawing = page.getByRole('img', { name: /^Key W/ });
+    await expect(drawing).toHaveCount(1);
+    await expect(drawing).toHaveAttribute('viewBox', '0 0 300 500');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+  });
+});
