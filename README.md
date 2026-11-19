@@ -7,10 +7,11 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: releases 1 and 2 are live at https://computable-lac.vercel.app.** This repo held a
+> **Status: releases 1, 2 and 3a are live at https://computable-lac.vercel.app.** This repo held a
 > 2016 capstone project built with jQuery. It is now Computable, built release by release. Release 1
-> is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. The
-> roadmap below lists the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
+> is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. Release 3a
+> adds a working Enigma I. The roadmap below lists the rest. The 2016 version stays available at the
+> git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -39,7 +40,7 @@ machine could do the same work.
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
-| **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Planned |
+| **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a). Planned: messages and the new Home (R3b), a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
 
@@ -116,6 +117,23 @@ machine could do the same work.
   you reach moves it one step, and scrolling back moves it back. With reduced motion, Step and Reset
   buttons move it instead.
 - **On the Learn page, after lesson 6.** The guide has no quiz.
+
+## What R3 brings
+
+- **A working Enigma I at `/enigma`.** Type on your own keyboard or tap the keys on the screen. A
+  lamp lights the secret letter. The menu's Enigma item opens it.
+- **The real parts.** Rotors I to VIII, reflectors B and C, ring settings and up to 13 plug pairs.
+  The rotors turn as on the real machine, with the double step of the middle rotor. The wirings were
+  checked against two published tables.
+- **Settings you can see.** One line shows the rotors, rings, plug pairs and reflector. A dialog
+  changes them. Tap 2 letters to join a plug pair.
+- **Decrypting in one click.** "Back to start" turns the rotors back. Type the lit letters, and the
+  lamps show the message again. Backspace takes back the last letter, which the real machine could
+  not do.
+- **The path of the current.** A drawing shows the letter after each part, out to the reflector and
+  back. It shows why a letter never lights itself.
+- **Coming next:** practice and real messages and a new Home (R3b), then a one-rotor machine in the
+  simulator (R3c).
 
 ## The machine format
 
