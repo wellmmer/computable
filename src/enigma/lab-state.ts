@@ -30,8 +30,8 @@ export interface LabState {
   previousLit: string;
   /** What emptied the strips into `previousLit`: "Back to start", or a ▲ or ▼ turn. */
   previousLitAfter: 'back' | 'turn';
-  /** What the live region says: the lamp that lit, or the letter Backspace removed. `id` makes it speak again. */
-  news: { id: number; kind: 'lit' | 'removed'; letter: Letter } | null;
+  /** What the live region says: the lamp that lit, the letter Backspace removed, or a rotor's new window letter. `id` makes it speak again. */
+  news: { id: number; kind: 'lit' | 'removed'; letter: Letter } | { id: number; kind: 'turned'; slot: 0 | 1 | 2; letter: Letter } | null;
 }
 
 export type LabAction =
@@ -62,9 +62,10 @@ export function labReducer(lab: LabState, action: LabAction): LabState {
     case 'turn': {
       const turn = (slot: 0 | 1 | 2) => (slot === action.slot ? letterAt(indexOf(lab.positions[slot]) + action.by) : lab.positions[slot]);
       const positions: Positions = [turn(0), turn(1), turn(2)];
-      if (lab.typed.length === 0) return { ...lab, positions, start: positions };
+      const news = { id: (lab.news?.id ?? 0) + 1, kind: 'turned', slot: action.slot, letter: positions[action.slot] } as const;
+      if (lab.typed.length === 0) return { ...lab, positions, start: positions, news };
       // "Back to start" cannot replay a turn, so a turn in the middle of a message starts a new message.
-      return { ...lab, positions, start: positions, typed: [], previousLit: litLetters(lab), previousLitAfter: 'turn' };
+      return { ...lab, positions, start: positions, typed: [], previousLit: litLetters(lab), previousLitAfter: 'turn', news };
     }
     case 'back-to-start':
       if (lab.typed.length === 0) return { ...lab, positions: lab.start };

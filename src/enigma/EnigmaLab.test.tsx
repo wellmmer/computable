@@ -80,6 +80,14 @@ describe('EnigmaLab (spec R3 3)', () => {
     expect(strip('Lamps lit')).toBe('WETTE RBERI CHT');
   });
 
+  it('reads the new window letter aloud after ▲ or ▼', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Middle rotor: next letter' }));
+    expect(screen.getByRole('status').textContent).toBe('Middle rotor, rotor II, shows M');
+    fireEvent.click(screen.getByRole('button', { name: 'Right rotor: previous letter' }));
+    expect(screen.getByRole('status').textContent).toBe('Right rotor, rotor III, shows Z');
+  });
+
   it('starts a new message when a rotor turns with letters in the strips', () => {
     renderWithIntl(<EnigmaLab />);
     typeKeys('WE');

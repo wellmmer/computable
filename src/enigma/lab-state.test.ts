@@ -45,6 +45,11 @@ describe('labReducer', () => {
     expect(run(...type('WE'), { type: 'backspace' }).news).toEqual({ id: 3, kind: 'removed', letter: 'E' });
   });
 
+  it('tells the live region which rotor turned, and its new window letter', () => {
+    expect(run({ type: 'turn', slot: 1, by: 1 }).news).toEqual({ id: 1, kind: 'turned', slot: 1, letter: 'M' });
+    expect(run(...type('W'), { type: 'turn', slot: 2, by: -1 }).news).toEqual({ id: 2, kind: 'turned', slot: 2, letter: 'A' });
+  });
+
   it('goes back to the start, keeps the lit letters to type, and decrypts them', () => {
     const lab = run(...type('WETTERBERICHT'), { type: 'back-to-start' });
     expect(lab.positions).toEqual(['B', 'L', 'A']);

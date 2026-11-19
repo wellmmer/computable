@@ -8,6 +8,9 @@ import { groupsOf5, initialLab, labReducer, litLetters, typedLetters } from './l
 import { MachinePanel } from './MachinePanel';
 import { SettingsDialog } from './SettingsDialog';
 
+/** The rotor names in the "enigma.machine" messages, by slot. */
+const SLOT_NAMES = ['left', 'middle', 'right'] as const;
+
 const button = 'border-2 border-ink px-3 py-1.5 font-semibold disabled:opacity-50';
 const strip = 'min-h-11 border border-soft bg-cell px-2.5 py-2 font-mono text-[17px] font-medium tracking-[2px] [word-spacing:6px] break-words';
 
@@ -22,6 +25,7 @@ const TEXT_FIELDS = 'input:not([type="checkbox"]):not([type="radio"]), select, t
 export function EnigmaLab() {
   const t = useTranslations('enigma.lab');
   const tSettings = useTranslations('enigma.settings');
+  const tMachine = useTranslations('enigma.machine');
   const [lab, dispatch] = useReducer(labReducer, undefined, initialLab);
   const [changing, setChanging] = useState(false);
   const [copied, setCopied] = useState<'copied' | 'copyFailed' | null>(null);
@@ -58,6 +62,16 @@ export function EnigmaLab() {
   const lit = litLetters(lab);
   const last = lab.typed.at(-1) ?? null;
   const { rotors, rings, reflector, plugs } = lab.settings;
+
+  const news = () => {
+    if (lab.news === null) return null;
+    const { kind, letter } = lab.news;
+    if (kind === 'turned') {
+      const { slot } = lab.news;
+      return tMachine('window', { rotor: tMachine(SLOT_NAMES[slot]), name: rotors[slot], letter });
+    }
+    return t(kind === 'lit' ? 'litNews' : 'removedNews', { letter });
+  };
 
   const copy = async () => {
     try {
@@ -141,7 +155,7 @@ export function EnigmaLab() {
       <CurrentPath settings={lab.settings} last={last} />
 
       <p role="status" className="sr-only">
-        {lab.news !== null && <span key={lab.news.id}>{t(lab.news.kind === 'lit' ? 'litNews' : 'removedNews', { letter: lab.news.letter })}</span>}
+        {lab.news !== null && <span key={lab.news.id}>{news()}</span>}
       </p>
 
       {changing && (
