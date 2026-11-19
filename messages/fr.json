@@ -425,5 +425,18 @@
       "readCorrection": "Lire la correction sur le site de l’éditeur",
       "license": "Le texte de ce guide est sous licence <link>CC BY 4.0</link>. Les citations de l’article de Turing ne le sont pas."
     }
+  },
+  "enigma": {
+    "machine": {
+      "label": "La machine",
+      "left": "Rotor de gauche",
+      "middle": "Rotor du milieu",
+      "right": "Rotor de droite",
+      "window": "{rotor}, rotor {name}, affiche {letter}",
+      "next": "{rotor} : lettre suivante",
+      "previous": "{rotor} : lettre précédente",
+      "note": "Le rotor de droite tourne d’un cran avant chaque lettre.",
+      "keyboard": "Clavier"
+    }
   }
 }

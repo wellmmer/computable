@@ -425,5 +425,18 @@
       "readCorrection": "Read the correction on the publisher’s site",
       "license": "The text of this guide is under the <link>CC BY 4.0</link> license. The quotes from Turing’s paper are not."
     }
+  },
+  "enigma": {
+    "machine": {
+      "label": "The machine",
+      "left": "Left rotor",
+      "middle": "Middle rotor",
+      "right": "Right rotor",
+      "window": "{rotor}, rotor {name}, shows {letter}",
+      "next": "{rotor}: next letter",
+      "previous": "{rotor}: previous letter",
+      "note": "The right rotor turns one step before each letter.",
+      "keyboard": "Keyboard"
+    }
   }
 }

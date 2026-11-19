@@ -60,3 +60,26 @@ describe('design tokens', () => {
     });
   });
 });
+
+describe('machine panel tokens (spec 6: the same in both themes)', () => {
+  const machine = tokensOf(':root');
+
+  /** [text, background, minimum ratio]. The unlit lamps are text too, so they need 4.5:1. */
+  const machinePairs: Array<[string, string, number]> = [
+    ['brass', 'bakelite', 4.5],
+    ['bakelite', 'ivory', 4.5],
+    ['bakelite', 'brass', 4.5],
+    ['bakelite', 'lamp', 4.5],
+    ['lamp-off-ink', 'lamp-off', 4.5],
+  ];
+
+  it.each(machinePairs)('%s on %s reaches %s:1', (front, back, minimum) => {
+    expect(contrast(machine[front], machine[back])).toBeGreaterThanOrEqual(minimum);
+  });
+
+  it('keeps the machine colors out of the night paper blocks', () => {
+    for (const name of ['bakelite', 'brass', 'lamp', 'ivory', 'lamp-off', 'lamp-off-ink']) {
+      expect(themes['night paper (switch)'][name], name).toBeUndefined();
+    }
+  });
+});

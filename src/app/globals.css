@@ -17,6 +17,14 @@
   --blank-ink: #848fa5;
   --row-now: #fbe3e0;
   --coffee: #7a4a2a;
+  /* The machine panel (spec 6), the same on squared paper and night paper. The unlit lamp text is
+     lighter than in the mockup (#8a8273, 3.2:1) to reach 4.5:1. */
+  --bakelite: #23201c;
+  --brass: #d4b67e;
+  --lamp: #ffc857;
+  --ivory: #ece4d4;
+  --lamp-off: #3a352e;
+  --lamp-off-ink: #ada490;
   color-scheme: light;
 }
 
@@ -63,6 +71,12 @@
   --color-blank-ink: var(--blank-ink);
   --color-row-now: var(--row-now);
   --color-coffee: var(--coffee);
+  --color-bakelite: var(--bakelite);
+  --color-brass: var(--brass);
+  --color-lamp: var(--lamp);
+  --color-ivory: var(--ivory);
+  --color-lamp-off: var(--lamp-off);
+  --color-lamp-off-ink: var(--lamp-off-ink);
   /* --font-math draws Turing's Fraktur state letters (𝔟, 𝔠, 𝔢, 𝔨) in every text style. */
   --font-display: var(--font-spectral), var(--font-math), Georgia, serif;
   --font-sans: var(--font-plex-sans), var(--font-math), system-ui, sans-serif;

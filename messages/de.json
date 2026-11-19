@@ -425,5 +425,18 @@
       "readCorrection": "Die Berichtigung auf der Seite des Verlags lesen",
       "license": "Der Text dieses Leitfadens steht unter der Lizenz <link>CC BY 4.0</link>. Die Zitate aus Turings Arbeit nicht."
     }
+  },
+  "enigma": {
+    "machine": {
+      "label": "Die Maschine",
+      "left": "Linke Walze",
+      "middle": "Mittlere Walze",
+      "right": "Rechte Walze",
+      "window": "{rotor}, Walze {name}, zeigt {letter}",
+      "next": "{rotor}: nächster Buchstabe",
+      "previous": "{rotor}: vorheriger Buchstabe",
+      "note": "Die rechte Walze dreht sich vor jedem Buchstaben um einen Schritt.",
+      "keyboard": "Tastatur"
+    }
   }
 }
