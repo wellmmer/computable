@@ -67,6 +67,15 @@ describe('SettingsDialog (spec R3 3, "Change settings")', () => {
     expect(onSave).not.toHaveBeenCalled();
   });
 
+  it('reads the error aloud when it shows, and moves focus to it on Save', () => {
+    const { dialog } = openDialog();
+    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Right rotor' }), { target: { value: 'I' } });
+    const alert = within(dialog).getByRole('alert');
+    expect(alert.textContent).toBe('Rotor I is there twice. Use each rotor only once.');
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Save' }));
+    expect(document.activeElement).toBe(alert);
+  });
+
   it('saves new rotors, rings and reflector', () => {
     const { dialog, onSave } = openDialog();
     fireEvent.change(within(dialog).getByRole('combobox', { name: 'Left rotor' }), { target: { value: 'VIII' } });

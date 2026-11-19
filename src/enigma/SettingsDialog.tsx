@@ -52,7 +52,8 @@ interface SettingsDialogProps {
 /**
  * "Change settings" (spec R3 3): rotors, rings, reflector and plug pairs. The lab mounts it to open
  * it. To add a plug pair, the visitor taps 2 letters; tapping a joined letter removes its pair.
- * Errors show next to their field, and Save keeps the dialog open until there are none.
+ * Errors show next to their field, and screen readers say them when they show. Save keeps the dialog
+ * open until there are none, and moves focus to the first error.
  */
 export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProps) {
   const t = useTranslations('enigma.settings');
@@ -81,7 +82,11 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
   };
 
   const save = () => {
-    if (errors.length > 0) return;
+    if (errors.length > 0) {
+      // Focus on the first error, so a screen reader says why Save did nothing.
+      dialog.current?.querySelector<HTMLElement>('[role="alert"]')?.focus();
+      return;
+    }
     onSave(draft);
     dialog.current?.close();
   };
@@ -89,7 +94,7 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
   const fieldErrors = (field: SettingsError['field']) => {
     const texts = errorText(field);
     return texts.length === 0 ? null : (
-      <p id={`settings-${field}-error`} className="mt-1 text-sm font-medium text-pencil">
+      <p id={`settings-${field}-error`} role="alert" tabIndex={-1} className="mt-1 text-sm font-medium text-pencil">
         {texts.join(' ')}
       </p>
     );
