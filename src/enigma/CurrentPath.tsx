@@ -137,7 +137,10 @@ export function CurrentPath({ settings, last }: { settings: EnigmaSettings; last
       : [
           [last.path[0].letter, last.path[1].letter],
           [last.path[8].letter, last.path[9].letter],
-        ].filter(([from, to]) => from !== to);
+        ]
+          .filter(([from, to]) => from !== to)
+          // Both swaps can be the same, such as A to V on the way in and on the way back. Say it once.
+          .filter(([from, to], i, all) => all.findIndex(([otherFrom, otherTo]) => otherFrom === from && otherTo === to) === i);
   const name =
     last === null
       ? ''

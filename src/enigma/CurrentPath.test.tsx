@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { isLetter } from '@/engines/enigma';
 import { renderWithIntl } from '@/test/intl';
 import { CurrentPath } from './CurrentPath';
@@ -52,6 +52,17 @@ describe('CurrentPath (spec R3 3, "Path panel")', () => {
     const lab = typed('W');
     renderWithIntl(<CurrentPath settings={lab.settings} last={lab.typed[0]} />);
     expect(screen.getByText('The plug pair OW turned W into O (red ring).')).toBeTruthy();
+  });
+
+  it('says a swap once when both swaps are the same: key A at A C F goes A to V on the way in and on the way back', () => {
+    const errors = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const lab = labReducer({ ...initialLab(), positions: ['A', 'C', 'F'] }, { type: 'press', key: 'A' });
+    const last = lab.typed[0];
+    expect([last.path[0], last.path[1], last.path[8], last.path[9]].map(({ letter }) => letter).join('')).toBe('AVAV');
+    renderWithIntl(<CurrentPath settings={lab.settings} last={last} />);
+    expect(screen.getAllByText('The plug pair AV turned A into V (red ring).')).toHaveLength(1);
+    expect(errors).not.toHaveBeenCalled();
+    errors.mockRestore();
   });
 
   it('hides the drawing with the "Show the path" switch', () => {
