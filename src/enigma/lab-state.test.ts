@@ -40,6 +40,18 @@ describe('labReducer', () => {
     expect(run({ type: 'backspace' })).toEqual(initialLab());
   });
 
+  it('turns the rotors back through the double step on Backspace: A D U, 3 keys, then 3 Backspaces', () => {
+    const typing = type('AAA').reduce(labReducer, { ...initialLab(), positions: ['A', 'D', 'U'], start: ['A', 'D', 'U'] });
+    expect(typing.positions).toEqual(['B', 'F', 'X']);
+    const windows: string[] = [];
+    let lab = typing;
+    for (let i = 0; i < 3; i++) {
+      lab = labReducer(lab, { type: 'backspace' });
+      windows.push(lab.positions.join(''));
+    }
+    expect(windows).toEqual(['AEW', 'ADV', 'ADU']);
+  });
+
   it('tells the live region which lamp lit, or which letter Backspace removed', () => {
     expect(run(...type('W')).news).toEqual({ id: 1, kind: 'lit', letter: 'P' });
     expect(run(...type('WE'), { type: 'backspace' }).news).toEqual({ id: 3, kind: 'removed', letter: 'E' });
