@@ -437,6 +437,25 @@
       "previous": "{rotor}: vorheriger Buchstabe",
       "note": "Die rechte Walze dreht sich vor jedem Buchstaben um einen Schritt.",
       "keyboard": "Tastatur"
+    },
+    "path": {
+      "title": "Der Weg des Stroms für {letter}",
+      "titleEmpty": "Der Weg des Stroms",
+      "empty": "Drücke eine Taste, um den Weg zu sehen.",
+      "show": "Weg zeigen",
+      "keyLamp": "Taste, Lampe",
+      "plugboard": "Steckerbrett",
+      "rotor": "Walze {name}",
+      "reflector": "Umkehrwalze",
+      "outTop": "Hin auf der oberen Linie, zurück auf der unteren Linie.",
+      "outLeft": "Hin auf der linken Linie, zurück auf der rechten Linie.",
+      "swap": "Das Steckerpaar {pair} hat {from} in {to} getauscht (roter Ring).",
+      "never": "Der Strom kommt immer über einen anderen Draht zurück. Darum leuchtet nie der getippte Buchstabe selbst.",
+      "labelKey": "Taste {letter}",
+      "labelPlugboard": "Steckerbrett {letter}",
+      "labelRotor": "Walze {name} {letter}",
+      "labelReflector": "Umkehrwalze {letter}",
+      "labelLamp": "Lampe {letter}"
     }
   }
 }

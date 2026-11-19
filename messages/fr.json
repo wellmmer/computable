@@ -437,6 +437,25 @@
       "previous": "{rotor} : lettre précédente",
       "note": "Le rotor de droite tourne d’un cran avant chaque lettre.",
       "keyboard": "Clavier"
+    },
+    "path": {
+      "title": "Le chemin du courant pour {letter}",
+      "titleEmpty": "Le chemin du courant",
+      "empty": "Appuyez sur une touche pour voir le chemin.",
+      "show": "Montrer le chemin",
+      "keyLamp": "Touche, lampe",
+      "plugboard": "Tableau de connexions",
+      "rotor": "Rotor {name}",
+      "reflector": "Réflecteur",
+      "outTop": "Aller sur la ligne du haut, retour sur la ligne du bas.",
+      "outLeft": "Aller sur la ligne de gauche, retour sur la ligne de droite.",
+      "swap": "La paire de fiches {pair} a changé {from} en {to} (anneau rouge).",
+      "never": "Le courant revient toujours par un autre fil. Une lettre ne s’allume donc jamais elle-même.",
+      "labelKey": "Touche {letter}",
+      "labelPlugboard": "tableau de connexions {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "réflecteur {letter}",
+      "labelLamp": "lampe {letter}"
     }
   }
 }

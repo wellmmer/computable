@@ -437,6 +437,25 @@
       "previous": "{rotor}: letra anterior",
       "note": "O rotor direito gira um passo antes de cada letra.",
       "keyboard": "Teclado"
+    },
+    "path": {
+      "title": "Por onde a corrente passou para {letter}",
+      "titleEmpty": "Por onde a corrente passa",
+      "empty": "Aperte uma tecla para ver o caminho.",
+      "show": "Mostrar o caminho",
+      "keyLamp": "Tecla, lâmpada",
+      "plugboard": "Painel de plugues",
+      "rotor": "Rotor {name}",
+      "reflector": "Refletor",
+      "outTop": "Ida na linha de cima, volta na linha de baixo.",
+      "outLeft": "Ida na linha da esquerda, volta na linha da direita.",
+      "swap": "O par de plugues {pair} trocou {from} por {to} (anel vermelho).",
+      "never": "A corrente sempre volta por outro fio, então uma letra nunca acende a si mesma.",
+      "labelKey": "Tecla {letter}",
+      "labelPlugboard": "painel de plugues {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "refletor {letter}",
+      "labelLamp": "lâmpada {letter}"
     }
   }
 }

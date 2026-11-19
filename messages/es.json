@@ -437,6 +437,25 @@
       "previous": "{rotor}: letra anterior",
       "note": "El rotor derecho gira un paso antes de cada letra.",
       "keyboard": "Teclado"
+    },
+    "path": {
+      "title": "Por dónde pasó la corriente para {letter}",
+      "titleEmpty": "Por dónde pasa la corriente",
+      "empty": "Pulsa una tecla para ver el camino.",
+      "show": "Mostrar el camino",
+      "keyLamp": "Tecla, lámpara",
+      "plugboard": "Clavijero",
+      "rotor": "Rotor {name}",
+      "reflector": "Reflector",
+      "outTop": "Ida por la línea de arriba, vuelta por la línea de abajo.",
+      "outLeft": "Ida por la línea de la izquierda, vuelta por la línea de la derecha.",
+      "swap": "El par de clavijas {pair} cambió {from} por {to} (anillo rojo).",
+      "never": "La corriente siempre vuelve por otro cable, así que una letra nunca se ilumina a sí misma.",
+      "labelKey": "Tecla {letter}",
+      "labelPlugboard": "clavijero {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "reflector {letter}",
+      "labelLamp": "lámpara {letter}"
     }
   }
 }

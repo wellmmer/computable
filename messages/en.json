@@ -437,6 +437,25 @@
       "previous": "{rotor}: previous letter",
       "note": "The right rotor turns one step before each letter.",
       "keyboard": "Keyboard"
+    },
+    "path": {
+      "title": "Where the current went for {letter}",
+      "titleEmpty": "Where the current goes",
+      "empty": "Press a key to see the path.",
+      "show": "Show the path",
+      "keyLamp": "Key, lamp",
+      "plugboard": "Plugboard",
+      "rotor": "Rotor {name}",
+      "reflector": "Reflector",
+      "outTop": "Out on the top line, back on the bottom line.",
+      "outLeft": "Out on the left line, back on the right line.",
+      "swap": "The plug pair {pair} turned {from} into {to} (red ring).",
+      "never": "The current always comes back on a different wire, so a letter never lights itself.",
+      "labelKey": "Key {letter}",
+      "labelPlugboard": "plugboard {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "reflector {letter}",
+      "labelLamp": "lamp {letter}"
     }
   }
 }
