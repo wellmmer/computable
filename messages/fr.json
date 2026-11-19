@@ -456,6 +456,29 @@
       "labelRotor": "rotor {name} {letter}",
       "labelReflector": "réflecteur {letter}",
       "labelLamp": "lampe {letter}"
+    },
+    "settings": {
+      "title": "Changer les réglages",
+      "rotors": "Rotors",
+      "rings": "Anneaux",
+      "reflector": "Réflecteur",
+      "plugs": "Paires de fiches",
+      "rotorLeft": "Rotor de gauche",
+      "rotorMiddle": "Rotor du milieu",
+      "rotorRight": "Rotor de droite",
+      "ringLeft": "Anneau de gauche",
+      "ringMiddle": "Anneau du milieu",
+      "ringRight": "Anneau de droite",
+      "plugsHelp": "Touchez 2 lettres pour les relier. Touchez une lettre reliée pour retirer sa paire.",
+      "plugJoined": "{letter}, reliée à {other}",
+      "noPlugs": "Aucune paire de fiches",
+      "sameRotor": "Le rotor {letters} est là deux fois. Utilisez chaque rotor une seule fois.",
+      "letterTwice": "La lettre {letters} est dans 2 paires de fiches. Une lettre ne peut être que dans une paire.",
+      "tooManyPairs": "Il y a {letters} paires de fiches. Utilisez-en 13 ou moins.",
+      "notAPair": "« {letters} » n’est pas une paire de fiches. Une paire relie 2 lettres différentes.",
+      "clears": "Enregistrer efface les lettres que vous avez tapées.",
+      "save": "Enregistrer",
+      "cancel": "Annuler"
     }
   }
 }

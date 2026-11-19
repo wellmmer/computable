@@ -456,6 +456,29 @@
       "labelRotor": "rotor {name} {letter}",
       "labelReflector": "refletor {letter}",
       "labelLamp": "lâmpada {letter}"
+    },
+    "settings": {
+      "title": "Mudar as configurações",
+      "rotors": "Rotores",
+      "rings": "Anéis",
+      "reflector": "Refletor",
+      "plugs": "Pares de plugues",
+      "rotorLeft": "Rotor esquerdo",
+      "rotorMiddle": "Rotor do meio",
+      "rotorRight": "Rotor direito",
+      "ringLeft": "Anel esquerdo",
+      "ringMiddle": "Anel do meio",
+      "ringRight": "Anel direito",
+      "plugsHelp": "Toque em 2 letras para ligá-las. Toque em uma letra ligada para desfazer o par.",
+      "plugJoined": "{letter}, ligada a {other}",
+      "noPlugs": "Nenhum par de plugues",
+      "sameRotor": "O rotor {letters} aparece duas vezes. Use cada rotor só uma vez.",
+      "letterTwice": "A letra {letters} está em 2 pares de plugues. Uma letra pode estar em só um par.",
+      "tooManyPairs": "Há {letters} pares de plugues. Use 13 ou menos.",
+      "notAPair": "“{letters}” não é um par de plugues. Um par liga 2 letras diferentes.",
+      "clears": "Salvar apaga as letras que você digitou.",
+      "save": "Salvar",
+      "cancel": "Cancelar"
     }
   }
 }

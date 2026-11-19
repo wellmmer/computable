@@ -456,6 +456,29 @@
       "labelRotor": "rotor {name} {letter}",
       "labelReflector": "reflector {letter}",
       "labelLamp": "lamp {letter}"
+    },
+    "settings": {
+      "title": "Change settings",
+      "rotors": "Rotors",
+      "rings": "Rings",
+      "reflector": "Reflector",
+      "plugs": "Plug pairs",
+      "rotorLeft": "Left rotor",
+      "rotorMiddle": "Middle rotor",
+      "rotorRight": "Right rotor",
+      "ringLeft": "Left ring",
+      "ringMiddle": "Middle ring",
+      "ringRight": "Right ring",
+      "plugsHelp": "Tap 2 letters to join them. Tap a joined letter to remove its pair.",
+      "plugJoined": "{letter}, joined to {other}",
+      "noPlugs": "No plug pairs",
+      "sameRotor": "Rotor {letters} is there twice. Use each rotor only once.",
+      "letterTwice": "The letter {letters} is in 2 plug pairs. A letter can be in only one pair.",
+      "tooManyPairs": "There are {letters} plug pairs. Use 13 or fewer.",
+      "notAPair": "“{letters}” is not a plug pair. A pair joins 2 different letters.",
+      "clears": "Saving clears the letters you typed.",
+      "save": "Save",
+      "cancel": "Cancel"
     }
   }
 }

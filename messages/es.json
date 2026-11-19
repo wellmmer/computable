@@ -456,6 +456,29 @@
       "labelRotor": "rotor {name} {letter}",
       "labelReflector": "reflector {letter}",
       "labelLamp": "lámpara {letter}"
+    },
+    "settings": {
+      "title": "Cambiar la configuración",
+      "rotors": "Rotores",
+      "rings": "Anillos",
+      "reflector": "Reflector",
+      "plugs": "Pares de clavijas",
+      "rotorLeft": "Rotor izquierdo",
+      "rotorMiddle": "Rotor central",
+      "rotorRight": "Rotor derecho",
+      "ringLeft": "Anillo izquierdo",
+      "ringMiddle": "Anillo central",
+      "ringRight": "Anillo derecho",
+      "plugsHelp": "Toca 2 letras para unirlas. Toca una letra unida para quitar su par.",
+      "plugJoined": "{letter}, unida a {other}",
+      "noPlugs": "Ningún par de clavijas",
+      "sameRotor": "El rotor {letters} aparece dos veces. Usa cada rotor solo una vez.",
+      "letterTwice": "La letra {letters} está en 2 pares de clavijas. Una letra puede estar en un solo par.",
+      "tooManyPairs": "Hay {letters} pares de clavijas. Usa 13 o menos.",
+      "notAPair": "«{letters}» no es un par de clavijas. Un par une 2 letras distintas.",
+      "clears": "Al guardar se borran las letras que escribiste.",
+      "save": "Guardar",
+      "cancel": "Cancelar"
     }
   }
 }

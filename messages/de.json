@@ -456,6 +456,29 @@
       "labelRotor": "Walze {name} {letter}",
       "labelReflector": "Umkehrwalze {letter}",
       "labelLamp": "Lampe {letter}"
+    },
+    "settings": {
+      "title": "Einstellungen ändern",
+      "rotors": "Walzen",
+      "rings": "Ringe",
+      "reflector": "Umkehrwalze",
+      "plugs": "Steckerpaare",
+      "rotorLeft": "Linke Walze",
+      "rotorMiddle": "Mittlere Walze",
+      "rotorRight": "Rechte Walze",
+      "ringLeft": "Linker Ring",
+      "ringMiddle": "Mittlerer Ring",
+      "ringRight": "Rechter Ring",
+      "plugsHelp": "Tippe 2 Buchstaben an, um sie zu verbinden. Tippe einen verbundenen Buchstaben an, um sein Paar zu lösen.",
+      "plugJoined": "{letter}, verbunden mit {other}",
+      "noPlugs": "Keine Steckerpaare",
+      "sameRotor": "Walze {letters} ist zweimal da. Nimm jede Walze nur einmal.",
+      "letterTwice": "Der Buchstabe {letters} steckt in 2 Steckerpaaren. Ein Buchstabe darf nur in einem Paar sein.",
+      "tooManyPairs": "Es sind {letters} Steckerpaare. Nimm 13 oder weniger.",
+      "notAPair": "„{letters}“ ist kein Steckerpaar. Ein Paar verbindet 2 verschiedene Buchstaben.",
+      "clears": "Speichern löscht die Buchstaben, die du getippt hast.",
+      "save": "Speichern",
+      "cancel": "Abbrechen"
     }
   }
 }
