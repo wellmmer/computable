@@ -80,6 +80,15 @@ describe('EnigmaLab (spec R3 3)', () => {
     expect(strip('Lamps lit')).toBe('WETTE RBERI CHT');
   });
 
+  it('starts a new message when a rotor turns with letters in the strips', () => {
+    renderWithIntl(<EnigmaLab />);
+    typeKeys('WE');
+    fireEvent.click(screen.getByRole('button', { name: 'Middle rotor: next letter' }));
+    expect(strip('You typed')).toBe('');
+    expect(screen.getByText('Lamps lit before you turned a rotor: PB')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Back to start (B M C)' })).toBeTruthy();
+  });
+
   it('clears the strips and keeps the rotors where they are', () => {
     renderWithIntl(<EnigmaLab />);
     typeKeys('WE');

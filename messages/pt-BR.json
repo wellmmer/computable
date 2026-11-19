@@ -498,6 +498,7 @@
       "clear": "Limpar",
       "hint": "Para decifrar: volte ao início e digite as letras acesas. As lâmpadas mostram a mensagem de novo.",
       "previousLit": "Lâmpadas acesas antes de você voltar: {letters}",
+      "previousLitTurned": "Lâmpadas acesas antes de você girar um rotor: {letters}",
       "litNews": "Lâmpada {letter}",
       "removedNews": "{letter} apagada"
     }

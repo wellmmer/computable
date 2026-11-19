@@ -59,11 +59,32 @@ describe('labReducer', () => {
     expect(run({ type: 'turn', slot: 0, by: -1 }, { type: 'turn', slot: 0, by: -1 }).positions).toEqual(['Z', 'L', 'A']);
   });
 
-  it('moves the start with the windows only while the strips are empty', () => {
-    expect(run({ type: 'turn', slot: 1, by: 1 }).start).toEqual(['B', 'M', 'A']);
-    const typing = run(...type('WE'), { type: 'turn', slot: 1, by: 1 });
-    expect(typing.positions).toEqual(['B', 'M', 'C']);
-    expect(typing.start).toEqual(['B', 'L', 'A']);
+  it('moves the start with the windows while the strips are empty', () => {
+    const lab = run({ type: 'turn', slot: 1, by: 1 });
+    expect(lab.start).toEqual(['B', 'M', 'A']);
+    expect(lab.previousLit).toBe('');
+  });
+
+  it('starts a new message when a rotor turns with letters in the strips', () => {
+    const lab = run(...type('WE'), { type: 'turn', slot: 1, by: 1 });
+    expect(lab.positions).toEqual(['B', 'M', 'C']);
+    expect(lab.start).toEqual(['B', 'M', 'C']);
+    expect(lab.typed).toEqual([]);
+    expect(lab.previousLit).toBe('PB');
+    expect(lab.previousLitAfter).toBe('turn');
+  });
+
+  it('decrypts the letters typed after a turn: WE, ▲ on the middle rotor, T, back to start, then the lit letters', () => {
+    const typing = run(...type('WE'), { type: 'turn', slot: 1, by: 1 }, ...type('T'));
+    const back = labReducer(typing, { type: 'back-to-start' });
+    expect(back.positions).toEqual(['B', 'M', 'C']);
+    expect(back.previousLitAfter).toBe('back');
+    expect(litLetters(type(back.previousLit).reduce(labReducer, back))).toBe('T');
+  });
+
+  it('does not undo a turn on Backspace', () => {
+    const lab = run(...type('WE'), { type: 'turn', slot: 1, by: 1 }, { type: 'backspace' });
+    expect(lab.positions).toEqual(['B', 'M', 'C']);
   });
 
   it('clears the strips and keeps the windows, which become the new start', () => {

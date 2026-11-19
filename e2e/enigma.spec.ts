@@ -34,6 +34,19 @@ test.describe('the Enigma lab (spec R3 3)', () => {
     await expect(strip(page, 'Lamps lit')).toHaveText('WETTE RBERI CHT');
   });
 
+  test('a ▲ turn in the middle of a message starts a new message, which still decrypts', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.keyboard.type('WE');
+    await page.getByRole('button', { name: 'Middle rotor: next letter' }).click();
+    await expect(page.getByText('Lamps lit before you turned a rotor: PB')).toBeVisible();
+    await expect(strip(page, 'You typed')).toHaveText('');
+    await page.keyboard.type('T');
+    const lit = await strip(page, 'Lamps lit').textContent();
+    await page.getByRole('button', { name: 'Back to start (B M C)' }).click();
+    await page.keyboard.type(lit ?? '');
+    await expect(strip(page, 'Lamps lit')).toHaveText('T');
+  });
+
   test('the on-screen keys and the ▲ and ▼ buttons work', async ({ page }) => {
     await openPage(page, '/en/enigma');
     await page.getByRole('button', { name: 'Left rotor: previous letter' }).click();

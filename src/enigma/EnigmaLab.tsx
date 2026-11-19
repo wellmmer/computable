@@ -134,7 +134,7 @@ export function EnigmaLab() {
             </button>
           </div>
           <p className="mt-2 text-sm text-muted">{t('hint')}</p>
-          {lab.previousLit !== '' && <p className="mt-2 font-mono text-sm">{t('previousLit', { letters: groupsOf5(lab.previousLit) })}</p>}
+          {lab.previousLit !== '' && <p className="mt-2 font-mono text-sm">{t(lab.previousLitAfter === 'turn' ? 'previousLitTurned' : 'previousLit', { letters: groupsOf5(lab.previousLit) })}</p>}
         </div>
       </div>
 

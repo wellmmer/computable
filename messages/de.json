@@ -498,6 +498,7 @@
       "clear": "Löschen",
       "hint": "Zum Entschlüsseln: zurück zum Start, dann die Leuchtbuchstaben tippen. Die Lampen zeigen wieder die Nachricht.",
       "previousLit": "Lampen vor dem Zurückgehen: {letters}",
+      "previousLitTurned": "Lampen vor dem Drehen einer Walze: {letters}",
       "litNews": "Lampe {letter}",
       "removedNews": "{letter} entfernt"
     }

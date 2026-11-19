@@ -498,6 +498,7 @@
       "clear": "Borrar",
       "hint": "Para descifrar: vuelve al inicio y escribe las letras encendidas. Las lámparas muestran el mensaje otra vez.",
       "previousLit": "Lámparas encendidas antes de volver: {letters}",
+      "previousLitTurned": "Lámparas encendidas antes de girar un rotor: {letters}",
       "litNews": "Lámpara {letter}",
       "removedNews": "{letter} borrada"
     }

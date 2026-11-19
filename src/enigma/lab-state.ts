@@ -26,8 +26,10 @@ export interface LabState {
   start: Positions;
   /** The letters in the "You typed" and "Lamps lit" strips. */
   typed: readonly TypedLetter[];
-  /** The lit letters from before the last "Back to start", so the visitor can type them to decrypt. */
+  /** The lit letters from before the last "Back to start" or rotor turn, so the visitor can type them to decrypt. */
   previousLit: string;
+  /** What emptied the strips into `previousLit`: "Back to start", or a ▲ or ▼ turn. */
+  previousLitAfter: 'back' | 'turn';
   /** What the live region says: the lamp that lit, or the letter Backspace removed. `id` makes it speak again. */
   news: { id: number; kind: 'lit' | 'removed'; letter: Letter } | null;
 }
@@ -41,7 +43,7 @@ export type LabAction =
   | { type: 'settings'; settings: EnigmaSettings };
 
 export function initialLab(): LabState {
-  return { settings: LAB_SETTINGS, positions: LAB_START, start: LAB_START, typed: [], previousLit: '', news: null };
+  return { settings: LAB_SETTINGS, positions: LAB_START, start: LAB_START, typed: [], previousLit: '', previousLitAfter: 'back', news: null };
 }
 
 export function labReducer(lab: LabState, action: LabAction): LabState {
@@ -60,11 +62,13 @@ export function labReducer(lab: LabState, action: LabAction): LabState {
     case 'turn': {
       const turn = (slot: 0 | 1 | 2) => (slot === action.slot ? letterAt(indexOf(lab.positions[slot]) + action.by) : lab.positions[slot]);
       const positions: Positions = [turn(0), turn(1), turn(2)];
-      // With letters in the strips, the start stays where the first letter was typed.
-      return { ...lab, positions, start: lab.typed.length === 0 ? positions : lab.start };
+      if (lab.typed.length === 0) return { ...lab, positions, start: positions };
+      // "Back to start" cannot replay a turn, so a turn in the middle of a message starts a new message.
+      return { ...lab, positions, start: positions, typed: [], previousLit: litLetters(lab), previousLitAfter: 'turn' };
     }
     case 'back-to-start':
-      return { ...lab, positions: lab.start, typed: [], previousLit: lab.typed.length === 0 ? lab.previousLit : litLetters(lab) };
+      if (lab.typed.length === 0) return { ...lab, positions: lab.start };
+      return { ...lab, positions: lab.start, typed: [], previousLit: litLetters(lab), previousLitAfter: 'back' };
     case 'clear':
       return { ...lab, start: lab.positions, typed: [], previousLit: '' };
     case 'settings':

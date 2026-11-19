@@ -498,6 +498,7 @@
       "clear": "Effacer",
       "hint": "Pour déchiffrer : revenez au début, puis tapez les lettres allumées. Les lampes montrent à nouveau le message.",
       "previousLit": "Lampes allumées avant le retour : {letters}",
+      "previousLitTurned": "Lampes allumées avant de tourner un rotor : {letters}",
       "litNews": "Lampe {letter}",
       "removedNews": "{letter} effacée"
     }

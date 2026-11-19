@@ -498,6 +498,7 @@
       "clear": "Clear",
       "hint": "To decrypt: go back to the start, then type the lit letters. The lamps show the message again.",
       "previousLit": "Lamps lit before you went back: {letters}",
+      "previousLitTurned": "Lamps lit before you turned a rotor: {letters}",
       "litNews": "Lamp {letter}",
       "removedNews": "Removed {letter}"
     }
