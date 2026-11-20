@@ -40,7 +40,8 @@
       "binary-plus-one": "Binario +1",
       "palindrome": "Detector de palíndromos",
       "turing-1936": "Turing 1936: 0 1 0 1…",
-      "tcc-2016": "Máquina del TCC (2016)"
+      "tcc-2016": "Máquina del TCC (2016)",
+      "one-rotor": "Cifrado de un rotor"
     },
     "share": {
       "copy": "Copiar enlace para compartir",
