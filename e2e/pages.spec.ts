@@ -63,6 +63,27 @@ test.describe('Home: "Type your own secret" (spec R3 4)', () => {
     await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText('HELLO XTURI NG');
   });
 
+  test('never erases text typed while the page is still loading', async ({ page }) => {
+    // Hold back the page's scripts, not its styles, so React hydrates only after the visitor typed.
+    let releaseScripts = () => {};
+    const scriptsHeld = new Promise<void>((resolve) => (releaseScripts = resolve));
+    await page.route(/\/_next\/static\/chunks\/.*\.js$/, async (route) => {
+      await scriptsHeld;
+      await route.continue();
+    });
+    await page.goto('/en', { waitUntil: 'commit' });
+    await textBox(page).pressSequentially('Hallo', { timeout: 10_000 });
+    const typedEarly = await textBox(page).inputValue();
+    releaseScripts();
+    await expect(page.getByRole('banner').locator('button[aria-pressed]')).toHaveAttribute('aria-pressed', /^(true|false)$/);
+    await expect(textBox(page)).toHaveValue(typedEarly);
+    // Once the page has loaded, the field takes the text and keeps it.
+    await textBox(page).pressSequentially('Welt');
+    await expect(textBox(page)).toHaveValue(`${typedEarly}Welt`);
+    await openPage(page, '/en');
+    await expect(textBox(page)).toHaveValue(`${typedEarly}Welt`);
+  });
+
   test('shows the secret first, then the two buttons, then Turing’s tape', async ({ page }) => {
     await openPage(page, '/en');
     const tops = await Promise.all(

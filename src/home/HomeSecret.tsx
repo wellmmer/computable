@@ -47,6 +47,8 @@ export function HomeSecret() {
           id="secret-text"
           value={plain}
           onChange={(event) => saveSecret(event.target.value)}
+          // Until the page has read the saved secret, React would erase what the visitor types. So the field waits.
+          readOnly={secret === undefined}
           rows={2}
           maxLength={250}
           spellCheck={false}
