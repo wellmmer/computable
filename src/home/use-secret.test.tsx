@@ -21,7 +21,7 @@ describe('useSecret', () => {
     fresh.forgetSecret();
   });
 
-  it('is null on the server, which cannot see the browser storage', () => {
+  it('is undefined on the server, which cannot see the browser storage', () => {
     function Status() {
       return <p>{useSecret() === undefined ? 'unknown' : 'known'}</p>;
     }
