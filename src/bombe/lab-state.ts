@@ -101,8 +101,11 @@ export function crashesHere(lab: BombeLab): number[] {
   return placeCount(lab) === 0 ? [] : crashes(secretLetters(lab), cribLetters(lab), lab.offset);
 }
 
+/** Why Start does not work: no secret letters, no crib, a crib too long, or a crash at its place. */
+export type Blocker = 'no-secret' | 'no-crib' | 'crib-too-long' | 'crash';
+
 /** Why Start does not work now, or null when it does. */
-export function blocker(lab: BombeLab): 'no-secret' | 'no-crib' | 'crib-too-long' | 'crash' | null {
+export function blocker(lab: BombeLab): Blocker | null {
   if (secretLetters(lab) === '') return 'no-secret';
   if (cribLetters(lab) === '') return 'no-crib';
   if (placeCount(lab) === 0) return 'crib-too-long';
