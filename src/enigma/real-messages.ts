@@ -80,6 +80,7 @@ export const REAL_MESSAGES: readonly RealMessage[] = [
         url: 'https://www.ciphermachinesandcryptology.com/files/Enigma%20Sim%20Manual.pdf',
       },
       { name: 'Frode Weierud, CryptoCellar: Enigma keys for July 1941', url: 'https://cryptocellar.org/bgac/e-keys-july-1941.html' },
+      { name: 'Frode Weierud, CryptoCellar: 1941 Message Overview', url: 'https://cryptocellar.org/bgac/1941-msg-list.html' },
     ],
   },
   {

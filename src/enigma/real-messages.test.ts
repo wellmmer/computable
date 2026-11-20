@@ -16,6 +16,8 @@ describe('the real messages (spec R3 4: checked against published sources on 202
   });
 
   it('gives each Barbarossa part the length in its header: 179 and 155 letters with the key group', () => {
+    // Weierud's overview lists RFUGZ 179/174 and FNJAU 155/150. The Rijmenants PDF cuts part 2 short, so the page links the overview.
+    expect(REAL_MESSAGES[0].sources.map(({ url }) => url)).toContain('https://cryptocellar.org/bgac/1941-msg-list.html');
     const [first, second] = REAL_MESSAGES[0].parts;
     expect(lettersOf(first.keyGroup + first.cipher)).toHaveLength(179);
     expect(lettersOf(second.keyGroup + second.cipher)).toHaveLength(155);
