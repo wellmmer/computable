@@ -36,11 +36,13 @@ test.describe('the menu and the footer (spec 4.2)', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Computable');
   });
 
-  test('links Enigma, and shows Bombe as coming soon, without a link', async ({ page }) => {
+  test('links Enigma, then Bombe, which opens the Bombe lab', async ({ page }) => {
     await openPage(page, '/en/about');
     const menu = page.getByRole('navigation', { name: 'Main menu' });
-    await expect(menu.getByRole('link')).toHaveText(['Learn', 'Simulator', 'Enigma']);
-    await expect(menu.getByText('Bombe, coming soon', { exact: true })).toBeVisible();
+    await expect(menu.getByRole('link')).toHaveText(['Learn', 'Simulator', 'Enigma', 'Bombe']);
+    await menu.getByRole('link', { name: 'Bombe' }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Bombe');
+    await expect(menu.getByRole('link', { name: 'Bombe' })).toHaveAttribute('aria-current', 'page');
   });
 
   test('works from the keyboard: the skip link, the menu, the language switcher, Tour and the theme switch', async ({ page }) => {
@@ -62,6 +64,7 @@ test.describe('the menu and the footer (spec 4.2)', () => {
       ['link', 'Support the dev'],
       ['button', 'Tour'],
       ['button', 'Language: English'],
+      ['link', 'Bombe'],
       ['link', 'Enigma'],
       ['link', 'Simulator'],
       ['link', 'Learn'],

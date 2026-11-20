@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { ROTOR_ORDERS } from '@/engines/bombe';
 import type { RotorName, Three } from '@/engines/enigma';
 import { useReducedMotion } from '@/simulator/components/use-reduced-motion';
@@ -12,6 +12,9 @@ import { ordersToSearch, readTestOrders } from './search-orders';
 import { StopsCard } from './StopsCard';
 import { workerSearch, type SearchRunner } from './worker-search';
 
+/** The page never changes "hydrated" after the first render, so nothing needs a subscription. */
+const noSubscription = () => () => {};
+
 /**
  * The Bombe lab (spec R4 3, layout B). From 768 px, the drum wall sits on the left and the cards on
  * the right. On phones, the page order is crib, menu, drum wall, stops. The search runs in a Web
@@ -22,6 +25,8 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   const [orders, setOrders] = useState<readonly Three<RotorName>[]>(ROTOR_ORDERS);
   const stopSearch = useRef<(() => void) | null>(null);
   const reducedMotion = useReducedMotion();
+  // The buttons work only after React loads. End-to-end tests wait for data-bombe="ready".
+  const hydrated = useSyncExternalStore(noSubscription, () => true, () => false);
   const menu = menuOf(lab);
 
   const end = () => {
@@ -49,7 +54,7 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   };
 
   return (
-    <div className="mt-6 grid gap-4 md:grid-cols-[1.2fr_1fr] md:items-start">
+    <div data-bombe={hydrated ? 'ready' : undefined} className="mt-6 grid gap-4 md:grid-cols-[1.2fr_1fr] md:items-start">
       <div className="md:col-start-2 md:row-start-1">
         <CribCard lab={lab} dispatch={dispatch} />
       </div>

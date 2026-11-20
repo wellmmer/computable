@@ -47,7 +47,7 @@ export function statesCutOff(page: Page, state?: string) {
   }, state ?? null);
 }
 
-/** The pages from plan R1c-1, the Learn pages from R2a-1 and the Enigma lab from R3a, with the heading each one shows. */
+/** The pages from plan R1c-1, the Learn pages from R2a-1, the Enigma lab from R3a and the Bombe lab from R4a, with the heading each one shows. */
 export const PAGES = [
   { name: 'home', path: '/en', heading: 'Computable' },
   { name: 'about', path: '/en/about', heading: 'About Computable' },
@@ -56,6 +56,7 @@ export const PAGES = [
   { name: 'learn', path: '/en/learn', heading: 'Learn' },
   { name: 'lesson', path: '/en/learn/intuition', heading: 'Intuition: the human computer' },
   { name: 'enigma', path: '/en/enigma', heading: 'Enigma I' },
+  { name: 'bombe', path: '/en/bombe', heading: 'Bombe' },
 ] as const;
 
 /**
