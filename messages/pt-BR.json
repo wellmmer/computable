@@ -44,7 +44,7 @@
       "one-rotor": "Cifra de um rotor"
     },
     "oneRotor": {
-      "note": "Os estados p0 a p3 são as 4 posições do rotor. Em cada um, a máquina escreve a letra que o rotor dá, anda para a direita e gira o rotor um passo. São 4 posições × 4 letras = 16 regras, e mais 4 regras param a máquina no fim da entrada. A mesma ideia com 26 letras precisa de 26 × 26 = 676 regras. O <lab>laboratório da Enigma</lab> tem 3 rotores e 26 letras."
+      "note": "Os estados p0 a p3 são as 4 posições do rotor. Em cada um, a máquina escreve a letra que o rotor dá, anda para a direita e gira o rotor um passo. São 4 posições × 4 letras = 16 regras, e mais 4 regras param a máquina no fim da entrada. A mesma ideia com 26 letras precisa de 26 × 26 = 676 regras, mais 26 para parar. O <lab>laboratório da Enigma</lab> tem 3 rotores e 26 letras."
     },
     "share": {
       "copy": "Copiar link de compartilhamento",

@@ -44,7 +44,7 @@
       "one-rotor": "Chiffre mit einer Walze"
     },
     "oneRotor": {
-      "note": "Die Zustände p0 bis p3 sind die 4 Stellungen der Walze. In jedem davon schreibt die Maschine den Buchstaben, den die Walze ergibt, geht nach rechts und dreht die Walze um einen Schritt. 4 Stellungen × 4 Buchstaben = 16 Regeln, dazu 4 Regeln, die die Maschine am Ende der Eingabe anhalten. Dieselbe Idee mit 26 Buchstaben braucht 26 × 26 = 676 Regeln. Das <lab>Enigma-Labor</lab> hat 3 Walzen und 26 Buchstaben."
+      "note": "Die Zustände p0 bis p3 sind die 4 Stellungen der Walze. In jedem davon schreibt die Maschine den Buchstaben, den die Walze ergibt, geht nach rechts und dreht die Walze um einen Schritt. 4 Stellungen × 4 Buchstaben = 16 Regeln, dazu 4 Regeln, die die Maschine am Ende der Eingabe anhalten. Dieselbe Idee mit 26 Buchstaben braucht 26 × 26 = 676 Regeln, dazu 26 zum Anhalten. Das <lab>Enigma-Labor</lab> hat 3 Walzen und 26 Buchstaben."
     },
     "share": {
       "copy": "Link zum Teilen kopieren",
