@@ -124,7 +124,9 @@ describe('One-rotor cipher', () => {
 
   it('never turns a letter into itself', () => {
     for (const input of allInputs) {
-      const output = rotor(input);
+      const run = createRun(m, input);
+      runUntilHalt(run);
+      const output = run.tape.toString();
       expect([...input].some((letter, index) => output[index] === letter)).toBe(false);
     }
   });
