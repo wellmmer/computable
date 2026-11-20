@@ -150,6 +150,28 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
+    // A real message loaded and typed, the answer checked, and every "What it says" open.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/enigma with a loaded message, a checked answer and open texts has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openPage(page, `${locale}/enigma`);
+          // The last card is the Scharnhorst message, with one button: load.
+          await page.getByRole('article').last().getByRole('button').click();
+          const box = page.locator('#decrypt-title').locator('..');
+          // The box's buttons: "Type it for me", then "Check my answer".
+          await box.getByRole('button').nth(0).click();
+          await box.getByRole('button').nth(1).click();
+          await expect(box.locator('[aria-live]')).not.toBeEmpty();
+          for (const summary of await page.locator('summary').all()) await summary.click();
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
+        }
+      });
+    }
+
     test("the Learn page's reset question has no axe violations", async ({ page }) => {
       await openPage(page, '/en/learn');
       await page.getByRole('button', { name: 'Reset my progress' }).click();

@@ -4,8 +4,11 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { isLetter } from '@/engines/enigma';
 import { CurrentPath } from './CurrentPath';
+import { DecryptBox } from './DecryptBox';
+import { lettersOf } from './key-sheet';
 import { groupsOf5, initialLab, labReducer, litLetters, typedLetters } from './lab-state';
 import { MachinePanel } from './MachinePanel';
+import { MessageList, type LoadedMessage } from './MessageList';
 import { SettingsDialog } from './SettingsDialog';
 
 /** The rotor names in the "enigma.machine" messages, by slot. */
@@ -21,6 +24,7 @@ const TEXT_FIELDS = 'input:not([type="checkbox"]):not([type="radio"]), select, t
  * The Enigma lab (spec R3 3, mockup lab-c-v2.html). Settings and typed letters live in this page
  * only: a reload starts again from the defaults. On phones, "Lamps lit" sits above the machine, so a
  * thumb on the keys never covers it; from 768 px, the strips and buttons sit right of the machine.
+ * The messages to decrypt sit under the lab (spec R3 4). A loaded message shows above the machine.
  */
 export function EnigmaLab() {
   const t = useTranslations('enigma.lab');
@@ -30,6 +34,8 @@ export function EnigmaLab() {
   const [changing, setChanging] = useState(false);
   const [copied, setCopied] = useState<'copied' | 'copyFailed' | null>(null);
   const changeButton = useRef<HTMLButtonElement>(null);
+  const [loaded, setLoaded] = useState<LoadedMessage | null>(null);
+  const decryptHeading = useRef<HTMLHeadingElement>(null);
 
   // The physical keyboard: letters press keys, Backspace takes the last one back.
   useEffect(() => {
@@ -52,6 +58,11 @@ export function EnigmaLab() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [changing]);
 
+  // A loaded message shows above the machine. Its heading takes the focus, so the page scrolls up to it.
+  useEffect(() => {
+    if (loaded !== null) decryptHeading.current?.focus();
+  }, [loaded]);
+
   // "Copied" goes back to "Copy lit letters" after 2 seconds.
   useEffect(() => {
     if (copied === null) return;
@@ -72,6 +83,8 @@ export function EnigmaLab() {
     }
     return t(kind === 'lit' ? 'litNews' : 'removedNews', { letter });
   };
+
+  const load = ({ settings, start }: LoadedMessage['sheet']) => dispatch({ type: 'load', settings, start });
 
   const copy = async () => {
     try {
@@ -104,6 +117,20 @@ export function EnigmaLab() {
           <span className="hidden sm:inline">{t('changeSettings')}</span>
         </button>
       </section>
+
+      {loaded !== null && (
+        <DecryptBox
+          key={loaded.title}
+          message={loaded}
+          lit={lit}
+          headingRef={decryptHeading}
+          onTypeForMe={() => {
+            load(loaded.sheet);
+            dispatch({ type: 'type', letters: lettersOf(loaded.sheet.cipher) });
+          }}
+          onClose={() => setLoaded(null)}
+        />
+      )}
 
       <div className="mt-4 grid gap-4 md:grid-cols-[1.25fr_1fr] md:grid-rows-[auto_auto_1fr]">
         <section aria-labelledby="lit-title" className="md:col-start-2 md:row-start-2">
@@ -153,6 +180,13 @@ export function EnigmaLab() {
       </div>
 
       <CurrentPath settings={lab.settings} last={last} />
+
+      <MessageList
+        onLoad={(message) => {
+          load(message.sheet);
+          setLoaded(message);
+        }}
+      />
 
       <p role="status" className="sr-only">
         {lab.news !== null && <span key={lab.news.id}>{news()}</span>}

@@ -95,6 +95,54 @@ test.describe('the Enigma lab (spec R3 3)', () => {
   });
 });
 
+test.describe('the messages under the lab (spec R3 4)', () => {
+  test('loads practice 3, decrypts it from the physical keyboard, and checks the answer', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.getByRole('button', { name: 'Load into the machine: Practice 3: plug pairs and rings' }).click();
+    const box = page.getByRole('region', { name: 'Decrypting: Practice 3: plug pairs and rings' });
+    await expect(box.getByRole('heading')).toBeFocused();
+    await expect(page.getByRole('button', { name: 'Back to start (Z O O)' })).toBeVisible();
+    await page.keyboard.type('XMIWIPCLAIMUPHVNBXSLNFBESKQMR');
+    await box.getByRole('button', { name: 'Check my answer' }).click();
+    await expect(box.getByText('Right! The message says: A LETTER NEVER BECOMES ITSELF')).toBeVisible();
+  });
+
+  test('types Barbarossa part 1, and the lamps light the published plain text', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.getByRole('button', { name: 'Load part 1: Operation Barbarossa, 1941' }).click();
+    await page.getByRole('button', { name: 'Type it for me' }).click();
+    await expect(strip(page, 'Lamps lit')).toHaveText(
+      'AUFKL XABTE ILUNG XVONX KURTI NOWAX KURTI NOWAX NORDW ESTLX SEBEZ XSEBE ZXUAF FLIEG ERSTR ASZER IQTUN GXDUB ROWKI XDUBR OWKIX OPOTS CHKAX OPOTS CHKAX UMXEI NSAQT DREIN ULLXU HRANG ETRET ENXAN GRIFF XINFX RGTX',
+    );
+  });
+
+  test('shows what the Scharnhorst message says, and links both sources', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    const card = page.getByRole('article', { name: 'The Scharnhorst’s last message, 1943' });
+    await card.getByText('What it says').click();
+    await expect(card.getByText('Am steering for Tanafjord. Position: square AC 4992. Speed: 20 knots. Scharnhorst.')).toBeVisible();
+    await expect(card.getByRole('link')).toHaveCount(2);
+  });
+});
+
+const PRACTICE_1 = [
+  { path: '/en', lit: 'HELLO XFROM XBLET CHLEY XPARK' },
+  { path: '/pt-br', lit: 'OLAXD EXBLE TCHLE YXPAR K' },
+  { path: '/es', lit: 'HOLAX DESDE XBLET CHLEY XPARK' },
+  { path: '/fr', lit: 'BONJO URXDE XBLET CHLEY XPARK' },
+  { path: '/de', lit: 'HALLO XAUSX BLETC HLEYX PARK' },
+] as const;
+
+for (const { path, lit } of PRACTICE_1) {
+  test(`${path}/enigma decrypts practice 1 in its own language`, async ({ page }) => {
+    await openPage(page, `${path}/enigma`);
+    // The first card is practice 1, with one button: load. The box's first button types the message.
+    await page.getByRole('article').first().getByRole('button').click();
+    await page.locator('#decrypt-title').locator('..').getByRole('button').first().click();
+    await expect(page.locator('[data-strip]').first()).toHaveText(lit);
+  });
+}
+
 const LANGUAGES = [
   { path: '/en', lit: 'Lamps lit', change: 'Change settings' },
   { path: '/pt-br', lit: 'Lâmpadas acesas', change: 'Mudar as configurações' },
@@ -128,6 +176,17 @@ test.describe('on a phone, 390 × 844', () => {
     const drawing = page.getByRole('img', { name: /^Key W/ });
     await expect(drawing).toHaveCount(1);
     await expect(drawing).toHaveAttribute('viewBox', '0 0 300 500');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+  });
+
+  test('puts a loaded message above "Lamps lit", and the open messages fit the width', async ({ page }) => {
+    await openPage(page, '/en/enigma');
+    await page.getByRole('button', { name: 'Load part 2: Operation Barbarossa, 1941' }).click();
+    const boxBox = await page.getByRole('region', { name: 'Decrypting: Operation Barbarossa, 1941, part 2' }).boundingBox();
+    const litBox = await strip(page, 'Lamps lit').boundingBox();
+    if (boxBox === null || litBox === null) throw new Error('no box or strip');
+    expect(boxBox.y + boxBox.height).toBeLessThan(litBox.y);
+    for (const summary of await page.locator('summary').all()) await summary.click();
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
   });
 });

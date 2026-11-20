@@ -501,6 +501,52 @@
       "previousLitTurned": "Lâmpadas acesas antes de você girar um rotor: {letters}",
       "litNews": "Lâmpada {letter}",
       "removedNews": "{letter} apagada"
+    },
+    "messages": {
+      "title": "Mensagens para decifrar",
+      "lead": "Carregue uma mensagem na máquina e digite as letras secretas. As lâmpadas acendem a mensagem.",
+      "spaces": "A Enigma não tem tecla de espaço. Por isso, os operadores digitavam X entre as palavras.",
+      "practice": "Treino",
+      "practice1": "Treino 1: sem pares de plugues",
+      "practice2": "Treino 2: pares de plugues",
+      "practice3": "Treino 3: pares de plugues e anéis",
+      "real": "Mensagens reais da guerra",
+      "start": "Início",
+      "secret": "Letras secretas",
+      "load": "Carregar na máquina",
+      "loadPart": "Carregar a parte {part}",
+      "part": "Parte {part}",
+      "titlePart": "{title}, parte {part}",
+      "keyGroup": "O primeiro grupo, {group}, só indicava a chave. Ele fica de fora aqui.",
+      "hiddenStart": "O operador enviou o início escondido: a partir de {from}, digitar {typed} acende {start}.",
+      "whatItSays": "O que ela diz",
+      "asPublished": "Como foi publicada",
+      "readable": "Em alemão legível",
+      "translation": "Em português",
+      "sources": "Fontes",
+      "barbarossa": {
+        "title": "Operação Barbarossa, 1941",
+        "about": "Em 7 de julho de 1941, uma divisão alemã na Rússia enviou este relatório em 2 partes. Frode Weierud e Geoff Sullivan o decifraram nos nossos dias.",
+        "rules": "X é um espaço, Q muitas vezes vale CH, e os nomes aparecem duas vezes.",
+        "text": "Unidade de reconhecimento de Kurtinowa, a noroeste de Sebez, no corredor aéreo em direção a Dubrowki e Opotschka. Partiu às 18h30. Ataque: o Regimento de Infantaria 3 avança devagar, mas com segurança. 17h06: 1º Batalhão do Regimento de Infantaria 3 no corredor aéreo, com a frente a 16 km a leste de Kamenec. Comandante da divisão."
+      },
+      "scharnhorst": {
+        "title": "A última mensagem do Scharnhorst, 1943",
+        "about": "Em 26 de dezembro de 1943, o navio de guerra alemão Scharnhorst enviou esta mensagem na sua última batalha. Ele afundou pouco depois. O Projeto M4 decifrou a mensagem em 2008.",
+        "rules": "J vem antes e depois do nome do lugar. AAA CCC quer dizer o quadrado AC.",
+        "text": "Rumo ao Tanafjord. Posição: quadrado AC 4992. Velocidade: 20 nós. Scharnhorst."
+      }
+    },
+    "decrypt": {
+      "title": "Decifrando: {title}",
+      "help": "Digite estas letras ou toque em “Digitar para mim”. As lâmpadas acendem a mensagem.",
+      "typeForMe": "Digitar para mim",
+      "check": "Conferir minha resposta",
+      "close": "Fechar",
+      "empty": "Digite as letras secretas primeiro.",
+      "right": "Certo! A mensagem diz: {text}",
+      "soFar": "Até aqui, tudo certo: {right} de {total} letras estão certas. Continue digitando.",
+      "wrong": "A letra {at} não está certa. O Backspace apaga letras."
     }
   }
 }
