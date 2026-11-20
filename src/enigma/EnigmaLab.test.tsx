@@ -70,6 +70,18 @@ describe('EnigmaLab (spec R3 3)', () => {
     expect(settings.getAttribute('data-keys')).toBeNull();
   });
 
+  it('shows a blinking caret after the typed letters while the keyboard types, and hides it while the settings dialog is open', () => {
+    renderWithIntl(<EnigmaLab />);
+    const typed = () => screen.getByRole('region', { name: 'You typed' }).querySelector('[data-strip]');
+    const caret = () => typed()?.querySelector('[data-caret]') ?? null;
+    expect(caret()?.getAttribute('aria-hidden')).toBe('true');
+    typeKeys('WET');
+    expect(typed()?.lastElementChild).toBe(caret());
+    expect(strip('You typed')).toBe('WET');
+    fireEvent.click(screen.getAllByRole('button', { name: /^Change/ })[0]);
+    expect(caret()).toBeNull();
+  });
+
   it('ignores keys with Ctrl, Alt or Cmd, and keys that are not letters', () => {
     renderWithIntl(<EnigmaLab />);
     typeKeys('c', { ctrlKey: true });

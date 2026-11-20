@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { isLetter } from '@/engines/enigma';
 import { CurrentPath } from './CurrentPath';
 import { DecryptBox } from './DecryptBox';
@@ -16,6 +16,9 @@ const SLOT_NAMES = ['left', 'middle', 'right'] as const;
 
 const button = 'border-2 border-ink px-3 py-1.5 font-semibold disabled:opacity-50';
 const strip = 'min-h-11 border border-soft bg-cell px-2.5 py-2 font-mono text-[17px] font-medium tracking-[2px] [word-spacing:6px] break-words';
+
+/** The page never changes "hydrated" after the first render, so nothing needs a subscription. */
+const noSubscription = () => () => {};
 
 /** Typing in these fields must not press Enigma keys. */
 const TEXT_FIELDS = 'input:not([type="checkbox"]):not([type="radio"]), select, textarea, [contenteditable]';
@@ -39,6 +42,9 @@ export function EnigmaLab() {
   const decryptHeading = useRef<HTMLHeadingElement>(null);
   /** The "Load" button that opened the box. "Close" gives the focus back to it. */
   const loadButton = useRef<HTMLButtonElement | null>(null);
+  // The keyboard types only after React loads, and not while the settings dialog is open. The caret shows only then.
+  const hydrated = useSyncExternalStore(noSubscription, () => true, () => false);
+  const keysOn = hydrated && !changing;
 
   // The physical keyboard: letters press keys, Backspace takes the last one back.
   useEffect(() => {
@@ -171,6 +177,7 @@ export function EnigmaLab() {
           </h2>
           <div data-strip className={strip}>
             {groupsOf5(typedLetters(lab))}
+            {keysOn && <span data-caret aria-hidden="true" className="typing-caret" />}
           </div>
         </section>
 
