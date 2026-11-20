@@ -126,19 +126,18 @@ test.describe('the messages under the lab (spec R3 4)', () => {
 });
 
 const PRACTICE_1 = [
-  { path: '/en', lit: 'HELLO XFROM XBLET CHLEY XPARK' },
-  { path: '/pt-br', lit: 'OLAXD EXBLE TCHLE YXPAR K' },
-  { path: '/es', lit: 'HOLAX DESDE XBLET CHLEY XPARK' },
-  { path: '/fr', lit: 'BONJO URXDE XBLET CHLEY XPARK' },
-  { path: '/de', lit: 'HALLO XAUSX BLETC HLEYX PARK' },
+  { path: '/en', load: 'Load into the machine: Practice 1: no plug pairs', box: 'Decrypting: Practice 1: no plug pairs', typeForMe: 'Type it for me', lit: 'HELLO XFROM XBLET CHLEY XPARK' },
+  { path: '/pt-br', load: 'Carregar na máquina: Treino 1: sem pares de plugues', box: 'Decifrando: Treino 1: sem pares de plugues', typeForMe: 'Digitar para mim', lit: 'OLAXD EXBLE TCHLE YXPAR K' },
+  { path: '/es', load: 'Cargar en la máquina: Práctica 1: sin pares de clavijas', box: 'Descifrando: Práctica 1: sin pares de clavijas', typeForMe: 'Escríbelo por mí', lit: 'HOLAX DESDE XBLET CHLEY XPARK' },
+  { path: '/fr', load: 'Charger dans la machine: Entraînement 1 : sans paires de fiches', box: 'Déchiffrement : Entraînement 1 : sans paires de fiches', typeForMe: 'Taper pour moi', lit: 'BONJO URXDE XBLET CHLEY XPARK' },
+  { path: '/de', load: 'In die Maschine laden: Übung 1: keine Steckerpaare', box: 'Entschlüsseln: Übung 1: keine Steckerpaare', typeForMe: 'Für mich tippen', lit: 'HALLO XAUSX BLETC HLEYX PARK' },
 ] as const;
 
-for (const { path, lit } of PRACTICE_1) {
+for (const { path, load, box, typeForMe, lit } of PRACTICE_1) {
   test(`${path}/enigma decrypts practice 1 in its own language`, async ({ page }) => {
     await openLab(page, `${path}/enigma`);
-    // The first card is practice 1, with one button: load. The box's first button types the message.
-    await page.getByRole('article').first().getByRole('button').click();
-    await page.locator('#decrypt-title').locator('..').getByRole('button').first().click();
+    await page.getByRole('button', { name: load }).click();
+    await page.getByRole('region', { name: box }).getByRole('button', { name: typeForMe }).click();
     await expect(page.locator('[data-strip]').first()).toHaveText(lit);
   });
 }
