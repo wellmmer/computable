@@ -43,6 +43,9 @@
       "tcc-2016": "Máquina del TCC (2016)",
       "one-rotor": "Cifrado de un rotor"
     },
+    "oneRotor": {
+      "note": "Los estados p0 a p3 son las 4 posiciones del rotor. En cada uno, la máquina escribe la letra que da el rotor, se mueve a la derecha y gira el rotor un paso. Son 4 posiciones × 4 letras = 16 reglas, y otras 4 reglas detienen la máquina al final de la entrada. La misma idea con 26 letras necesita 26 × 26 = 676 reglas. El <lab>laboratorio Enigma</lab> tiene 3 rotores y 26 letras."
+    },
     "share": {
       "copy": "Copiar enlace para compartir",
       "copied": "Enlace copiado.",

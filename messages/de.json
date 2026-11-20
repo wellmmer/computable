@@ -41,7 +41,10 @@
       "palindrome": "Palindrom-Prüfer",
       "turing-1936": "Turing 1936: 0 1 0 1…",
       "tcc-2016": "TCC-Maschine (2016)",
-      "one-rotor": "Ein-Rotor-Chiffre"
+      "one-rotor": "Chiffre mit einer Walze"
+    },
+    "oneRotor": {
+      "note": "Die Zustände p0 bis p3 sind die 4 Stellungen der Walze. In jedem davon schreibt die Maschine den Buchstaben, den die Walze ergibt, geht nach rechts und dreht die Walze um einen Schritt. 4 Stellungen × 4 Buchstaben = 16 Regeln, dazu 4 Regeln, die die Maschine am Ende der Eingabe anhalten. Dieselbe Idee mit 26 Buchstaben braucht 26 × 26 = 676 Regeln. Das <lab>Enigma-Labor</lab> hat 3 Walzen und 26 Buchstaben."
     },
     "share": {
       "copy": "Link zum Teilen kopieren",
