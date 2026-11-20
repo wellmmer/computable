@@ -25,6 +25,11 @@
   --ivory: #ece4d4;
   --lamp-off: #3a352e;
   --lamp-off-ink: #ada490;
+  /* The Bombe's drums (R1 spec): left rotor red, middle yellow, right green, the same in both themes. */
+  --drum-left: #b23a2e;
+  --drum-middle: #c9a227;
+  --drum-right: #3e7d4f;
+  --on-drum: #ffffff;
   /* The reflector's box in the path drawing: ivory on squared paper, a dark warm grey on night paper. */
   --reflector: #ece4d4;
   color-scheme: light;
@@ -82,6 +87,10 @@
   --color-lamp-off: var(--lamp-off);
   --color-lamp-off-ink: var(--lamp-off-ink);
   --color-reflector: var(--reflector);
+  --color-drum-left: var(--drum-left);
+  --color-drum-middle: var(--drum-middle);
+  --color-drum-right: var(--drum-right);
+  --color-on-drum: var(--on-drum);
   /* --font-math draws Turing's Fraktur state letters (𝔟, 𝔠, 𝔢, 𝔨) in every text style. */
   --font-display: var(--font-spectral), var(--font-math), Georgia, serif;
   --font-sans: var(--font-plex-sans), var(--font-math), system-ui, sans-serif;
