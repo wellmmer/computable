@@ -7,11 +7,11 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: releases 1, 2, 3a and 3b are live at https://computable-lac.vercel.app.** This repo held
+> **Status: releases 1, 2 and 3 are live at https://computable-lac.vercel.app.** This repo held
 > a 2016 capstone project built with jQuery. It is now Computable, built release by release. Release
 > 1 is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. Release
-> 3a adds a working Enigma I, and release 3b adds messages to decrypt and a new Home. The roadmap
-> below lists the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
+> 3a adds a working Enigma I, and release 3b adds messages to decrypt and a new Home. Release 3c adds
+> a one-rotor cipher to the simulator. The roadmap below lists the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -40,7 +40,7 @@ machine could do the same work.
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
-| **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b). Planned: a one-rotor machine in the simulator (R3c) |
+| **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
 
@@ -140,7 +140,9 @@ machine could do the same work.
   letters. The secret stays in your browser only. "Forget my secret" deletes it.
 - **Clearer to use.** A blinking caret in "You typed" shows that the lab listens to your keyboard.
   On every page, buttons show the hand cursor, and framed buttons lift a little under the mouse.
-- **Coming next:** a one-rotor machine in the simulator (R3c).
+- **A one-rotor machine in the simulator.** The example "One-rotor cipher" is a Turing machine on
+  the letters A B C D. Its states p0 to p3 are the 4 rotor positions, so 16 rules do the work of one rotor.
+  A note says why 26 letters would need 26 × 26 = 676 rules, and links to the lab.
 
 ## The machine format
 
