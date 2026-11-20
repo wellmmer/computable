@@ -1,4 +1,4 @@
-import { indexOf, letterAt, press, type EnigmaSettings, type Letter, type PathPoint, type Positions } from '@/engines/enigma';
+import { indexOf, isLetter, letterAt, press, type EnigmaSettings, type Letter, type PathPoint, type Positions } from '@/engines/enigma';
 
 /** The lab's settings when the page opens (spec R3 3). A reload comes back to them. */
 export const LAB_SETTINGS: EnigmaSettings = {
@@ -40,7 +40,9 @@ export type LabAction =
   | { type: 'turn'; slot: 0 | 1 | 2; by: 1 | -1 }
   | { type: 'back-to-start' }
   | { type: 'clear' }
-  | { type: 'settings'; settings: EnigmaSettings };
+  | { type: 'settings'; settings: EnigmaSettings }
+  | { type: 'load'; settings: EnigmaSettings; start: Positions }
+  | { type: 'type'; letters: string };
 
 export function initialLab(): LabState {
   return { settings: LAB_SETTINGS, positions: LAB_START, start: LAB_START, typed: [], previousLit: '', previousLitAfter: 'back', news: null };
@@ -74,6 +76,11 @@ export function labReducer(lab: LabState, action: LabAction): LabState {
       return { ...lab, start: lab.positions, typed: [], previousLit: '' };
     case 'settings':
       return { ...lab, settings: action.settings, start: lab.positions, typed: [], previousLit: '' };
+    case 'load':
+      // A message from the list: its key sheet's settings, and the rotors at its start.
+      return { ...lab, settings: action.settings, positions: action.start, start: action.start, typed: [], previousLit: '' };
+    case 'type':
+      return [...action.letters].filter(isLetter).reduce((next, key) => labReducer(next, { type: 'press', key }), lab);
   }
 }
 
