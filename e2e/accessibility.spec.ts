@@ -23,6 +23,15 @@ for (const colorScheme of ['light', 'dark'] as const) {
       expect(results.violations).toEqual([]);
     });
 
+    test('the one-rotor cipher with its note has no axe violations', async ({ page }) => {
+      await openSimulator(page);
+      await pickExample(page, 'One-rotor cipher');
+      await expect(page.getByTestId('example-note')).toBeVisible();
+      await page.getByRole('button', { name: 'Step', exact: true }).click();
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
     test('the key hints on the buttons, such as [E] and [?], have a contrast of at least 4.5:1', async ({ page }) => {
       // axe skips them, because they are aria-hidden. They are still text that people read (WCAG 1.4.3).
       await openSimulator(page);
