@@ -542,13 +542,13 @@
       "sources": "Fontes",
       "barbarossa": {
         "title": "Operação Barbarossa, 1941",
-        "about": "Em 7 de julho de 1941, uma divisão alemã na Rússia enviou este relatório em 2 partes. Frode Weierud e Geoff Sullivan o decifraram nos nossos dias.",
+        "about": "Em 7 de julho de 1941, uma divisão alemã na Rússia enviou este relatório em 2 partes. Frode Weierud e Geoff Sullivan o decifraram, no projeto deles para decifrar mensagens alemãs da guerra.",
         "rules": "X é um espaço, Q muitas vezes vale CH, e os nomes aparecem duas vezes.",
         "text": "Unidade de reconhecimento de Kurtinowa, a noroeste de Sebez, no corredor aéreo em direção a Dubrowki e Opotschka. Partiu às 18h30. Ataque: o Regimento de Infantaria 3 avança devagar, mas com segurança. 17h06: 1º Batalhão do Regimento de Infantaria 3 no corredor aéreo, com a frente a 16 km a leste de Kamenec. Comandante da divisão."
       },
       "scharnhorst": {
         "title": "A última mensagem do Scharnhorst, 1943",
-        "about": "Em 26 de dezembro de 1943, o navio de guerra alemão Scharnhorst enviou esta mensagem na sua última batalha. Ele afundou pouco depois. O Projeto M4 decifrou a mensagem em 2008.",
+        "about": "Em 26 de dezembro de 1943, o navio de guerra alemão Scharnhorst enviou esta mensagem na sua última batalha. Ele afundou pouco depois. O Projeto M4 decifrou a mensagem em 28 de maio de 2008.",
         "rules": "J vem antes e depois do nome do lugar. AAA CCC quer dizer o quadrado AC.",
         "text": "Rumo ao Tanafjord. Posição: quadrado AC 4992. Velocidade: 20 nós. Scharnhorst."
       }

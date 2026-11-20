@@ -542,13 +542,13 @@
       "sources": "Quellen",
       "barbarossa": {
         "title": "Unternehmen Barbarossa, 1941",
-        "about": "Am 7. Juli 1941 schickte eine deutsche Division in Russland diesen Bericht in 2 Teilen. Frode Weierud und Geoff Sullivan haben ihn in unserer Zeit entschlüsselt.",
+        "about": "Am 7. Juli 1941 schickte eine deutsche Division in Russland diesen Bericht in 2 Teilen. Frode Weierud und Geoff Sullivan haben ihn entschlüsselt, in ihrem Projekt zum Entschlüsseln deutscher Nachrichten aus dem Krieg.",
         "rules": "X ist ein Leerzeichen, Q steht oft für CH, und Namen stehen zweimal da.",
         "text": "Die Aufklärungsabteilung ist um 18:30 Uhr von Kurtinowa, nordwestlich von Sebez, auf der Fliegerstraße in Richtung Dubrowki und Opotschka losgefahren. Angriff: Das Infanterie-Regiment 3 kommt langsam, aber sicher voran. 17:06 Uhr: Das I. Bataillon des Infanterie-Regiments 3 steht auf der Fliegerstraße, seine Spitze 16 km östlich von Kamenec. Der Divisionskommandeur."
       },
       "scharnhorst": {
         "title": "Die letzte Nachricht der Scharnhorst, 1943",
-        "about": "Am 26. Dezember 1943 schickte das deutsche Kriegsschiff Scharnhorst diese Nachricht in seiner letzten Schlacht. Es sank kurz danach. Das M4-Projekt hat die Nachricht 2008 entschlüsselt.",
+        "about": "Am 26. Dezember 1943 schickte das deutsche Kriegsschiff Scharnhorst diese Nachricht in seiner letzten Schlacht. Es sank kurz danach. Das M4-Projekt hat die Nachricht am 28. Mai 2008 entschlüsselt.",
         "rules": "J steht vor und nach dem Ortsnamen. AAA CCC bedeutet das Quadrat AC.",
         "text": "Ich steuere den Tanafjord an. Standort: Quadrat AC 4992. Fahrt: 20 Seemeilen pro Stunde. Scharnhorst."
       }

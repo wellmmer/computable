@@ -542,13 +542,13 @@
       "sources": "Sources",
       "barbarossa": {
         "title": "Operation Barbarossa, 1941",
-        "about": "On 7 July 1941, a German division in Russia sent this report in 2 parts. Frode Weierud and Geoff Sullivan broke it in our time.",
+        "about": "On 7 July 1941, a German division in Russia sent this report in 2 parts. Frode Weierud and Geoff Sullivan broke it, in their project to break German wartime messages.",
         "rules": "X is a space, Q often stands for CH, and names are written twice.",
         "text": "Reconnaissance unit from Kurtinowa, north-west of Sebez, on the flight corridor towards Dubrowki and Opotschka. Set off at 18:30. Attack: Infantry Regiment 3 moves forward slowly but surely. 17:06: 1st Battalion, Infantry Regiment 3, on the flight corridor, its front 16 km east of Kamenec. Division commander."
       },
       "scharnhorst": {
         "title": "The Scharnhorst’s last message, 1943",
-        "about": "On 26 December 1943, the German warship Scharnhorst sent this message in its last battle. It sank soon after. The M4 Project broke the message in 2008.",
+        "about": "On 26 December 1943, the German warship Scharnhorst sent this message in its last battle. It sank soon after. The M4 Project broke the message on 28 May 2008.",
         "rules": "J comes before and after the place name. AAA CCC stands for the square AC.",
         "text": "Am steering for Tanafjord. Position: square AC 4992. Speed: 20 knots. Scharnhorst."
       }
