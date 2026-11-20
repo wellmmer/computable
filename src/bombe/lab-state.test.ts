@@ -67,8 +67,9 @@ describe('the crib card (spec R4 3, "Crib card")', () => {
     expect(hints(run({ type: 'crib', text: 'WET' }))).toEqual({ short: false, noLoop: false });
   });
 
-  it('gives the menu of the crib at its place', () => {
+  it('gives the menu of the crib at its place, and no links while the crib has no place', () => {
     expect(menuOf(run({ type: 'practice' })).loops).toBe(3);
+    expect(menuOf(run({ type: 'secret', text: 'ABC' })).links).toEqual([]);
   });
 });
 

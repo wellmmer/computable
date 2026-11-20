@@ -90,8 +90,9 @@ export function bombeReducer(lab: BombeLab, action: BombeAction): BombeLab {
   }
 }
 
-/** The menu of the crib at its place. */
+/** The menu of the crib at its place. It has no links while the crib has no place. */
 export function menuOf(lab: BombeLab): Menu {
+  if (placeCount(lab) === 0) return buildMenu('', '', 0);
   return buildMenu(secretLetters(lab), cribLetters(lab), lab.offset);
 }
 
