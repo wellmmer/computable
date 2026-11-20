@@ -35,6 +35,18 @@ describe('HomeSecret (spec R3 4, "Type your own secret")', () => {
     expect(JSON.parse(localStorage.getItem(SECRET_KEY) ?? 'null')).toMatchObject({ plain: 'Wetterbericht!', cipher: 'PBJGOLIZQMQGZ' });
   });
 
+  it('reads a lamp aloud only after a key press, and says which letter Backspace removed', () => {
+    saveSecret('Wetterbericht');
+    renderWithIntl(<HomeSecret />);
+    expect(screen.getByRole('status').textContent).toBe('');
+    fireEvent.change(textBox(), { target: { value: 'Wetterberich' } });
+    expect(screen.getByRole('status').textContent).toBe('Removed T');
+    fireEvent.change(textBox(), { target: { value: 'Wetterbericht' } });
+    expect(screen.getByRole('status').textContent).toBe('Lamp Z');
+    fireEvent.change(textBox(), { target: { value: 'Wetterbericht!' } });
+    expect(screen.getByRole('status').textContent).toBe('');
+  });
+
   it('shows the secret that the browser kept', () => {
     saveSecret('Hallo Welt');
     renderWithIntl(<HomeSecret />);

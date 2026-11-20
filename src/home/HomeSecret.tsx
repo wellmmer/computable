@@ -1,8 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useRef } from 'react';
-import { isLetter } from '@/engines/enigma';
+import { useRef, useState } from 'react';
+import { isLetter, type Letter } from '@/engines/enigma';
 import { groupsOf5 } from '@/enigma/lab-state';
 import { Lampboard } from '@/enigma/Lampboard';
 import { encryptSecret, HOME_SETTINGS, HOME_START } from './secret';
@@ -17,6 +17,7 @@ const strip = 'min-h-11 border border-soft bg-cell px-2.5 py-2 font-mono text-[1
  */
 export function HomeSecret() {
   const t = useTranslations('home.secret');
+  const tLab = useTranslations('enigma.lab');
   const secret = useSecret();
   const plain = secret?.plain ?? '';
   const { letters, cipher } = encryptSecret(plain);
@@ -24,10 +25,24 @@ export function HomeSecret() {
   const lit = lamp !== undefined && isLetter(lamp) ? lamp : null;
   const { rotors, rings, plugs, reflector } = HOME_SETTINGS;
   const textField = useRef<HTMLTextAreaElement>(null);
+  // What the live region says. Only typing sets it, so a saved secret is not read aloud on page load. `id` makes it speak again.
+  const [news, setNews] = useState<{ id: number; kind: 'lit' | 'removed'; letter: Letter } | null>(null);
+
+  const type = (text: string) => {
+    const next = encryptSecret(text);
+    const id = (news?.id ?? 0) + 1;
+    const lastLamp = next.cipher.at(-1);
+    const removed = letters.at(-1);
+    if (next.letters.length > letters.length && lastLamp !== undefined && isLetter(lastLamp)) setNews({ id, kind: 'lit', letter: lastLamp });
+    else if (next.letters.length < letters.length && removed !== undefined && isLetter(removed)) setNews({ id, kind: 'removed', letter: removed });
+    else setNews(null);
+    saveSecret(text);
+  };
 
   // "Forget my secret" turns itself off, so the focus would drop to the page. It goes to the empty text field instead.
   const forget = () => {
     forgetSecret();
+    setNews(null);
     textField.current?.focus();
   };
 
@@ -46,7 +61,7 @@ export function HomeSecret() {
           ref={textField}
           id="secret-text"
           value={plain}
-          onChange={(event) => saveSecret(event.target.value)}
+          onChange={(event) => type(event.target.value)}
           // Until the page has read the saved secret, React would erase what the visitor types. So the field waits.
           readOnly={secret === undefined}
           rows={2}
@@ -90,7 +105,7 @@ export function HomeSecret() {
         <p className="text-sm text-muted">{t('stays')}</p>
       </div>
       <p role="status" className="sr-only">
-        {lit !== null && <span key={cipher.length}>{t('litNews', { letter: lit })}</span>}
+        {news !== null && <span key={news.id}>{news.kind === 'lit' ? t('litNews', { letter: news.letter }) : tLab('removedNews', { letter: news.letter })}</span>}
       </p>
     </section>
   );
