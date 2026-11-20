@@ -566,7 +566,67 @@
       "empty": "Digite as letras secretas primeiro.",
       "right": "Certo! A mensagem diz: {text}",
       "soFar": "Até aqui, tudo certo: {right} de {total} letras estão certas. Continue digitando.",
-      "wrong": "A letra {at} não está certa. O Backspace apaga letras."
+      "wrong": "A letra {at} não está certa. O Backspace apaga letras.",
+      "bombeStop": "Parada da Bombe, rotores {rotors}, início {start}",
+      "partial": "A Bombe encontrou só alguns pares de plugues. Letras que ela não alcançou podem sair erradas."
+    }
+  },
+  "bombe": {
+    "page": {
+      "title": "Bombe",
+      "lead": "Dê à Bombe uma palavra que você sabe que está na mensagem. Ela encontra a chave."
+    },
+    "crib": {
+      "title": "Crib",
+      "secret": "Letras secretas",
+      "secretHelp": "Cole as letras secretas de uma mensagem. Espaços não importam.",
+      "practice": "Carregar a mensagem de treino",
+      "practiceAbout": "A mensagem de treino é um boletim do tempo alemão inventado. Ela começa com WETTERBERICHT, “boletim do tempo”.",
+      "crib": "Crib: uma palavra que você sabe que está na mensagem",
+      "slideLeft": "Deslizar o crib para a esquerda",
+      "slideRight": "Deslizar o crib para a direita",
+      "place": "Posição {place} de {count}",
+      "lined": "Letras secretas nesta posição: {secret}. Crib: {crib}.",
+      "fits": "Nenhuma letra vira ela mesma aqui.",
+      "crashes": "{count, plural, one {# letra viraria ela mesma (em vermelho).} other {# letras virariam elas mesmas (em vermelho).}} A Enigma nunca faz isso, então o crib não pode ficar aqui.",
+      "tooLong": "O crib é mais longo que as letras secretas.",
+      "hintShort": "Dica: use um crib de 10 letras ou mais. Um crib curto dá muitas paradas falsas.",
+      "hintNoLoop": "Dica: este menu não tem laço. Deslize o crib ou aumente o crib para ter menos paradas falsas."
+    },
+    "menu": {
+      "title": "Menu: {loops, plural, =0 {nenhum laço} one {# laço} other {# laços}}",
+      "lead": "Mais laços, menos paradas falsas.",
+      "empty": "Coloque um crib sob as letras secretas para ver o menu dele.",
+      "drawing": "{links} ligações entre {letters} letras. O teste começa em {center}.",
+      "legend": "Cada linha é uma letra do crib sobre a sua letra secreta. O teste começa em {center}, a letra com mais linhas."
+    },
+    "wall": {
+      "title": "A Bombe",
+      "order": "Ordem de rotores {current} de {total}",
+      "testing": "Testando os rotores {rotors}",
+      "stops": "{count, plural, =0 {Nenhuma parada} one {# parada} other {# paradas}}",
+      "start": "Iniciar",
+      "stop": "Parar",
+      "progress": "Ordens de rotores testadas",
+      "finished": "Concluído: {total, plural, one {# ordem de rotores testada} other {todas as # ordens de rotores testadas}}. {count, plural, =0 {Nenhuma parada.} one {# parada.} other {# paradas.}}",
+      "stopped": "Parou depois de {done} de {total} ordens de rotores.",
+      "legend": "Uma Enigma para cada letra do crib: rotor esquerdo vermelho, do meio amarelo, direito verde.",
+      "more": "A parede mostra 12 das {count} Enigmas.",
+      "noSecret": "Carregue a mensagem de treino ou cole letras secretas para começar.",
+      "noCrib": "Digite um crib para começar.",
+      "tooLong": "Deixe o crib mais curto que as letras secretas para começar.",
+      "crash": "Deslize o crib até uma posição sem letras vermelhas para começar."
+    },
+    "stops": {
+      "title": "Paradas",
+      "empty": "Nenhuma parada ainda. Toque em Iniciar.",
+      "none": "Nenhuma parada. Confira o crib e a posição dele.",
+      "item": "{rotors} · início {start}",
+      "plugs": "Pares de plugues encontrados: {plugs}",
+      "noPlugs": "Nenhum par de plugues encontrado.",
+      "try": "Testar no laboratório da Enigma",
+      "more": "{count, number} paradas. A lista mostra as primeiras {shown}.",
+      "unknown": "As letras que o menu não alcançou continuam desconhecidas."
     }
   }
 }

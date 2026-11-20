@@ -566,7 +566,67 @@
       "empty": "Tippe zuerst die geheimen Buchstaben.",
       "right": "Richtig! Die Nachricht lautet: {text}",
       "soFar": "So weit, so gut: {right} von {total} Buchstaben stimmen. Tippe weiter.",
-      "wrong": "Buchstabe {at} stimmt nicht. Die Rücktaste nimmt Buchstaben zurück."
+      "wrong": "Buchstabe {at} stimmt nicht. Die Rücktaste nimmt Buchstaben zurück.",
+      "bombeStop": "Bombe-Stopp, Walzen {rotors}, Start {start}",
+      "partial": "Die Bombe hat nur einige Steckerpaare gefunden. Buchstaben, die sie nicht erreicht hat, können falsch herauskommen."
+    }
+  },
+  "bombe": {
+    "page": {
+      "title": "Bombe",
+      "lead": "Gib der Bombe ein Wort, von dem du weißt, dass es in der Nachricht steht. Sie findet den Schlüssel."
+    },
+    "crib": {
+      "title": "Crib",
+      "secret": "Geheime Buchstaben",
+      "secretHelp": "Füge die geheimen Buchstaben einer Nachricht ein. Leerzeichen spielen keine Rolle.",
+      "practice": "Übungsnachricht laden",
+      "practiceAbout": "Die Übungsnachricht ist ein ausgedachter deutscher Wetterbericht. Sie beginnt mit WETTERBERICHT.",
+      "crib": "Crib: ein Wort, von dem du weißt, dass es in der Nachricht steht",
+      "slideLeft": "Crib nach links schieben",
+      "slideRight": "Crib nach rechts schieben",
+      "place": "Stelle {place} von {count}",
+      "lined": "Geheime Buchstaben an dieser Stelle: {secret}. Crib: {crib}.",
+      "fits": "Hier wird kein Buchstabe zu sich selbst.",
+      "crashes": "{count, plural, one {# Buchstabe würde zu sich selbst (rot).} other {# Buchstaben würden zu sich selbst (rot).}} Die Enigma tut das nie, also kann der Crib hier nicht stehen.",
+      "tooLong": "Der Crib ist länger als die geheimen Buchstaben.",
+      "hintShort": "Tipp: Nimm einen Crib mit 10 oder mehr Buchstaben. Ein kurzer Crib gibt viele falsche Stopps.",
+      "hintNoLoop": "Tipp: Dieses Menü hat keine Schleife. Schiebe den Crib oder mach ihn länger, um weniger falsche Stopps zu bekommen."
+    },
+    "menu": {
+      "title": "Menü: {loops, plural, =0 {keine Schleife} one {# Schleife} other {# Schleifen}}",
+      "lead": "Mehr Schleifen, weniger falsche Stopps.",
+      "empty": "Lege einen Crib unter die geheimen Buchstaben, um sein Menü zu sehen.",
+      "drawing": "{links} Verbindungen zwischen {letters} Buchstaben. Der Test beginnt bei {center}.",
+      "legend": "Jede Linie ist ein Crib-Buchstabe über seinem geheimen Buchstaben. Der Test beginnt bei {center}, dem Buchstaben mit den meisten Linien."
+    },
+    "wall": {
+      "title": "Die Bombe",
+      "order": "Walzenlage {current} von {total}",
+      "testing": "Teste die Walzen {rotors}",
+      "stops": "{count, plural, =0 {Keine Stopps} one {# Stopp} other {# Stopps}}",
+      "start": "Start",
+      "stop": "Stopp",
+      "progress": "Getestete Walzenlagen",
+      "finished": "Fertig: {total, plural, one {# Walzenlage getestet} other {alle # Walzenlagen getestet}}. {count, plural, =0 {Keine Stopps.} one {# Stopp.} other {# Stopps.}}",
+      "stopped": "Angehalten nach {done} von {total} Walzenlagen.",
+      "legend": "Eine Enigma für jeden Crib-Buchstaben: linke Walze rot, mittlere gelb, rechte grün.",
+      "more": "Die Wand zeigt 12 der {count} Enigmas.",
+      "noSecret": "Lade die Übungsnachricht oder füge geheime Buchstaben ein, um zu starten.",
+      "noCrib": "Tippe einen Crib, um zu starten.",
+      "tooLong": "Mach den Crib kürzer als die geheimen Buchstaben, um zu starten.",
+      "crash": "Schiebe den Crib an eine Stelle ohne rote Buchstaben, um zu starten."
+    },
+    "stops": {
+      "title": "Stopps",
+      "empty": "Noch keine Stopps. Drücke Start.",
+      "none": "Keine Stopps. Prüfe den Crib und seine Stelle.",
+      "item": "{rotors} · Start {start}",
+      "plugs": "Gefundene Steckerpaare: {plugs}",
+      "noPlugs": "Keine Steckerpaare gefunden.",
+      "try": "Im Enigma-Labor ausprobieren",
+      "more": "{count, number} Stopps. Die Liste zeigt die ersten {shown}.",
+      "unknown": "Buchstaben, die das Menü nie erreicht hat, bleiben unbekannt."
     }
   }
 }
