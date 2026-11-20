@@ -56,7 +56,7 @@ function TapeButton({ icon: Icon, label, onClick }: { icon: LucideIcon; label: s
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-3 text-sm font-semibold text-ink active:translate-y-px"
+      className="inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-3 text-sm font-semibold text-ink press"
     >
       <Icon aria-hidden className="size-4" />
       {label}

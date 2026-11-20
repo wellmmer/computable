@@ -38,7 +38,7 @@ export function MachinePanel({ rotors, positions, lit, lastKey, onPress, onTurn 
           const rotor = t(name);
           return (
             <div key={name} className="flex flex-col items-center">
-              <button type="button" onClick={() => onTurn(slot, 1)} className={`h-7 w-10 text-sm text-brass ${onPanel}`}>
+              <button type="button" onClick={() => onTurn(slot, 1)} className={`h-7 w-10 text-sm text-brass transition-colors hover:text-lamp ${onPanel}`}>
                 <span aria-hidden>▲</span>
                 <span className="sr-only">{t('next', { rotor })}</span>
               </button>
@@ -46,7 +46,7 @@ export function MachinePanel({ rotors, positions, lit, lastKey, onPress, onTurn 
               <span aria-hidden className="rounded-[3px] border-2 border-brass bg-ivory px-2.5 py-0.5 font-mono text-xl font-bold text-bakelite">
                 {positions[slot]}
               </span>
-              <button type="button" onClick={() => onTurn(slot, -1)} className={`h-7 w-10 text-sm text-brass ${onPanel}`}>
+              <button type="button" onClick={() => onTurn(slot, -1)} className={`h-7 w-10 text-sm text-brass transition-colors hover:text-lamp ${onPanel}`}>
                 <span aria-hidden>▼</span>
                 <span className="sr-only">{t('previous', { rotor })}</span>
               </button>
@@ -69,7 +69,7 @@ export function MachinePanel({ rotors, positions, lit, lastKey, onPress, onTurn 
                 key={letter}
                 type="button"
                 onClick={() => onPress(letter)}
-                className={`${round} border-2 border-brass text-bakelite ${letter === lastKey ? 'bg-brass' : 'bg-ivory'} ${onPanel}`}
+                className={`${round} press border-2 border-brass [--press-shadow:var(--brass)] text-bakelite ${letter === lastKey ? 'bg-brass' : 'bg-ivory'} ${onPanel}`}
               >
                 {letter}
               </button>

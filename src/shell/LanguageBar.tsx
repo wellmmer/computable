@@ -27,7 +27,7 @@ export function LanguageBar() {
     saveLanguageChoice(choice);
     setLanguageBarShown(false);
   };
-  const button = 'border-2 border-paper px-3 py-1 font-semibold';
+  const button = 'press border-2 border-paper [--press-shadow:var(--paper)] px-3 py-1 font-semibold';
 
   return (
     <section aria-label={t('label')} className="language-bar border-b-2 border-ink bg-ink text-paper">

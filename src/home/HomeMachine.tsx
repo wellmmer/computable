@@ -73,7 +73,7 @@ export function HomeMachine() {
         <button
           type="button"
           onClick={() => setChoice(!playing)}
-          className="inline-flex items-center gap-1.5 border-2 border-ink bg-cell px-2.5 py-1 font-semibold text-ink"
+          className="press inline-flex items-center gap-1.5 border-2 border-ink bg-cell px-2.5 py-1 font-semibold text-ink"
         >
           {playing ? <Pause aria-hidden className="size-3.5" /> : <Play aria-hidden className="size-3.5" />}
           {playing ? t('pause') : t('play')}

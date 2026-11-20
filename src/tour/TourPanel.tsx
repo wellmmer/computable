@@ -156,7 +156,7 @@ export function TourPanel() {
     stepForward();
   };
 
-  const button = 'inline-flex items-center gap-2 border-2 border-ink px-3 py-1.5 font-semibold disabled:cursor-not-allowed disabled:opacity-50';
+  const button = 'press inline-flex items-center gap-2 border-2 border-ink px-3 py-1.5 font-semibold disabled:cursor-not-allowed disabled:opacity-50';
 
   return (
     <>
@@ -184,7 +184,7 @@ export function TourPanel() {
       >
         <div className="flex items-baseline justify-between gap-4">
           <p className="text-sm text-muted">{t('progress', { step: step + 1, total: TOUR_STEPS.length })}</p>
-          <button type="button" onClick={() => tourStore.getState().close()} className="text-sm font-semibold underline underline-offset-4">
+          <button type="button" onClick={() => tourStore.getState().close()} className="text-sm font-semibold underline underline-offset-4 hover:text-pencil">
             {t('skip')}
           </button>
         </div>

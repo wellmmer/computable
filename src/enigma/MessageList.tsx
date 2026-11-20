@@ -47,7 +47,7 @@ function Facts({ settings, start }: { settings: EnigmaSettings; start?: Position
 /** "Load into the machine", with the message's name for screen readers: 6 buttons on the page say the same. */
 function LoadButton({ text, title, onClick }: { text: string; title: string; onClick: (button: HTMLButtonElement) => void }) {
   return (
-    <button type="button" aria-label={`${text}: ${title}`} onClick={(event) => onClick(event.currentTarget)} className="mt-3 border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper">
+    <button type="button" aria-label={`${text}: ${title}`} onClick={(event) => onClick(event.currentTarget)} className="press mt-3 border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper">
       {text}
     </button>
   );

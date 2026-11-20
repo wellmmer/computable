@@ -138,6 +138,8 @@ machine could do the same work.
   real setting and letter was checked against published sources, and the page links them.
 - **A secret on Home.** Home starts with a small Enigma: type a secret message and see its secret
   letters. The secret stays in your browser only. "Forget my secret" deletes it.
+- **Clearer to use.** A blinking caret in "You typed" shows that the lab listens to your keyboard.
+  On every page, buttons show the hand cursor, and framed buttons lift a little under the mouse.
 - **Coming next:** a one-rotor machine in the simulator (R3c).
 
 ## The machine format

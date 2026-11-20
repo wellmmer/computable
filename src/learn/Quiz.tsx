@@ -88,7 +88,7 @@ function Question({ question, number, total, name, chosen, checked, onChoose, on
           type="button"
           onClick={onCheck}
           disabled={chosen === undefined}
-          className="mt-3 border-2 border-ink bg-ink px-4 py-1.5 font-semibold text-paper active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-3 border-2 border-ink bg-ink px-4 py-1.5 font-semibold text-paper press disabled:cursor-not-allowed disabled:opacity-50"
         >
           {t('check')}
         </button>
@@ -153,7 +153,7 @@ export function Quiz({ slug, questions }: { slug: string; questions: QuizQuestio
         )}
       </div>
       {done && (
-        <button type="button" onClick={tryAgain} className="mt-3 border-2 border-ink bg-cell px-4 py-1.5 font-semibold text-ink active:translate-y-px">
+        <button type="button" onClick={tryAgain} className="mt-3 border-2 border-ink bg-cell px-4 py-1.5 font-semibold text-ink press">
           {t('tryAgain')}
         </button>
       )}

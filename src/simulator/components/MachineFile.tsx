@@ -13,7 +13,7 @@ import { useSimulator, useSimulatorStore } from './store-context';
 type FileError = MachineFileError | { code: 'unreadable' };
 type FileStatus = { kind: 'opened'; name: string } | { kind: 'error'; error: FileError } | null;
 
-const button = 'inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-medium text-ink';
+const button = 'press inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-medium text-ink';
 
 /** The third view of spec 5.1: the machine as JSON, with Download, Open file and New machine (spec 5.6). */
 export function MachineFile() {

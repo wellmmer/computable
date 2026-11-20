@@ -156,3 +156,70 @@ body {
 :root[data-tour-new] .tour-prompt {
   display: block;
 }
+
+/*
+ * The Enigma lab's "You typed" strip is not a text field: the whole page listens to the keyboard.
+ * A blinking caret at its end shows that typing works. With reduced motion, the caret stays still.
+ */
+.typing-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  background-color: currentColor;
+  animation: typing-caret-blink 1.06s step-end infinite;
+}
+
+@keyframes typing-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing-caret {
+    animation: none;
+  }
+}
+
+/* Tailwind 4 gives buttons the arrow cursor. Every enabled button shows the hand, so a visitor sees what can be clicked. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
+/*
+ * A framed button with "press" lifts 2 px under the mouse and shows a hard shadow, like the tour
+ * panel's card on the squared paper. A click pushes it back down. Touch screens have no hover, so
+ * they show only the click. With reduced motion, the shadow shows and the button does not move.
+ * --press-shadow sets the shadow color where ink does not show, as on the Enigma panel.
+ */
+@utility press {
+  transition:
+    translate 120ms ease-out,
+    box-shadow 120ms ease-out;
+
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      translate: -2px -2px;
+      box-shadow: 2px 2px 0 var(--press-shadow, var(--ink));
+    }
+  }
+
+  &:active:not(:disabled) {
+    translate: 0 0;
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover:not(:disabled),
+    &:active:not(:disabled) {
+      translate: none;
+    }
+  }
+}

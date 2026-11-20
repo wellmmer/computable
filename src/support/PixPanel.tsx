@@ -44,7 +44,7 @@ export function PixPanel({ pix, amount, amountLabel }: { pix: SupportHandles['pi
           />
         </label>
         <div className="flex flex-wrap items-center gap-3">
-          <button type="button" onClick={copy} className="inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink">
+          <button type="button" onClick={copy} className="press inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink">
             <Copy aria-hidden className="size-4" />
             {t('copyPix')}
           </button>

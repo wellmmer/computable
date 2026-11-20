@@ -25,7 +25,7 @@ function ControlButton({ icon: Icon, label, keyLabel, shortcut, onClick, disable
       onClick={onClick}
       disabled={disabled}
       aria-keyshortcuts={shortcut}
-      className={`inline-flex items-center justify-center gap-2 border-2 border-ink px-4 py-2 font-semibold active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`inline-flex items-center justify-center gap-2 border-2 border-ink px-4 py-2 font-semibold press disabled:cursor-not-allowed disabled:opacity-50 ${
         primary ? 'min-w-28 bg-ink text-paper' : 'bg-cell text-ink'
       }`}
     >
@@ -73,7 +73,7 @@ export function Controls() {
       <ControlButton icon={StepForward} label={t('step')} keyLabel="→" shortcut="ArrowRight" onClick={actions.stepForward} disabled={!canStep} />
       <div role="group" aria-label={t('speed')} className="flex items-center gap-2 text-muted sm:ml-2.5">
         <span aria-hidden>{t('speed')}</span>
-        <button type="button" onClick={actions.slower} aria-label={t('slower')} aria-keyshortcuts="-" className="border-2 border-ink bg-cell p-1 text-ink">
+        <button type="button" onClick={actions.slower} aria-label={t('slower')} aria-keyshortcuts="-" className="press border-2 border-ink bg-cell p-1 text-ink">
           <Minus aria-hidden className="size-4" />
         </button>
         <input
@@ -90,7 +90,7 @@ export function Controls() {
           }}
           className="w-24 accent-pencil"
         />
-        <button type="button" onClick={actions.faster} aria-label={t('faster')} aria-keyshortcuts="+" className="border-2 border-ink bg-cell p-1 text-ink">
+        <button type="button" onClick={actions.faster} aria-label={t('faster')} aria-keyshortcuts="+" className="press border-2 border-ink bg-cell p-1 text-ink">
           <Plus aria-hidden className="size-4" />
         </button>
       </div>

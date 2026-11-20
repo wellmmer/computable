@@ -4,7 +4,7 @@ import { HomeMachine } from '@/home/HomeMachine';
 import { HomeSecret } from '@/home/HomeSecret';
 import { Link } from '@/i18n/navigation';
 
-const link = 'inline-flex items-center gap-2 border-2 border-ink px-5 py-2.5 text-lg font-semibold active:translate-y-px';
+const link = 'inline-flex items-center gap-2 border-2 border-ink px-5 py-2.5 text-lg font-semibold press';
 
 /**
  * Home from R3 (spec R3 4): the title, one sentence, "Type a secret message" on a small Enigma, the

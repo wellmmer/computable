@@ -15,7 +15,7 @@ interface DiagramButtonsProps {
 }
 
 /** The look of the small buttons on the page, such as Slower and Faster. Pressed buttons are ink with paper text. */
-const button = 'inline-flex items-center gap-1.5 border-2 border-ink bg-cell px-2 py-1 text-sm font-medium text-ink aria-pressed:bg-ink aria-pressed:text-paper';
+const button = 'press inline-flex items-center gap-1.5 border-2 border-ink bg-cell px-2 py-1 text-sm font-medium text-ink aria-pressed:bg-ink aria-pressed:text-paper';
 
 /**
  * The buttons above the state diagram (spec section 3). They are normal buttons in the tab order. The

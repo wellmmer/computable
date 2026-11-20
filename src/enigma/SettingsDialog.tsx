@@ -27,7 +27,7 @@ const PROBLEM_TEXT = {
 } as const satisfies Record<SettingsError['problem'], string>;
 
 const select = 'border-2 border-ink bg-cell px-2 py-1 font-mono text-ink';
-const button = 'border-2 border-ink px-3 py-1.5 font-semibold';
+const button = 'press border-2 border-ink px-3 py-1.5 font-semibold';
 const legend = 'font-semibold';
 
 /** The partner of `letter` in the plug pairs, or null. */
@@ -191,7 +191,7 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
                 type="button"
                 aria-pressed={waiting === letter}
                 onClick={() => tap(letter)}
-                className={`h-10 border-2 font-mono font-bold ${
+                className={`press h-10 border-2 font-mono font-bold ${
                   waiting === letter ? 'border-ink bg-ink text-paper' : partner === null ? 'border-ink bg-cell' : 'border-pencil bg-row-now'
                 }`}
               >

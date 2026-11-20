@@ -39,7 +39,7 @@ export function ShareButton() {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <button type="button" onClick={share} className="inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-medium">
+      <button type="button" onClick={share} className="press inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-medium">
         <Link2 aria-hidden className="size-4" />
         {t('copy')}
       </button>
@@ -50,7 +50,7 @@ export function ShareButton() {
         <button
           type="button"
           onClick={() => downloadMachine(store.getState().machine)}
-          className="inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-medium"
+          className="press inline-flex items-center gap-2 border-2 border-ink bg-cell px-3 py-1.5 font-medium"
         >
           <Download aria-hidden className="size-4" />
           {tFile('download')}
