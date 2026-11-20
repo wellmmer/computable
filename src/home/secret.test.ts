@@ -7,6 +7,12 @@ describe('toEnigmaLetters (Enigma has only 26 letters)', () => {
     expect(toEnigmaLetters('Ça va? Señor Weiß')).toBe('CAXVAXSENORXWEISS');
   });
 
+  it('writes the joined letters œ, æ and ß as two letters', () => {
+    expect(toEnigmaLetters('cœur')).toBe('COEUR');
+    expect(toEnigmaLetters('Œuvre, Æsop, ægide')).toBe('OEUVREXAESOPXAEGIDE');
+    expect(toEnigmaLetters('Straße, STRAẞE')).toBe('STRASSEXSTRASSE');
+  });
+
   it('leaves out digits and signs, and spaces at the ends', () => {
     expect(toEnigmaLetters('  Turing 1912 ')).toBe('TURING');
     expect(toEnigmaLetters('a - b')).toBe('AXB');
