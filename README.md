@@ -11,7 +11,8 @@ in a plain sentence.
 > a 2016 capstone project built with jQuery. It is now Computable, built release by release. Release
 > 1 is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. Release
 > 3a adds a working Enigma I, and release 3b adds messages to decrypt and a new Home. Release 3c adds
-> a one-rotor cipher to the simulator. The roadmap below lists the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
+> a one-rotor cipher to the simulator. The roadmap below lists the rest. The 2016 version stays
+> available at the git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -141,8 +142,9 @@ machine could do the same work.
 - **Clearer to use.** A blinking caret in "You typed" shows that the lab listens to your keyboard.
   On every page, buttons show the hand cursor, and framed buttons lift a little under the mouse.
 - **A one-rotor machine in the simulator.** The example "One-rotor cipher" is a Turing machine on
-  the letters A B C D. Its states p0 to p3 are the 4 rotor positions, so 16 rules do the work of one rotor.
-  A note says why 26 letters would need 26 × 26 = 676 rules, and links to the lab.
+  the letters A B C D. Its states p0 to p3 are the 4 rotor positions, so 16 rules do the work of one
+  rotor, and 4 more rules stop it. A note says why 26 letters would need 26 × 26 = 676 rules, and
+  links to the lab.
 
 ## The machine format
 
