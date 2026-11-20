@@ -190,4 +190,12 @@ describe('a message loaded into the lab (spec R3 4)', () => {
     expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
     expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('II IV V')).toBeTruthy();
   });
+
+  it('gives the focus back to the button that loaded the message when the box closes', () => {
+    renderWithIntl(<EnigmaLab />);
+    const load = screen.getByRole('button', { name: 'Load part 2: Operation Barbarossa, 1941' });
+    fireEvent.click(load);
+    fireEvent.click(within(box()).getByRole('button', { name: 'Close' }));
+    expect(document.activeElement).toBe(load);
+  });
 });

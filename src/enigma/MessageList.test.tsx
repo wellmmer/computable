@@ -30,11 +30,12 @@ describe('MessageList (spec R3 4)', () => {
   it('hands the key sheet to the lab', () => {
     const onLoad = vi.fn();
     renderWithIntl(<MessageList onLoad={onLoad} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 2: plug pairs' }));
-    expect(onLoad).toHaveBeenCalledWith({
-      title: 'Practice 2: plug pairs',
-      sheet: expect.objectContaining({ start: ['D', 'O', 'G'], answer: 'TURINGXHELPEDXBREAKXENIGMA' }),
-    });
+    const load = screen.getByRole('button', { name: 'Load into the machine: Practice 2: plug pairs' });
+    fireEvent.click(load);
+    expect(onLoad).toHaveBeenCalledWith(
+      { title: 'Practice 2: plug pairs', sheet: expect.objectContaining({ start: ['D', 'O', 'G'], answer: 'TURINGXHELPEDXBREAKXENIGMA' }) },
+      load,
+    );
   });
 
   it('shows Barbarossa in 2 parts, each with its start and its own button', () => {
@@ -44,8 +45,9 @@ describe('MessageList (spec R3 4)', () => {
     expect(facts(card)).toEqual(['Rotors: II IV V', 'Rings: B U L', 'Plug pairs: AV BS CG DL FU HZ IN KM OW RX', 'Reflector: B']);
     expect(within(card).getByText('The operator sent the start hidden: from W X C, typing K C H lights B L A.')).toBeTruthy();
     expect(within(card).getByText('The first group, RFUGZ, only named the key. It is left out here.')).toBeTruthy();
-    fireEvent.click(within(card).getByRole('button', { name: 'Load part 2: Operation Barbarossa, 1941' }));
-    expect(onLoad).toHaveBeenCalledWith({ title: 'Operation Barbarossa, 1941, part 2', sheet: expect.objectContaining({ start: ['L', 'S', 'D'] }) });
+    const loadPart2 = within(card).getByRole('button', { name: 'Load part 2: Operation Barbarossa, 1941' });
+    fireEvent.click(loadPart2);
+    expect(onLoad).toHaveBeenCalledWith({ title: 'Operation Barbarossa, 1941, part 2', sheet: expect.objectContaining({ start: ['L', 'S', 'D'] }) }, loadPart2);
   });
 
   it('shows what each real message says, in German and in the visitor’s language, and links its sources', () => {

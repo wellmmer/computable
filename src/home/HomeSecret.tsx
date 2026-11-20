@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { useRef } from 'react';
 import { isLetter } from '@/engines/enigma';
 import { groupsOf5 } from '@/enigma/lab-state';
 import { Lampboard } from '@/enigma/Lampboard';
@@ -22,6 +23,13 @@ export function HomeSecret() {
   const lamp = cipher.at(-1);
   const lit = lamp !== undefined && isLetter(lamp) ? lamp : null;
   const { rotors, rings, plugs, reflector } = HOME_SETTINGS;
+  const textField = useRef<HTMLTextAreaElement>(null);
+
+  // "Forget my secret" turns itself off, so the focus would drop to the page. It goes to the empty text field instead.
+  const forget = () => {
+    forgetSecret();
+    textField.current?.focus();
+  };
 
   return (
     <section aria-labelledby="secret-title" className="mx-auto max-w-[720px] px-4">
@@ -35,6 +43,7 @@ export function HomeSecret() {
           {t('label')}
         </label>
         <textarea
+          ref={textField}
           id="secret-text"
           value={plain}
           onChange={(event) => saveSecret(event.target.value)}
@@ -70,7 +79,7 @@ export function HomeSecret() {
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         <button
           type="button"
-          onClick={forgetSecret}
+          onClick={forget}
           disabled={!secret}
           className="border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink disabled:opacity-50"
         >

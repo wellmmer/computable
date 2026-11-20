@@ -52,4 +52,14 @@ describe('HomeSecret (spec R3 4, "Type your own secret")', () => {
     expect(strip('Secret letters')).toBe('');
     expect(localStorage.getItem(SECRET_KEY)).toBeNull();
   });
+
+  it('moves the focus to the text field after "Forget my secret", which turns itself off', () => {
+    saveSecret('Hallo');
+    renderWithIntl(<HomeSecret />);
+    const forget = screen.getByRole<HTMLButtonElement>('button', { name: 'Forget my secret' });
+    forget.focus();
+    fireEvent.click(forget);
+    expect(forget.disabled).toBe(true);
+    expect(document.activeElement).toBe(textBox());
+  });
 });

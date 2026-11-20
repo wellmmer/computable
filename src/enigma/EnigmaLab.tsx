@@ -37,6 +37,8 @@ export function EnigmaLab() {
   const settingsLine = useRef<HTMLElement>(null);
   const [loaded, setLoaded] = useState<LoadedMessage | null>(null);
   const decryptHeading = useRef<HTMLHeadingElement>(null);
+  /** The "Load" button that opened the box. "Close" gives the focus back to it. */
+  const loadButton = useRef<HTMLButtonElement | null>(null);
 
   // The physical keyboard: letters press keys, Backspace takes the last one back.
   useEffect(() => {
@@ -135,7 +137,10 @@ export function EnigmaLab() {
             load(loaded.sheet);
             dispatch({ type: 'type', letters: lettersOf(loaded.sheet.cipher) });
           }}
-          onClose={() => setLoaded(null)}
+          onClose={() => {
+            setLoaded(null);
+            loadButton.current?.focus();
+          }}
         />
       )}
 
@@ -189,7 +194,8 @@ export function EnigmaLab() {
       <CurrentPath settings={lab.settings} last={last} />
 
       <MessageList
-        onLoad={(message) => {
+        onLoad={(message, button) => {
+          loadButton.current = button;
           load(message.sheet);
           setLoaded(message);
         }}

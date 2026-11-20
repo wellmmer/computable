@@ -45,9 +45,9 @@ function Facts({ settings, start }: { settings: EnigmaSettings; start?: Position
 }
 
 /** "Load into the machine", with the message's name for screen readers: 6 buttons on the page say the same. */
-function LoadButton({ text, title, onClick }: { text: string; title: string; onClick: () => void }) {
+function LoadButton({ text, title, onClick }: { text: string; title: string; onClick: (button: HTMLButtonElement) => void }) {
   return (
-    <button type="button" aria-label={`${text}: ${title}`} onClick={onClick} className="mt-3 border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper">
+    <button type="button" aria-label={`${text}: ${title}`} onClick={(event) => onClick(event.currentTarget)} className="mt-3 border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper">
       {text}
     </button>
   );
@@ -55,9 +55,10 @@ function LoadButton({ text, title, onClick }: { text: string; title: string; onC
 
 /**
  * The messages under the lab (spec R3 4): 3 practice messages in the visitor's language, then the
- * two real messages with their sources. "Load into the machine" hands a key sheet to the lab.
+ * two real messages with their sources. "Load into the machine" hands a key sheet to the lab, with
+ * the button that was pressed, so the focus can go back to it.
  */
-export function MessageList({ onLoad }: { onLoad: (message: LoadedMessage) => void }) {
+export function MessageList({ onLoad }: { onLoad: (message: LoadedMessage, button: HTMLButtonElement) => void }) {
   const t = useTranslations('enigma.messages');
   const locale = useLocale();
 
@@ -81,7 +82,7 @@ export function MessageList({ onLoad }: { onLoad: (message: LoadedMessage) => vo
               <Facts settings={sheet.settings} start={sheet.start} />
               <p className={label}>{t('secret')}</p>
               <p className={letterGroups}>{sheet.cipher}</p>
-              <LoadButton text={t('load')} title={title} onClick={() => onLoad({ title, sheet })} />
+              <LoadButton text={t('load')} title={title} onClick={(button) => onLoad({ title, sheet }, button)} />
             </article>
           );
         })}
@@ -116,7 +117,7 @@ export function MessageList({ onLoad }: { onLoad: (message: LoadedMessage) => vo
                   <LoadButton
                     text={parts.length === 1 ? t('load') : t('loadPart', { part: i + 1 })}
                     title={title}
-                    onClick={() => onLoad({ title: partTitle, sheet: part })}
+                    onClick={(button) => onLoad({ title: partTitle, sheet: part }, button)}
                   />
                 </div>
               );
