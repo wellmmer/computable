@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
-import { LOCALE_PATHS, openPage } from './helpers';
+import { LOCALE_PATHS, openLab, openPage } from './helpers';
 
 /** Every page, after the language prefix. */
 const PATHS = [
@@ -138,7 +138,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
           { width: 390, height: 844 },
         ]) {
           await page.setViewportSize(viewport);
-          await openPage(page, `${locale}/enigma`);
+          await openLab(page, `${locale}/enigma`);
           await page.keyboard.type('WETTERBERICHT');
           await expect(page.getByRole('status')).not.toBeEmpty();
           expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
@@ -146,6 +146,44 @@ for (const colorScheme of ['light', 'dark'] as const) {
           await page.getByRole('main').getByRole('region').first().getByRole('button').click();
           await expect(page.getByRole('dialog')).toBeVisible();
           expect(await axeViolations(page), `${viewport.width} px, dialog`).toEqual([]);
+        }
+      });
+    }
+
+    // Home with a typed secret: the lit lamp, both strips and "Forget my secret".
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale} with a typed secret has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openPage(page, locale);
+          await page.getByRole('textbox').fill('Olá, Turing!');
+          await expect(page.locator('[data-lit]')).toHaveCount(1);
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
+        }
+      });
+    }
+
+    // A real message loaded and typed, the answer checked, and every "What it says" open.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/enigma with a loaded message, a checked answer and open texts has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openLab(page, `${locale}/enigma`);
+          // The last card is the Scharnhorst message, with one button: load.
+          await page.getByRole('article').last().getByRole('button').click();
+          const box = page.locator('#decrypt-title').locator('..');
+          // The box's buttons: "Type it for me", then "Check my answer".
+          await box.getByRole('button').nth(0).click();
+          await box.getByRole('button').nth(1).click();
+          await expect(box.locator('[aria-live]')).not.toBeEmpty();
+          for (const summary of await page.locator('summary').all()) await summary.click();
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
         }
       });
     }

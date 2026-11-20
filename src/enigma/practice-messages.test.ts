@@ -1,0 +1,31 @@
+import { describe, expect, it } from 'vitest';
+import { checkSettings, encrypt } from '@/engines/enigma';
+import { routing } from '@/i18n/routing';
+import { lettersOf } from './key-sheet';
+import { practiceMessages, readable } from './practice-messages';
+
+describe('the practice messages (spec R3 4)', () => {
+  it.each(routing.locales)('in %s, each key sheet decrypts to the answer', (locale) => {
+    for (const sheet of practiceMessages(locale)) {
+      expect(checkSettings(sheet.settings)).toEqual([]);
+      expect(encrypt(sheet.settings, sheet.start, lettersOf(sheet.cipher))).toBe(sheet.answer);
+    }
+  });
+
+  it.each(routing.locales)('in %s, the answers use only the 26 letters, with X between words and no X inside a word', (locale) => {
+    for (const { answer } of practiceMessages(locale)) {
+      expect(answer).toMatch(/^[A-WYZ]+(X[A-WYZ]+)*$/);
+    }
+  });
+
+  it('gets harder: no plug pairs, then plug pairs, then plug pairs and ring settings', () => {
+    const [first, second, third] = practiceMessages('en').map(({ settings }) => settings);
+    expect([first.plugs.length, first.rings.join('')]).toEqual([0, 'AAA']);
+    expect([second.plugs.length, second.rings.join('')]).toEqual([4, 'AAA']);
+    expect([third.plugs.length, third.rings.join('')]).toEqual([4, 'FUN']);
+  });
+
+  it('shows the answer with spaces for X', () => {
+    expect(readable('HELLOXFROMXBLETCHLEYXPARK')).toBe('HELLO FROM BLETCHLEY PARK');
+  });
+});

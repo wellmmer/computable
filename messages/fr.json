@@ -10,7 +10,22 @@
     "openSimulator": "Ouvrir le simulateur",
     "caption": "Voici la première machine de Turing, tirée de son article de 1936. Elle imprime 0 1 0 1 … une case sur deux et ne s’arrête jamais.",
     "pause": "Pause",
-    "play": "Lecture"
+    "play": "Lecture",
+    "openLab": "Ouvrir le labo Enigma",
+    "tapeTitle": "La première machine de Turing",
+    "secret": {
+      "title": "Tapez un message secret",
+      "lead": "Enigma change chaque lettre en une autre. Tapez ci-dessous, et les lampes allument vos lettres secrètes.",
+      "label": "Votre message",
+      "typed": "Enigma tape",
+      "cipher": "Lettres secrètes",
+      "rules": "Enigma n’a que 26 lettres. Elle retire les accents, tape X à la place de l’espace et laisse de côté les chiffres et les signes.",
+      "settings": "Réglages : rotors {rotors}, anneaux {rings}, paires de fiches {plugs}, réflecteur {reflector}, départ {start}. Le labo Enigma commence avec les mêmes réglages.",
+      "decrypt": "Pour le relire, ouvrez le labo Enigma et tapez les lettres secrètes. Les lampes allument votre message.",
+      "forget": "Oublier mon secret",
+      "stays": "Votre secret reste dans ce navigateur. Il n’est jamais envoyé.",
+      "litNews": "Lampe {letter}"
+    }
   },
   "simulator": {
     "page": {
@@ -251,6 +266,7 @@
     "browserTitle": "Ce qui reste dans votre navigateur",
     "browser": "Votre navigateur garde votre machine actuelle, votre choix entre papier quadrillé et papier de nuit, votre langue, et si vous avez vu la visite. Ils restent sur votre appareil.",
     "quiz": "Vos résultats de quiz restent dans ce navigateur seulement.",
+    "secret": "Le message secret de l’accueil, ses lettres secrètes et les réglages d’Enigma restent seulement dans ce navigateur. « Oublier mon secret » les efface.",
     "language": "La langue est aussi dans un cookie nommé NEXT_LOCALE, pendant un an. Le site le pose quand vous choisissez une langue, ou quand vous ouvrez une page dans une autre langue que celle de votre navigateur. Votre navigateur l’envoie avec chaque page demandée, pour que l’adresse principale du site s’ouvre dans votre langue. Il ne contient que le code de la langue, comme pt-BR.",
     "shareLink": "Un lien de partage contient la machine après le signe #. Les navigateurs n’envoient cette partie d’un lien à aucun serveur.",
     "analytics": {
@@ -501,6 +517,52 @@
       "previousLitTurned": "Lampes allumées avant de tourner un rotor : {letters}",
       "litNews": "Lampe {letter}",
       "removedNews": "{letter} effacée"
+    },
+    "messages": {
+      "title": "Messages à déchiffrer",
+      "lead": "Chargez un message dans la machine, puis tapez ses lettres secrètes. Les lampes allument le message.",
+      "spaces": "Enigma n’a pas de touche espace. Les opérateurs tapaient donc X entre les mots.",
+      "practice": "Entraînement",
+      "practice1": "Entraînement 1 : sans paires de fiches",
+      "practice2": "Entraînement 2 : paires de fiches",
+      "practice3": "Entraînement 3 : paires de fiches et anneaux",
+      "real": "Vrais messages de la guerre",
+      "start": "Départ",
+      "secret": "Lettres secrètes",
+      "load": "Charger dans la machine",
+      "loadPart": "Charger la partie {part}",
+      "part": "Partie {part}",
+      "titlePart": "{title}, partie {part}",
+      "keyGroup": "Le premier groupe, {group}, indiquait seulement la clé. Il est retiré ici.",
+      "hiddenStart": "L’opérateur a envoyé le départ caché : depuis {from}, taper {typed} allume {start}.",
+      "whatItSays": "Ce qu’il dit",
+      "asPublished": "Tel que publié",
+      "readable": "En allemand lisible",
+      "translation": "En français",
+      "sources": "Sources",
+      "barbarossa": {
+        "title": "Opération Barbarossa, 1941",
+        "about": "Le 7 juillet 1941, une division allemande en Russie a envoyé ce rapport en 2 parties. Frode Weierud et Geoff Sullivan l’ont déchiffré, dans leur projet pour déchiffrer des messages allemands de la guerre.",
+        "rules": "X est un espace, Q remplace souvent CH, et les noms sont écrits deux fois.",
+        "text": "Unité de reconnaissance de Kurtinowa, au nord-ouest de Sebez, sur le couloir aérien vers Dubrowki et Opotschka. Départ à 18 h 30. Attaque : le régiment d’infanterie 3 avance lentement mais sûrement. 17 h 06 : Ier bataillon du régiment d’infanterie 3 sur le couloir aérien, la tête à 16 km à l’est de Kamenec. Le commandant de la division."
+      },
+      "scharnhorst": {
+        "title": "Le dernier message du Scharnhorst, 1943",
+        "about": "Le 26 décembre 1943, le navire de guerre allemand Scharnhorst a envoyé ce message pendant sa dernière bataille. Il a coulé peu après. Le projet M4 a déchiffré le message le 28 mai 2008.",
+        "rules": "J vient avant et après le nom du lieu. AAA CCC désigne le carré AC.",
+        "text": "Cap sur le Tanafjord. Position : carré AC 4992. Vitesse : 20 nœuds. Scharnhorst."
+      }
+    },
+    "decrypt": {
+      "title": "Déchiffrement : {title}",
+      "help": "Tapez ces lettres, ou appuyez sur « Taper pour moi ». Les lampes allument le message.",
+      "typeForMe": "Taper pour moi",
+      "check": "Vérifier ma réponse",
+      "close": "Fermer",
+      "empty": "Tapez d’abord les lettres secrètes.",
+      "right": "Bravo ! Le message dit : {text}",
+      "soFar": "Pour l’instant, tout va bien : {right} lettres sur {total} sont justes. Continuez.",
+      "wrong": "La lettre {at} n’est pas juste. La touche Retour arrière efface des lettres."
     }
   }
 }

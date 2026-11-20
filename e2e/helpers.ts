@@ -67,5 +67,15 @@ export async function openPage(page: Page, path: string) {
   await expect(page.getByRole('banner').locator('button[aria-pressed]')).toHaveAttribute('aria-pressed', /^(true|false)$/);
 }
 
+/**
+ * Opens the Enigma lab and waits until it listens to the physical keyboard. The lab hydrates after
+ * the menu bar, so letters typed right after openPage could be lost. Its settings line gets
+ * data-keys="on" once the keys work.
+ */
+export async function openLab(page: Page, path: string) {
+  await openPage(page, path);
+  await expect(page.locator('[data-keys="on"]')).toBeAttached();
+}
+
 /** The URL prefix of each language. Brazilian Portuguese is in lower case in URLs. */
 export const LOCALE_PATHS = ['/en', '/pt-br', '/es', '/fr', '/de'] as const;

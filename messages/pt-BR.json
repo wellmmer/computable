@@ -10,7 +10,22 @@
     "openSimulator": "Abrir o simulador",
     "caption": "Esta é a primeira máquina de Turing, do artigo de 1936. Ela imprime 0 1 0 1 … em casas alternadas e nunca para.",
     "pause": "Pausar",
-    "play": "Continuar"
+    "play": "Continuar",
+    "openLab": "Abrir o laboratório da Enigma",
+    "tapeTitle": "A primeira máquina de Turing",
+    "secret": {
+      "title": "Digite uma mensagem secreta",
+      "lead": "A Enigma troca cada letra por outra. Digite abaixo, e as lâmpadas acendem as suas letras secretas.",
+      "label": "Sua mensagem",
+      "typed": "A Enigma digita",
+      "cipher": "Letras secretas",
+      "rules": "A Enigma só tem 26 letras. Ela tira os acentos, digita X no lugar do espaço e deixa de fora números e sinais.",
+      "settings": "Configurações: rotores {rotors}, anéis {rings}, pares de plugues {plugs}, refletor {reflector}, início {start}. O laboratório da Enigma começa com as mesmas configurações.",
+      "decrypt": "Para ler de novo, abra o laboratório da Enigma e digite as letras secretas. As lâmpadas acendem a sua mensagem.",
+      "forget": "Esquecer meu segredo",
+      "stays": "Seu segredo fica neste navegador. Ele nunca é enviado.",
+      "litNews": "Lâmpada {letter}"
+    }
   },
   "simulator": {
     "page": {
@@ -251,6 +266,7 @@
     "browserTitle": "O que fica no seu navegador",
     "browser": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho.",
     "quiz": "Seus resultados de quiz ficam só neste navegador.",
+    "secret": "A mensagem secreta da página inicial, as letras secretas e as configurações da Enigma ficam só neste navegador. “Esquecer meu segredo” apaga tudo.",
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
     "analytics": {
@@ -501,6 +517,52 @@
       "previousLitTurned": "Lâmpadas acesas antes de você girar um rotor: {letters}",
       "litNews": "Lâmpada {letter}",
       "removedNews": "{letter} apagada"
+    },
+    "messages": {
+      "title": "Mensagens para decifrar",
+      "lead": "Carregue uma mensagem na máquina e digite as letras secretas. As lâmpadas acendem a mensagem.",
+      "spaces": "A Enigma não tem tecla de espaço. Por isso, os operadores digitavam X entre as palavras.",
+      "practice": "Treino",
+      "practice1": "Treino 1: sem pares de plugues",
+      "practice2": "Treino 2: pares de plugues",
+      "practice3": "Treino 3: pares de plugues e anéis",
+      "real": "Mensagens reais da guerra",
+      "start": "Início",
+      "secret": "Letras secretas",
+      "load": "Carregar na máquina",
+      "loadPart": "Carregar a parte {part}",
+      "part": "Parte {part}",
+      "titlePart": "{title}, parte {part}",
+      "keyGroup": "O primeiro grupo, {group}, só indicava a chave. Ele fica de fora aqui.",
+      "hiddenStart": "O operador enviou o início escondido: a partir de {from}, digitar {typed} acende {start}.",
+      "whatItSays": "O que ela diz",
+      "asPublished": "Como foi publicada",
+      "readable": "Em alemão legível",
+      "translation": "Em português",
+      "sources": "Fontes",
+      "barbarossa": {
+        "title": "Operação Barbarossa, 1941",
+        "about": "Em 7 de julho de 1941, uma divisão alemã na Rússia enviou este relatório em 2 partes. Frode Weierud e Geoff Sullivan o decifraram, no projeto deles para decifrar mensagens alemãs da guerra.",
+        "rules": "X é um espaço, Q muitas vezes vale CH, e os nomes aparecem duas vezes.",
+        "text": "Unidade de reconhecimento de Kurtinowa, a noroeste de Sebez, no corredor aéreo em direção a Dubrowki e Opotschka. Partiu às 18h30. Ataque: o Regimento de Infantaria 3 avança devagar, mas com segurança. 17h06: 1º Batalhão do Regimento de Infantaria 3 no corredor aéreo, com a frente a 16 km a leste de Kamenec. Comandante da divisão."
+      },
+      "scharnhorst": {
+        "title": "A última mensagem do Scharnhorst, 1943",
+        "about": "Em 26 de dezembro de 1943, o navio de guerra alemão Scharnhorst enviou esta mensagem na sua última batalha. Ele afundou pouco depois. O Projeto M4 decifrou a mensagem em 28 de maio de 2008.",
+        "rules": "J vem antes e depois do nome do lugar. AAA CCC quer dizer o quadrado AC.",
+        "text": "Rumo ao Tanafjord. Posição: quadrado AC 4992. Velocidade: 20 nós. Scharnhorst."
+      }
+    },
+    "decrypt": {
+      "title": "Decifrando: {title}",
+      "help": "Digite estas letras ou toque em “Digitar para mim”. As lâmpadas acendem a mensagem.",
+      "typeForMe": "Digitar para mim",
+      "check": "Conferir minha resposta",
+      "close": "Fechar",
+      "empty": "Digite as letras secretas primeiro.",
+      "right": "Certo! A mensagem diz: {text}",
+      "soFar": "Até aqui, tudo certo: {right} de {total} letras estão certas. Continue digitando.",
+      "wrong": "A letra {at} não está certa. O Backspace apaga letras."
     }
   }
 }

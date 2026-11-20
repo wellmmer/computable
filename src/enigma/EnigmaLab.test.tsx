@@ -62,6 +62,14 @@ describe('EnigmaLab (spec R3 3)', () => {
     expect(screen.getByRole('status').textContent).toBe('Removed T');
   });
 
+  it('marks its settings line while it listens to the physical keyboard, so tests know when to type', () => {
+    renderWithIntl(<EnigmaLab />);
+    const settings = screen.getByRole('region', { name: 'Settings' });
+    expect(settings.getAttribute('data-keys')).toBe('on');
+    fireEvent.click(screen.getAllByRole('button', { name: /^Change/ })[0]);
+    expect(settings.getAttribute('data-keys')).toBeNull();
+  });
+
   it('ignores keys with Ctrl, Alt or Cmd, and keys that are not letters', () => {
     renderWithIntl(<EnigmaLab />);
     typeKeys('c', { ctrlKey: true });
@@ -127,5 +135,67 @@ describe('EnigmaLab (spec R3 3)', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
     expect(strip('You typed')).toBe('');
     expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('V II III')).toBeTruthy();
+  });
+});
+
+describe('a message loaded into the lab (spec R3 4)', () => {
+  const box = () => screen.getByRole('region', { name: /^Decrypting/ });
+
+  it('sets the key sheet, shows the secret letters above the machine, and moves the focus there', () => {
+    renderWithIntl(<EnigmaLab />);
+    typeKeys('WE');
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 1: no plug pairs' }));
+    expect(screen.getByRole('heading', { name: 'Decrypting: Practice 1: no plug pairs' })).toBe(document.activeElement);
+    expect(within(box()).getByText('ILBDA SDTMV HFEBU AWAOM QEQGT')).toBeTruthy();
+    expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('No plug pairs')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Back to start (A A A)' })).toBeTruthy();
+    expect(strip('You typed')).toBe('');
+  });
+
+  it('checks the answer: so far, wrong, then right', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 1: no plug pairs' }));
+    const check = () => fireEvent.click(within(box()).getByRole('button', { name: 'Check my answer' }));
+    check();
+    expect(within(box()).getByText('Type the secret letters first.')).toBeTruthy();
+    typeKeys('ILBDA');
+    check();
+    expect(within(box()).getByText('So far, so good: 5 of 25 letters are right. Keep typing.')).toBeTruthy();
+    typeKeys('Q');
+    expect(within(box()).queryByText(/So far/)).toBeNull();
+    check();
+    expect(within(box()).getByText('Letter 6 is not right. Backspace takes letters back.')).toBeTruthy();
+    act(() => fireEvent.keyDown(document.body, { key: 'Backspace' }));
+    typeKeys('SDTMVHFEBUAWAOMQEQGT');
+    check();
+    expect(within(box()).getByText('Right! The message says: HELLO FROM BLETCHLEY PARK')).toBeTruthy();
+    expect(strip('Lamps lit')).toBe('HELLO XFROM XBLET CHLEY XPARK');
+  });
+
+  it('types the whole message on "Type it for me", from the start', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: The Scharnhorst’s last message, 1943' }));
+    typeKeys('ABC');
+    fireEvent.click(within(box()).getByRole('button', { name: 'Type it for me' }));
+    expect(strip('Lamps lit')).toBe('STEUE REJTA NAFJO RDJAN STAND ORTQU AAACC CVIER NEUNN EUNZW OFAHR TZWON ULSMX XSCHA RNHOR STHCO');
+    fireEvent.click(within(box()).getByRole('button', { name: 'Check my answer' }));
+    expect(within(box()).getByText(/^Right! The message says: STEUEREJTANAFJORD/)).toBeTruthy();
+  });
+
+  it('closes the box and keeps the machine as it is', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load part 1: Operation Barbarossa, 1941' }));
+    expect(screen.getByRole('button', { name: 'Back to start (B L A)' })).toBeTruthy();
+    fireEvent.click(within(box()).getByRole('button', { name: 'Close' }));
+    expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
+    expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('II IV V')).toBeTruthy();
+  });
+
+  it('gives the focus back to the button that loaded the message when the box closes', () => {
+    renderWithIntl(<EnigmaLab />);
+    const load = screen.getByRole('button', { name: 'Load part 2: Operation Barbarossa, 1941' });
+    fireEvent.click(load);
+    fireEvent.click(within(box()).getByRole('button', { name: 'Close' }));
+    expect(document.activeElement).toBe(load);
   });
 });

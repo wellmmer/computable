@@ -10,7 +10,22 @@
     "openSimulator": "Open the simulator",
     "caption": "This is Turing's first machine, from his 1936 paper. It prints 0 1 0 1 … on every other cell and never stops.",
     "pause": "Pause",
-    "play": "Play"
+    "play": "Play",
+    "openLab": "Open the Enigma lab",
+    "tapeTitle": "Turing’s first machine",
+    "secret": {
+      "title": "Type a secret message",
+      "lead": "Enigma turns each letter into another one. Type below, and the lamps light your secret letters.",
+      "label": "Your message",
+      "typed": "Enigma types",
+      "cipher": "Secret letters",
+      "rules": "Enigma has only 26 letters. It drops accents, types X for a space, and leaves out digits and signs.",
+      "settings": "Settings: rotors {rotors}, rings {rings}, plug pairs {plugs}, reflector {reflector}, start {start}. The Enigma lab starts with the same settings.",
+      "decrypt": "To read it again, open the Enigma lab and type the secret letters. The lamps light your message.",
+      "forget": "Forget my secret",
+      "stays": "Your secret stays in this browser. It is never sent anywhere.",
+      "litNews": "Lamp {letter}"
+    }
   },
   "simulator": {
     "page": {
@@ -251,6 +266,7 @@
     "browserTitle": "What stays in your browser",
     "browser": "Your browser keeps your current machine, your choice of squared or night paper, your language, and whether you saw the tour. They stay on your device.",
     "quiz": "Your quiz results stay in this browser only.",
+    "secret": "Home’s secret message, its secret letters and the Enigma settings stay in this browser only. “Forget my secret” deletes them.",
     "language": "The language is also in a cookie named NEXT_LOCALE, for one year. The site sets it when you choose a language, or when you open a page in a language other than your browser's. Your browser sends it with each page request, so the site's main address opens your language. It holds only the language code, such as pt-BR.",
     "shareLink": "A share link holds the machine after the # sign. Browsers do not send that part of a link to any server.",
     "analytics": {
@@ -501,6 +517,52 @@
       "previousLitTurned": "Lamps lit before you turned a rotor: {letters}",
       "litNews": "Lamp {letter}",
       "removedNews": "Removed {letter}"
+    },
+    "messages": {
+      "title": "Messages to decrypt",
+      "lead": "Load a message into the machine, then type its secret letters. The lamps light the message.",
+      "spaces": "Enigma has no space key, so operators typed X between words.",
+      "practice": "Practice",
+      "practice1": "Practice 1: no plug pairs",
+      "practice2": "Practice 2: plug pairs",
+      "practice3": "Practice 3: plug pairs and rings",
+      "real": "Real messages from the war",
+      "start": "Start",
+      "secret": "Secret letters",
+      "load": "Load into the machine",
+      "loadPart": "Load part {part}",
+      "part": "Part {part}",
+      "titlePart": "{title}, part {part}",
+      "keyGroup": "The first group, {group}, only named the key. It is left out here.",
+      "hiddenStart": "The operator sent the start hidden: from {from}, typing {typed} lights {start}.",
+      "whatItSays": "What it says",
+      "asPublished": "As published",
+      "readable": "In readable German",
+      "translation": "In English",
+      "sources": "Sources",
+      "barbarossa": {
+        "title": "Operation Barbarossa, 1941",
+        "about": "On 7 July 1941, a German division in Russia sent this report in 2 parts. Frode Weierud and Geoff Sullivan broke it, in their project to break German wartime messages.",
+        "rules": "X is a space, Q often stands for CH, and names are written twice.",
+        "text": "Reconnaissance unit from Kurtinowa, north-west of Sebez, on the flight corridor towards Dubrowki and Opotschka. Set off at 18:30. Attack: Infantry Regiment 3 moves forward slowly but surely. 17:06: 1st Battalion, Infantry Regiment 3, on the flight corridor, its front 16 km east of Kamenec. Division commander."
+      },
+      "scharnhorst": {
+        "title": "The Scharnhorst’s last message, 1943",
+        "about": "On 26 December 1943, the German warship Scharnhorst sent this message in its last battle. It sank soon after. The M4 Project broke the message on 28 May 2008.",
+        "rules": "J comes before and after the place name. AAA CCC stands for the square AC.",
+        "text": "Am steering for Tanafjord. Position: square AC 4992. Speed: 20 knots. Scharnhorst."
+      }
+    },
+    "decrypt": {
+      "title": "Decrypting: {title}",
+      "help": "Type these letters, or press “Type it for me”. The lamps light the message.",
+      "typeForMe": "Type it for me",
+      "check": "Check my answer",
+      "close": "Close",
+      "empty": "Type the secret letters first.",
+      "right": "Right! The message says: {text}",
+      "soFar": "So far, so good: {right} of {total} letters are right. Keep typing.",
+      "wrong": "Letter {at} is not right. Backspace takes letters back."
     }
   }
 }

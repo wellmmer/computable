@@ -120,6 +120,20 @@ describe('labReducer', () => {
     expect(lab.positions).toEqual(['B', 'L', 'C']);
     expect(lab.start).toEqual(['B', 'L', 'C']);
   });
+
+  it('loads a key sheet: its settings, and its start in the windows, with empty strips', () => {
+    const settings = { rotors: ['II', 'IV', 'V'], rings: ['B', 'U', 'L'], reflector: 'B', plugs: ['AV', 'BS'] } as const;
+    const lab = run(...type('WE'), { type: 'back-to-start' }, { type: 'load', settings, start: ['L', 'S', 'D'] });
+    expect(lab.settings).toEqual(settings);
+    expect(lab.positions).toEqual(['L', 'S', 'D']);
+    expect(lab.start).toEqual(['L', 'S', 'D']);
+    expect(lab.typed).toEqual([]);
+    expect(lab.previousLit).toBe('');
+  });
+
+  it('types a whole text at once, as if each key were pressed in turn', () => {
+    expect(run({ type: 'type', letters: 'WETTERBERICHT' })).toEqual(run(...type('WETTERBERICHT')));
+  });
 });
 
 describe('groupsOf5', () => {

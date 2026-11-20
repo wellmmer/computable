@@ -29,6 +29,13 @@ describe('Privacy (spec 4.2)', () => {
     expect(screen.getByText('Your quiz results stay in this browser only.')).toBeTruthy();
   });
 
+  it('says that Home’s secret stays in this browser, and how to delete it (spec R3 4)', () => {
+    renderWithIntl(<PrivacyPage />);
+    expect(
+      screen.getByText('Home’s secret message, its secret letters and the Enigma settings stay in this browser only. “Forget my secret” deletes them.'),
+    ).toBeTruthy();
+  });
+
   it('says the counter never receives the machine from a share link (spec 5.6)', () => {
     renderWithIntl(<PrivacyPage />);
     expect(

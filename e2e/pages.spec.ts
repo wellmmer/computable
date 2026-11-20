@@ -36,6 +36,67 @@ test.describe('Home (spec 4.2)', () => {
   });
 });
 
+test.describe('Home: "Type your own secret" (spec R3 4)', () => {
+  const textBox = (page: Page) => page.getByRole('textbox', { name: 'Your message' });
+  const secretLetters = (page: Page) => page.getByText('Secret letters', { exact: true }).locator('xpath=following-sibling::dd');
+
+  test('keeps a typed secret after a reload, and forgets it', async ({ page }) => {
+    await openPage(page, '/en');
+    await textBox(page).fill('Wetterbericht');
+    await expect(secretLetters(page)).toHaveText('PBJGO LIZQM QGZ');
+    await openPage(page, '/en');
+    await expect(textBox(page)).toHaveValue('Wetterbericht');
+    await page.getByRole('button', { name: 'Forget my secret' }).click();
+    await expect(textBox(page)).toHaveValue('');
+    expect(await page.evaluate(() => localStorage.getItem('computable.secret'))).toBeNull();
+  });
+
+  test('the Enigma lab decrypts the secret letters from Home', async ({ page }) => {
+    await openPage(page, '/en');
+    await textBox(page).fill('Hello, Turing!');
+    await expect(secretLetters(page)).not.toBeEmpty();
+    const secret = (await secretLetters(page).textContent()) ?? '';
+    await page.getByRole('link', { name: 'Open the Enigma lab' }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.locator('[data-keys="on"]')).toBeAttached();
+    await page.keyboard.type(secret.replaceAll(' ', ''));
+    await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText('HELLO XTURI NG');
+  });
+
+  test('never erases text typed while the page is still loading', async ({ page }) => {
+    // Hold back the page's scripts, not its styles, so React hydrates only after the visitor typed.
+    let releaseScripts = () => {};
+    const scriptsHeld = new Promise<void>((resolve) => (releaseScripts = resolve));
+    await page.route(/\/_next\/static\/chunks\/.*\.js$/, async (route) => {
+      await scriptsHeld;
+      await route.continue();
+    });
+    await page.goto('/en', { waitUntil: 'commit' });
+    await textBox(page).pressSequentially('Hallo', { timeout: 10_000 });
+    const typedEarly = await textBox(page).inputValue();
+    releaseScripts();
+    await expect(page.getByRole('banner').locator('button[aria-pressed]')).toHaveAttribute('aria-pressed', /^(true|false)$/);
+    await expect(textBox(page)).toHaveValue(typedEarly);
+    // Once the page has loaded, the field takes the text and keeps it.
+    await textBox(page).pressSequentially('Welt');
+    await expect(textBox(page)).toHaveValue(`${typedEarly}Welt`);
+    await openPage(page, '/en');
+    await expect(textBox(page)).toHaveValue(`${typedEarly}Welt`);
+  });
+
+  test('shows the secret first, then the two buttons, then Turing’s tape', async ({ page }) => {
+    await openPage(page, '/en');
+    const tops = await Promise.all(
+      [textBox(page), page.getByRole('link', { name: 'Open the Enigma lab' }), page.getByRole('link', { name: 'Open the simulator' }), page.getByTestId('tape-strip')].map(
+        async (locator) => (await locator.boundingBox())?.y ?? -1,
+      ),
+    );
+    expect(tops[0]).toBeLessThan(tops[1]);
+    expect(tops[1]).toBeLessThanOrEqual(tops[2]);
+    expect(tops[2]).toBeLessThan(tops[3]);
+  });
+});
+
 test.describe('Support the dev (spec 7)', () => {
   test('says the links are not ready while every handle is empty, with no amount and no payment link', async ({ page }) => {
     await openPage(page, '/en/support');

@@ -7,11 +7,11 @@
 press Run, and watch the head read, write and move, one square at a time. Every step is explained
 in a plain sentence.
 
-> **Status: releases 1, 2 and 3a are live at https://computable-lac.vercel.app.** This repo held a
-> 2016 capstone project built with jQuery. It is now Computable, built release by release. Release 1
-> is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. Release 3a
-> adds a working Enigma I. The roadmap below lists the rest. The 2016 version stays available at the
-> git tag `v1.0-tcc-2016`.
+> **Status: releases 1, 2, 3a and 3b are live at https://computable-lac.vercel.app.** This repo held
+> a 2016 capstone project built with jQuery. It is now Computable, built release by release. Release
+> 1 is the simulator. Release 2 adds six lessons and a reading guide to Turing's 1936 paper. Release
+> 3a adds a working Enigma I, and release 3b adds messages to decrypt and a new Home. The roadmap
+> below lists the rest. The 2016 version stays available at the git tag `v1.0-tcc-2016`.
 
 ---
 
@@ -40,7 +40,7 @@ machine could do the same work.
 | **R2a** | The Learn page, lesson 1 (intuition) and lesson 2 (the formal definition), quizzes, and progress saved in your browser | Live |
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
-| **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a). Planned: messages and the new Home (R3b), a one-rotor machine in the simulator (R3c) |
+| **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b). Planned: a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
 
@@ -132,8 +132,13 @@ machine could do the same work.
   not do.
 - **The path of the current.** A drawing shows the letter after each part, out to the reflector and
   back. It shows why a letter never lights itself.
-- **Coming next:** practice and real messages and a new Home (R3b), then a one-rotor machine in the
-  simulator (R3c).
+- **Messages to decrypt.** Under the lab, 3 practice messages in your language get harder one step
+  at a time. Two real wartime messages follow: Operation Barbarossa (1941) and the Scharnhorst's last
+  message (1943). One button loads a message into the machine, and "Check my answer" checks it. Every
+  real setting and letter was checked against published sources, and the page links them.
+- **A secret on Home.** Home starts with a small Enigma: type a secret message and see its secret
+  letters. The secret stays in your browser only. "Forget my secret" deletes it.
+- **Coming next:** a one-rotor machine in the simulator (R3c).
 
 ## The machine format
 
