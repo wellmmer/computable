@@ -425,5 +425,82 @@
       "readCorrection": "Lire la correction sur le site de l’éditeur",
       "license": "Le texte de ce guide est sous licence <link>CC BY 4.0</link>. Les citations de l’article de Turing ne le sont pas."
     }
+  },
+  "enigma": {
+    "machine": {
+      "label": "La machine",
+      "left": "Rotor de gauche",
+      "middle": "Rotor du milieu",
+      "right": "Rotor de droite",
+      "window": "{rotor}, rotor {name}, affiche {letter}",
+      "next": "{rotor} : lettre suivante",
+      "previous": "{rotor} : lettre précédente",
+      "note": "Le rotor de droite tourne d’un cran avant chaque lettre.",
+      "keyboard": "Clavier"
+    },
+    "path": {
+      "title": "Le chemin du courant pour {letter}",
+      "titleEmpty": "Le chemin du courant",
+      "empty": "Appuyez sur une touche pour voir le chemin.",
+      "show": "Montrer le chemin",
+      "keyLamp": "Touche, lampe",
+      "plugboard": "Tableau de connexions",
+      "rotor": "Rotor {name}",
+      "reflector": "Réflecteur",
+      "outTop": "Aller sur la ligne du haut, retour sur la ligne du bas.",
+      "outLeft": "Aller sur la ligne de gauche, retour sur la ligne de droite.",
+      "swap": "La paire de fiches {pair} a changé {from} en {to} (anneau rouge).",
+      "never": "Le courant revient toujours par un autre fil. Une lettre ne s’allume donc jamais elle-même.",
+      "labelKey": "Touche {letter}",
+      "labelPlugboard": "tableau de connexions {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "réflecteur {letter}",
+      "labelLamp": "lampe {letter}"
+    },
+    "settings": {
+      "title": "Changer les réglages",
+      "rotors": "Rotors",
+      "rings": "Anneaux",
+      "reflector": "Réflecteur",
+      "plugs": "Paires de fiches",
+      "rotorLeft": "Rotor de gauche",
+      "rotorMiddle": "Rotor du milieu",
+      "rotorRight": "Rotor de droite",
+      "ringLeft": "Anneau de gauche",
+      "ringMiddle": "Anneau du milieu",
+      "ringRight": "Anneau de droite",
+      "plugsHelp": "Touchez 2 lettres pour les relier. Touchez une lettre reliée pour retirer sa paire.",
+      "plugJoined": "{letter}, reliée à {other}",
+      "noPlugs": "Aucune paire de fiches",
+      "sameRotor": "Le rotor {letters} est là deux fois. Utilisez chaque rotor une seule fois.",
+      "letterTwice": "La lettre {letters} est dans 2 paires de fiches. Une lettre ne peut être que dans une paire.",
+      "tooManyPairs": "Il y a {letters} paires de fiches. Utilisez-en 13 ou moins.",
+      "notAPair": "« {letters} » n’est pas une paire de fiches. Une paire relie 2 lettres différentes.",
+      "clears": "Enregistrer efface les lettres que vous avez tapées.",
+      "save": "Enregistrer",
+      "cancel": "Annuler"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Tapez une lettre sur votre clavier ou touchez une touche. Une lampe allume la lettre secrète."
+    },
+    "lab": {
+      "settings": "Réglages",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {aucune paire de fiches} one {# paire de fiches} other {# paires de fiches}}",
+      "change": "Changer",
+      "changeSettings": "Changer les réglages",
+      "typed": "Vous avez tapé",
+      "lit": "Lampes allumées",
+      "backToStart": "Retour au début ({start})",
+      "copy": "Copier les lettres allumées",
+      "copied": "Copié",
+      "copyFailed": "Copie impossible",
+      "clear": "Effacer",
+      "hint": "Pour déchiffrer : revenez au début, puis tapez les lettres allumées. Les lampes montrent à nouveau le message.",
+      "previousLit": "Lampes allumées avant le retour : {letters}",
+      "previousLitTurned": "Lampes allumées avant de tourner un rotor : {letters}",
+      "litNews": "Lampe {letter}",
+      "removedNews": "{letter} effacée"
+    }
   }
 }

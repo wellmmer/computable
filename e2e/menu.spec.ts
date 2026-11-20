@@ -11,6 +11,11 @@ test.describe('the menu and the footer (spec 4.2)', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Learn');
     await expect(menu.getByRole('link', { name: 'Learn' })).toHaveAttribute('aria-current', 'page');
 
+    await menu.getByRole('link', { name: 'Enigma' }).click();
+    await expect(page).toHaveURL(/\/en\/enigma$/);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(menu.getByRole('link', { name: 'Enigma' })).toHaveAttribute('aria-current', 'page');
+
     await menu.getByRole('link', { name: 'Simulator' }).click();
     await expect(page).toHaveURL(/\/en\/simulator$/);
     await expect(menu.getByRole('link', { name: 'Simulator' })).toHaveAttribute('aria-current', 'page');
@@ -31,13 +36,11 @@ test.describe('the menu and the footer (spec 4.2)', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Computable');
   });
 
-  test('shows Enigma and Bombe as coming soon, without a link', async ({ page }) => {
+  test('links Enigma, and shows Bombe as coming soon, without a link', async ({ page }) => {
     await openPage(page, '/en/about');
     const menu = page.getByRole('navigation', { name: 'Main menu' });
-    await expect(menu.getByRole('link')).toHaveText(['Learn', 'Simulator']);
-    for (const name of ['Enigma', 'Bombe']) {
-      await expect(menu.getByText(`${name}, coming soon`, { exact: true })).toBeVisible();
-    }
+    await expect(menu.getByRole('link')).toHaveText(['Learn', 'Simulator', 'Enigma']);
+    await expect(menu.getByText('Bombe, coming soon', { exact: true })).toBeVisible();
   });
 
   test('works from the keyboard: the skip link, the menu, the language switcher, Tour and the theme switch', async ({ page }) => {
@@ -59,6 +62,7 @@ test.describe('the menu and the footer (spec 4.2)', () => {
       ['link', 'Support the dev'],
       ['button', 'Tour'],
       ['button', 'Language: English'],
+      ['link', 'Enigma'],
       ['link', 'Simulator'],
       ['link', 'Learn'],
       ['link', 'Computable'],

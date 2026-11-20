@@ -425,5 +425,82 @@
       "readCorrection": "Leer la corrección en el sitio de la editorial",
       "license": "El texto de esta guía está bajo la licencia <link>CC BY 4.0</link>. Las citas del artículo de Turing no lo están."
     }
+  },
+  "enigma": {
+    "machine": {
+      "label": "La máquina",
+      "left": "Rotor izquierdo",
+      "middle": "Rotor central",
+      "right": "Rotor derecho",
+      "window": "{rotor}, rotor {name}, muestra {letter}",
+      "next": "{rotor}: letra siguiente",
+      "previous": "{rotor}: letra anterior",
+      "note": "El rotor derecho gira un paso antes de cada letra.",
+      "keyboard": "Teclado"
+    },
+    "path": {
+      "title": "Por dónde pasó la corriente para {letter}",
+      "titleEmpty": "Por dónde pasa la corriente",
+      "empty": "Pulsa una tecla para ver el camino.",
+      "show": "Mostrar el camino",
+      "keyLamp": "Tecla, lámpara",
+      "plugboard": "Clavijero",
+      "rotor": "Rotor {name}",
+      "reflector": "Reflector",
+      "outTop": "Ida por la línea de arriba, vuelta por la línea de abajo.",
+      "outLeft": "Ida por la línea de la izquierda, vuelta por la línea de la derecha.",
+      "swap": "El par de clavijas {pair} cambió {from} por {to} (anillo rojo).",
+      "never": "La corriente siempre vuelve por otro cable, así que una letra nunca se ilumina a sí misma.",
+      "labelKey": "Tecla {letter}",
+      "labelPlugboard": "clavijero {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "reflector {letter}",
+      "labelLamp": "lámpara {letter}"
+    },
+    "settings": {
+      "title": "Cambiar la configuración",
+      "rotors": "Rotores",
+      "rings": "Anillos",
+      "reflector": "Reflector",
+      "plugs": "Pares de clavijas",
+      "rotorLeft": "Rotor izquierdo",
+      "rotorMiddle": "Rotor central",
+      "rotorRight": "Rotor derecho",
+      "ringLeft": "Anillo izquierdo",
+      "ringMiddle": "Anillo central",
+      "ringRight": "Anillo derecho",
+      "plugsHelp": "Toca 2 letras para unirlas. Toca una letra unida para quitar su par.",
+      "plugJoined": "{letter}, unida a {other}",
+      "noPlugs": "Ningún par de clavijas",
+      "sameRotor": "El rotor {letters} aparece dos veces. Usa cada rotor solo una vez.",
+      "letterTwice": "La letra {letters} está en 2 pares de clavijas. Una letra puede estar en un solo par.",
+      "tooManyPairs": "Hay {letters} pares de clavijas. Usa 13 o menos.",
+      "notAPair": "«{letters}» no es un par de clavijas. Un par une 2 letras distintas.",
+      "clears": "Al guardar se borran las letras que escribiste.",
+      "save": "Guardar",
+      "cancel": "Cancelar"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Escribe una letra en tu teclado o toca una tecla. Una lámpara ilumina la letra secreta."
+    },
+    "lab": {
+      "settings": "Configuración",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {ningún par de clavijas} one {# par de clavijas} other {# pares de clavijas}}",
+      "change": "Cambiar",
+      "changeSettings": "Cambiar la configuración",
+      "typed": "Escribiste",
+      "lit": "Lámparas encendidas",
+      "backToStart": "Volver al inicio ({start})",
+      "copy": "Copiar las letras encendidas",
+      "copied": "Copiado",
+      "copyFailed": "No se pudo copiar",
+      "clear": "Borrar",
+      "hint": "Para descifrar: vuelve al inicio y escribe las letras encendidas. Las lámparas muestran el mensaje otra vez.",
+      "previousLit": "Lámparas encendidas antes de volver: {letters}",
+      "previousLitTurned": "Lámparas encendidas antes de girar un rotor: {letters}",
+      "litNews": "Lámpara {letter}",
+      "removedNews": "{letter} borrada"
+    }
   }
 }

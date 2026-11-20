@@ -425,5 +425,82 @@
       "readCorrection": "Ler a correção no site da editora",
       "license": "O texto deste guia está sob a licença <link>CC BY 4.0</link>. As citações do artigo de Turing não estão."
     }
+  },
+  "enigma": {
+    "machine": {
+      "label": "A máquina",
+      "left": "Rotor esquerdo",
+      "middle": "Rotor do meio",
+      "right": "Rotor direito",
+      "window": "{rotor}, rotor {name}, mostra {letter}",
+      "next": "{rotor}: próxima letra",
+      "previous": "{rotor}: letra anterior",
+      "note": "O rotor direito gira um passo antes de cada letra.",
+      "keyboard": "Teclado"
+    },
+    "path": {
+      "title": "Por onde a corrente passou para {letter}",
+      "titleEmpty": "Por onde a corrente passa",
+      "empty": "Aperte uma tecla para ver o caminho.",
+      "show": "Mostrar o caminho",
+      "keyLamp": "Tecla, lâmpada",
+      "plugboard": "Painel de plugues",
+      "rotor": "Rotor {name}",
+      "reflector": "Refletor",
+      "outTop": "Ida na linha de cima, volta na linha de baixo.",
+      "outLeft": "Ida na linha da esquerda, volta na linha da direita.",
+      "swap": "O par de plugues {pair} trocou {from} por {to} (anel vermelho).",
+      "never": "A corrente sempre volta por outro fio, então uma letra nunca acende a si mesma.",
+      "labelKey": "Tecla {letter}",
+      "labelPlugboard": "painel de plugues {letter}",
+      "labelRotor": "rotor {name} {letter}",
+      "labelReflector": "refletor {letter}",
+      "labelLamp": "lâmpada {letter}"
+    },
+    "settings": {
+      "title": "Mudar as configurações",
+      "rotors": "Rotores",
+      "rings": "Anéis",
+      "reflector": "Refletor",
+      "plugs": "Pares de plugues",
+      "rotorLeft": "Rotor esquerdo",
+      "rotorMiddle": "Rotor do meio",
+      "rotorRight": "Rotor direito",
+      "ringLeft": "Anel esquerdo",
+      "ringMiddle": "Anel do meio",
+      "ringRight": "Anel direito",
+      "plugsHelp": "Toque em 2 letras para ligá-las. Toque em uma letra ligada para desfazer o par.",
+      "plugJoined": "{letter}, ligada a {other}",
+      "noPlugs": "Nenhum par de plugues",
+      "sameRotor": "O rotor {letters} aparece duas vezes. Use cada rotor só uma vez.",
+      "letterTwice": "A letra {letters} está em 2 pares de plugues. Uma letra pode estar em só um par.",
+      "tooManyPairs": "Há {letters} pares de plugues. Use 13 ou menos.",
+      "notAPair": "“{letters}” não é um par de plugues. Um par liga 2 letras diferentes.",
+      "clears": "Salvar apaga as letras que você digitou.",
+      "save": "Salvar",
+      "cancel": "Cancelar"
+    },
+    "page": {
+      "title": "Enigma I",
+      "lead": "Digite uma letra no seu teclado ou toque em uma tecla. Uma lâmpada acende a letra secreta."
+    },
+    "lab": {
+      "settings": "Configurações",
+      "summary": "{rotors}, {reflector}, {count, plural, =0 {nenhum par de plugues} one {# par de plugues} other {# pares de plugues}}",
+      "change": "Mudar",
+      "changeSettings": "Mudar as configurações",
+      "typed": "Você digitou",
+      "lit": "Lâmpadas acesas",
+      "backToStart": "Voltar ao início ({start})",
+      "copy": "Copiar as letras acesas",
+      "copied": "Copiado",
+      "copyFailed": "Não foi possível copiar",
+      "clear": "Limpar",
+      "hint": "Para decifrar: volte ao início e digite as letras acesas. As lâmpadas mostram a mensagem de novo.",
+      "previousLit": "Lâmpadas acesas antes de você voltar: {letters}",
+      "previousLitTurned": "Lâmpadas acesas antes de você girar um rotor: {letters}",
+      "litNews": "Lâmpada {letter}",
+      "removedNews": "{letter} apagada"
+    }
   }
 }
