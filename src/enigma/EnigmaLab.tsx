@@ -34,6 +34,7 @@ export function EnigmaLab() {
   const [changing, setChanging] = useState(false);
   const [copied, setCopied] = useState<'copied' | 'copyFailed' | null>(null);
   const changeButton = useRef<HTMLButtonElement>(null);
+  const settingsLine = useRef<HTMLElement>(null);
   const [loaded, setLoaded] = useState<LoadedMessage | null>(null);
   const decryptHeading = useRef<HTMLHeadingElement>(null);
 
@@ -55,7 +56,13 @@ export function EnigmaLab() {
       }
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    // data-keys="on" says the keys work. The lab hydrates after the menu bar, so end-to-end tests wait for it before typing.
+    const line = settingsLine.current;
+    line?.setAttribute('data-keys', 'on');
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      line?.removeAttribute('data-keys');
+    };
   }, [changing]);
 
   // A loaded message shows above the machine. Its heading takes the focus, so the page scrolls up to it.
@@ -97,7 +104,7 @@ export function EnigmaLab() {
 
   return (
     <>
-      <section aria-label={t('settings')} className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1.5 border border-soft bg-cell px-3.5 py-2.5 sm:rounded">
+      <section ref={settingsLine} aria-label={t('settings')} className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1.5 border border-soft bg-cell px-3.5 py-2.5 sm:rounded">
         <dl className="hidden flex-wrap gap-x-6 gap-y-1.5 sm:flex">
           {[
             [tSettings('rotors'), rotors.join(' ')],

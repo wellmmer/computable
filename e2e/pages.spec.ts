@@ -58,6 +58,7 @@ test.describe('Home: "Type your own secret" (spec R3 4)', () => {
     const secret = (await secretLetters(page).textContent()) ?? '';
     await page.getByRole('link', { name: 'Open the Enigma lab' }).click();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.locator('[data-keys="on"]')).toBeAttached();
     await page.keyboard.type(secret.replaceAll(' ', ''));
     await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText('HELLO XTURI NG');
   });

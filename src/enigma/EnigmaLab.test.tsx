@@ -62,6 +62,14 @@ describe('EnigmaLab (spec R3 3)', () => {
     expect(screen.getByRole('status').textContent).toBe('Removed T');
   });
 
+  it('marks its settings line while it listens to the physical keyboard, so tests know when to type', () => {
+    renderWithIntl(<EnigmaLab />);
+    const settings = screen.getByRole('region', { name: 'Settings' });
+    expect(settings.getAttribute('data-keys')).toBe('on');
+    fireEvent.click(screen.getAllByRole('button', { name: /^Change/ })[0]);
+    expect(settings.getAttribute('data-keys')).toBeNull();
+  });
+
   it('ignores keys with Ctrl, Alt or Cmd, and keys that are not letters', () => {
     renderWithIntl(<EnigmaLab />);
     typeKeys('c', { ctrlKey: true });

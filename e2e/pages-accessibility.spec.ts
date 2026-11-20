@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
-import { LOCALE_PATHS, openPage } from './helpers';
+import { LOCALE_PATHS, openLab, openPage } from './helpers';
 
 /** Every page, after the language prefix. */
 const PATHS = [
@@ -138,7 +138,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
           { width: 390, height: 844 },
         ]) {
           await page.setViewportSize(viewport);
-          await openPage(page, `${locale}/enigma`);
+          await openLab(page, `${locale}/enigma`);
           await page.keyboard.type('WETTERBERICHT');
           await expect(page.getByRole('status')).not.toBeEmpty();
           expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
@@ -174,7 +174,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
           { width: 390, height: 844 },
         ]) {
           await page.setViewportSize(viewport);
-          await openPage(page, `${locale}/enigma`);
+          await openLab(page, `${locale}/enigma`);
           // The last card is the Scharnhorst message, with one button: load.
           await page.getByRole('article').last().getByRole('button').click();
           const box = page.locator('#decrypt-title').locator('..');
