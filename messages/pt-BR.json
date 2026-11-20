@@ -10,7 +10,22 @@
     "openSimulator": "Abrir o simulador",
     "caption": "Esta é a primeira máquina de Turing, do artigo de 1936. Ela imprime 0 1 0 1 … em casas alternadas e nunca para.",
     "pause": "Pausar",
-    "play": "Continuar"
+    "play": "Continuar",
+    "openLab": "Abrir o laboratório da Enigma",
+    "tapeTitle": "A primeira máquina de Turing",
+    "secret": {
+      "title": "Digite uma mensagem secreta",
+      "lead": "A Enigma troca cada letra por outra. Digite abaixo, e as lâmpadas acendem as suas letras secretas.",
+      "label": "Sua mensagem",
+      "typed": "A Enigma digita",
+      "cipher": "Letras secretas",
+      "rules": "A Enigma só tem 26 letras. Ela tira os acentos, digita X no lugar do espaço e deixa de fora números e sinais.",
+      "settings": "Configurações: rotores {rotors}, anéis {rings}, pares de plugues {plugs}, refletor {reflector}, início {start}. O laboratório da Enigma começa com as mesmas configurações.",
+      "decrypt": "Para ler de novo, abra o laboratório da Enigma e digite as letras secretas. As lâmpadas acendem a sua mensagem.",
+      "forget": "Esquecer meu segredo",
+      "stays": "Seu segredo fica neste navegador. Ele nunca é enviado.",
+      "litNews": "Lâmpada {letter}"
+    }
   },
   "simulator": {
     "page": {
@@ -251,6 +266,7 @@
     "browserTitle": "O que fica no seu navegador",
     "browser": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho.",
     "quiz": "Seus resultados de quiz ficam só neste navegador.",
+    "secret": "A mensagem secreta da página inicial, as letras secretas e as configurações da Enigma ficam só neste navegador. “Esquecer meu segredo” apaga tudo.",
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
     "analytics": {

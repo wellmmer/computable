@@ -10,7 +10,22 @@
     "openSimulator": "Simulator öffnen",
     "caption": "Das ist Turings erste Maschine aus seinem Aufsatz von 1936. Sie druckt 0 1 0 1 … in jedes zweite Feld und hält nie an.",
     "pause": "Pause",
-    "play": "Abspielen"
+    "play": "Abspielen",
+    "openLab": "Enigma-Labor öffnen",
+    "tapeTitle": "Turings erste Maschine",
+    "secret": {
+      "title": "Tippe eine geheime Nachricht",
+      "lead": "Die Enigma macht aus jedem Buchstaben einen anderen. Tippe unten, und die Lampen zeigen deine geheimen Buchstaben.",
+      "label": "Deine Nachricht",
+      "typed": "Die Enigma tippt",
+      "cipher": "Geheime Buchstaben",
+      "rules": "Die Enigma hat nur 26 Buchstaben. Sie macht aus Ä ein A, tippt X statt Leerzeichen und lässt Ziffern und Zeichen weg.",
+      "settings": "Einstellungen: Walzen {rotors}, Ringe {rings}, Steckerpaare {plugs}, Umkehrwalze {reflector}, Start {start}. Das Enigma-Labor startet mit denselben Einstellungen.",
+      "decrypt": "Zum Lesen öffne das Enigma-Labor und tippe die geheimen Buchstaben. Die Lampen zeigen deine Nachricht.",
+      "forget": "Mein Geheimnis vergessen",
+      "stays": "Dein Geheimnis bleibt in diesem Browser. Es wird nie gesendet.",
+      "litNews": "Lampe {letter}"
+    }
   },
   "simulator": {
     "page": {
@@ -251,6 +266,7 @@
     "browserTitle": "Was in deinem Browser bleibt",
     "browser": "Dein Browser behält deine aktuelle Maschine, deine Wahl zwischen Karopapier und Nachtpapier, deine Sprache und ob du die Tour gesehen hast. Sie bleiben auf deinem Gerät.",
     "quiz": "Deine Quiz-Ergebnisse bleiben nur in diesem Browser.",
+    "secret": "Die geheime Nachricht der Startseite, ihre geheimen Buchstaben und die Enigma-Einstellungen bleiben nur in diesem Browser. „Mein Geheimnis vergessen“ löscht sie.",
     "language": "Die Sprache steht außerdem ein Jahr lang in einem Cookie namens NEXT_LOCALE. Die Website setzt es, wenn du eine Sprache wählst oder eine Seite in einer anderen Sprache als der deines Browsers öffnest. Dein Browser sendet es bei jedem Seitenabruf mit, damit die Hauptadresse der Website in deiner Sprache öffnet. Es enthält nur den Sprachcode, etwa pt-BR.",
     "shareLink": "Ein Link zum Teilen enthält die Maschine hinter dem Zeichen #. Browser senden diesen Teil eines Links an keinen Server.",
     "analytics": {

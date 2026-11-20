@@ -150,6 +150,22 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
+    // Home with a typed secret: the lit lamp, both strips and "Forget my secret".
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale} with a typed secret has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openPage(page, locale);
+          await page.getByRole('textbox').fill('Olá, Turing!');
+          await expect(page.locator('[data-lit]')).toHaveCount(1);
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
+        }
+      });
+    }
+
     // A real message loaded and typed, the answer checked, and every "What it says" open.
     for (const locale of LOCALE_PATHS) {
       test(`${locale}/enigma with a loaded message, a checked answer and open texts has no axe violations, on a desktop and a phone`, async ({ page }) => {
