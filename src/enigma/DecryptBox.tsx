@@ -21,19 +21,21 @@ interface DecryptBoxProps {
 
 /**
  * The loaded message, above the machine: its secret letters, "Type it for me" and "Check my answer".
- * A check stays on screen until the lit letters change.
+ * A check stays on screen until the lit letters change. A Bombe stop has no answer to check: the
+ * box says instead that some plug pairs are unknown.
  */
 export function DecryptBox({ message, lit, headingRef, onTypeForMe, onClose }: DecryptBoxProps) {
   const t = useTranslations('enigma.decrypt');
   const [checkedLit, setCheckedLit] = useState<string | null>(null);
-  const check = checkedLit === lit ? checkAnswer(lit, message.sheet.answer) : null;
+  const { answer } = message.sheet;
+  const check = answer !== null && checkedLit === lit ? checkAnswer(lit, answer) : null;
 
-  const say = (result: AnswerCheck) => {
+  const say = (result: AnswerCheck, answer: string) => {
     switch (result.result) {
       case 'empty':
         return t('empty');
       case 'right':
-        return t('right', { text: readable(message.sheet.answer) });
+        return t('right', { text: readable(answer) });
       case 'so-far':
         return t('soFar', { right: result.right, total: result.total });
       case 'wrong':
@@ -47,20 +49,23 @@ export function DecryptBox({ message, lit, headingRef, onTypeForMe, onClose }: D
         {t('title', { title: message.title })}
       </h2>
       <p className="mt-1 text-sm text-muted">{t('help')}</p>
+      {answer === null && <p className="mt-1 text-sm text-muted">{t('partial')}</p>}
       <p className={`mt-2 ${letterGroups}`}>{message.sheet.cipher}</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button type="button" onClick={onTypeForMe} className={button}>
           {t('typeForMe')}
         </button>
-        <button type="button" onClick={() => setCheckedLit(lit)} className={mainButton}>
-          {t('check')}
-        </button>
+        {answer !== null && (
+          <button type="button" onClick={() => setCheckedLit(lit)} className={mainButton}>
+            {t('check')}
+          </button>
+        )}
         <button type="button" onClick={onClose} className={button}>
           {t('close')}
         </button>
       </div>
       <p aria-live="polite" className="mt-2 font-semibold break-words">
-        {check !== null && say(check)}
+        {check !== null && answer !== null && say(check, answer)}
       </p>
     </section>
   );

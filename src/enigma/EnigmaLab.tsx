@@ -10,6 +10,7 @@ import { groupsOf5, initialLab, labReducer, litLetters, typedLetters } from './l
 import { MachinePanel } from './MachinePanel';
 import { MessageList, type LoadedMessage } from './MessageList';
 import { SettingsDialog } from './SettingsDialog';
+import { parseTryHash } from './try-link';
 
 /** The rotor names in the "enigma.machine" messages, by slot. */
 const SLOT_NAMES = ['left', 'middle', 'right'] as const;
@@ -28,11 +29,13 @@ const TEXT_FIELDS = 'input:not([type="checkbox"]):not([type="radio"]), select, t
  * only: a reload starts again from the defaults. On phones, "Lamps lit" sits above the machine, so a
  * thumb on the keys never covers it; from 768 px, the strips and buttons sit right of the machine.
  * The messages to decrypt sit under the lab (spec R3 4). A loaded message shows above the machine.
+ * A Bombe stop's link loads its key and secret letters the same way (spec R4 3).
  */
 export function EnigmaLab() {
   const t = useTranslations('enigma.lab');
   const tSettings = useTranslations('enigma.settings');
   const tMachine = useTranslations('enigma.machine');
+  const tDecrypt = useTranslations('enigma.decrypt');
   const [lab, dispatch] = useReducer(labReducer, undefined, initialLab);
   const [changing, setChanging] = useState(false);
   const [copied, setCopied] = useState<'copied' | 'copyFailed' | null>(null);
@@ -77,6 +80,24 @@ export function EnigmaLab() {
   useEffect(() => {
     if (loaded !== null) decryptHeading.current?.focus();
   }, [loaded]);
+
+  // A link from the Bombe lab loads a stop's key and opens the box with its secret letters (spec R4 3).
+  // A link pasted into the address bar of an open lab changes only the hash, so the lab listens for that too.
+  useEffect(() => {
+    const openLink = () => {
+      const key = parseTryHash(window.location.hash);
+      if (key === null) return;
+      // Like any loaded message, the key lives in the page only: a reload goes back to the first settings.
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      const { settings, start, cipher } = key;
+      dispatch({ type: 'load', settings, start });
+      const title = tDecrypt('bombeStop', { rotors: settings.rotors.join(' '), start: start.join(' ') });
+      setLoaded({ title, sheet: { settings, start, cipher: groupsOf5(cipher), answer: null } });
+    };
+    openLink();
+    window.addEventListener('hashchange', openLink);
+    return () => window.removeEventListener('hashchange', openLink);
+  }, [tDecrypt]);
 
   // "Copied" goes back to "Copy lit letters" after 2 seconds.
   useEffect(() => {

@@ -11,7 +11,8 @@ import { REAL_MESSAGES } from './real-messages';
 /** A message the visitor loaded into the machine, with the name the "Decrypting" box shows. */
 export interface LoadedMessage {
   title: string;
-  sheet: KeySheet;
+  /** The key sheet. Its answer is null when nobody knows the plain text yet, as for a Bombe stop. */
+  sheet: Omit<KeySheet, 'answer'> & { answer: string | null };
 }
 
 const PRACTICE_TITLES = ['practice1', 'practice2', 'practice3'] as const;

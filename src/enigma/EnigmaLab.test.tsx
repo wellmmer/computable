@@ -2,7 +2,9 @@
 import { act, cleanup, fireEvent, screen, within } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
+import { PRACTICE } from '@/bombe/practice-message';
 import { EnigmaLab } from './EnigmaLab';
+import { tryHash, type KeyToTry } from './try-link';
 
 beforeAll(() => {
   // jsdom has <dialog> but not showModal() or close(). A browser fires "close" when the dialog closes.
@@ -209,5 +211,38 @@ describe('a message loaded into the lab (spec R3 4)', () => {
     fireEvent.click(load);
     fireEvent.click(within(box()).getByRole('button', { name: 'Close' }));
     expect(document.activeElement).toBe(load);
+  });
+});
+
+describe('a Bombe stop opened from its link (spec R4 3, "Try in the Enigma lab")', () => {
+  const box = () => screen.getByRole('region', { name: /^Decrypting/ });
+  const STOP: KeyToTry = {
+    settings: { ...PRACTICE.settings, plugs: ['AH', 'BP', 'EX', 'KW', 'MR', 'NT', 'VZ'] },
+    start: PRACTICE.start,
+    cipher: PRACTICE.cipher,
+  };
+
+  afterEach(() => window.history.replaceState(null, '', '/'));
+
+  it('loads the key, shows the secret letters without "Check my answer", and drops the link from the address', () => {
+    window.history.replaceState(null, '', `/en/enigma${tryHash(STOP)}`);
+    renderWithIntl(<EnigmaLab />);
+    expect(screen.getByRole('heading', { name: 'Decrypting: Bombe stop, rotors II III V, start Q K A' })).toBe(document.activeElement);
+    expect(within(box()).getByText('The Bombe found only some plug pairs. Letters it did not reach may come out wrong.')).toBeTruthy();
+    expect(within(box()).queryByRole('button', { name: 'Check my answer' })).toBeNull();
+    expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('AH BP EX KW MR NT VZ')).toBeTruthy();
+    expect(window.location.hash).toBe('');
+    fireEvent.click(within(box()).getByRole('button', { name: 'Type it for me' }));
+    expect(strip('Lamps lit')?.startsWith('WETTE RBERI CHT')).toBe(true);
+  });
+
+  it('opens a link pasted into the address bar of the open lab', () => {
+    renderWithIntl(<EnigmaLab />);
+    expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
+    act(() => {
+      window.history.replaceState(null, '', `/en/enigma${tryHash(STOP)}`);
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    });
+    expect(screen.getByRole('heading', { name: 'Decrypting: Bombe stop, rotors II III V, start Q K A' })).toBeTruthy();
   });
 });
