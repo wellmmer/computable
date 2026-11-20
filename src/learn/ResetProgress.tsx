@@ -5,7 +5,7 @@ import { useId, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { resetProgress } from './progress';
 
-const button = 'border-2 border-ink px-3 py-1.5 font-semibold active:translate-y-px';
+const button = 'border-2 border-ink px-3 py-1.5 font-semibold press';
 
 /** "Reset my progress" on the Learn page (spec 2.1). It asks first, because the results cannot come back. */
 export function ResetProgress() {

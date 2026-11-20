@@ -83,7 +83,7 @@ export function EditTapeButton() {
       type="button"
       onClick={() => startTapeEdit()}
       aria-keyshortcuts="e"
-      className="inline-flex items-center gap-2 px-2 py-1 text-sm font-semibold text-muted underline underline-offset-4"
+      className="inline-flex items-center gap-2 px-2 py-1 text-sm font-semibold text-muted underline underline-offset-4 hover:text-pencil"
     >
       <PencilLine aria-hidden className="size-4" />
       {t('edit')}

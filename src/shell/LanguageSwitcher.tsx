@@ -60,7 +60,7 @@ export function LanguageSwitcher() {
         aria-expanded={open}
         aria-controls={listId}
         onClick={() => setOpen(!open)}
-        className="inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-2.5 font-semibold text-ink"
+        className="press inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-2.5 font-semibold text-ink"
       >
         <Languages aria-hidden className="size-[18px] shrink-0" strokeWidth={1.8} />
         <span lang={locale}>{LANGUAGE_NAMES[locale]}</span>

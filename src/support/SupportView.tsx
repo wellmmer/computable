@@ -49,7 +49,7 @@ function ProviderRow({ id, handles, amount, currency }: ProviderRowProps) {
   const link = providerLink(id, handles, amount ?? AMOUNTS[currency].preset, currency);
   const note = link.carriesAmount && shown !== null ? t('carries', { amount: shown }) : shown === null ? t('typeAny') : t('typeIt', { amount: shown });
   const label = !link.carriesAmount ? t('open', { provider: name }) : shown === null ? t('payNoAmount', { provider: name }) : t('pay', { amount: shown, provider: name });
-  const button = 'inline-flex items-center gap-2 border-2 border-ink px-4 py-2 font-semibold';
+  const button = 'press inline-flex items-center gap-2 border-2 border-ink px-4 py-2 font-semibold';
   return (
     <li className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-5">
       <div>

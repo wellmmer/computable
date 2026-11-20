@@ -83,7 +83,7 @@ export function KeyboardShortcuts() {
         type="button"
         onClick={() => dialog.current?.showModal()}
         aria-keyshortcuts="?"
-        className="inline-flex items-center gap-2 px-2 py-1 text-sm font-semibold text-muted underline underline-offset-4"
+        className="inline-flex items-center gap-2 px-2 py-1 text-sm font-semibold text-muted underline underline-offset-4 hover:text-pencil"
       >
         <Keyboard aria-hidden className="size-4" />
         {t('open')}
@@ -98,7 +98,7 @@ export function KeyboardShortcuts() {
           <h2 id="shortcuts-title" className="font-display text-xl font-semibold">
             {t('title')}
           </h2>
-          <button type="button" onClick={() => dialog.current?.close()} aria-label={t('close')} className="p-1">
+          <button type="button" onClick={() => dialog.current?.close()} aria-label={t('close')} className="p-1 hover:text-pencil">
             <X aria-hidden className="size-5" />
           </button>
         </div>

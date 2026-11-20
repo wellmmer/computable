@@ -21,7 +21,7 @@ function MachineButton({ icon: Icon, label, onClick, disabled, primary }: { icon
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-2 border-2 border-ink px-4 py-2 font-semibold active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`inline-flex items-center justify-center gap-2 border-2 border-ink px-4 py-2 font-semibold press disabled:cursor-not-allowed disabled:opacity-50 ${
         primary ? 'min-w-28 bg-ink text-paper' : 'bg-cell text-ink'
       }`}
     >

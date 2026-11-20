@@ -34,7 +34,7 @@ export function Notices() {
       {leftEdgeNote && (
         <li className="flex flex-wrap items-center gap-3 border-l-4 border-pencil bg-cell px-3 py-2">
           <span className="flex-1">{t('leftEdge')}</span>
-          <button type="button" onClick={dismissLeftEdgeNote} className="font-semibold underline underline-offset-4">
+          <button type="button" onClick={dismissLeftEdgeNote} className="font-semibold underline underline-offset-4 hover:text-pencil">
             {t('gotIt')}
           </button>
         </li>

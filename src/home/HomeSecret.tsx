@@ -98,7 +98,7 @@ export function HomeSecret() {
           type="button"
           onClick={forget}
           disabled={!secret}
-          className="border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink disabled:opacity-50"
+          className="press border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink disabled:opacity-50"
         >
           {t('forget')}
         </button>

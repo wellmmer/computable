@@ -18,10 +18,10 @@ export function TourPrompt() {
           {t('text')}
         </p>
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={() => tourStore.getState().request()} className="border-2 border-ink bg-ink px-3 py-1 font-semibold text-paper">
+          <button type="button" onClick={() => tourStore.getState().request()} className="press border-2 border-ink bg-ink px-3 py-1 font-semibold text-paper">
             {t('take')}
           </button>
-          <button type="button" onClick={markTourSeen} className="border-2 border-ink bg-cell px-3 py-1 font-semibold text-ink">
+          <button type="button" onClick={markTourSeen} className="press border-2 border-ink bg-cell px-3 py-1 font-semibold text-ink">
             {t('dismiss')}
           </button>
         </div>

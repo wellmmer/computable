@@ -12,7 +12,7 @@ import { useSimulator, useSimulatorStore } from './store-context';
 /** Where focus goes after a rule is added or deleted, or an example opens, so it is never lost. */
 type FocusTarget = { kind: 'field'; rule: number } | { kind: 'delete'; rule: number } | { kind: 'add' } | null;
 
-const textButton = 'inline-flex items-center gap-1.5 py-1 text-sm font-semibold text-ink underline underline-offset-4';
+const textButton = 'inline-flex items-center gap-1.5 py-1 text-sm font-semibold text-ink underline underline-offset-4 hover:text-pencil';
 
 /** The editable rule table (spec 5.1). Every edit goes through compileMachine in the store. */
 export function RuleTable() {

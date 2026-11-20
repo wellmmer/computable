@@ -14,7 +14,7 @@ import { SettingsDialog } from './SettingsDialog';
 /** The rotor names in the "enigma.machine" messages, by slot. */
 const SLOT_NAMES = ['left', 'middle', 'right'] as const;
 
-const button = 'border-2 border-ink px-3 py-1.5 font-semibold disabled:opacity-50';
+const button = 'press border-2 border-ink px-3 py-1.5 font-semibold disabled:opacity-50';
 const strip = 'min-h-11 border border-soft bg-cell px-2.5 py-2 font-mono text-[17px] font-medium tracking-[2px] [word-spacing:6px] break-words';
 
 /** The page never changes "hydrated" after the first render, so nothing needs a subscription. */

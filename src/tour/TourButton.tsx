@@ -30,7 +30,7 @@ export function TourButton() {
       type="button"
       onClick={open}
       data-tour-button
-      className="inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-2.5 font-semibold text-ink"
+      className="press inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-2.5 font-semibold text-ink"
     >
       <CircleHelp aria-hidden className="size-[18px] shrink-0" strokeWidth={1.8} />
       {t('button')}

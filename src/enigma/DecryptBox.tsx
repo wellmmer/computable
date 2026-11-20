@@ -6,8 +6,8 @@ import { checkAnswer, type AnswerCheck } from './key-sheet';
 import { letterGroups, type LoadedMessage } from './MessageList';
 import { readable } from './practice-messages';
 
-const button = 'border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink';
-const mainButton = 'border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper';
+const button = 'press border-2 border-ink bg-cell px-3 py-1.5 font-semibold text-ink';
+const mainButton = 'press border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper';
 
 interface DecryptBoxProps {
   message: LoadedMessage;

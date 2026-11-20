@@ -70,7 +70,7 @@ export function ThemeSwitch() {
       onClick={toggle}
       aria-pressed={theme === null ? undefined : theme === 'dark'}
       title={t('label')}
-      className="grid size-9 shrink-0 place-items-center border-2 border-ink bg-cell text-ink"
+      className="press grid size-9 shrink-0 place-items-center border-2 border-ink bg-cell text-ink"
     >
       <span className="sr-only">{t('label')}</span>
       <Moon aria-hidden className="on-paper size-[18px]" strokeWidth={1.8} />

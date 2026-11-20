@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { useSimulator } from './store-context';
 
-const button = 'border-2 border-ink px-3 py-1.5 font-semibold';
+const button = 'press border-2 border-ink px-3 py-1.5 font-semibold';
 
 /**
  * Asks before a share link replaces a machine the visitor built. The store holds the link's machine

@@ -27,7 +27,7 @@ export function ResultLine() {
     <div className={`mx-auto mt-4 flex max-w-[640px] flex-wrap items-center justify-center gap-3 px-4 py-3 text-center font-semibold ${tone}`}>
       <p data-testid="result-line">{plain(result)}</p>
       {loop === 'limit' && (
-        <button type="button" onClick={continueRun} className="border-2 border-ink bg-ink px-3 py-1 text-paper">
+        <button type="button" onClick={continueRun} className="press border-2 border-ink bg-ink px-3 py-1 text-paper">
           {t('continue')}
         </button>
       )}
