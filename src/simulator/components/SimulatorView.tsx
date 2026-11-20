@@ -4,6 +4,7 @@ import { TourPanel } from '@/tour/TourPanel';
 import { TourPrompt } from '@/tour/TourPrompt';
 import { Controls } from './Controls';
 import { DiagramPanel } from './DiagramPanel';
+import { ExampleNote } from './ExampleNote';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
 import { LiveRegion } from './LiveRegion';
 import { MachineFile } from './MachineFile';
@@ -25,6 +26,7 @@ export function SimulatorView() {
     <main className="mx-auto w-full max-w-[1200px] px-4 py-6 sm:px-7">
       <TourPrompt />
       <MachineHeader />
+      <ExampleNote />
       <TapeStage />
       <StepSentence />
       <Notices />

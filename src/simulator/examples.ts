@@ -1,10 +1,11 @@
 import binaryPlusOne from '../../examples/binary-plus-one.json';
 import tcc2016Text from '../../examples/example.txt?raw';
+import oneRotor from '../../examples/one-rotor.json';
 import palindrome from '../../examples/palindrome.json';
 import turingFirst from '../../examples/turing-1936-first.json';
 import { parseLegacy, parseMachine, type LegacyWarning, type Machine } from '@/engines/turing';
 
-export const EXAMPLE_IDS = ['binary-plus-one', 'palindrome', 'turing-1936', 'tcc-2016'] as const;
+export const EXAMPLE_IDS = ['binary-plus-one', 'palindrome', 'turing-1936', 'tcc-2016', 'one-rotor'] as const;
 export type ExampleId = (typeof EXAMPLE_IDS)[number];
 
 export interface Example {
@@ -30,6 +31,7 @@ export const examples: Record<ExampleId, Example> = {
   palindrome: fromJson(palindrome),
   'turing-1936': fromJson(turingFirst),
   'tcc-2016': fromLegacy(tcc2016Text, 'TCC machine (2016)'),
+  'one-rotor': fromJson(oneRotor),
 };
 
 export const DEFAULT_EXAMPLE_ID: ExampleId = 'binary-plus-one';

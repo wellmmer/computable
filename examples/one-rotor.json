@@ -1,0 +1,32 @@
+{
+  "format": "computable/machine@1",
+  "name": "One-rotor cipher",
+  "tape": "one-sided",
+  "blank": "_",
+  "start": "p0",
+  "accept": ["qA"],
+  "reject": [],
+  "input": "AAAA",
+  "rules": [
+    { "state": "p0", "read": "A", "write": "B", "move": "R", "next": "p1" },
+    { "state": "p0", "read": "B", "write": "D", "move": "R", "next": "p1" },
+    { "state": "p0", "read": "C", "write": "A", "move": "R", "next": "p1" },
+    { "state": "p0", "read": "D", "write": "C", "move": "R", "next": "p1" },
+    { "state": "p0", "read": "_", "write": "_", "move": "S", "next": "qA" },
+    { "state": "p1", "read": "A", "write": "C", "move": "R", "next": "p2" },
+    { "state": "p1", "read": "B", "write": "D", "move": "R", "next": "p2" },
+    { "state": "p1", "read": "C", "write": "B", "move": "R", "next": "p2" },
+    { "state": "p1", "read": "D", "write": "A", "move": "R", "next": "p2" },
+    { "state": "p1", "read": "_", "write": "_", "move": "S", "next": "qA" },
+    { "state": "p2", "read": "A", "write": "C", "move": "R", "next": "p3" },
+    { "state": "p2", "read": "B", "write": "A", "move": "R", "next": "p3" },
+    { "state": "p2", "read": "C", "write": "D", "move": "R", "next": "p3" },
+    { "state": "p2", "read": "D", "write": "B", "move": "R", "next": "p3" },
+    { "state": "p2", "read": "_", "write": "_", "move": "S", "next": "qA" },
+    { "state": "p3", "read": "A", "write": "D", "move": "R", "next": "p0" },
+    { "state": "p3", "read": "B", "write": "C", "move": "R", "next": "p0" },
+    { "state": "p3", "read": "C", "write": "A", "move": "R", "next": "p0" },
+    { "state": "p3", "read": "D", "write": "B", "move": "R", "next": "p0" },
+    { "state": "p3", "read": "_", "write": "_", "move": "S", "next": "qA" }
+  ]
+}

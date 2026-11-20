@@ -40,7 +40,11 @@
       "binary-plus-one": "Binaire +1",
       "palindrome": "Détecteur de palindromes",
       "turing-1936": "Turing 1936 : 0 1 0 1…",
-      "tcc-2016": "Machine du TCC (2016)"
+      "tcc-2016": "Machine du TCC (2016)",
+      "one-rotor": "Chiffre à un rotor"
+    },
+    "oneRotor": {
+      "note": "Les états p0 à p3 sont les 4 positions du rotor. Dans chacun, la machine écrit la lettre que donne le rotor, va à droite et fait tourner le rotor d’un cran. 4 positions × 4 lettres = 16 règles, et 4 règles de plus arrêtent la machine à la fin de l’entrée. La même idée avec 26 lettres demande 26 × 26 = 676 règles, plus 26 pour l’arrêter. Le <lab>labo Enigma</lab> a 3 rotors et 26 lettres."
     },
     "share": {
       "copy": "Copier le lien de partage",

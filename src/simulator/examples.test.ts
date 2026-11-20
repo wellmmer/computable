@@ -3,8 +3,8 @@ import { compileMachine, createRun, runUntilHalt } from '@/engines/turing';
 import { EXAMPLE_IDS, examples, findExampleId } from './examples';
 
 describe('examples', () => {
-  it('ships the four R1 examples in picker order', () => {
-    expect(EXAMPLE_IDS).toEqual(['binary-plus-one', 'palindrome', 'turing-1936', 'tcc-2016']);
+  it('ships the four R1 examples and the R3 one-rotor cipher, in picker order', () => {
+    expect(EXAMPLE_IDS).toEqual(['binary-plus-one', 'palindrome', 'turing-1936', 'tcc-2016', 'one-rotor']);
   });
 
   it.each(EXAMPLE_IDS)('%s compiles without issues', (id) => {
