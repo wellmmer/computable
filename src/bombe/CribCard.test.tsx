@@ -24,6 +24,11 @@ describe('CribCard (spec R4 3, "Crib card")', () => {
     expect(screen.queryByRole('button', { name: 'Slide the crib right' })).toBeNull();
   });
 
+  it('takes at most 2,000 characters of secret letters, so the search can count every key press', () => {
+    renderWithIntl(<Lab />);
+    expect(screen.getByRole<HTMLTextAreaElement>('textbox', { name: 'Secret letters' }).maxLength).toBe(2000);
+  });
+
   it('loads the practice message and lays the crib under its first letters, where it fits', () => {
     renderWithIntl(<Lab />);
     fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));

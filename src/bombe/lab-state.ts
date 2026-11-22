@@ -39,6 +39,12 @@ export type BombeAction =
   | { type: 'report'; report: SearchReport }
   | { type: 'stop' };
 
+/**
+ * The longest secret letters field, in characters. The search keeps each link's key presses in a
+ * 16-bit number, which stops at 65,535. Enigma messages were short, so 2,000 leaves plenty of room.
+ */
+export const SECRET_MAX_LENGTH = 2000;
+
 export const NO_SEARCH: Search = { status: 'idle', total: 0, done: 0, testing: null, stops: [], count: 0 };
 
 /** The lab when the page opens: no secret letters yet, and the crib WETTERBERICHT. */

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { Dispatch } from 'react';
-import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, placeCount, secretLetters, type BombeAction, type BombeLab } from './lab-state';
+import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, placeCount, SECRET_MAX_LENGTH, secretLetters, type BombeAction, type BombeLab } from './lab-state';
 
 export const card = 'border border-soft bg-cell px-4 py-3 sm:rounded';
 export const cardTitle = 'font-semibold';
@@ -55,6 +55,7 @@ export function CribCard({ lab, dispatch }: { lab: BombeLab; dispatch: Dispatch<
         id="bombe-secret"
         aria-describedby="bombe-secret-help"
         rows={3}
+        maxLength={SECRET_MAX_LENGTH}
         spellCheck={false}
         readOnly={running}
         value={lab.secretText}
