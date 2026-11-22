@@ -66,6 +66,7 @@ describe('DrumWall (spec R4 3, "Drum wall")', () => {
     wall({ search: { ...running, status: 'finished', done: 1, count: 1 }, orders: ORDER });
     expect(screen.getByRole('status').textContent).toBe('Finished: 1 rotor order tested. 1 stop.');
     expect(screen.getByRole('progressbar', { name: 'Rotor orders tested' }).getAttribute('aria-valuenow')).toBe('1');
+    expect(screen.queryByText(/^Testing rotors/)).toBeNull();
   });
 
   it('says how many Enigmas a long menu needs', () => {

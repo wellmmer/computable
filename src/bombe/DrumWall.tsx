@@ -91,7 +91,7 @@ export function DrumWall({ menu, search, orders, reducedMotion, blocked, onStart
         <span>{t('order', { current, total })}</span>
         <span>{t('stops', { count: search.count })}</span>
       </div>
-      {search.status !== 'idle' && <p className="text-sm text-brass">{t('testing', { rotors: orders[search.testing?.order ?? 0].join(' ') })}</p>}
+      {running && <p className="text-sm text-brass">{t('testing', { rotors: orders[search.testing?.order ?? 0].join(' ') })}</p>}
 
       <button
         type="button"
