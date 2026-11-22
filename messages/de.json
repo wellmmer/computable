@@ -621,6 +621,7 @@
       "title": "Stopps",
       "empty": "Noch keine Stopps. Drücke Start.",
       "none": "Keine Stopps. Prüfe den Crib und seine Stelle.",
+      "stopped": "Die Suche wurde vor dem ersten Stopp angehalten.",
       "item": "{rotors} · Start {start}",
       "plugs": "Gefundene Steckerpaare: {plugs}",
       "noPlugs": "Keine Steckerpaare gefunden.",

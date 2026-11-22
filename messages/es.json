@@ -621,6 +621,7 @@
       "title": "Paradas",
       "empty": "Todavía no hay paradas. Pulsa Iniciar.",
       "none": "Ninguna parada. Revisa el crib y su posición.",
+      "stopped": "La búsqueda se detuvo antes de encontrar una parada.",
       "item": "{rotors} · inicio {start}",
       "plugs": "Pares de clavijas encontrados: {plugs}",
       "noPlugs": "No se encontró ningún par de clavijas.",

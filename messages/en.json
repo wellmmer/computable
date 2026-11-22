@@ -621,6 +621,7 @@
       "title": "Stops",
       "empty": "No stops yet. Press Start.",
       "none": "No stops. Check the crib and its place.",
+      "stopped": "Search stopped before any stop.",
       "item": "{rotors} · start {start}",
       "plugs": "Plug pairs found: {plugs}",
       "noPlugs": "No plug pairs found.",

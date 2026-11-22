@@ -26,7 +26,8 @@ export function StopsCard({ search, cipher }: { search: Search; cipher: string }
         {t('title')}
       </h2>
       {status === 'idle' && <p className="mt-1 text-sm text-muted">{t('empty')}</p>}
-      {status !== 'idle' && status !== 'running' && count === 0 && <p className="mt-1 text-sm text-muted">{t('none')}</p>}
+      {status === 'finished' && count === 0 && <p className="mt-1 text-sm text-muted">{t('none')}</p>}
+      {status === 'stopped' && count === 0 && <p className="mt-1 text-sm text-muted">{t('stopped')}</p>}
       {stops.length > 0 && (
         <>
           <ol className="mt-2 space-y-3">

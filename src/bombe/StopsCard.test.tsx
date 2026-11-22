@@ -44,6 +44,12 @@ describe('StopsCard (spec R4 3, "Stops card")', () => {
     expect(screen.getByText('No stops. Check the crib and its place.')).toBeTruthy();
   });
 
+  it('does not blame the crib when the visitor stopped the search before any stop', () => {
+    renderWithIntl(<StopsCard search={{ ...finished, status: 'stopped', done: 3, stops: [], count: 0 }} cipher={PRACTICE.cipher} />);
+    expect(screen.queryByText('No stops. Check the crib and its place.')).toBeNull();
+    expect(screen.getByText('Search stopped before any stop.')).toBeTruthy();
+  });
+
   it('counts the stops the list leaves out', () => {
     renderWithIntl(<StopsCard search={{ ...finished, count: 1054537 }} cipher={PRACTICE.cipher} />);
     expect(screen.getByText('1,054,537 stops. The list shows the first 1.')).toBeTruthy();

@@ -621,6 +621,7 @@
       "title": "Paradas",
       "empty": "Nenhuma parada ainda. Toque em Iniciar.",
       "none": "Nenhuma parada. Confira o crib e a posição dele.",
+      "stopped": "A busca parou antes de qualquer parada.",
       "item": "{rotors} · início {start}",
       "plugs": "Pares de plugues encontrados: {plugs}",
       "noPlugs": "Nenhum par de plugues encontrado.",
