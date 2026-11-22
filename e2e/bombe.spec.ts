@@ -111,7 +111,7 @@ const PRACTICE = [
   { path: '/en', load: 'Load the practice message', start: 'Start', done: 'Finished: 1 rotor order tested. 1 stop.', tryIt: 'Try in the Enigma lab: II III V, Q K A', box: 'Decrypting: Bombe stop, rotors II III V, start Q K A' },
   { path: '/pt-br', load: 'Carregar a mensagem de treino', start: 'Iniciar', done: 'Concluído: 1 ordem de rotores testada. 1 parada.', tryIt: 'Testar no laboratório da Enigma: II III V, Q K A', box: 'Decifrando: Parada da Bombe, rotores II III V, início Q K A' },
   { path: '/es', load: 'Cargar el mensaje de práctica', start: 'Iniciar', done: 'Terminado: 1 orden de rotores probado. 1 parada.', tryIt: 'Probar en el laboratorio Enigma: II III V, Q K A', box: 'Descifrando: Parada de la Bombe, rotores II III V, inicio Q K A' },
-  { path: '/fr', load: 'Charger le message d’entraînement', start: 'Démarrer', done: 'Terminé : 1 ordre des rotors testé. 1 arrêt.', tryIt: 'Essayer dans le labo Enigma: II III V, Q K A', box: 'Déchiffrement : Arrêt de la Bombe, rotors II III V, départ Q K A' },
+  { path: '/fr', load: 'Charger le message d’entraînement', start: 'Démarrer', done: 'Terminé : 1 ordre des rotors testé. 1 arrêt.', tryIt: 'Essayer dans le labo Enigma : II III V, Q K A', box: 'Déchiffrement : Arrêt de la Bombe, rotors II III V, départ Q K A' },
   { path: '/de', load: 'Übungsnachricht laden', start: 'Start', done: 'Fertig: 1 Walzenlage getestet. 1 Stopp.', tryIt: 'Im Enigma-Labor ausprobieren: II III V, Q K A', box: 'Entschlüsseln: Bombe-Stopp, Walzen II III V, Start Q K A' },
 ] as const;
 

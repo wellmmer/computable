@@ -40,7 +40,7 @@ export function StopsCard({ search, cipher }: { search: Search; cipher: string }
                   <p className="text-sm">{stop.plugs.length === 0 ? t('noPlugs') : t('plugs', { plugs: stop.plugs.join(' ') })}</p>
                   <Link
                     href={tryLink(stop, cipher)}
-                    aria-label={`${t('try')}: ${rotors}, ${start}`}
+                    aria-label={t('tryLabel', { rotors, start })}
                     className="press mt-1.5 inline-block border-2 border-ink bg-ink px-3 py-1.5 font-semibold text-paper"
                   >
                     {t('try')}

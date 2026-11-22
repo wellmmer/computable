@@ -1,9 +1,11 @@
 // @vitest-environment jsdom
-import { cleanup, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
 import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { parseTryHash } from '@/enigma/try-link';
 import { renderWithIntl } from '@/test/intl';
+import fr from '../../messages/fr.json';
 import { NO_SEARCH, type Search } from './lab-state';
 import { PRACTICE } from './practice-message';
 import { StopsCard } from './StopsCard';
@@ -48,6 +50,15 @@ describe('StopsCard (spec R4 3, "Stops card")', () => {
     renderWithIntl(<StopsCard search={{ ...finished, status: 'stopped', done: 3, stops: [], count: 0 }} cipher={PRACTICE.cipher} />);
     expect(screen.queryByText('No stops. Check the crib and its place.')).toBeNull();
     expect(screen.getByText('Search stopped before any stop.')).toBeTruthy();
+  });
+
+  it('names the link with the spacing of each language: French puts a space before the colon', () => {
+    render(
+      <NextIntlClientProvider locale="fr" messages={fr}>
+        <StopsCard search={finished} cipher={PRACTICE.cipher} />
+      </NextIntlClientProvider>,
+    );
+    expect(screen.getByRole('link', { name: 'Essayer dans le labo Enigma : II III V, Q K A' })).toBeTruthy();
   });
 
   it('counts the stops the list leaves out', () => {

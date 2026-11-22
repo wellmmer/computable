@@ -627,6 +627,7 @@
       "plugs": "Paires de fiches trouvées : {plugs}",
       "noPlugs": "Aucune paire de fiches trouvée.",
       "try": "Essayer dans le labo Enigma",
+      "tryLabel": "Essayer dans le labo Enigma : {rotors}, {start}",
       "more": "{count, number} arrêts. La liste montre les {shown} premiers.",
       "unknown": "Les lettres que le menu n’a pas atteintes restent inconnues."
     }

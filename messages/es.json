@@ -627,6 +627,7 @@
       "plugs": "Pares de clavijas encontrados: {plugs}",
       "noPlugs": "No se encontró ningún par de clavijas.",
       "try": "Probar en el laboratorio Enigma",
+      "tryLabel": "Probar en el laboratorio Enigma: {rotors}, {start}",
       "more": "{count, number} paradas. La lista muestra las primeras {shown}.",
       "unknown": "Las letras que el menú no alcanzó siguen siendo desconocidas."
     }

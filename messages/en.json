@@ -627,6 +627,7 @@
       "plugs": "Plug pairs found: {plugs}",
       "noPlugs": "No plug pairs found.",
       "try": "Try in the Enigma lab",
+      "tryLabel": "Try in the Enigma lab: {rotors}, {start}",
       "more": "{count, number} stops. The list shows the first {shown}.",
       "unknown": "Letters the menu never reached stay unknown."
     }

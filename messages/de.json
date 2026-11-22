@@ -627,6 +627,7 @@
       "plugs": "Gefundene Steckerpaare: {plugs}",
       "noPlugs": "Keine Steckerpaare gefunden.",
       "try": "Im Enigma-Labor ausprobieren",
+      "tryLabel": "Im Enigma-Labor ausprobieren: {rotors}, {start}",
       "more": "{count, number} Stopps. Die Liste zeigt die ersten {shown}.",
       "unknown": "Buchstaben, die das Menü nie erreicht hat, bleiben unbekannt."
     }

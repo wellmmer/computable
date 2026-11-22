@@ -627,6 +627,7 @@
       "plugs": "Pares de plugues encontrados: {plugs}",
       "noPlugs": "Nenhum par de plugues encontrado.",
       "try": "Testar no laboratório da Enigma",
+      "tryLabel": "Testar no laboratório da Enigma: {rotors}, {start}",
       "more": "{count, number} paradas. A lista mostra as primeiras {shown}.",
       "unknown": "As letras que o menu não alcançou continuam desconhecidas."
     }
