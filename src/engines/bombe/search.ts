@@ -64,7 +64,8 @@ function setLinks(tester: Tester, start: number): void {
   const { presses, bases, tables } = tester;
   let position = start;
   let done = 0;
-  // `presses` grows by 1 from link to link, so one walk sets them all.
+  // The links are in message order, so `presses` never goes down. It can jump by more than 1,
+  // because the menu skips crib letters outside A to Z. One walk forward sets every link.
   for (let link = 0; link < presses.length; link++) {
     while (done < presses[link]) {
       position = tables.next[position];

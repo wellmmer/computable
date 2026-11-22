@@ -1,33 +1,50 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { ALPHABET, encrypt, type EnigmaSettings, type Positions, type RotorName, type Three } from '@/engines/enigma';
-import { buildMenu } from './menu';
+import { buildMenu, type Menu } from './menu';
 import { BOMBE_ROTORS, scramblerTables, startIndex } from './scramblers';
 import { createTester, testStart, type Stop } from './search';
 
-/** True when the stop has the key's rotors and start, and every pair it found is one of the key's pairs. */
-function isKey(stop: Stop, settings: EnigmaSettings, start: Positions): boolean {
+/** The letter plugged to `letter` in a list of pairs such as "AV". A letter in no pair is plugged to itself. */
+function partner(pairs: readonly string[], letter: string): string {
+  const pair = pairs.find((found) => found.includes(letter));
+  if (pair === undefined) return letter;
+  return pair[0] === letter ? pair[1] : pair[0];
+}
+
+/**
+ * True when the stop has the key's rotors and start, gives the menu's center letter the key's
+ * partner, and every pair it found is one of the key's pairs. A stop with no pairs does not pass
+ * unless the key leaves the center letter unplugged.
+ */
+function isKey(stop: Stop, settings: EnigmaSettings, start: Positions, menu: Menu): boolean {
+  if (menu.center === null) throw new Error('The menu has no links.');
   const pairs = settings.plugs.map((pair) => [...pair].sort().join(''));
-  return stop.rotors.join(' ') === settings.rotors.join(' ') && stop.start.join('') === start.join('') && stop.plugs.every((pair) => pairs.includes(pair));
+  return (
+    stop.rotors.join(' ') === settings.rotors.join(' ') &&
+    stop.start.join('') === start.join('') &&
+    partner(stop.plugs, menu.center) === partner(settings.plugs, menu.center) &&
+    stop.plugs.every((pair) => pairs.includes(pair))
+  );
 }
 
 describe('testStart (spec R4 2, "One test")', () => {
   it('stops at the lab key for WETTERBERICHT, and finds only true plug pairs', () => {
     // The lab's first settings light PBJGOLIZQMQGZ for WETTERBERICHT (spec R3 3).
     const settings: EnigmaSettings = { rotors: ['I', 'II', 'III'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'] };
-    const tester = createTester(scramblerTables(settings.rotors), buildMenu('PBJGOLIZQMQGZ', 'WETTERBERICHT', 0));
-    const stops = testStart(tester, startIndex(['B', 'L', 'A']));
-    expect(stops.some((stop) => isKey(stop, settings, ['B', 'L', 'A']))).toBe(true);
+    const menu = buildMenu('PBJGOLIZQMQGZ', 'WETTERBERICHT', 0);
+    const stops = testStart(createTester(scramblerTables(settings.rotors), menu), startIndex(['B', 'L', 'A']));
+    expect(stops.some((stop) => isKey(stop, settings, ['B', 'L', 'A'], menu))).toBe(true);
   });
 
   it('tries every partner when the first guess lights one wire: a guess can fit and still be wrong', () => {
     // Without a loop, the first guess "C is plugged to A" fits here, with pairs AT HO PX UY. The key has other pairs.
     const settings: EnigmaSettings = { rotors: ['II', 'III', 'IV'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: ['AY', 'DH', 'EX', 'FR', 'GV', 'JL', 'KW', 'MN', 'OZ', 'PT'] };
     expect(encrypt(settings, ['K', 'Q', 'C'], 'WETTERBERICHT')).toBe('KZUABNJFCRVTP');
-    const tester = createTester(scramblerTables(settings.rotors), buildMenu('KZUABNJFCRVTP', 'WETTERBERICHT', 0));
-    const stops = testStart(tester, startIndex(['K', 'Q', 'C']));
+    const menu = buildMenu('KZUABNJFCRVTP', 'WETTERBERICHT', 0);
+    const stops = testStart(createTester(scramblerTables(settings.rotors), menu), startIndex(['K', 'Q', 'C']));
     expect(stops.map(({ plugs }) => plugs.join(' '))).toContain('AT HO PX UY');
-    expect(stops.some((stop) => isKey(stop, settings, ['K', 'Q', 'C']))).toBe(true);
+    expect(stops.some((stop) => isKey(stop, settings, ['K', 'Q', 'C'], menu))).toBe(true);
   });
 
   it('refuses a menu without links', () => {
@@ -60,7 +77,7 @@ describe('the Bombe with random keys (spec R4 2, property test)', () => {
         const menu = buildMenu(encrypt(settings, start, plain), crib, place);
         // The other 59 rotor orders cannot hold the key, so the test only needs the key's order and start.
         const stops = testStart(createTester(scramblerTables(settings.rotors), menu), startIndex(start));
-        expect(stops.some((stop) => isKey(stop, settings, start))).toBe(true);
+        expect(stops.some((stop) => isKey(stop, settings, start, menu))).toBe(true);
       }),
       { numRuns: 20 },
     );
