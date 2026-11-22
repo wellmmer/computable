@@ -31,7 +31,12 @@ function onStorage(event: StorageEvent) {
 }
 
 function subscribe(listener: () => void) {
-  if (listeners.size === 0) window.addEventListener('storage', onStorage);
+  if (listeners.size === 0) {
+    window.addEventListener('storage', onStorage);
+    // Another tab may have changed the secret while no page here listened. React reads the snapshot again after this.
+    const saved = openStorage().load();
+    if (JSON.stringify(saved) !== JSON.stringify(snapshot)) snapshot = saved;
+  }
   listeners.add(listener);
   return () => {
     listeners.delete(listener);

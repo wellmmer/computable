@@ -3,6 +3,8 @@
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { ROTOR_ORDERS } from '@/engines/bombe';
 import type { RotorName, Three } from '@/engines/enigma';
+import { MY_SECRET_HASH } from '@/home/secret-link';
+import { readSecret, useSecret } from '@/home/use-secret';
 import { useReducedMotion } from '@/simulator/components/use-reduced-motion';
 import { CribCard } from './CribCard';
 import { DrumWall } from './DrumWall';
@@ -18,7 +20,8 @@ const noSubscription = () => () => {};
 /**
  * The Bombe lab (spec R4 3, layout B). From 768 px, the drum wall sits on the left and the cards on
  * the right. On phones, the page order is crib, menu, drum wall, stops. The search runs in a Web
- * Worker; tests hand in another `search`.
+ * Worker; tests hand in another `search`. Home's "Break it with the Bombe" fills the secret letters,
+ * and a stop that matches the saved key says so (spec R4 4).
  */
 export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   const [lab, dispatch] = useReducer(bombeReducer, undefined, initialLab);
@@ -30,6 +33,7 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   // The buttons work only after React loads. End-to-end tests wait for data-bombe="ready".
   const hydrated = useSyncExternalStore(noSubscription, () => true, () => false);
   const menu = menuOf(lab);
+  const secret = useSecret();
 
   const end = () => {
     stopSearch.current?.();
@@ -38,6 +42,20 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
 
   // Leaving the page ends the worker.
   useEffect(() => () => stopSearch.current?.(), []);
+
+  // Home's "Break it with the Bombe" fills the secret letters from this browser. The key stays out of the address.
+  useEffect(() => {
+    const openLink = () => {
+      if (window.location.hash !== MY_SECRET_HASH) return;
+      const saved = readSecret();
+      if (saved === null || saved.cipher === '') return;
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+      dispatch({ type: 'load-secret', cipher: saved.cipher });
+    };
+    openLink();
+    window.addEventListener('hashchange', openLink);
+    return () => window.removeEventListener('hashchange', openLink);
+  }, []);
 
   const start = () => {
     end();
@@ -69,7 +87,7 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
         <DrumWall menu={menu} search={lab.search} orders={orders} reducedMotion={reducedMotion} blocked={blocker(lab)} onStart={start} onStop={stop} />
       </div>
       <div className="md:col-start-2 md:row-start-3">
-        <StopsCard search={lab.search} cipher={secretLetters(lab)} />
+        <StopsCard search={lab.search} cipher={secretLetters(lab)} yourKey={secret ?? null} />
       </div>
     </div>
   );

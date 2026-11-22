@@ -50,6 +50,16 @@ describe('useSecret', () => {
     expect(localStorage.getItem(SECRET_KEY)).toBeNull();
   });
 
+  it('reads the secret again when a page starts to listen, so a change made while no page listened shows', () => {
+    const first = renderHook(() => useSecret());
+    expect(first.result.current).toBeNull();
+    first.unmount();
+    const value = JSON.stringify({ plain: 'A', cipher: 'B', settings: { rotors: ['I', 'II', 'III'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: [] }, start: ['A', 'A', 'A'] });
+    localStorage.setItem(SECRET_KEY, value);
+    const { result } = renderHook(() => useSecret());
+    expect(result.current?.plain).toBe('A');
+  });
+
   it('shows a secret that another tab saved', () => {
     const { result } = renderHook(() => useSecret());
     const value = JSON.stringify({ plain: 'A', cipher: 'B', settings: { rotors: ['I', 'II', 'III'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: [] }, start: ['A', 'A', 'A'] });

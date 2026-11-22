@@ -35,6 +35,8 @@ export type BombeAction =
   | { type: 'crib'; text: string }
   | { type: 'slide'; by: 1 | -1 }
   | { type: 'practice' }
+  /** Home's secret letters, from "Break it with the Bombe" (spec R4 4). */
+  | { type: 'load-secret'; cipher: string }
   | { type: 'start'; total: number }
   | { type: 'report'; report: SearchReport }
   | { type: 'stop' };
@@ -77,6 +79,9 @@ export function bombeReducer(lab: BombeLab, action: BombeAction): BombeLab {
       return running ? lab : clamp({ ...lab, offset: Math.max(0, lab.offset + action.by), search: NO_SEARCH });
     case 'practice':
       return running ? lab : { secretText: groupsOf5(PRACTICE.cipher), cribText: PRACTICE.crib, offset: PRACTICE.offset, search: NO_SEARCH };
+    case 'load-secret':
+      // The crib is the visitor's to choose: about 15 letters they know are in their message.
+      return running ? lab : { secretText: groupsOf5(action.cipher), cribText: '', offset: 0, search: NO_SEARCH };
     case 'start':
       return { ...lab, search: { ...NO_SEARCH, status: 'running', total: action.total } };
     case 'stop':

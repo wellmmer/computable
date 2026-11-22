@@ -2,8 +2,12 @@
 import { act, cleanup, fireEvent, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { encrypt } from '@/engines/enigma';
+import { MY_SECRET_HASH } from '@/home/secret-link';
+import { SECRET_KEY, type SavedSecret } from '@/home/secret-storage';
 import { renderWithIntl } from '@/test/intl';
 import { BombeLab } from './BombeLab';
+import { PRACTICE } from './practice-message';
 import { runSearch } from './run-search';
 import { TEST_ORDERS_KEY } from './search-orders';
 import type { SearchReport } from './search-messages';
@@ -21,6 +25,8 @@ vi.mock('@/i18n/navigation', () => ({
 afterEach(() => {
   cleanup();
   sessionStorage.clear();
+  localStorage.clear();
+  window.history.replaceState(null, '', '/');
 });
 
 /** Runs the search at once, on this thread, instead of in a worker. */
@@ -89,3 +95,32 @@ describe('BombeLab (spec R4 3)', () => {
   });
 });
 
+describe('Home’s secret on the Bombe (spec R4 4)', () => {
+  const SECRET: SavedSecret = { plain: PRACTICE.plain, cipher: encrypt(PRACTICE.settings, PRACTICE.start, PRACTICE.plain), settings: PRACTICE.settings, start: PRACTICE.start };
+  const field = (name: string) => screen.getByRole<HTMLTextAreaElement | HTMLInputElement>('textbox', { name });
+
+  it('fills the secret letters from "Break it with the Bombe", leaves the crib empty, and drops the link', () => {
+    localStorage.setItem(SECRET_KEY, JSON.stringify(SECRET));
+    window.history.replaceState(null, '', `/en/bombe${MY_SECRET_HASH}`);
+    renderWithIntl(<BombeLab search={searchNow} />);
+    expect(field('Secret letters').value.slice(0, 11)).toBe('HXHIC IRWHZ');
+    expect(field('Crib: a word you know is in the message').value).toBe('');
+    expect(window.location.hash).toBe('');
+  });
+
+  it('marks the stop that matches the saved key: "This is your key"', () => {
+    sessionStorage.setItem(TEST_ORDERS_KEY, 'II III V');
+    localStorage.setItem(SECRET_KEY, JSON.stringify(SECRET));
+    window.history.replaceState(null, '', `/en/bombe${MY_SECRET_HASH}`);
+    renderWithIntl(<BombeLab search={searchNow} />);
+    fireEvent.change(field('Crib: a word you know is in the message'), { target: { value: 'WETTERBERICHT' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    expect(screen.getByRole('listitem').textContent).toContain('✓ This is your key');
+  });
+
+  it('opens nothing without a secret in this browser', () => {
+    window.history.replaceState(null, '', `/en/bombe${MY_SECRET_HASH}`);
+    renderWithIntl(<BombeLab search={searchNow} />);
+    expect(field('Secret letters').value).toBe('');
+  });
+});

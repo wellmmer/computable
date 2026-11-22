@@ -70,6 +70,13 @@ describe('the crib card (spec R4 3, "Crib card")', () => {
     expect(hints(run({ type: 'crib', text: 'WET' }))).toEqual({ short: false, noLoop: false });
   });
 
+  it('loads Home’s secret letters in groups of 5, with an empty crib at place 0 (spec R4 4)', () => {
+    const lab = run({ type: 'practice' }, { type: 'slide', by: 1 }, { type: 'load-secret', cipher: 'ABCDEFGH' });
+    expect([lab.secretText, lab.cribText, lab.offset]).toEqual(['ABCDE FGH', '', 0]);
+    expect(lab.search).toEqual(NO_SEARCH);
+    expect(blocker(lab)).toBe('no-crib');
+  });
+
   it('gives the menu of the crib at its place, and no links while the crib has no place', () => {
     expect(menuOf(run({ type: 'practice' })).loops).toBe(3);
     expect(menuOf(run({ type: 'secret', text: 'ABC' })).links).toEqual([]);
@@ -110,6 +117,7 @@ describe('the search (spec R4 3, "Drum wall" and "Stops card")', () => {
   it('keeps the fields while a search runs, and clears the stops after a change', () => {
     expect(bombeReducer(started, { type: 'crib', text: 'WETTER' })).toBe(started);
     expect(bombeReducer(started, { type: 'slide', by: 1 })).toBe(started);
+    expect(bombeReducer(started, { type: 'load-secret', cipher: 'ABC' })).toBe(started);
     const finished = bombeReducer(started, { type: 'report', report: { type: 'finished' } });
     expect(bombeReducer(finished, { type: 'slide', by: 1 }).search).toEqual(NO_SEARCH);
   });
