@@ -2,7 +2,10 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
-import { isLetter } from '@/engines/enigma';
+import { checkSettings, isLetter } from '@/engines/enigma';
+import { toEnigmaLetters } from '@/home/secret';
+import { MY_SECRET_HASH } from '@/home/secret-link';
+import { readSecret } from '@/home/use-secret';
 import { CurrentPath } from './CurrentPath';
 import { DecryptBox } from './DecryptBox';
 import { lettersOf } from './key-sheet';
@@ -29,7 +32,8 @@ const TEXT_FIELDS = 'input:not([type="checkbox"]):not([type="radio"]), select, t
  * only: a reload starts again from the defaults. On phones, "Lamps lit" sits above the machine, so a
  * thumb on the keys never covers it; from 768 px, the strips and buttons sit right of the machine.
  * The messages to decrypt sit under the lab (spec R3 4). A loaded message shows above the machine.
- * A Bombe stop's link loads its key and secret letters the same way (spec R4 3).
+ * A Bombe stop's link loads its key and secret letters the same way (spec R4 3). So does Home's
+ * "Load my secret into the lab", with the answer, so "Check my answer" works (spec R4 4).
  */
 export function EnigmaLab() {
   const t = useTranslations('enigma.lab');
@@ -82,17 +86,29 @@ export function EnigmaLab() {
   }, [loaded]);
 
   // A link from the Bombe lab loads a stop's key and opens the box with its secret letters (spec R4 3).
+  // Home's "Load my secret into the lab" loads the secret saved in this browser, with its answer (spec R4 4).
   // A link pasted into the address bar of an open lab changes only the hash, so the lab listens for that too.
   useEffect(() => {
+    const linkedMessage = (hash: string): LoadedMessage | null => {
+      if (hash === MY_SECRET_HASH) {
+        const secret = readSecret();
+        if (secret === null || secret.cipher === '' || checkSettings(secret.settings).length > 0) return null;
+        const { settings, start, cipher, plain } = secret;
+        return { title: tDecrypt('homeSecret'), sheet: { settings, start, cipher: groupsOf5(cipher), answer: toEnigmaLetters(plain) } };
+      }
+      const key = parseTryHash(hash);
+      if (key === null) return null;
+      const { settings, start, cipher } = key;
+      const title = tDecrypt('bombeStop', { rotors: settings.rotors.join(' '), start: start.join(' ') });
+      return { title, sheet: { settings, start, cipher: groupsOf5(cipher), answer: null } };
+    };
     const openLink = () => {
-      const key = parseTryHash(window.location.hash);
-      if (key === null) return;
+      const message = linkedMessage(window.location.hash);
+      if (message === null) return;
       // Like any loaded message, the key lives in the page only: a reload goes back to the first settings.
       window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
-      const { settings, start, cipher } = key;
-      dispatch({ type: 'load', settings, start });
-      const title = tDecrypt('bombeStop', { rotors: settings.rotors.join(' '), start: start.join(' ') });
-      setLoaded({ title, sheet: { settings, start, cipher: groupsOf5(cipher), answer: null } });
+      dispatch({ type: 'load', settings: message.sheet.settings, start: message.sheet.start });
+      setLoaded(message);
     };
     openLink();
     window.addEventListener('hashchange', openLink);

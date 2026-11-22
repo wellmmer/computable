@@ -55,6 +55,11 @@ export function saveSecret(plain: string) {
   publish(secret);
 }
 
+/** The secret saved in this browser, read now. The labs read it when a Home button opens them. */
+export function readSecret(): SavedSecret | null {
+  return openStorage().load();
+}
+
 /** "Forget my secret" (spec R3 4). */
 export function forgetSecret() {
   openStorage().forget();

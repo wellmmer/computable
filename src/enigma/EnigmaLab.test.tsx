@@ -3,7 +3,11 @@ import { act, cleanup, fireEvent, screen, within } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
 import { PRACTICE } from '@/bombe/practice-message';
+import { encrypt } from '@/engines/enigma';
+import { MY_SECRET_HASH } from '@/home/secret-link';
+import { SECRET_KEY, type SavedSecret } from '@/home/secret-storage';
 import { EnigmaLab } from './EnigmaLab';
+import { groupsOf5 } from './lab-state';
 import { tryHash, type KeyToTry } from './try-link';
 
 beforeAll(() => {
@@ -244,5 +248,40 @@ describe('a Bombe stop opened from its link (spec R4 3, "Try in the Enigma lab")
       window.dispatchEvent(new HashChangeEvent('hashchange'));
     });
     expect(screen.getByRole('heading', { name: 'Decrypting: Bombe stop, rotors II III V, start Q K A' })).toBeTruthy();
+  });
+});
+
+describe('Home’s secret opened from "Load my secret into the lab" (spec R4 4)', () => {
+  const box = () => screen.getByRole('region', { name: /^Decrypting/ });
+  const SECRET: SavedSecret = { plain: 'Hello, Turing!', cipher: encrypt(PRACTICE.settings, PRACTICE.start, 'HELLOXTURING'), settings: PRACTICE.settings, start: PRACTICE.start };
+
+  afterEach(() => {
+    window.history.replaceState(null, '', '/');
+    localStorage.clear();
+  });
+
+  it('loads the saved key, shows the secret letters, and checks the answer', () => {
+    localStorage.setItem(SECRET_KEY, JSON.stringify(SECRET));
+    window.history.replaceState(null, '', `/en/enigma${MY_SECRET_HASH}`);
+    renderWithIntl(<EnigmaLab />);
+    expect(screen.getByRole('heading', { name: 'Decrypting: Your secret from Home' })).toBe(document.activeElement);
+    expect(within(box()).getByText(groupsOf5(SECRET.cipher))).toBeTruthy();
+    expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('II III V')).toBeTruthy();
+    expect(window.location.hash).toBe('');
+    fireEvent.click(within(box()).getByRole('button', { name: 'Type it for me' }));
+    expect(strip('Lamps lit')).toBe('HELLO XTURI NG');
+    fireEvent.click(within(box()).getByRole('button', { name: 'Check my answer' }));
+    expect(within(box()).getByText('Right! The message says: HELLO TURING')).toBeTruthy();
+  });
+
+  it('opens nothing when this browser has no secret, or a secret with a key the lab does not allow', () => {
+    window.history.replaceState(null, '', `/en/enigma${MY_SECRET_HASH}`);
+    renderWithIntl(<EnigmaLab />);
+    expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
+    cleanup();
+    localStorage.setItem(SECRET_KEY, JSON.stringify({ ...SECRET, settings: { ...SECRET.settings, rotors: ['I', 'I', 'V'] } }));
+    window.history.replaceState(null, '', `/en/enigma${MY_SECRET_HASH}`);
+    renderWithIntl(<EnigmaLab />);
+    expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
   });
 });
