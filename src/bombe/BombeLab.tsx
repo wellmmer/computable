@@ -46,8 +46,12 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   // Leaving the page ends the worker.
   useEffect(() => () => stopSearch.current?.(), []);
 
+  const running = lab.search.status === 'running';
+
   // Home's "Break it with the Bombe" fills the secret letters from this browser. The key stays out of the address.
+  // The lab ignores new secret letters while a search runs. So the link waits in the address, and this effect reads it when the search ends.
   useEffect(() => {
+    if (running) return;
     const openLink = () => {
       if (window.location.hash !== MY_SECRET_HASH) return;
       const saved = readSecret();
@@ -58,7 +62,7 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
     openLink();
     window.addEventListener('hashchange', openLink);
     return () => window.removeEventListener('hashchange', openLink);
-  }, []);
+  }, [running]);
 
   const start = () => {
     end();

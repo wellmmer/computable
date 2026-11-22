@@ -138,6 +138,27 @@ describe('Home’s secret on the Bombe (spec R4 4)', () => {
     expect(screen.getByRole('listitem').textContent).toContain('✓ This is your key');
   });
 
+  it('keeps the link while a search runs, and fills the secret letters when the search ends', () => {
+    const reports: ((report: SearchReport) => void)[] = [];
+    const held: SearchRunner = (_request, onReport) => {
+      reports.push(onReport);
+      return () => {};
+    };
+    localStorage.setItem(SECRET_KEY, JSON.stringify({ ...SECRET, cipher: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' }));
+    renderWithIntl(<BombeLab search={held} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    act(() => {
+      window.history.replaceState(null, '', `/en/bombe${MY_SECRET_HASH}`);
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    });
+    expect(field('Secret letters').value.slice(0, 11)).toBe('HXHIC IRWHZ');
+    expect(window.location.hash).toBe(MY_SECRET_HASH);
+    act(() => reports[0]({ type: 'finished' }));
+    expect(field('Secret letters').value.slice(0, 11)).toBe('ABCDE FGHIJ');
+    expect(window.location.hash).toBe('');
+  });
+
   it('opens nothing without a secret in this browser', () => {
     window.history.replaceState(null, '', `/en/bombe${MY_SECRET_HASH}`);
     renderWithIntl(<BombeLab search={searchNow} />);
