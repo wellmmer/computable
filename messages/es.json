@@ -566,7 +566,70 @@
       "empty": "Primero escribe las letras secretas.",
       "right": "¡Correcto! El mensaje dice: {text}",
       "soFar": "Vas bien: {right} de {total} letras son correctas. Sigue escribiendo.",
-      "wrong": "La letra {at} no es correcta. La tecla de retroceso borra letras."
+      "wrong": "La letra {at} no es correcta. La tecla de retroceso borra letras.",
+      "bombeStop": "Parada de la Bombe, rotores {rotors}, inicio {start}",
+      "partial": "La Bombe encontró solo algunos pares de clavijas. Las letras que no alcanzó pueden salir mal."
+    }
+  },
+  "bombe": {
+    "page": {
+      "title": "Bombe",
+      "lead": "Dale a la Bombe una palabra que sabes que está en el mensaje. Ella encuentra la clave."
+    },
+    "crib": {
+      "title": "Crib",
+      "secret": "Letras secretas",
+      "secretHelp": "Pega las letras secretas de un mensaje. Los espacios no importan.",
+      "practice": "Cargar el mensaje de práctica",
+      "practiceAbout": "El mensaje de práctica es un parte meteorológico alemán inventado. Empieza con WETTERBERICHT, “parte meteorológico”.",
+      "crib": "Crib: una palabra que sabes que está en el mensaje",
+      "slideLeft": "Deslizar el crib a la izquierda",
+      "slideRight": "Deslizar el crib a la derecha",
+      "place": "Posición {place} de {count}",
+      "lined": "Letras secretas en esta posición: {secret}. Crib: {crib}.",
+      "fits": "Aquí ninguna letra se convierte en sí misma.",
+      "crashes": "{count, plural, one {# letra se convertiría en sí misma (en rojo).} other {# letras se convertirían en sí mismas (en rojo).}} Enigma nunca hace eso, así que el crib no puede ir aquí.",
+      "tooLong": "El crib es más largo que las letras secretas.",
+      "hintShort": "Consejo: usa un crib de {count} letras o más. Un crib corto da muchas paradas falsas.",
+      "hintNoLoop": "Consejo: este menú no tiene bucles. Desliza el crib o alárgalo para tener menos paradas falsas."
+    },
+    "menu": {
+      "title": "Menú: {loops, plural, =0 {ningún bucle} one {# bucle} other {# bucles}}",
+      "lead": "Más bucles, menos paradas falsas.",
+      "empty": "Coloca un crib bajo las letras secretas para ver su menú.",
+      "drawing": "{links} enlaces entre {letters} letras. La prueba empieza en {center}.",
+      "legend": "Cada línea es una letra del crib sobre su letra secreta. La prueba empieza en {center}, la letra con más líneas."
+    },
+    "wall": {
+      "title": "La Bombe",
+      "order": "Orden de rotores {current} de {total}",
+      "testing": "Probando los rotores {rotors}",
+      "stops": "{count, plural, =0 {Ninguna parada} one {# parada} other {# paradas}}",
+      "start": "Iniciar",
+      "stop": "Detener",
+      "progress": "Órdenes de rotores probados",
+      "finished": "Terminado: {total, plural, one {# orden de rotores probado} other {los # órdenes de rotores probados}}. {count, plural, =0 {Ninguna parada.} one {# parada.} other {# paradas.}}",
+      "stopped": "Detenida tras {done} de {total} órdenes de rotores.",
+      "failed": "La búsqueda no pudo ejecutarse. Recarga la página e inténtalo de nuevo.",
+      "legend": "Una Enigma para cada letra del crib: rotor izquierdo rojo, central amarillo, derecho verde.",
+      "more": "La pared muestra {shown} de las {count} Enigmas.",
+      "noSecret": "Carga el mensaje de práctica o pega letras secretas para empezar.",
+      "noCrib": "Escribe un crib para empezar.",
+      "tooLong": "Haz el crib más corto que las letras secretas para empezar.",
+      "crash": "Desliza el crib a una posición sin letras rojas para empezar."
+    },
+    "stops": {
+      "title": "Paradas",
+      "empty": "Todavía no hay paradas. Pulsa Iniciar.",
+      "none": "Ninguna parada. Revisa el crib y su posición.",
+      "stopped": "La búsqueda se detuvo antes de encontrar una parada.",
+      "item": "{rotors} · inicio {start}",
+      "plugs": "Pares de clavijas encontrados: {plugs}",
+      "noPlugs": "No se encontró ningún par de clavijas.",
+      "try": "Probar en el laboratorio Enigma",
+      "tryLabel": "Probar en el laboratorio Enigma: {rotors}, {start}",
+      "more": "{count, number} paradas. La lista muestra las primeras {shown}.",
+      "unknown": "Las letras que el menú no alcanzó siguen siendo desconocidas."
     }
   }
 }

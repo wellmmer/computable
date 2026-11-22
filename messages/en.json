@@ -566,7 +566,70 @@
       "empty": "Type the secret letters first.",
       "right": "Right! The message says: {text}",
       "soFar": "So far, so good: {right} of {total} letters are right. Keep typing.",
-      "wrong": "Letter {at} is not right. Backspace takes letters back."
+      "wrong": "Letter {at} is not right. Backspace takes letters back.",
+      "bombeStop": "Bombe stop, rotors {rotors}, start {start}",
+      "partial": "The Bombe found only some plug pairs. Letters it did not reach may come out wrong."
+    }
+  },
+  "bombe": {
+    "page": {
+      "title": "Bombe",
+      "lead": "Give the Bombe a word you know is in the message. It finds the key."
+    },
+    "crib": {
+      "title": "Crib",
+      "secret": "Secret letters",
+      "secretHelp": "Paste the secret letters of a message. Spaces do not matter.",
+      "practice": "Load the practice message",
+      "practiceAbout": "The practice message is a made-up German weather report. It starts with WETTERBERICHT, “weather report”.",
+      "crib": "Crib: a word you know is in the message",
+      "slideLeft": "Slide the crib left",
+      "slideRight": "Slide the crib right",
+      "place": "Place {place} of {count}",
+      "lined": "Secret letters at this place: {secret}. Crib: {crib}.",
+      "fits": "No letter turns into itself here.",
+      "crashes": "{count, plural, one {# letter would turn into itself (red).} other {# letters would turn into themselves (red).}} Enigma never does that, so the crib cannot sit here.",
+      "tooLong": "The crib is longer than the secret letters.",
+      "hintShort": "Tip: use a crib of {count} letters or more. A short crib gives many false stops.",
+      "hintNoLoop": "Tip: this menu has no loop. Slide the crib or make it longer to get fewer false stops."
+    },
+    "menu": {
+      "title": "Menu: {loops, plural, =0 {no loops} one {# loop} other {# loops}}",
+      "lead": "More loops, fewer false stops.",
+      "empty": "Place a crib under the secret letters to see its menu.",
+      "drawing": "{links} links between {letters} letters. The test starts at {center}.",
+      "legend": "Each line is one crib letter on its secret letter. The test starts at {center}, the letter with the most lines."
+    },
+    "wall": {
+      "title": "The Bombe",
+      "order": "Rotor order {current} of {total}",
+      "testing": "Testing rotors {rotors}",
+      "stops": "{count, plural, =0 {No stops} one {# stop} other {# stops}}",
+      "start": "Start",
+      "stop": "Stop",
+      "progress": "Rotor orders tested",
+      "finished": "Finished: {total, plural, one {# rotor order} other {all # rotor orders}} tested. {count, plural, =0 {No stops.} one {# stop.} other {# stops.}}",
+      "stopped": "Stopped after {done} of {total} rotor orders.",
+      "failed": "The search could not run. Reload the page and try again.",
+      "legend": "One Enigma for each crib letter: left rotor red, middle yellow, right green.",
+      "more": "The wall shows {shown} of the {count} Enigmas.",
+      "noSecret": "Load the practice message or paste secret letters to start.",
+      "noCrib": "Type a crib to start.",
+      "tooLong": "Make the crib shorter than the secret letters to start.",
+      "crash": "Slide the crib to a place without red letters to start."
+    },
+    "stops": {
+      "title": "Stops",
+      "empty": "No stops yet. Press Start.",
+      "none": "No stops. Check the crib and its place.",
+      "stopped": "Search stopped before any stop.",
+      "item": "{rotors} · start {start}",
+      "plugs": "Plug pairs found: {plugs}",
+      "noPlugs": "No plug pairs found.",
+      "try": "Try in the Enigma lab",
+      "tryLabel": "Try in the Enigma lab: {rotors}, {start}",
+      "more": "{count, number} stops. The list shows the first {shown}.",
+      "unknown": "Letters the menu never reached stay unknown."
     }
   }
 }

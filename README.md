@@ -42,7 +42,7 @@ machine could do the same work.
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
-| **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Planned |
+| **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | In progress: the engine and the lab (R4a). Next: your own secret and slow step mode (R4b), then history and Barbarossa (R4c) |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
 
 ## What R1 brings
@@ -145,6 +145,25 @@ machine could do the same work.
   the letters A B C D. Its states p0 to p3 are the 4 rotor positions, so 16 rules do the work of one
   rotor, and 4 more rules stop it. A note says why 26 letters would need 26 × 26 = 676 rules, and
   links to the lab.
+
+## What R4 brings
+
+- **A working Bombe at `/bombe`.** Give it a crib, a word you know is in the message. It tests all
+  60 rotor orders and all 17,576 starts, and stops where the crib fits. The menu's Bombe item opens
+  it.
+- **A real Turing–Welchman search.** The crib makes a menu of letter links. The Bombe follows the
+  links, with the diagonal board, in a Web Worker. The full search takes about 10 seconds on a
+  desktop.
+- **The crib slide.** Slide the crib along the secret letters. A letter that would turn into itself
+  shows in red, because Enigma never does that. A hint shows when the crib is short or its menu has
+  no loop.
+- **The menu and the drum wall.** A drawing shows the menu's letters, links and loops. A wall of up
+  to 12 Enigmas, with a red, a yellow and a green drum each, turns during the search. With reduced
+  motion, the drums stay still.
+- **Stops you can try.** Each stop shows its rotor order, start and plug pairs. "Try in the Enigma
+  lab" loads the stop into the lab with the secret letters.
+- **A practice message.** A German weather report that starts with WETTERBERICHT. The Bombe finds
+  its key with one stop.
 
 ## The machine format
 

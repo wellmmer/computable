@@ -71,6 +71,10 @@ describe('machine panel tokens (spec 6: the same in both themes)', () => {
     ['bakelite', 'brass', 4.5],
     ['bakelite', 'lamp', 4.5],
     ['lamp-off-ink', 'lamp-off', 4.5],
+    // The Bombe's drums (spec R4 3): white letters on red and green, bakelite letters on yellow.
+    ['on-drum', 'drum-left', 4.5],
+    ['bakelite', 'drum-middle', 4.5],
+    ['on-drum', 'drum-right', 4.5],
   ];
 
   it.each(machinePairs)('%s on %s reaches %s:1', (front, back, minimum) => {
@@ -78,7 +82,7 @@ describe('machine panel tokens (spec 6: the same in both themes)', () => {
   });
 
   it('keeps the machine colors out of the night paper blocks', () => {
-    for (const name of ['bakelite', 'brass', 'lamp', 'ivory', 'lamp-off', 'lamp-off-ink']) {
+    for (const name of ['bakelite', 'brass', 'lamp', 'ivory', 'lamp-off', 'lamp-off-ink', 'drum-left', 'drum-middle', 'drum-right', 'on-drum']) {
       expect(themes['night paper (switch)'][name], name).toBeUndefined();
     }
   });

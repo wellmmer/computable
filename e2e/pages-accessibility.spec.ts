@@ -18,6 +18,7 @@ const PATHS = [
   '/learn/church-turing',
   '/learn/paper',
   '/enigma',
+  '/bombe',
 ];
 
 async function axeViolations(page: Page) {
@@ -146,6 +147,32 @@ for (const colorScheme of ['light', 'dark'] as const) {
           await page.getByRole('main').getByRole('region').first().getByRole('button').click();
           await expect(page.getByRole('dialog')).toBeVisible();
           expect(await axeViolations(page), `${viewport.width} px, dialog`).toEqual([]);
+        }
+      });
+    }
+
+    // The Bombe lab after a search: the stops list, then a crash in red and the hints.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/bombe with a finished search, a crash and the hints has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        await page.addInitScript(() => window.sessionStorage.setItem('computable.test.bombe-orders', 'II III V'));
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openPage(page, `${locale}/bombe`);
+          await expect(page.locator('[data-bombe="ready"]')).toBeAttached();
+          const crib = page.getByRole('main').getByRole('region').first();
+          // The crib card's buttons: "Load the practice message", then ◀ and ▶.
+          await crib.getByRole('button').nth(0).click();
+          // The wall's one button: Start.
+          await page.getByRole('main').getByRole('region').nth(2).getByRole('button').click();
+          await expect(page.getByRole('main').getByRole('region').nth(3).getByRole('link')).toHaveCount(1);
+          expect(await axeViolations(page), `${viewport.width} px, stops`).toEqual([]);
+          await crib.getByRole('textbox').nth(1).fill('WETTER');
+          await crib.getByRole('button').nth(2).click();
+          await expect(page.locator('[data-crash]')).not.toHaveCount(0);
+          expect(await axeViolations(page), `${viewport.width} px, crash`).toEqual([]);
         }
       });
     }

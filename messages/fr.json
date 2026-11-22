@@ -566,7 +566,70 @@
       "empty": "Tapez d’abord les lettres secrètes.",
       "right": "Bravo ! Le message dit : {text}",
       "soFar": "Pour l’instant, tout va bien : {right} lettres sur {total} sont justes. Continuez.",
-      "wrong": "La lettre {at} n’est pas juste. La touche Retour arrière efface des lettres."
+      "wrong": "La lettre {at} n’est pas juste. La touche Retour arrière efface des lettres.",
+      "bombeStop": "Arrêt de la Bombe, rotors {rotors}, départ {start}",
+      "partial": "La Bombe n’a trouvé que quelques paires de fiches. Les lettres qu’elle n’a pas atteintes peuvent sortir fausses."
+    }
+  },
+  "bombe": {
+    "page": {
+      "title": "Bombe",
+      "lead": "Donnez à la Bombe un mot que vous savez présent dans le message. Elle trouve la clé."
+    },
+    "crib": {
+      "title": "Crib",
+      "secret": "Lettres secrètes",
+      "secretHelp": "Collez les lettres secrètes d’un message. Les espaces ne comptent pas.",
+      "practice": "Charger le message d’entraînement",
+      "practiceAbout": "Le message d’entraînement est un bulletin météo allemand inventé. Il commence par WETTERBERICHT, « bulletin météo ».",
+      "crib": "Crib : un mot que vous savez présent dans le message",
+      "slideLeft": "Glisser le crib vers la gauche",
+      "slideRight": "Glisser le crib vers la droite",
+      "place": "Position {place} sur {count}",
+      "lined": "Lettres secrètes à cette position : {secret}. Crib : {crib}.",
+      "fits": "Ici, aucune lettre ne devient elle-même.",
+      "crashes": "{count, plural, one {# lettre deviendrait elle-même (en rouge).} other {# lettres deviendraient elles-mêmes (en rouge).}} Enigma ne fait jamais cela, donc le crib ne peut pas être ici.",
+      "tooLong": "Le crib est plus long que les lettres secrètes.",
+      "hintShort": "Conseil : utilisez un crib de {count} lettres ou plus. Un crib court donne beaucoup de faux arrêts.",
+      "hintNoLoop": "Conseil : ce menu n’a pas de boucle. Glissez le crib ou allongez-le pour avoir moins de faux arrêts."
+    },
+    "menu": {
+      "title": "Menu : {loops, plural, =0 {aucune boucle} one {# boucle} other {# boucles}}",
+      "lead": "Plus de boucles, moins de faux arrêts.",
+      "empty": "Placez un crib sous les lettres secrètes pour voir son menu.",
+      "drawing": "{links} liens entre {letters} lettres. Le test commence à {center}.",
+      "legend": "Chaque trait est une lettre du crib sur sa lettre secrète. Le test commence à {center}, la lettre qui a le plus de traits."
+    },
+    "wall": {
+      "title": "La Bombe",
+      "order": "Ordre des rotors {current} sur {total}",
+      "testing": "Test des rotors {rotors}",
+      "stops": "{count, plural, =0 {Aucun arrêt} one {# arrêt} other {# arrêts}}",
+      "start": "Démarrer",
+      "stop": "Arrêter",
+      "progress": "Ordres des rotors testés",
+      "finished": "Terminé : {total, plural, one {# ordre des rotors testé} other {les # ordres des rotors testés}}. {count, plural, =0 {Aucun arrêt.} one {# arrêt.} other {# arrêts.}}",
+      "stopped": "Arrêtée après {done} ordres des rotors sur {total}.",
+      "failed": "La recherche n’a pas pu démarrer. Rechargez la page et réessayez.",
+      "legend": "Une Enigma pour chaque lettre du crib : rotor de gauche rouge, du milieu jaune, de droite vert.",
+      "more": "Le mur montre {shown} des {count} Enigma.",
+      "noSecret": "Chargez le message d’entraînement ou collez des lettres secrètes pour démarrer.",
+      "noCrib": "Tapez un crib pour démarrer.",
+      "tooLong": "Rendez le crib plus court que les lettres secrètes pour démarrer.",
+      "crash": "Glissez le crib à une position sans lettres rouges pour démarrer."
+    },
+    "stops": {
+      "title": "Arrêts",
+      "empty": "Aucun arrêt pour l’instant. Appuyez sur Démarrer.",
+      "none": "Aucun arrêt. Vérifiez le crib et sa position.",
+      "stopped": "La recherche s’est arrêtée avant de trouver un arrêt.",
+      "item": "{rotors} · départ {start}",
+      "plugs": "Paires de fiches trouvées : {plugs}",
+      "noPlugs": "Aucune paire de fiches trouvée.",
+      "try": "Essayer dans le labo Enigma",
+      "tryLabel": "Essayer dans le labo Enigma : {rotors}, {start}",
+      "more": "{count, number} arrêts. La liste montre les {shown} premiers.",
+      "unknown": "Les lettres que le menu n’a pas atteintes restent inconnues."
     }
   }
 }
