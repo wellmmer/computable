@@ -590,7 +590,7 @@
       "fits": "No letter turns into itself here.",
       "crashes": "{count, plural, one {# letter would turn into itself (red).} other {# letters would turn into themselves (red).}} Enigma never does that, so the crib cannot sit here.",
       "tooLong": "The crib is longer than the secret letters.",
-      "hintShort": "Tip: use a crib of 10 letters or more. A short crib gives many false stops.",
+      "hintShort": "Tip: use a crib of {count} letters or more. A short crib gives many false stops.",
       "hintNoLoop": "Tip: this menu has no loop. Slide the crib or make it longer to get fewer false stops."
     },
     "menu": {

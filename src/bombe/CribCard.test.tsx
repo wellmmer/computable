@@ -51,7 +51,7 @@ describe('CribCard (spec R4 3, "Crib card")', () => {
     renderWithIntl(<Lab />);
     fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));
     fireEvent.change(screen.getByRole('textbox', { name: 'Crib: a word you know is in the message' }), { target: { value: 'wetter' } });
-    expect(screen.getByText('Tip: use a crib of 10 letters or more. A short crib gives many false stops.')).toBeTruthy();
+    expect(screen.getByText('Tip: use a crib of 15 letters or more. A short crib gives many false stops.')).toBeTruthy();
     expect(screen.getByText('Tip: this menu has no loop. Slide the crib or make it longer to get fewer false stops.')).toBeTruthy();
     fireEvent.change(screen.getByRole('textbox', { name: 'Secret letters' }), { target: { value: 'ABC' } });
     expect(screen.getByText('The crib is longer than the secret letters.')).toBeTruthy();

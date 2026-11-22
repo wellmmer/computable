@@ -52,11 +52,11 @@ test.describe('the Bombe lab (spec R4 3)', () => {
     await expect(page.getByRole('button', { name: 'Start' })).toBeEnabled();
   });
 
-  test('gives the hints for a crib under 10 letters without a loop', async ({ page }) => {
+  test('gives the hints for a crib under 15 letters without a loop', async ({ page }) => {
     await openBombe(page);
     await page.getByRole('button', { name: 'Load the practice message' }).click();
     await page.getByRole('textbox', { name: 'Crib: a word you know is in the message' }).fill('wetter');
-    await expect(page.getByText('Tip: use a crib of 10 letters or more. A short crib gives many false stops.')).toBeVisible();
+    await expect(page.getByText('Tip: use a crib of 15 letters or more. A short crib gives many false stops.')).toBeVisible();
     await expect(page.getByText('Tip: this menu has no loop. Slide the crib or make it longer to get fewer false stops.')).toBeVisible();
   });
 

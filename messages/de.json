@@ -590,7 +590,7 @@
       "fits": "Hier wird kein Buchstabe zu sich selbst.",
       "crashes": "{count, plural, one {# Buchstabe würde zu sich selbst (rot).} other {# Buchstaben würden zu sich selbst (rot).}} Die Enigma tut das nie, also kann der Crib hier nicht stehen.",
       "tooLong": "Der Crib ist länger als die geheimen Buchstaben.",
-      "hintShort": "Tipp: Nimm einen Crib mit 10 oder mehr Buchstaben. Ein kurzer Crib gibt viele falsche Stopps.",
+      "hintShort": "Tipp: Nimm einen Crib mit {count} oder mehr Buchstaben. Ein kurzer Crib gibt viele falsche Stopps.",
       "hintNoLoop": "Tipp: Dieses Menü hat keine Schleife. Schiebe den Crib oder mach ihn länger, um weniger falsche Stopps zu bekommen."
     },
     "menu": {

@@ -590,7 +590,7 @@
       "fits": "Nenhuma letra vira ela mesma aqui.",
       "crashes": "{count, plural, one {# letra viraria ela mesma (em vermelho).} other {# letras virariam elas mesmas (em vermelho).}} A Enigma nunca faz isso, então o crib não pode ficar aqui.",
       "tooLong": "O crib é mais longo que as letras secretas.",
-      "hintShort": "Dica: use um crib de 10 letras ou mais. Um crib curto dá muitas paradas falsas.",
+      "hintShort": "Dica: use um crib de {count} letras ou mais. Um crib curto dá muitas paradas falsas.",
       "hintNoLoop": "Dica: este menu não tem laço. Deslize o crib ou aumente o crib para ter menos paradas falsas."
     },
     "menu": {

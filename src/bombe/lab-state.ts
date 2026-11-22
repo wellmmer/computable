@@ -116,10 +116,13 @@ export function blocker(lab: BombeLab): Blocker | null {
   return null;
 }
 
-/** The hints under the crib: a crib under 10 letters, and a menu without a loop. */
+/** The hint asks for a crib of at least this many letters. A shorter crib still runs (spec R4 3). */
+export const HINT_CRIB_LETTERS = 15;
+
+/** The hints under the crib: a crib under 15 letters, and a menu without a loop. */
 export function hints(lab: BombeLab): { short: boolean; noLoop: boolean } {
   if (placeCount(lab) === 0) return { short: false, noLoop: false };
-  return { short: cribLetters(lab).length < 10, noLoop: menuOf(lab).loops === 0 };
+  return { short: cribLetters(lab).length < HINT_CRIB_LETTERS, noLoop: menuOf(lab).loops === 0 };
 }
 
 /** The drum wall shows one Enigma for each link, up to 12. */

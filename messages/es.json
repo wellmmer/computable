@@ -590,7 +590,7 @@
       "fits": "Aquí ninguna letra se convierte en sí misma.",
       "crashes": "{count, plural, one {# letra se convertiría en sí misma (en rojo).} other {# letras se convertirían en sí mismas (en rojo).}} Enigma nunca hace eso, así que el crib no puede ir aquí.",
       "tooLong": "El crib es más largo que las letras secretas.",
-      "hintShort": "Consejo: usa un crib de 10 letras o más. Un crib corto da muchas paradas falsas.",
+      "hintShort": "Consejo: usa un crib de {count} letras o más. Un crib corto da muchas paradas falsas.",
       "hintNoLoop": "Consejo: este menú no tiene bucles. Desliza el crib o alárgalo para tener menos paradas falsas."
     },
     "menu": {

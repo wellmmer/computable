@@ -61,8 +61,11 @@ describe('the crib card (spec R4 3, "Crib card")', () => {
     expect(blocker(run({ type: 'secret', text: 'ABC' }, { type: 'crib', text: 'WXYZ' }))).toBe('crib-too-long');
   });
 
-  it('gives a hint for a crib under 10 letters, and for a menu without a loop', () => {
-    expect(hints(run({ type: 'practice' }))).toEqual({ short: false, noLoop: false });
+  it('gives a hint for a crib under 15 letters, and for a menu without a loop', () => {
+    // WETTERBERICHT has 13 letters. Start still works with it (spec R4 3).
+    expect(hints(run({ type: 'practice' }))).toEqual({ short: true, noLoop: false });
+    expect(blocker(run({ type: 'practice' }))).toBeNull();
+    expect(hints(run({ type: 'practice' }, { type: 'crib', text: 'WETTERBERICHTXN' }))).toEqual({ short: false, noLoop: false });
     expect(hints(run({ type: 'practice' }, { type: 'crib', text: 'WETTER' }))).toEqual({ short: true, noLoop: true });
     expect(hints(run({ type: 'crib', text: 'WET' }))).toEqual({ short: false, noLoop: false });
   });

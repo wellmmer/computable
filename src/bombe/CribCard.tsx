@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { Dispatch } from 'react';
-import { crashesHere, cribLetters, hints, placeCount, secretLetters, type BombeAction, type BombeLab } from './lab-state';
+import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, placeCount, secretLetters, type BombeAction, type BombeLab } from './lab-state';
 
 export const card = 'border border-soft bg-cell px-4 py-3 sm:rounded';
 export const cardTitle = 'font-semibold';
@@ -112,7 +112,7 @@ export function CribCard({ lab, dispatch }: { lab: BombeLab; dispatch: Dispatch<
       <div aria-live="polite" className="mt-2">
         {status()}
       </div>
-      {short && <p className="mt-1 text-sm text-muted">{t('hintShort')}</p>}
+      {short && <p className="mt-1 text-sm text-muted">{t('hintShort', { count: HINT_CRIB_LETTERS })}</p>}
       {noLoop && <p className="mt-1 text-sm text-muted">{t('hintNoLoop')}</p>}
     </section>
   );
