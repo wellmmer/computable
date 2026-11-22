@@ -18,7 +18,15 @@ describe('drawMenu (spec R4 3, "Menu card")', () => {
 
   it('draws one line for each link', () => {
     expect(drawing.lines).toHaveLength(menu.links.length);
-    expect(drawing.lines[0]).toEqual({ key: 'HW0', path: expect.stringMatching(/^M[\d.]+ [\d.]+L[\d.]+ [\d.]+$/) });
+    expect(drawing.lines[0]).toEqual({ key: 'HW0', link: 0, path: expect.stringMatching(/^M[\d.]+ [\d.]+L[\d.]+ [\d.]+$/) });
+  });
+
+  it('gives each line the number of its link, so slow step mode can mark it (spec R4 4)', () => {
+    expect(drawing.lines.map(({ link }) => link).sort((a, b) => a - b)).toEqual(menu.links.map((_, link) => link));
+    for (const { link, key } of drawing.lines) {
+      const { plain, cipher } = menu.links[link];
+      expect(key.slice(0, 2)).toBe([plain, cipher].sort().join(''));
+    }
   });
 
   it('bends 2 links between the same letters apart, so both show', () => {

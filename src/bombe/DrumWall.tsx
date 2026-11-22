@@ -23,6 +23,8 @@ interface DrumWallProps {
   blocked: Blocker | null;
   onStart: () => void;
   onStop: () => void;
+  /** Slow step mode: the test it shows, and the link in use, or null for a step without a link. */
+  slow?: { rotors: Three<RotorName>; start: Positions; link: number | null } | null;
 }
 
 function Drum({ letter, slot }: { letter: Letter | null; slot: 0 | 1 | 2 }) {
@@ -41,14 +43,16 @@ function Drum({ letter, slot }: { letter: Letter | null; slot: 0 | 1 | 2 }) {
 /**
  * The drum wall (spec R4 3, layout B): one Enigma for each menu link, up to 12, each with 3 drums.
  * The drums show the start under test and turn during the search. With reduced motion, they stay
- * at the first start; only the counter changes.
+ * at the first start; only the counter changes. In slow step mode, the drums show the slow test,
+ * and the Enigma of the link in use has a lamp-colored frame (spec R4 4).
  */
-export function DrumWall({ menu, search, orders, reducedMotion, blocked, onStart, onStop }: DrumWallProps) {
+export function DrumWall({ menu, search, orders, reducedMotion, blocked, onStart, onStop, slow = null }: DrumWallProps) {
   const t = useTranslations('bombe.wall');
   const running = search.status === 'running';
   const testing = reducedMotion ? null : search.testing;
-  const rotors = orders[testing?.order ?? 0];
-  const wall = menu.links.length === 0 ? EMPTY_WALL : drumLetters(menu, rotors, testing === null ? STARTS : startAt(testing.start));
+  const rotors = slow?.rotors ?? orders[testing?.order ?? 0];
+  const start = slow?.start ?? (testing === null ? STARTS : startAt(testing.start));
+  const wall = menu.links.length === 0 ? EMPTY_WALL : drumLetters(menu, rotors, start);
   const total = search.status === 'idle' ? orders.length : search.total;
   const current = search.testing === null ? search.done : search.testing.order + 1;
 
@@ -67,7 +71,12 @@ export function DrumWall({ menu, search, orders, reducedMotion, blocked, onStart
       </h2>
       <div aria-hidden className="mt-2 grid grid-cols-6 justify-items-center gap-x-1.5 gap-y-3">
         {wall.map((windows, enigma) => (
-          <span key={enigma} data-enigma className="flex flex-col gap-1">
+          <span
+            key={enigma}
+            data-enigma
+            data-active={slow?.link === enigma || undefined}
+            className={`flex flex-col gap-1 rounded-full ${slow?.link === enigma ? 'outline-3 outline-offset-2 outline-lamp' : ''}`}
+          >
             {([0, 1, 2] as const).map((slot) => (
               <Drum key={slot} slot={slot} letter={windows === null ? null : windows[slot]} />
             ))}

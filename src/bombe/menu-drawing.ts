@@ -12,8 +12,8 @@ const BEND = 18;
 export interface MenuDrawing {
   /** Each letter, with its place. The center letter sits in the middle; the others sit on a ring. */
   letters: readonly { letter: Letter; x: number; y: number; center: boolean }[];
-  /** An SVG path for each link. Links between the same 2 letters bend apart, so each one shows. */
-  lines: readonly { key: string; path: string }[];
+  /** An SVG path for each link, with the link's number. Links between the same 2 letters bend apart, so each one shows. */
+  lines: readonly { key: string; link: number; path: string }[];
 }
 
 const round = (value: number) => Math.round(value * 10) / 10;
@@ -32,29 +32,29 @@ export function drawMenu(menu: Menu): MenuDrawing {
   const place = (letter: Letter) => places.get(letter) ?? { x: MIDDLE, y: MIDDLE };
 
   // Links between the same 2 letters, in either direction, share one entry.
-  const pairs = new Map<string, { a: Letter; b: Letter; count: number }>();
-  for (const { plain, cipher } of menu.links) {
+  const pairs = new Map<string, { a: Letter; b: Letter; links: number[] }>();
+  menu.links.forEach(({ plain, cipher }, link) => {
     const [a, b] = plain < cipher ? [plain, cipher] : [cipher, plain];
-    const pair = pairs.get(a + b) ?? { a, b, count: 0 };
-    pairs.set(a + b, { ...pair, count: pair.count + 1 });
-  }
-  const lines: { key: string; path: string }[] = [];
-  for (const { a, b, count } of pairs.values()) {
+    const pair = pairs.get(a + b) ?? { a, b, links: [] };
+    pairs.set(a + b, { ...pair, links: [...pair.links, link] });
+  });
+  const lines: { key: string; link: number; path: string }[] = [];
+  for (const { a, b, links } of pairs.values()) {
     if (a === b) continue;
     const [from, to] = [place(a), place(b)];
-    for (let i = 0; i < count; i++) {
-      const bend = (i - (count - 1) / 2) * BEND;
+    links.forEach((link, i) => {
+      const bend = (i - (links.length - 1) / 2) * BEND;
       const key = `${a}${b}${i}`;
       if (bend === 0) {
-        lines.push({ key, path: `M${from.x} ${from.y}L${to.x} ${to.y}` });
-        continue;
+        lines.push({ key, link, path: `M${from.x} ${from.y}L${to.x} ${to.y}` });
+        return;
       }
       // A curve through a point beside the middle of the line, at right angles to it.
       const [dx, dy] = [to.x - from.x, to.y - from.y];
       const length = Math.hypot(dx, dy);
       const control = { x: round((from.x + to.x) / 2 - (dy / length) * bend * 2), y: round((from.y + to.y) / 2 + (dx / length) * bend * 2) };
-      lines.push({ key, path: `M${from.x} ${from.y}Q${control.x} ${control.y} ${to.x} ${to.y}` });
-    }
+      lines.push({ key, link, path: `M${from.x} ${from.y}Q${control.x} ${control.y} ${to.x} ${to.y}` });
+    });
   }
 
   return {

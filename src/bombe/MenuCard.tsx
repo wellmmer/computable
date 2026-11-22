@@ -7,11 +7,14 @@ import { DRAWING_SIZE, drawMenu } from './menu-drawing';
 
 /**
  * The menu card (spec R4 3): the loop count, and a drawing of the menu. Letters are circles and
- * links are lines. The center letter, where the test starts, has a red ring.
+ * links are lines. The center letter, where the test starts, has a red ring. In slow step mode, the
+ * link in use is a thick red line (spec R4 4).
  */
-export function MenuCard({ menu }: { menu: Menu }) {
+export function MenuCard({ menu, activeLink = null }: { menu: Menu; activeLink?: number | null }) {
   const t = useTranslations('bombe.menu');
   const drawing = drawMenu(menu);
+  // The link in use goes last, so it is drawn on top of the others.
+  const lines = [...drawing.lines.filter(({ link }) => link !== activeLink), ...drawing.lines.filter(({ link }) => link === activeLink)];
   return (
     <section aria-labelledby="menu-title" className={card}>
       <h2 id="menu-title" className={cardTitle}>
@@ -28,9 +31,13 @@ export function MenuCard({ menu }: { menu: Menu }) {
             viewBox={`0 0 ${DRAWING_SIZE} ${DRAWING_SIZE}`}
             className="mx-auto mt-2 block w-full max-w-[260px]"
           >
-            {drawing.lines.map(({ key, path }) => (
-              <path key={key} d={path} fill="none" strokeWidth={2} className="stroke-muted" />
-            ))}
+            {lines.map(({ key, link, path }) =>
+              link === activeLink ? (
+                <path key={key} data-link={link} data-active d={path} fill="none" strokeWidth={5} className="stroke-pencil" />
+              ) : (
+                <path key={key} data-link={link} d={path} fill="none" strokeWidth={2} className="stroke-muted" />
+              ),
+            )}
             {drawing.letters.map(({ letter, x, y, center }) => (
               <g key={letter}>
                 <circle cx={x} cy={y} r={14} strokeWidth={center ? 3 : 2} className={`fill-cell ${center ? 'stroke-pencil' : 'stroke-ink'}`} />
