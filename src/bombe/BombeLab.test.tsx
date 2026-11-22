@@ -1,11 +1,12 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
 import { BombeLab } from './BombeLab';
 import { runSearch } from './run-search';
 import { TEST_ORDERS_KEY } from './search-orders';
+import type { SearchReport } from './search-messages';
 import type { SearchRunner } from './worker-search';
 
 // The real Link needs the Next.js router, which screen tests do not have.
@@ -68,4 +69,23 @@ describe('BombeLab (spec R4 3)', () => {
     expect(screen.getByRole('status').textContent).toBe('The search could not run. Reload the page and try again.');
     expect(screen.getByRole<HTMLButtonElement>('button', { name: 'Start' }).disabled).toBe(false);
   });
+
+  it('ignores a late report from an old search', () => {
+    const searches: { onReport: (report: SearchReport) => void; end: () => void }[] = [];
+    const held: SearchRunner = (_request, onReport) => {
+      const end = vi.fn();
+      searches.push({ onReport, end });
+      return end;
+    };
+    renderWithIntl(<BombeLab search={held} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Stop' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    act(() => searches[0].onReport({ type: 'finished' }));
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeTruthy();
+    expect(screen.getByRole('status').textContent).toBe('');
+    expect(searches[1].end).not.toHaveBeenCalled();
+  });
 });
+

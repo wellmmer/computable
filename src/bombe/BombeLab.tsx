@@ -24,6 +24,8 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   const [lab, dispatch] = useReducer(bombeReducer, undefined, initialLab);
   const [orders, setOrders] = useState<readonly Three<RotorName>[]>(ROTOR_ORDERS);
   const stopSearch = useRef<(() => void) | null>(null);
+  // Each search gets a new number. A late report from an older search is ignored.
+  const searchId = useRef(0);
   const reducedMotion = useReducedMotion();
   // The buttons work only after React loads. End-to-end tests wait for data-bombe="ready".
   const hydrated = useSyncExternalStore(noSubscription, () => true, () => false);
@@ -42,7 +44,9 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
     const next = ordersToSearch(readTestOrders());
     setOrders(next);
     dispatch({ type: 'start', total: next.length });
+    const id = ++searchId.current;
     stopSearch.current = search({ cipher: secretLetters(lab), crib: cribLetters(lab), offset: lab.offset, orders: next }, (report) => {
+      if (id !== searchId.current) return;
       dispatch({ type: 'report', report });
       if (report.type === 'finished' || report.type === 'failed') end();
     });
