@@ -612,7 +612,7 @@
       "stopped": "Angehalten nach {done} von {total} Walzenlagen.",
       "failed": "Die Suche konnte nicht laufen. Lade die Seite neu und versuche es noch einmal.",
       "legend": "Eine Enigma für jeden Crib-Buchstaben: linke Walze rot, mittlere gelb, rechte grün.",
-      "more": "Die Wand zeigt 12 der {count} Enigmas.",
+      "more": "Die Wand zeigt {shown} der {count} Enigmas.",
       "noSecret": "Lade die Übungsnachricht oder füge geheime Buchstaben ein, um zu starten.",
       "noCrib": "Tippe einen Crib, um zu starten.",
       "tooLong": "Mach den Crib kürzer als die geheimen Buchstaben, um zu starten.",

@@ -612,7 +612,7 @@
       "stopped": "Detenida tras {done} de {total} órdenes de rotores.",
       "failed": "La búsqueda no pudo ejecutarse. Recarga la página e inténtalo de nuevo.",
       "legend": "Una Enigma para cada letra del crib: rotor izquierdo rojo, central amarillo, derecho verde.",
-      "more": "La pared muestra 12 de las {count} Enigmas.",
+      "more": "La pared muestra {shown} de las {count} Enigmas.",
       "noSecret": "Carga el mensaje de práctica o pega letras secretas para empezar.",
       "noCrib": "Escribe un crib para empezar.",
       "tooLong": "Haz el crib más corto que las letras secretas para empezar.",

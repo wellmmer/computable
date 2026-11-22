@@ -75,7 +75,7 @@ export function DrumWall({ menu, search, orders, reducedMotion, blocked, onStart
         ))}
       </div>
       <p className="mt-2 text-xs text-brass">{t('legend')}</p>
-      {menu.links.length > WALL_ENIGMAS && <p className="text-xs text-brass">{t('more', { count: menu.links.length })}</p>}
+      {menu.links.length > WALL_ENIGMAS && <p className="text-xs text-brass">{t('more', { shown: WALL_ENIGMAS, count: menu.links.length })}</p>}
 
       <div
         role="progressbar"
