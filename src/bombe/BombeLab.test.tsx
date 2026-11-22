@@ -56,4 +56,16 @@ describe('BombeLab (spec R4 3)', () => {
     expect(end).toHaveBeenCalledTimes(1);
     expect(screen.getByRole('status').textContent).toBe('Stopped after 0 of 60 rotor orders.');
   });
+
+  it('says when the search cannot run, and lets the visitor start again', () => {
+    const broken: SearchRunner = (_request, onReport) => {
+      onReport({ type: 'failed' });
+      return () => {};
+    };
+    renderWithIntl(<BombeLab search={broken} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    expect(screen.getByRole('status').textContent).toBe('The search could not run. Reload the page and try again.');
+    expect(screen.getByRole<HTMLButtonElement>('button', { name: 'Start' }).disabled).toBe(false);
+  });
 });

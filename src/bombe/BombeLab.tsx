@@ -44,7 +44,7 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
     dispatch({ type: 'start', total: next.length });
     stopSearch.current = search({ cipher: secretLetters(lab), crib: cribLetters(lab), offset: lab.offset, orders: next }, (report) => {
       dispatch({ type: 'report', report });
-      if (report.type === 'finished') end();
+      if (report.type === 'finished' || report.type === 'failed') end();
     });
   };
 

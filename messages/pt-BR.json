@@ -610,6 +610,7 @@
       "progress": "Ordens de rotores testadas",
       "finished": "Concluído: {total, plural, one {# ordem de rotores testada} other {todas as # ordens de rotores testadas}}. {count, plural, =0 {Nenhuma parada.} one {# parada.} other {# paradas.}}",
       "stopped": "Parou depois de {done} de {total} ordens de rotores.",
+      "failed": "A busca não pôde rodar. Recarregue a página e tente de novo.",
       "legend": "Uma Enigma para cada letra do crib: rotor esquerdo vermelho, do meio amarelo, direito verde.",
       "more": "A parede mostra 12 das {count} Enigmas.",
       "noSecret": "Carregue a mensagem de treino ou cole letras secretas para começar.",

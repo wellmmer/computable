@@ -55,6 +55,7 @@ export function DrumWall({ menu, search, orders, reducedMotion, blocked, onStart
   const news = () => {
     if (search.status === 'finished') return t('finished', { total, count: search.count });
     if (search.status === 'stopped') return t('stopped', { done: search.done, total });
+    if (search.status === 'failed') return t('failed');
     return null;
   };
   const reasons = { 'no-secret': 'noSecret', 'no-crib': 'noCrib', 'crib-too-long': 'tooLong', crash: 'crash' } as const;

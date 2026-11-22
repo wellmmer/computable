@@ -610,6 +610,7 @@
       "progress": "Getestete Walzenlagen",
       "finished": "Fertig: {total, plural, one {# Walzenlage getestet} other {alle # Walzenlagen getestet}}. {count, plural, =0 {Keine Stopps.} one {# Stopp.} other {# Stopps.}}",
       "stopped": "Angehalten nach {done} von {total} Walzenlagen.",
+      "failed": "Die Suche konnte nicht laufen. Lade die Seite neu und versuche es noch einmal.",
       "legend": "Eine Enigma für jeden Crib-Buchstaben: linke Walze rot, mittlere gelb, rechte grün.",
       "more": "Die Wand zeigt 12 der {count} Enigmas.",
       "noSecret": "Lade die Übungsnachricht oder füge geheime Buchstaben ein, um zu starten.",

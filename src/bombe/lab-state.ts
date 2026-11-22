@@ -6,7 +6,8 @@ import { PRACTICE } from './practice-message';
 import type { SearchReport } from './search-messages';
 
 export interface Search {
-  status: 'idle' | 'running' | 'finished' | 'stopped';
+  /** `failed`: the worker could not load or run. */
+  status: 'idle' | 'running' | 'finished' | 'stopped' | 'failed';
   /** How many rotor orders the search tests: 60, or fewer with the test setting. */
   total: number;
   /** How many rotor orders are done. */
@@ -85,6 +86,8 @@ export function bombeReducer(lab: BombeLab, action: BombeAction): BombeLab {
           return { ...lab, search: { ...search, done: report.order + 1, stops: [...search.stops, ...report.stops], count: search.count + report.count } };
         case 'finished':
           return { ...lab, search: { ...search, status: 'finished' } };
+        case 'failed':
+          return { ...lab, search: { ...search, status: 'failed' } };
       }
     }
   }

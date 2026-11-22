@@ -15,4 +15,6 @@ export type SearchReport =
   | { type: 'testing'; order: number; start: number }
   /** One rotor order is done. `stops` holds its stops, up to the list's limit; `count` counts them all. */
   | { type: 'order-done'; order: number; stops: readonly Stop[]; count: number }
-  | { type: 'finished' };
+  | { type: 'finished' }
+  /** The worker could not load or run. `workerSearch` sends this, not the worker. */
+  | { type: 'failed' };

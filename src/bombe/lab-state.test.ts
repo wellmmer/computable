@@ -97,6 +97,13 @@ describe('the search (spec R4 3, "Drum wall" and "Stops card")', () => {
     expect(bombeReducer(stopped, { type: 'report', report: { type: 'finished' } })).toBe(stopped);
   });
 
+  it('ends the search when the worker fails, and keeps what it found', () => {
+    const half = bombeReducer(started, { type: 'report', report: { type: 'order-done', order: 0, stops: [STOP], count: 1 } });
+    const failed = bombeReducer(half, { type: 'report', report: { type: 'failed' } });
+    expect(failed.search).toEqual({ ...half.search, status: 'failed' });
+    expect(blocker(failed)).toBeNull();
+  });
+
   it('keeps the fields while a search runs, and clears the stops after a change', () => {
     expect(bombeReducer(started, { type: 'crib', text: 'WETTER' })).toBe(started);
     expect(bombeReducer(started, { type: 'slide', by: 1 })).toBe(started);

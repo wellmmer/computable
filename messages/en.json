@@ -610,6 +610,7 @@
       "progress": "Rotor orders tested",
       "finished": "Finished: {total, plural, one {# rotor order} other {all # rotor orders}} tested. {count, plural, =0 {No stops.} one {# stop.} other {# stops.}}",
       "stopped": "Stopped after {done} of {total} rotor orders.",
+      "failed": "The search could not run. Reload the page and try again.",
       "legend": "One Enigma for each crib letter: left rotor red, middle yellow, right green.",
       "more": "The wall shows 12 of the {count} Enigmas.",
       "noSecret": "Load the practice message or paste secret letters to start.",
