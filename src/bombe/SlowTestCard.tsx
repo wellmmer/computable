@@ -41,6 +41,8 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
   const canOpen = lab.search.status !== 'running' && blocker(lab) === null;
   const last = slow === null ? 0 : slow.steps.length - 1;
   const atEnd = slow !== null && slow.at === last;
+  // Play stops at the last step. Otherwise Back would start it again.
+  if (playing && atEnd) setPlaying(false);
   const isPlaying = playing && slow !== null && !atEnd;
 
   useEffect(() => {
@@ -68,6 +70,12 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
     setPlaying(false);
     focusNext.current = 'step';
     dispatch({ type: 'slow-open', rotors, start });
+  };
+
+  /** Back and Step move one step and pause Play. */
+  const stepBy = (by: 1 | -1) => {
+    setPlaying(false);
+    dispatch({ type: 'slow-step', by });
   };
 
   const close = () => {
@@ -118,7 +126,7 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
             {say(step)}
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
-            <button ref={backButton} type="button" disabled={slow.at === 0} onClick={() => dispatch({ type: 'slow-step', by: -1 })} className={`${button} bg-cell text-ink`}>
+            <button ref={backButton} type="button" disabled={slow.at === 0} onClick={() => stepBy(-1)} className={`${button} bg-cell text-ink`}>
               <StepBack aria-hidden className="size-4" />
               {t('back')}
             </button>
@@ -126,7 +134,7 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
               {isPlaying ? <Pause aria-hidden className="size-4" /> : <Play aria-hidden className="size-4" />}
               {isPlaying ? t('pause') : t('play')}
             </button>
-            <button ref={stepButton} type="button" disabled={atEnd} onClick={() => dispatch({ type: 'slow-step', by: 1 })} className={`${button} bg-cell text-ink`}>
+            <button ref={stepButton} type="button" disabled={atEnd} onClick={() => stepBy(1)} className={`${button} bg-cell text-ink`}>
               <StepForward aria-hidden className="size-4" />
               {t('step')}
             </button>

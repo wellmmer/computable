@@ -96,6 +96,34 @@ describe('SlowTestCard (spec R4 4, slow step mode)', () => {
       expect(button('Play').disabled).toBe(true);
     });
 
+    it('stops playing at the last step: Back then stays on the step before it, and the button reads Play', () => {
+      renderWithIntl(<Card lab={FINISHED} />);
+      fireEvent.click(button('Watch one test slowly'));
+      fireEvent.click(button('Play'));
+      act(() => vi.advanceTimersByTime(PLAY_STEP_MS * 30));
+      expect(screen.getByText('Step 18 of 18')).toBeTruthy();
+      fireEvent.click(button('Back'));
+      act(() => vi.advanceTimersByTime(PLAY_STEP_MS * 3));
+      expect(screen.getByText('Step 17 of 18')).toBeTruthy();
+      expect(button('Play').disabled).toBe(false);
+    });
+
+    it('pauses when the visitor presses Back or Step', () => {
+      renderWithIntl(<Card lab={FINISHED} />);
+      fireEvent.click(button('Watch one test slowly'));
+      fireEvent.click(button('Play'));
+      act(() => vi.advanceTimersByTime(PLAY_STEP_MS * 3));
+      fireEvent.click(button('Back'));
+      act(() => vi.advanceTimersByTime(PLAY_STEP_MS * 3));
+      expect(screen.getByText('Step 3 of 18')).toBeTruthy();
+      fireEvent.click(button('Play'));
+      act(() => vi.advanceTimersByTime(PLAY_STEP_MS));
+      fireEvent.click(button('Step'));
+      act(() => vi.advanceTimersByTime(PLAY_STEP_MS * 3));
+      expect(screen.getByText('Step 5 of 18')).toBeTruthy();
+      expect(button('Play')).toBeTruthy();
+    });
+
     it('reads aloud only the step the visitor asked for, and the last step after Play', () => {
       renderWithIntl(<Card lab={FINISHED} />);
       fireEvent.click(button('Watch one test slowly'));
