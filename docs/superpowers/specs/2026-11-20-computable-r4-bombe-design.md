@@ -32,8 +32,10 @@ Plain TypeScript with no React, like `src/engines/enigma/`.
 - **One test.** For one rotor order and one start, each link is a scrambler: the Enigma without its
   plugboard, at that link's position. The test assumes the center letter is plugged to one letter,
   then spreads that fact along every link. The diagonal board adds the mirror fact: if A is plugged
-  to B, then B is plugged to A. The test stops when the center letter's 26 wires do not all light. 1 lit wire means
-  the guess fits. 25 lit wires mean the one dark wire is the right partner.
+  to B, then B is plugged to A. The test stops when the center letter's 26 wires do not all light.
+  A wrong guess can also light just 1 wire when the menu has no loop. So at each stop, the engine
+  tries every partner for the center letter. It keeps each guess where no letter gets two partners.
+  Only the center letter's group of links is tested. Links in other groups give no plug pairs.
 - **Stepping.** Each scrambler uses the real stepping of the Enigma engine, with the middle rotor's
   double step. Rings stay at A A A, so the Bombe finds where each rotor's wiring sits.
 - **Stop result.** Each stop gives the rotor order, the start, and the plug pairs that the facts
@@ -60,7 +62,8 @@ Tests (Vitest):
 - **Menu item** "Bombe", after "Enigma".
 - **Crib card.** A text field for the crib, the secret letters above it, and ◀ ▶ buttons to slide
   it. Crashes show in red. A green line says when no letter turns into itself. A hint shows when the
-  crib has fewer than 10 letters or its menu has no loop.
+  crib has fewer than 15 letters or its menu has no loop. Start still works with a short crib
+  (Wellmmer, 2026-11-20). The stops list shows at most 100 stops and counts the rest.
 - **Menu card.** A drawing of the menu: letters as circles, links as lines, and the loop count. A
   sentence says "More loops, fewer false stops."
 - **Drum wall.** A dark panel. One Enigma for each menu link, up to 12, each with 3 drums: left
@@ -84,8 +87,9 @@ Tests (Vitest):
 - Home does not show the key. Two buttons: "Load my secret into the lab" and "Break it with the
   Bombe". The second opens `/bombe` with the secret letters filled in.
 - On `/bombe`, a stop that matches the saved key shows "✓ This is your key".
-- A hint on Home: the Bombe works best with a secret of about 30 letters or more. The R4a tests give
-  the real number.
+- A hint on Home: the Bombe needs a crib of about 15 letters from your secret. The R4a tests
+  showed this: with a 15-letter crib, 14 of 20 random keys gave 100 stops or fewer; with 10
+  letters, none did.
 
 ### Slow step mode
 
