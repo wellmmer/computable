@@ -637,7 +637,7 @@
     },
     "slow": {
       "title": "One test, step by step",
-      "about": "Watch how the Bombe tests one rotor order and one start. It takes the first stop, or the rotor order and start on the drum wall.",
+      "about": "Watch how the Bombe tests one rotor order and one start. It takes the first stop of the last search, or the practice message’s key, or the rotor order and start on the drum wall.",
       "watch": "Watch one test slowly",
       "which": "Rotors {rotors}, start {start}",
       "progress": "Step {step} of {total}",
@@ -646,6 +646,7 @@
       "play": "Play",
       "pause": "Pause",
       "step": "Step",
+      "end": "Skip to the end",
       "close": "Close",
       "enter": "The test current enters {letter} on wire {wire}. This is the guess “{letter} is plugged to {wire}”.",
       "link": "Through link {number} ({plain} on {cipher}), {from} on wire {fromWire} lights {to} on wire {toWire}.",

@@ -637,7 +637,7 @@
     },
     "slow": {
       "title": "Um teste, passo a passo",
-      "about": "Veja como a Bombe testa uma ordem de rotores e um início. Ela usa a primeira parada, ou a ordem de rotores e o início da parede de tambores.",
+      "about": "Veja como a Bombe testa uma ordem de rotores e um início. Ela usa a primeira parada da última busca, ou a chave da mensagem de treino, ou a ordem de rotores e o início da parede de tambores.",
       "watch": "Ver um teste devagar",
       "which": "Rotores {rotors}, início {start}",
       "progress": "Passo {step} de {total}",
@@ -646,6 +646,7 @@
       "play": "Tocar",
       "pause": "Pausar",
       "step": "Passo",
+      "end": "Pular para o fim",
       "close": "Fechar",
       "enter": "A corrente de teste entra em {letter} pelo fio {wire}. Este é o palpite “{letter} está ligada a {wire}”.",
       "link": "Pela ligação {number} ({plain} sobre {cipher}), {from} no fio {fromWire} acende {to} no fio {toWire}.",

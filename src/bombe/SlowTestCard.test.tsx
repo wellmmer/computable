@@ -58,9 +58,16 @@ describe('SlowTestCard (spec R4 4, slow step mode)', () => {
     expect(screen.getByText('Step 17 of 18')).toBeTruthy();
   });
 
-  it('ends with "all 26 wires lit: no stop" at a start without a stop', () => {
-    // No search yet: the test is the first rotor order at A A A.
+  it('opens the practice key before any search of the practice message', () => {
     renderWithIntl(<Card lab={PRACTICE_LAB} />);
+    fireEvent.click(button('Watch one test slowly'));
+    expect(screen.getByText('Rotors II III V, start Q K A')).toBeTruthy();
+    expect(screen.getByText('Step 1 of 18')).toBeTruthy();
+  });
+
+  it('ends with "all 26 wires lit: no stop" at a start without a stop', () => {
+    // A search stopped before it found a stop: the test is the first rotor order at A A A.
+    renderWithIntl(<Card lab={{ ...PRACTICE_LAB, search: { ...NO_SEARCH, status: 'stopped', total: 60 } }} />);
     fireEvent.click(button('Watch one test slowly'));
     expect(screen.getByText('Rotors I II III, start A A A')).toBeTruthy();
     const total = Number(/of (\d+)$/.exec(screen.getByText(/^Step 1 of/).textContent ?? '')?.[1]);
@@ -76,6 +83,24 @@ describe('SlowTestCard (spec R4 4, slow step mode)', () => {
     const last = (opened.slow?.steps.length ?? 0) - 1;
     renderWithIntl(<Card lab={{ ...opened, slow: opened.slow && { ...opened.slow, at: last } }} />);
     expect(sentence()).toBe('Only 1 of 26 wires of E lit. But every guess for E gives a letter two partners, so this is not a stop.');
+  });
+
+  it('skips to the end: the last step, Play paused, and the focus on Back', () => {
+    vi.useFakeTimers();
+    renderWithIntl(<Card lab={FINISHED} />);
+    fireEvent.click(button('Watch one test slowly'));
+    fireEvent.click(button('Play'));
+    act(() => vi.advanceTimersByTime(PLAY_STEP_MS));
+    button('Skip to the end').focus();
+    fireEvent.click(button('Skip to the end'));
+    expect(screen.getByText('Step 18 of 18')).toBeTruthy();
+    expect(sentence()).toMatch(/^Stop: only \d+ of 26 wires of H lit\.$/);
+    expect(button('Skip to the end').disabled).toBe(true);
+    expect(document.activeElement).toBe(button('Back'));
+    fireEvent.click(button('Back'));
+    act(() => vi.advanceTimersByTime(PLAY_STEP_MS * 3));
+    expect(screen.getByText('Step 17 of 18')).toBeTruthy();
+    expect(button('Play')).toBeTruthy();
   });
 
   describe('Play', () => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Pause, Play, StepBack, StepForward } from 'lucide-react';
+import { Pause, Play, SkipForward, StepBack, StepForward } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, type Dispatch } from 'react';
 import type { TestStep } from '@/engines/bombe';
@@ -33,6 +33,7 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
   const backButton = useRef<HTMLButtonElement>(null);
   const playButton = useRef<HTMLButtonElement>(null);
   const stepButton = useRef<HTMLButtonElement>(null);
+  const endButton = useRef<HTMLButtonElement>(null);
   /** Where the focus goes after the card opens or closes: the button that was pressed is gone. */
   const focusNext = useRef<'step' | 'watch' | null>(null);
   const { slow } = lab;
@@ -57,16 +58,17 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
     focusNext.current = null;
   }, [opened]);
 
-  // Step and Play turn off at the last step, and Back at the first. The focus moves to a button that still works.
+  // Step, Play and "Skip to the end" turn off at the last step, and Back at the first. The focus moves to a button that still works.
   useEffect(() => {
     if (slow === null) return;
     const focused = document.activeElement;
-    if (atEnd && (focused === stepButton.current || focused === playButton.current || focused === document.body)) backButton.current?.focus();
+    const offAtEnd: (Element | null)[] = [stepButton.current, playButton.current, endButton.current, document.body];
+    if (atEnd && offAtEnd.includes(focused)) backButton.current?.focus();
     if (slow.at === 0 && focused === backButton.current) stepButton.current?.focus();
   }, [slow, atEnd]);
 
   const open = () => {
-    const { rotors, start } = slowTestKey(lab.search, orders);
+    const { rotors, start } = slowTestKey(lab, orders);
     setPlaying(false);
     focusNext.current = 'step';
     dispatch({ type: 'slow-open', rotors, start });
@@ -76,6 +78,11 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
   const stepBy = (by: 1 | -1) => {
     setPlaying(false);
     dispatch({ type: 'slow-step', by });
+  };
+
+  const skipToEnd = () => {
+    setPlaying(false);
+    dispatch({ type: 'slow-end' });
   };
 
   const close = () => {
@@ -137,6 +144,10 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
             <button ref={stepButton} type="button" disabled={atEnd} onClick={() => stepBy(1)} className={`${button} bg-cell text-ink`}>
               <StepForward aria-hidden className="size-4" />
               {t('step')}
+            </button>
+            <button ref={endButton} type="button" disabled={atEnd} onClick={skipToEnd} className={`${button} bg-cell text-ink`}>
+              <SkipForward aria-hidden className="size-4" />
+              {t('end')}
             </button>
             <button type="button" onClick={close} className={`${button} bg-cell text-ink`}>
               {t('close')}

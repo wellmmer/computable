@@ -176,10 +176,27 @@ describe('slow step mode (spec R4 4, "Watch one test slowly")', () => {
     expect(run({ type: 'practice' }, { type: 'slide', by: 1 }, open).slow).toBeNull();
   });
 
-  it('picks the test: the first stop, or else the rotor order and start on the drum wall, or else the first order at A A A', () => {
+  it('skips to the last step', () => {
+    expect(run({ type: 'practice' }, open, { type: 'slow-end' }).slow?.at).toBe(17);
+    expect(run({ type: 'practice' }, { type: 'slow-end' }).slow).toBeNull();
+  });
+
+  it('picks the test: the first stop of the last search, or else the rotor order and start on the drum wall, or else the first order at A A A', () => {
     const search = { ...NO_SEARCH, status: 'finished', total: 60, done: 60, testing: { order: 3, start: 2197 } } as const;
-    expect(slowTestKey({ ...search, stops: [STOP] }, ROTOR_ORDERS)).toEqual({ rotors: STOP.rotors, start: STOP.start });
-    expect(slowTestKey(search, ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[3], start: ['D', 'G', 'N'] });
-    expect(slowTestKey(NO_SEARCH, [['II', 'III', 'V']])).toEqual({ rotors: ['II', 'III', 'V'], start: ['A', 'A', 'A'] });
+    const practice = run({ type: 'practice' });
+    expect(slowTestKey({ ...practice, search: { ...search, stops: [STOP] } }, ROTOR_ORDERS)).toEqual({ rotors: STOP.rotors, start: STOP.start });
+    expect(slowTestKey({ ...practice, search }, ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[3], start: ['D', 'G', 'N'] });
+    expect(slowTestKey(run({ type: 'secret', text: PRACTICE.cipher.slice(1) }), [['II', 'IV', 'V']])).toEqual({ rotors: ['II', 'IV', 'V'], start: ['A', 'A', 'A'] });
+  });
+
+  it('picks the practice key before any search of the practice message with its crib at its place', () => {
+    const practice = run({ type: 'practice' });
+    expect(slowTestKey(practice, ROTOR_ORDERS)).toEqual({ rotors: ['II', 'III', 'V'], start: ['Q', 'K', 'A'] });
+    // The crib moved, or changed: the practice key no longer fits.
+    expect(slowTestKey(bombeReducer(practice, { type: 'slide', by: 1 }), ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['A', 'A', 'A'] });
+    expect(slowTestKey(bombeReducer(practice, { type: 'crib', text: 'WETTERBERICH' }), ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['A', 'A', 'A'] });
+    // A search that was stopped before any stop: the drum wall's rotor order and start.
+    const stopped = { ...NO_SEARCH, status: 'stopped', total: 60, done: 0, testing: { order: 0, start: 2197 } } as const;
+    expect(slowTestKey({ ...practice, search: stopped }, ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['D', 'G', 'N'] });
   });
 });

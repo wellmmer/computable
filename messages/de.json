@@ -637,7 +637,7 @@
     },
     "slow": {
       "title": "Ein Test, Schritt für Schritt",
-      "about": "Sieh zu, wie die Bombe eine Walzenlage und einen Start testet. Sie nimmt den ersten Stopp, oder die Walzenlage und den Start auf der Trommelwand.",
+      "about": "Sieh zu, wie die Bombe eine Walzenlage und einen Start testet. Sie nimmt den ersten Stopp der letzten Suche, oder den Schlüssel der Übungsnachricht, oder die Walzenlage und den Start auf der Trommelwand.",
       "watch": "Einen Test langsam ansehen",
       "which": "Walzen {rotors}, Start {start}",
       "progress": "Schritt {step} von {total}",
@@ -646,6 +646,7 @@
       "play": "Abspielen",
       "pause": "Pause",
       "step": "Schritt",
+      "end": "Zum Ende springen",
       "close": "Schließen",
       "enter": "Der Teststrom tritt bei {letter} auf Draht {wire} ein. Das ist die Annahme „{letter} ist mit {wire} gesteckt“.",
       "link": "Über Verbindung {number} ({plain} über {cipher}) lässt {from} auf Draht {fromWire} {to} auf Draht {toWire} leuchten.",

@@ -637,7 +637,7 @@
     },
     "slow": {
       "title": "Un test, pas à pas",
-      "about": "Regardez comment la Bombe teste un ordre des rotors et un départ. Elle prend le premier arrêt, ou l’ordre des rotors et le départ du mur de tambours.",
+      "about": "Regardez comment la Bombe teste un ordre des rotors et un départ. Elle prend le premier arrêt de la dernière recherche, ou la clé du message d’entraînement, ou l’ordre des rotors et le départ du mur de tambours.",
       "watch": "Voir un test lentement",
       "which": "Rotors {rotors}, départ {start}",
       "progress": "Pas {step} sur {total}",
@@ -646,6 +646,7 @@
       "play": "Lecture",
       "pause": "Pause",
       "step": "Un pas",
+      "end": "Aller à la fin",
       "close": "Fermer",
       "enter": "Le courant de test entre dans {letter} par le fil {wire}. C’est l’hypothèse « {letter} est branchée sur {wire} ».",
       "link": "Par le lien {number} ({plain} sur {cipher}), {from} sur le fil {fromWire} allume {to} sur le fil {toWire}.",

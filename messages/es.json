@@ -637,7 +637,7 @@
     },
     "slow": {
       "title": "Una prueba, paso a paso",
-      "about": "Mira cómo la Bombe prueba un orden de rotores y un inicio. Usa la primera parada, o el orden de rotores y el inicio de la pared de tambores.",
+      "about": "Mira cómo la Bombe prueba un orden de rotores y un inicio. Usa la primera parada de la última búsqueda, o la clave del mensaje de práctica, o el orden de rotores y el inicio de la pared de tambores.",
       "watch": "Ver una prueba despacio",
       "which": "Rotores {rotors}, inicio {start}",
       "progress": "Paso {step} de {total}",
@@ -646,6 +646,7 @@
       "play": "Reproducir",
       "pause": "Pausar",
       "step": "Paso",
+      "end": "Saltar al final",
       "close": "Cerrar",
       "enter": "La corriente de prueba entra en {letter} por el cable {wire}. Es la suposición “{letter} está conectada a {wire}”.",
       "link": "Por el enlace {number} ({plain} sobre {cipher}), {from} en el cable {fromWire} enciende {to} en el cable {toWire}.",

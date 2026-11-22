@@ -53,6 +53,8 @@ export type BombeAction =
   | { type: 'stop' }
   | { type: 'slow-open'; rotors: Three<RotorName>; start: Positions }
   | { type: 'slow-step'; by: 1 | -1 }
+  /** "Skip to the end": the last step. */
+  | { type: 'slow-end' }
   | { type: 'slow-close' };
 
 /**
@@ -108,6 +110,8 @@ export function bombeReducer(lab: BombeLab, action: BombeAction): BombeLab {
       const at = Math.min(Math.max(lab.slow.at + action.by, 0), lab.slow.steps.length - 1);
       return { ...lab, slow: { ...lab.slow, at } };
     }
+    case 'slow-end':
+      return lab.slow === null ? lab : { ...lab, slow: { ...lab.slow, at: lab.slow.steps.length - 1 } };
     case 'slow-close':
       return { ...lab, slow: null };
     case 'stop':
@@ -162,10 +166,22 @@ export function hints(lab: BombeLab): { short: boolean; noLoop: boolean } {
   return { short: cribLetters(lab).length < HINT_CRIB_LETTERS, noLoop: menuOf(lab).loops === 0 };
 }
 
-/** The test that "Watch one test slowly" shows: the first stop, or else the rotor order and start on the drum wall. */
-export function slowTestKey(search: Search, orders: readonly Three<RotorName>[]): { rotors: Three<RotorName>; start: Positions } {
+/** True when the lab holds the practice message, with WETTERBERICHT at its place. */
+function isPracticeAtItsPlace(lab: BombeLab): boolean {
+  return secretLetters(lab) === PRACTICE.cipher && cribLetters(lab) === PRACTICE.crib && lab.offset === PRACTICE.offset;
+}
+
+/**
+ * The test that "Watch one test slowly" shows. A test without a stop takes 286 to 445 steps, and a
+ * stop about 18, so the card opens on a stop when it knows one. First choice: the first stop of the
+ * last search. Before any search of the practice message: the practice key. Otherwise: the rotor
+ * order and start on the drum wall.
+ */
+export function slowTestKey(lab: BombeLab, orders: readonly Three<RotorName>[]): { rotors: Three<RotorName>; start: Positions } {
+  const { search } = lab;
   const [stop] = search.stops;
   if (stop !== undefined) return { rotors: stop.rotors, start: stop.start };
+  if (search.status === 'idle' && isPracticeAtItsPlace(lab)) return { rotors: PRACTICE.settings.rotors, start: PRACTICE.start };
   if (search.testing !== null) return { rotors: orders[search.testing.order], start: startAt(search.testing.start) };
   return { rotors: orders[0], start: ['A', 'A', 'A'] };
 }
