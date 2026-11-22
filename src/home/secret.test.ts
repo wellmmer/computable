@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { encryptSecret, HOME_SETTINGS, HOME_START, toEnigmaLetters } from './secret';
+import { PRACTICE } from '@/bombe/practice-message';
+import { encryptSecret, toEnigmaLetters } from './secret';
 
 describe('toEnigmaLetters (Enigma has only 26 letters)', () => {
   it('writes capitals, drops accents, and types X for each space', () => {
@@ -21,17 +22,10 @@ describe('toEnigmaLetters (Enigma has only 26 letters)', () => {
 });
 
 describe('encryptSecret', () => {
-  it('uses the lab’s first settings, so the lab decrypts the secret without changes', () => {
-    expect(HOME_SETTINGS).toEqual({
-      rotors: ['I', 'II', 'III'],
-      rings: ['A', 'A', 'A'],
-      reflector: 'B',
-      plugs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'],
-    });
-    expect(HOME_START).toEqual(['B', 'L', 'A']);
-  });
-
-  it('turns "Wetterbericht" into PBJGOLIZQMQGZ, like the lab', () => {
-    expect(encryptSecret('Wetterbericht')).toEqual({ letters: 'WETTERBERICHT', cipher: 'PBJGOLIZQMQGZ' });
+  it('encrypts with the secret’s own key', () => {
+    // The key every secret got before R4b: the lab's first settings.
+    const r3Key = { settings: { rotors: ['I', 'II', 'III'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'] }, start: ['B', 'L', 'A'] } as const;
+    expect(encryptSecret('Wetterbericht', r3Key)).toEqual({ letters: 'WETTERBERICHT', cipher: 'PBJGOLIZQMQGZ' });
+    expect(encryptSecret('Wetterbericht', { settings: PRACTICE.settings, start: PRACTICE.start })).toEqual({ letters: 'WETTERBERICHT', cipher: 'HXHICIRWHZRQW' });
   });
 });

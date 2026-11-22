@@ -20,8 +20,6 @@
       "typed": "Enigma tape",
       "cipher": "Lettres secrètes",
       "rules": "Enigma n’a que 26 lettres. Elle retire les accents, tape X à la place de l’espace et laisse de côté les chiffres et les signes.",
-      "settings": "Réglages : rotors {rotors}, anneaux {rings}, paires de fiches {plugs}, réflecteur {reflector}, départ {start}. Le labo Enigma commence avec les mêmes réglages.",
-      "decrypt": "Pour le relire, ouvrez le labo Enigma et tapez les lettres secrètes. Les lampes allument votre message.",
       "forget": "Oublier mon secret",
       "stays": "Votre secret reste dans ce navigateur. Il n’est jamais envoyé.",
       "litNews": "Lampe {letter}",

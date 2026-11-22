@@ -20,8 +20,6 @@
       "typed": "Enigma types",
       "cipher": "Secret letters",
       "rules": "Enigma has only 26 letters. It drops accents, types X for a space, and leaves out digits and signs.",
-      "settings": "Settings: rotors {rotors}, rings {rings}, plug pairs {plugs}, reflector {reflector}, start {start}. The Enigma lab starts with the same settings.",
-      "decrypt": "To read it again, open the Enigma lab and type the secret letters. The lamps light your message.",
       "forget": "Forget my secret",
       "stays": "Your secret stays in this browser. It is never sent anywhere.",
       "litNews": "Lamp {letter}",

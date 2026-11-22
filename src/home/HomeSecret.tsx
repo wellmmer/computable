@@ -5,38 +5,41 @@ import { useRef, useState } from 'react';
 import { isLetter, type Letter } from '@/engines/enigma';
 import { groupsOf5 } from '@/enigma/lab-state';
 import { Lampboard } from '@/enigma/Lampboard';
-import { encryptSecret, HOME_SETTINGS, HOME_START } from './secret';
+import { Link } from '@/i18n/navigation';
+import { toEnigmaLetters } from './secret';
+import { MY_SECRET_HASH } from './secret-link';
 import { forgetSecret, saveSecret, useSecret } from './use-secret';
 
 const strip = 'min-h-11 border border-soft bg-cell px-2.5 py-2 font-mono text-[17px] font-medium tracking-[2px] [word-spacing:6px] break-words';
+const link = 'press inline-block border-2 border-ink px-3 py-1.5 font-semibold';
 
 /**
- * "Type your own secret" (spec R3 4): a small Enigma on Home. The text, its secret letters and the
- * settings stay in this browser only. The settings are the lab's first settings, so the lab decrypts
- * the secret letters without changes.
+ * "Type your own secret" (spec R3 4): a small Enigma on Home. The text, its secret letters and its
+ * key stay in this browser only. Each new secret gets a random key, and Home does not show it. Two
+ * buttons open the secret in the Enigma lab and in the Bombe (spec R4 4).
  */
 export function HomeSecret() {
   const t = useTranslations('home.secret');
   const tLab = useTranslations('enigma.lab');
   const secret = useSecret();
   const plain = secret?.plain ?? '';
-  const { letters, cipher } = encryptSecret(plain);
+  const letters = toEnigmaLetters(plain);
+  const cipher = secret?.cipher ?? '';
   const lamp = cipher.at(-1);
   const lit = lamp !== undefined && isLetter(lamp) ? lamp : null;
-  const { rotors, rings, plugs, reflector } = HOME_SETTINGS;
   const textField = useRef<HTMLTextAreaElement>(null);
   // What the live region says. Only typing sets it, so a saved secret is not read aloud on page load. `id` makes it speak again.
   const [news, setNews] = useState<{ id: number; kind: 'lit' | 'removed'; letter: Letter } | null>(null);
 
   const type = (text: string) => {
-    const next = encryptSecret(text);
+    const saved = saveSecret(text);
+    const nextLetters = toEnigmaLetters(text);
     const id = (news?.id ?? 0) + 1;
-    const lastLamp = next.cipher.at(-1);
+    const lastLamp = saved?.cipher.at(-1);
     const removed = letters.at(-1);
-    if (next.letters.length > letters.length && lastLamp !== undefined && isLetter(lastLamp)) setNews({ id, kind: 'lit', letter: lastLamp });
-    else if (next.letters.length < letters.length && removed !== undefined && isLetter(removed)) setNews({ id, kind: 'removed', letter: removed });
+    if (nextLetters.length > letters.length && lastLamp !== undefined && isLetter(lastLamp)) setNews({ id, kind: 'lit', letter: lastLamp });
+    else if (nextLetters.length < letters.length && removed !== undefined && isLetter(removed)) setNews({ id, kind: 'removed', letter: removed });
     else setNews(null);
-    saveSecret(text);
   };
 
   // "Forget my secret" turns itself off, so the focus would drop to the page. It goes to the empty text field instead.
@@ -89,10 +92,20 @@ export function HomeSecret() {
         </div>
       </dl>
       <p className="mt-2 text-sm text-muted">{t('rules')}</p>
-      <p className="mt-2 text-sm text-muted">
-        {t('settings', { rotors: rotors.join(' '), rings: rings.join(' '), plugs: plugs.join(' '), reflector, start: HOME_START.join(' ') })}
-      </p>
-      <p className="mt-2 text-sm">{t('decrypt')}</p>
+      <p className="mt-2 text-sm text-muted">{t('hidden')}</p>
+      {cipher !== '' && (
+        <>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link href={`/enigma${MY_SECRET_HASH}`} className={`${link} bg-ink text-paper`}>
+              {t('loadLab')}
+            </Link>
+            <Link href={`/bombe${MY_SECRET_HASH}`} className={`${link} bg-cell text-ink`}>
+              {t('breakIt')}
+            </Link>
+          </div>
+          <p className="mt-2 text-sm">{t('bombeHint')}</p>
+        </>
+      )}
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         <button
           type="button"

@@ -20,8 +20,6 @@
       "typed": "Die Enigma tippt",
       "cipher": "Geheime Buchstaben",
       "rules": "Die Enigma hat nur 26 Buchstaben. Sie macht aus Ä ein A, tippt X statt Leerzeichen und lässt Ziffern und Zeichen weg.",
-      "settings": "Einstellungen: Walzen {rotors}, Ringe {rings}, Steckerpaare {plugs}, Umkehrwalze {reflector}, Start {start}. Das Enigma-Labor startet mit denselben Einstellungen.",
-      "decrypt": "Zum Lesen öffne das Enigma-Labor und tippe die geheimen Buchstaben. Die Lampen zeigen deine Nachricht.",
       "forget": "Mein Geheimnis vergessen",
       "stays": "Dein Geheimnis bleibt in diesem Browser. Es wird nie gesendet.",
       "litNews": "Lampe {letter}",

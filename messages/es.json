@@ -20,8 +20,6 @@
       "typed": "Enigma escribe",
       "cipher": "Letras secretas",
       "rules": "Enigma solo tiene 26 letras. Quita los acentos, escribe X en lugar del espacio y deja fuera números y signos.",
-      "settings": "Configuración: rotores {rotors}, anillos {rings}, pares de clavijas {plugs}, reflector {reflector}, inicio {start}. El laboratorio Enigma empieza con la misma configuración.",
-      "decrypt": "Para leerlo otra vez, abre el laboratorio Enigma y escribe las letras secretas. Las lámparas iluminan tu mensaje.",
       "forget": "Olvidar mi secreto",
       "stays": "Tu secreto se queda en este navegador. Nunca se envía.",
       "litNews": "Lámpara {letter}",
