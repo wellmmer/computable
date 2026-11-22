@@ -1,4 +1,4 @@
-import { buildMenu, crashes, type Menu, type Stop } from '@/engines/bombe';
+import { buildMenu, crashes, startAt, testSteps, type Menu, type Stop, type TestStep } from '@/engines/bombe';
 import { stepRotors, type Positions, type RotorName, type Three } from '@/engines/enigma';
 import { lettersOf } from '@/enigma/key-sheet';
 import { groupsOf5 } from '@/enigma/lab-state';
@@ -20,6 +20,15 @@ export interface Search {
   count: number;
 }
 
+/** Slow step mode (spec R4 4): one test, its steps, and the step on screen. */
+export interface SlowTest {
+  rotors: Three<RotorName>;
+  start: Positions;
+  steps: readonly TestStep[];
+  /** The step on screen, from 0. */
+  at: number;
+}
+
 export interface BombeLab {
   /** The secret letters field, as the visitor typed it. */
   secretText: string;
@@ -28,6 +37,8 @@ export interface BombeLab {
   /** The place of the crib's first letter in the secret letters, from 0. */
   offset: number;
   search: Search;
+  /** The test that slow step mode shows, or null when it is closed. */
+  slow: SlowTest | null;
 }
 
 export type BombeAction =
@@ -39,7 +50,10 @@ export type BombeAction =
   | { type: 'load-secret'; cipher: string }
   | { type: 'start'; total: number }
   | { type: 'report'; report: SearchReport }
-  | { type: 'stop' };
+  | { type: 'stop' }
+  | { type: 'slow-open'; rotors: Three<RotorName>; start: Positions }
+  | { type: 'slow-step'; by: 1 | -1 }
+  | { type: 'slow-close' };
 
 /**
  * The longest secret letters field, in characters. The search keeps each link's key presses in a
@@ -51,7 +65,7 @@ export const NO_SEARCH: Search = { status: 'idle', total: 0, done: 0, testing: n
 
 /** The lab when the page opens: no secret letters yet, and the crib WETTERBERICHT. */
 export function initialLab(): BombeLab {
-  return { secretText: '', cribText: PRACTICE.crib, offset: 0, search: NO_SEARCH };
+  return { secretText: '', cribText: PRACTICE.crib, offset: 0, search: NO_SEARCH, slow: null };
 }
 
 export const secretLetters = (lab: BombeLab) => lettersOf(lab.secretText);
@@ -72,18 +86,30 @@ export function bombeReducer(lab: BombeLab, action: BombeAction): BombeLab {
   const running = lab.search.status === 'running';
   switch (action.type) {
     case 'secret':
-      return running ? lab : clamp({ ...lab, secretText: action.text, search: NO_SEARCH });
+      return running ? lab : clamp({ ...lab, secretText: action.text, search: NO_SEARCH, slow: null });
     case 'crib':
-      return running ? lab : clamp({ ...lab, cribText: action.text, search: NO_SEARCH });
+      return running ? lab : clamp({ ...lab, cribText: action.text, search: NO_SEARCH, slow: null });
     case 'slide':
-      return running ? lab : clamp({ ...lab, offset: Math.max(0, lab.offset + action.by), search: NO_SEARCH });
+      return running ? lab : clamp({ ...lab, offset: Math.max(0, lab.offset + action.by), search: NO_SEARCH, slow: null });
     case 'practice':
-      return running ? lab : { secretText: groupsOf5(PRACTICE.cipher), cribText: PRACTICE.crib, offset: PRACTICE.offset, search: NO_SEARCH };
+      return running ? lab : { secretText: groupsOf5(PRACTICE.cipher), cribText: PRACTICE.crib, offset: PRACTICE.offset, search: NO_SEARCH, slow: null };
     case 'load-secret':
       // The crib is the visitor's to choose: about 15 letters they know are in their message.
-      return running ? lab : { secretText: groupsOf5(action.cipher), cribText: '', offset: 0, search: NO_SEARCH };
+      return running ? lab : { secretText: groupsOf5(action.cipher), cribText: '', offset: 0, search: NO_SEARCH, slow: null };
     case 'start':
-      return { ...lab, search: { ...NO_SEARCH, status: 'running', total: action.total } };
+      return { ...lab, search: { ...NO_SEARCH, status: 'running', total: action.total }, slow: null };
+    case 'slow-open': {
+      if (running || blocker(lab) !== null) return lab;
+      const { rotors, start } = action;
+      return { ...lab, slow: { rotors, start, steps: testSteps(rotors, start, menuOf(lab)), at: 0 } };
+    }
+    case 'slow-step': {
+      if (lab.slow === null) return lab;
+      const at = Math.min(Math.max(lab.slow.at + action.by, 0), lab.slow.steps.length - 1);
+      return { ...lab, slow: { ...lab.slow, at } };
+    }
+    case 'slow-close':
+      return { ...lab, slow: null };
     case 'stop':
       return running ? { ...lab, search: { ...lab.search, status: 'stopped' } } : lab;
     case 'report': {
@@ -134,6 +160,14 @@ export const HINT_CRIB_LETTERS = 15;
 export function hints(lab: BombeLab): { short: boolean; noLoop: boolean } {
   if (placeCount(lab) === 0) return { short: false, noLoop: false };
   return { short: cribLetters(lab).length < HINT_CRIB_LETTERS, noLoop: menuOf(lab).loops === 0 };
+}
+
+/** The test that "Watch one test slowly" shows: the first stop, or else the rotor order and start on the drum wall. */
+export function slowTestKey(search: Search, orders: readonly Three<RotorName>[]): { rotors: Three<RotorName>; start: Positions } {
+  const [stop] = search.stops;
+  if (stop !== undefined) return { rotors: stop.rotors, start: stop.start };
+  if (search.testing !== null) return { rotors: orders[search.testing.order], start: startAt(search.testing.start) };
+  return { rotors: orders[0], start: ['A', 'A', 'A'] };
 }
 
 /** The drum wall shows one Enigma for each link, up to 12. */

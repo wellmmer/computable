@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { press, type EnigmaState } from '@/engines/enigma';
-import { blocker, bombeReducer, crashesHere, cribLetters, drumLetters, hints, initialLab, menuOf, NO_SEARCH, placeCount, secretLetters, type BombeAction, type BombeLab } from './lab-state';
+import { ROTOR_ORDERS, testSteps } from '@/engines/bombe';
+import { blocker, bombeReducer, crashesHere, cribLetters, drumLetters, hints, initialLab, menuOf, NO_SEARCH, placeCount, secretLetters, slowTestKey, type BombeAction, type BombeLab } from './lab-state';
 import { PRACTICE } from './practice-message';
 import type { SearchReport } from './search-messages';
 
@@ -16,6 +17,7 @@ describe('the Bombe lab at the start (spec R4 3)', () => {
     const lab = initialLab();
     expect([lab.secretText, lab.cribText, lab.offset]).toEqual(['', 'WETTERBERICHT', 0]);
     expect(lab.search).toEqual(NO_SEARCH);
+    expect(lab.slow).toBeNull();
     expect(blocker(lab)).toBe('no-secret');
   });
 });
@@ -134,5 +136,50 @@ describe('drumLetters (spec R4 3, "Drum wall")', () => {
       expect(windows[link], `link ${link}`).toEqual(state.positions);
     });
     expect(windows[0]).toEqual(['Q', 'K', 'B']);
+  });
+});
+
+describe('slow step mode (spec R4 4, "Watch one test slowly")', () => {
+  const open: BombeAction = { type: 'slow-open', rotors: PRACTICE.settings.rotors, start: PRACTICE.start };
+
+  it('opens one test at its first step, with the steps of the engine', () => {
+    const lab = run({ type: 'practice' }, open);
+    expect(lab.slow).toEqual({ rotors: ['II', 'III', 'V'], start: ['Q', 'K', 'A'], steps: testSteps(PRACTICE.settings.rotors, PRACTICE.start, menuOf(lab)), at: 0 });
+  });
+
+  it('steps forward and back, and stays between the first and the last step', () => {
+    const lab = run({ type: 'practice' }, open, { type: 'slow-step', by: -1 });
+    expect(lab.slow?.at).toBe(0);
+    const forward = Array.from({ length: 30 }).reduce<BombeLab>((next) => bombeReducer(next, { type: 'slow-step', by: 1 }), lab);
+    expect(forward.slow?.at).toBe(17);
+    expect(bombeReducer(forward, { type: 'slow-step', by: -1 }).slow?.at).toBe(16);
+  });
+
+  it('closes on Close, when a field changes, and when a search starts', () => {
+    const lab = run({ type: 'practice' }, open);
+    for (const action of [
+      { type: 'slow-close' },
+      { type: 'crib', text: 'WETTER' },
+      { type: 'slide', by: 1 },
+      { type: 'secret', text: 'ABC' },
+      { type: 'practice' },
+      { type: 'load-secret', cipher: 'ABC' },
+      { type: 'start', total: 60 },
+    ] satisfies BombeAction[]) {
+      expect(bombeReducer(lab, action).slow, action.type).toBeNull();
+    }
+  });
+
+  it('does not open while a search runs, or while Start is blocked', () => {
+    expect(run({ type: 'practice' }, { type: 'start', total: 60 }, open).slow).toBeNull();
+    expect(run(open).slow).toBeNull();
+    expect(run({ type: 'practice' }, { type: 'slide', by: 1 }, open).slow).toBeNull();
+  });
+
+  it('picks the test: the first stop, or else the rotor order and start on the drum wall, or else the first order at A A A', () => {
+    const search = { ...NO_SEARCH, status: 'finished', total: 60, done: 60, testing: { order: 3, start: 2197 } } as const;
+    expect(slowTestKey({ ...search, stops: [STOP] }, ROTOR_ORDERS)).toEqual({ rotors: STOP.rotors, start: STOP.start });
+    expect(slowTestKey(search, ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[3], start: ['D', 'G', 'N'] });
+    expect(slowTestKey(NO_SEARCH, [['II', 'III', 'V']])).toEqual({ rotors: ['II', 'III', 'V'], start: ['A', 'A', 'A'] });
   });
 });
