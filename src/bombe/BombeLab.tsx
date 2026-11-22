@@ -10,6 +10,7 @@ import { CribCard } from './CribCard';
 import { DrumWall } from './DrumWall';
 import { blocker, bombeReducer, cribLetters, initialLab, menuOf, secretLetters } from './lab-state';
 import { MenuCard } from './MenuCard';
+import { SlowTestCard } from './SlowTestCard';
 import { ordersToSearch, readTestOrders } from './search-orders';
 import { StopsCard } from './StopsCard';
 import { workerSearch, type SearchRunner } from './worker-search';
@@ -21,7 +22,7 @@ const noSubscription = () => () => {};
  * The Bombe lab (spec R4 3, layout B). From 768 px, the drum wall sits on the left and the cards on
  * the right. On phones, the page order is crib, menu, drum wall, stops. The search runs in a Web
  * Worker; tests hand in another `search`. Home's "Break it with the Bombe" fills the secret letters,
- * and a stop that matches the saved key says so (spec R4 4).
+ * and a stop that matches the saved key says so (spec R4 4). Slow step mode sits under the drum wall.
  */
 export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   const [lab, dispatch] = useReducer(bombeReducer, undefined, initialLab);
@@ -34,6 +35,8 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
   const hydrated = useSyncExternalStore(noSubscription, () => true, () => false);
   const menu = menuOf(lab);
   const secret = useSecret();
+  const slowStep = lab.slow?.steps[lab.slow.at];
+  const activeLink = slowStep?.kind === 'link' ? slowStep.link : null;
 
   const end = () => {
     stopSearch.current?.();
@@ -81,10 +84,20 @@ export function BombeLab({ search = workerSearch }: { search?: SearchRunner }) {
         <CribCard lab={lab} dispatch={dispatch} />
       </div>
       <div className="md:col-start-2 md:row-start-2">
-        <MenuCard menu={menu} />
+        <MenuCard menu={menu} activeLink={activeLink} />
       </div>
-      <div className="md:col-start-1 md:row-span-3 md:row-start-1">
-        <DrumWall menu={menu} search={lab.search} orders={orders} reducedMotion={reducedMotion} blocked={blocker(lab)} onStart={start} onStop={stop} />
+      <div className="grid gap-4 md:col-start-1 md:row-span-3 md:row-start-1">
+        <DrumWall
+          menu={menu}
+          search={lab.search}
+          orders={orders}
+          reducedMotion={reducedMotion}
+          blocked={blocker(lab)}
+          onStart={start}
+          onStop={stop}
+          slow={lab.slow === null ? null : { rotors: lab.slow.rotors, start: lab.slow.start, link: activeLink }}
+        />
+        <SlowTestCard lab={lab} orders={orders} dispatch={dispatch} />
       </div>
       <div className="md:col-start-2 md:row-start-3">
         <StopsCard search={lab.search} cipher={secretLetters(lab)} yourKey={secret ?? null} />

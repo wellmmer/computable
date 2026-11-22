@@ -36,9 +36,29 @@ const searchNow: SearchRunner = (request, onReport) => {
 };
 
 describe('BombeLab (spec R4 3)', () => {
-  it('puts the crib, the menu, the drum wall and the stops in this order, for phones', () => {
+  it('puts the crib, the menu, the drum wall, slow step mode and the stops in this order, for phones', () => {
     renderWithIntl(<BombeLab search={searchNow} />);
-    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual(['Crib', 'Menu: no loops', 'The Bombe', 'Stops']);
+    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual(['Crib', 'Menu: no loops', 'The Bombe', 'One test, step by step', 'Stops']);
+  });
+
+  it('marks the link in use on the menu drawing and the drum wall in slow step mode (spec R4 4)', () => {
+    sessionStorage.setItem(TEST_ORDERS_KEY, 'II III V');
+    renderWithIntl(<BombeLab search={searchNow} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Watch one test slowly' }));
+    expect(document.querySelectorAll('[data-active]')).toHaveLength(0);
+    // Step 3 is the first link: the current leaves the center letter H.
+    fireEvent.click(screen.getByRole('button', { name: 'Step' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Step' }));
+    const link = Number(/^Through link (\d+)/.exec(screen.getByTestId('slow-sentence').textContent ?? '')?.[1]) - 1;
+    expect(document.querySelector('path[data-active]')?.getAttribute('data-link')).toBe(String(link));
+    const wall = [...document.querySelectorAll('[data-enigma]')];
+    expect(wall.findIndex((enigma) => enigma.hasAttribute('data-active'))).toBe(link < 12 ? link : -1);
+    // The wall shows the slow test: the practice key, Q K A.
+    expect(wall[0].textContent).toBe('QKB');
+    fireEvent.click(screen.getByRole('button', { name: 'Start' }));
+    expect(screen.queryByTestId('slow-sentence')).toBeNull();
   });
 
   it('breaks the practice message: 1 rotor order with the test setting, 1 stop, the key', () => {
