@@ -24,7 +24,11 @@
       "decrypt": "Para leerlo otra vez, abre el laboratorio Enigma y escribe las letras secretas. Las lámparas iluminan tu mensaje.",
       "forget": "Olvidar mi secreto",
       "stays": "Tu secreto se queda en este navegador. Nunca se envía.",
-      "litNews": "Lámpara {letter}"
+      "litNews": "Lámpara {letter}",
+      "hidden": "Cada secreto nuevo recibe su propia clave Enigma al azar. La página de inicio no muestra la clave.",
+      "loadLab": "Cargar mi secreto en el laboratorio",
+      "breakIt": "Romperlo con la Bombe",
+      "bombeHint": "Para romperlo, la Bombe necesita un crib: unas 15 letras que sabes que están en tu secreto."
     }
   },
   "simulator": {
@@ -568,7 +572,8 @@
       "soFar": "Vas bien: {right} de {total} letras son correctas. Sigue escribiendo.",
       "wrong": "La letra {at} no es correcta. La tecla de retroceso borra letras.",
       "bombeStop": "Parada de la Bombe, rotores {rotors}, inicio {start}",
-      "partial": "La Bombe encontró solo algunos pares de clavijas. Las letras que no alcanzó pueden salir mal."
+      "partial": "La Bombe encontró solo algunos pares de clavijas. Las letras que no alcanzó pueden salir mal.",
+      "homeSecret": "Tu secreto de la página de inicio"
     }
   },
   "bombe": {
@@ -629,7 +634,26 @@
       "try": "Probar en el laboratorio Enigma",
       "tryLabel": "Probar en el laboratorio Enigma: {rotors}, {start}",
       "more": "{count, number} paradas. La lista muestra las primeras {shown}.",
-      "unknown": "Las letras que el menú no alcanzó siguen siendo desconocidas."
+      "unknown": "Las letras que el menú no alcanzó siguen siendo desconocidas.",
+      "yourKey": "Esta es tu clave"
+    },
+    "slow": {
+      "title": "Una prueba, paso a paso",
+      "about": "Mira cómo la Bombe prueba un orden de rotores y un inicio. Usa la primera parada, o el orden de rotores y el inicio de la pared de tambores.",
+      "watch": "Ver una prueba despacio",
+      "which": "Rotores {rotors}, inicio {start}",
+      "progress": "Paso {step} de {total}",
+      "lit": "{center}: {lit} de 26 cables encendidos",
+      "back": "Atrás",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "step": "Paso",
+      "close": "Cerrar",
+      "enter": "La corriente de prueba entra en {letter} por el cable {wire}. Es la suposición “{letter} está conectada a {wire}”.",
+      "link": "Por el enlace {number} ({plain} sobre {cipher}), {from} en el cable {fromWire} enciende {to} en el cable {toWire}.",
+      "mirror": "El tablero diagonal enciende el cable espejo: {letter} en el cable {wire}.",
+      "noStop": "Los 26 cables de {center} encendidos: ninguna parada.",
+      "stop": "Parada: solo {lit} de 26 cables de {center} encendidos."
     }
   }
 }

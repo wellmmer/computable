@@ -24,7 +24,11 @@
       "decrypt": "Zum Lesen öffne das Enigma-Labor und tippe die geheimen Buchstaben. Die Lampen zeigen deine Nachricht.",
       "forget": "Mein Geheimnis vergessen",
       "stays": "Dein Geheimnis bleibt in diesem Browser. Es wird nie gesendet.",
-      "litNews": "Lampe {letter}"
+      "litNews": "Lampe {letter}",
+      "hidden": "Jedes neue Geheimnis bekommt einen eigenen zufälligen Enigma-Schlüssel. Die Startseite zeigt den Schlüssel nicht.",
+      "loadLab": "Mein Geheimnis ins Labor laden",
+      "breakIt": "Mit der Bombe knacken",
+      "bombeHint": "Zum Knacken braucht die Bombe einen Crib: etwa 15 Buchstaben, die sicher in deinem Geheimnis stehen."
     }
   },
   "simulator": {
@@ -568,7 +572,8 @@
       "soFar": "So weit, so gut: {right} von {total} Buchstaben stimmen. Tippe weiter.",
       "wrong": "Buchstabe {at} stimmt nicht. Die Rücktaste nimmt Buchstaben zurück.",
       "bombeStop": "Bombe-Stopp, Walzen {rotors}, Start {start}",
-      "partial": "Die Bombe hat nur einige Steckerpaare gefunden. Buchstaben, die sie nicht erreicht hat, können falsch herauskommen."
+      "partial": "Die Bombe hat nur einige Steckerpaare gefunden. Buchstaben, die sie nicht erreicht hat, können falsch herauskommen.",
+      "homeSecret": "Dein Geheimnis von der Startseite"
     }
   },
   "bombe": {
@@ -629,7 +634,26 @@
       "try": "Im Enigma-Labor ausprobieren",
       "tryLabel": "Im Enigma-Labor ausprobieren: {rotors}, {start}",
       "more": "{count, number} Stopps. Die Liste zeigt die ersten {shown}.",
-      "unknown": "Buchstaben, die das Menü nie erreicht hat, bleiben unbekannt."
+      "unknown": "Buchstaben, die das Menü nie erreicht hat, bleiben unbekannt.",
+      "yourKey": "Das ist dein Schlüssel"
+    },
+    "slow": {
+      "title": "Ein Test, Schritt für Schritt",
+      "about": "Sieh zu, wie die Bombe eine Walzenlage und einen Start testet. Sie nimmt den ersten Stopp, oder die Walzenlage und den Start auf der Trommelwand.",
+      "watch": "Einen Test langsam ansehen",
+      "which": "Walzen {rotors}, Start {start}",
+      "progress": "Schritt {step} von {total}",
+      "lit": "{center}: {lit} von 26 Drähten leuchten",
+      "back": "Zurück",
+      "play": "Abspielen",
+      "pause": "Pause",
+      "step": "Schritt",
+      "close": "Schließen",
+      "enter": "Der Teststrom tritt bei {letter} auf Draht {wire} ein. Das ist die Annahme „{letter} ist mit {wire} gesteckt“.",
+      "link": "Über Verbindung {number} ({plain} über {cipher}) lässt {from} auf Draht {fromWire} {to} auf Draht {toWire} leuchten.",
+      "mirror": "Das Diagonalbrett lässt den Spiegeldraht leuchten: {letter} auf Draht {wire}.",
+      "noStop": "Alle 26 Drähte von {center} leuchten: kein Stopp.",
+      "stop": "Stopp: nur {lit} von 26 Drähten von {center} leuchten."
     }
   }
 }
