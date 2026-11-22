@@ -651,7 +651,8 @@
       "link": "Por el enlace {number} ({plain} sobre {cipher}), {from} en el cable {fromWire} enciende {to} en el cable {toWire}.",
       "mirror": "El tablero diagonal enciende el cable espejo: {letter} en el cable {wire}.",
       "noStop": "Los 26 cables de {center} encendidos: ninguna parada.",
-      "stop": "Parada: solo {lit} de 26 cables de {center} encendidos."
+      "stop": "Parada: solo {lit} de 26 cables de {center} encendidos.",
+      "clash": "Solo {lit} de 26 cables de {center} encendidos. Pero cada suposición para {center} da dos parejas a una letra, así que esto no es una parada."
     }
   }
 }

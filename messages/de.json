@@ -651,7 +651,8 @@
       "link": "Über Verbindung {number} ({plain} über {cipher}) lässt {from} auf Draht {fromWire} {to} auf Draht {toWire} leuchten.",
       "mirror": "Das Diagonalbrett lässt den Spiegeldraht leuchten: {letter} auf Draht {wire}.",
       "noStop": "Alle 26 Drähte von {center} leuchten: kein Stopp.",
-      "stop": "Stopp: nur {lit} von 26 Drähten von {center} leuchten."
+      "stop": "Stopp: nur {lit} von 26 Drähten von {center} leuchten.",
+      "clash": "Nur {lit} von 26 Drähten von {center} leuchten. Aber jede Annahme für {center} gibt einem Buchstaben zwei Partner, also ist das kein Stopp."
     }
   }
 }

@@ -88,7 +88,8 @@ export function SlowTestCard({ lab, orders, dispatch }: SlowTestCardProps) {
       case 'mirror':
         return t('mirror', { letter: step.letter, wire: step.wire });
       case 'end':
-        return step.stop ? t('stop', { lit: step.lit, center }) : t('noStop', { center });
+        if (step.result === 'all-lit') return t('noStop', { center });
+        return step.result === 'stop' ? t('stop', { lit: step.lit, center }) : t('clash', { lit: step.lit, center });
     }
   };
 

@@ -651,7 +651,8 @@
       "link": "Par le lien {number} ({plain} sur {cipher}), {from} sur le fil {fromWire} allume {to} sur le fil {toWire}.",
       "mirror": "Le tableau diagonal allume le fil miroir : {letter} sur le fil {wire}.",
       "noStop": "Les 26 fils de {center} sont allumés : pas d’arrêt.",
-      "stop": "Arrêt : seulement {lit} fils de {center} allumés sur 26."
+      "stop": "Arrêt : seulement {lit} fils de {center} allumés sur 26.",
+      "clash": "Seulement {lit} fils de {center} allumés sur 26. Mais chaque hypothèse pour {center} donne deux partenaires à une lettre, donc ce n’est pas un arrêt."
     }
   }
 }

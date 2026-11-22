@@ -651,7 +651,8 @@
       "link": "Through link {number} ({plain} on {cipher}), {from} on wire {fromWire} lights {to} on wire {toWire}.",
       "mirror": "The diagonal board adds the mirror wire: {letter} on wire {wire}.",
       "noStop": "All 26 wires of {center} lit: no stop.",
-      "stop": "Stop: only {lit} of 26 wires of {center} lit."
+      "stop": "Stop: only {lit} of 26 wires of {center} lit.",
+      "clash": "Only {lit} of 26 wires of {center} lit. But every guess for {center} gives a letter two partners, so this is not a stop."
     }
   }
 }

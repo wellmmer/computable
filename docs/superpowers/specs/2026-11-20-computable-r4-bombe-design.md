@@ -96,6 +96,8 @@ Tests (Vitest):
 - "Watch one test slowly" on `/bombe` runs one test with Step, Back and Play, as in the simulator.
 - Each step has one sentence: the test current enters the center letter; it goes through one link;
   the diagonal board adds the mirror wire; the test ends with "all 26 wires lit: no stop" or "Stop".
+- With fewer than 26 wires lit, the test still tries each guess for the center letter's partner, as
+  the search does. If every guess gives a letter two partners, the last step says "not a stop".
 - The drum wall and the menu drawing mark the link in use.
 
 ## 5. R4c: history, the film, and Barbarossa

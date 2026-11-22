@@ -1,12 +1,24 @@
 import { describe, expect, it } from 'vitest';
 import { PRACTICE } from '@/bombe/practice-message';
-import { encrypt, stepRotors, type Letter, type Positions } from '@/engines/enigma';
-import { buildMenu } from './menu';
-import { ROTOR_ORDERS, scramblerTables, startAt, START_COUNT } from './scramblers';
-import { createTester, testStart } from './search';
+import { ALPHABET, encrypt, stepRotors, type Letter, type Positions } from '@/engines/enigma';
+import { randomKey } from '@/home/random-key';
+import { buildMenu, type Menu } from './menu';
+import { ROTOR_ORDERS, scramblerTables, startAt, startIndex, START_COUNT } from './scramblers';
+import { createTester, testStart, type Tester } from './search';
 import { testSteps } from './test-steps';
 
 const MENU = buildMenu(PRACTICE.cipher, PRACTICE.crib, PRACTICE.offset);
+
+/** Numbers from 0 up to 1 that are the same on each run (mulberry32), so the random keys are too. */
+function seeded(seed: number): () => number {
+  let state = seed;
+  return () => {
+    state = (state + 0x6d2b79f5) | 0;
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 /** The windows after `presses` key presses from `start`. */
 function after(rotors: (typeof ROTOR_ORDERS)[number], start: Positions, presses: number): Positions {
@@ -26,22 +38,18 @@ describe('testSteps: one test, step by step (spec R4 4, slow step mode)', () => 
   it('ends with a stop at the practice key, in 18 steps, with fewer than 26 wires of H lit', () => {
     const steps = testSteps(PRACTICE.settings.rotors, PRACTICE.start, MENU);
     expect(steps).toHaveLength(18);
-    expect(steps.at(-1)).toMatchObject({ kind: 'end', stop: true });
+    expect(steps.at(-1)).toMatchObject({ kind: 'end', result: 'stop' });
     expect(steps.at(-1)?.lit).toBeLessThan(26);
   });
 
-  it('ends with all 26 wires of the center letter lit where the fast search finds no stop, with the same wires', () => {
+  it('ends with all 26 wires of the center letter lit where the first guess fills it, with the same wires as the fast search', () => {
     let compared = 0;
     for (const rotors of [ROTOR_ORDERS[0], ROTOR_ORDERS[37]]) {
       const tester = createTester(scramblerTables(rotors), MENU);
       for (let start = 0; start < START_COUNT; start += 251) {
-        const stops = testStart(tester, start);
+        testStart(tester, start);
         const end = testSteps(rotors, startAt(start), MENU).at(-1);
-        if (stops.length > 0) {
-          expect(end, `${rotors} ${startAt(start)}`).toMatchObject({ kind: 'end', stop: true });
-          continue;
-        }
-        if (end?.kind === 'end' && !end.stop) {
+        if (end?.kind === 'end' && end.result === 'all-lit') {
           expect(end.lit).toBe(26);
           expect(end.wires).toEqual([...tester.wires]);
           compared++;
@@ -49,6 +57,39 @@ describe('testSteps: one test, step by step (spec R4 4, slow step mode)', () => 
       }
     }
     expect(compared).toBeGreaterThan(100);
+  });
+
+  it('ends with a stop exactly where the fast search finds one, also with weak menus from 9- to 12-letter cribs', () => {
+    const random = seeded(1940);
+    const ends = { stop: 0, clash: 0, 'all-lit': 0 };
+    const check = (tester: Tester, menu: Menu, start: number) => {
+      const rotors = tester.tables.rotors;
+      const stops = testStart(tester, start);
+      const end = testSteps(rotors, startAt(start), menu).at(-1);
+      if (end?.kind !== 'end') throw new Error('The last step is not the end.');
+      expect(end.result === 'stop', `${rotors.join(' ')} ${startAt(start).join(' ')}`).toBe(stops.length > 0);
+      ends[end.result]++;
+    };
+
+    // The reviewer's example: the lab's first secret letters, crib WETTERBERICH. The first guess lights 1 wire of E, but every guess clashes.
+    const example = buildMenu('PBJGOLIZQMQG', 'WETTERBERICH', 0);
+    check(createTester(scramblerTables(['IV', 'V', 'II']), example), example, startIndex(['A', 'A', 'A']));
+    expect(ends.clash).toBe(1);
+
+    for (let run = 0; run < 12; run++) {
+      const { settings, start } = randomKey(random);
+      const plain = Array.from({ length: 12 }, () => ALPHABET[Math.floor(random() * 26)]).join('');
+      const crib = plain.slice(0, 9 + (run % 4));
+      const menu = buildMenu(encrypt(settings, start, plain), crib, 0);
+      for (const rotors of [settings.rotors, ROTOR_ORDERS[(run * 7) % 60]]) {
+        const tester = createTester(scramblerTables(rotors), menu);
+        for (let at = run; at < START_COUNT; at += 97) check(tester, menu, at);
+      }
+    }
+    // Each kind of end shows up, so the test compares all three.
+    expect(ends.stop).toBeGreaterThan(500);
+    expect(ends.clash).toBeGreaterThan(500);
+    expect(ends['all-lit']).toBeGreaterThan(500);
   });
 
   it('lights one new wire in each step but the last; a mirror step lights the mirror of the wire before it', () => {

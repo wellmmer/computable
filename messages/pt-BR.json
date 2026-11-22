@@ -651,7 +651,8 @@
       "link": "Pela ligação {number} ({plain} sobre {cipher}), {from} no fio {fromWire} acende {to} no fio {toWire}.",
       "mirror": "O quadro diagonal acende o fio espelho: {letter} no fio {wire}.",
       "noStop": "Os 26 fios de {center} acesos: nenhuma parada.",
-      "stop": "Parada: só {lit} de 26 fios de {center} acesos."
+      "stop": "Parada: só {lit} de 26 fios de {center} acesos.",
+      "clash": "Só {lit} de 26 fios de {center} acesos. Mas cada palpite para {center} dá dois parceiros a uma letra, então isto não é uma parada."
     }
   }
 }

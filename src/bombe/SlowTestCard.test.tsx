@@ -69,6 +69,15 @@ describe('SlowTestCard (spec R4 4, slow step mode)', () => {
     expect(screen.getByText('H: 26 of 26 wires lit')).toBeTruthy();
   });
 
+  it('ends with "not a stop" when fewer than 26 wires lit but every guess gives a letter two partners', () => {
+    // The fast search finds no stop here, so slow step mode must not say "Stop".
+    const typed = [{ type: 'secret', text: 'PBJGOLIZQMQG' }, { type: 'crib', text: 'WETTERBERICH' }, { type: 'slow-open', rotors: ['IV', 'V', 'II'], start: ['A', 'A', 'A'] }] as const;
+    const opened = typed.reduce<BombeLab>(bombeReducer, initialLab());
+    const last = (opened.slow?.steps.length ?? 0) - 1;
+    renderWithIntl(<Card lab={{ ...opened, slow: opened.slow && { ...opened.slow, at: last } }} />);
+    expect(sentence()).toBe('Only 1 of 26 wires of E lit. But every guess for E gives a letter two partners, so this is not a stop.');
+  });
+
   describe('Play', () => {
     beforeEach(() => vi.useFakeTimers());
 
