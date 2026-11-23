@@ -151,9 +151,9 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
-    // The Bombe lab after a search: the stops list with "This is your key", slow step mode, then a crash in red and the hints.
+    // The Bombe lab after a search: the stops list with "This is your key", slow step mode, a crash in red and the hints, then Barbarossa part 1.
     for (const locale of LOCALE_PATHS) {
-      test(`${locale}/bombe with a finished search, your key, slow step mode, a crash and the hints has no axe violations, on a desktop and a phone`, async ({ page }) => {
+      test(`${locale}/bombe with a finished search, your key, slow step mode, a crash, the hints and Barbarossa has no axe violations, on a desktop and a phone`, async ({ page }) => {
         await page.addInitScript(() => window.sessionStorage.setItem('computable.test.bombe-orders', 'II III V'));
         // Home's secret with the practice key, so the stop says "This is your key".
         await page.addInitScript(() =>
@@ -191,10 +191,15 @@ for (const colorScheme of ['light', 'dark'] as const) {
           await regions.nth(3).getByRole('button').nth(2).click();
           await expect(page.locator('path[data-active]')).toHaveCount(1);
           expect(await axeViolations(page), `${viewport.width} px, slow step mode`).toEqual([]);
+          // The crib card's buttons: "Load the practice message", "Break part 1 with the Bombe", ◀, ▶.
           await crib.getByRole('textbox').nth(1).fill('WETTER');
-          await crib.getByRole('button').nth(2).click();
+          await crib.getByRole('button').nth(3).click();
           await expect(page.locator('[data-crash]')).not.toHaveCount(0);
           expect(await axeViolations(page), `${viewport.width} px, crash`).toEqual([]);
+          // Barbarossa part 1 with its crib at its place, and the note about the rings.
+          await crib.getByRole('button').nth(1).click();
+          await expect(crib.getByRole('textbox').nth(1)).toHaveValue('OWAXNORDWESTLXSE');
+          expect(await axeViolations(page), `${viewport.width} px, Barbarossa`).toEqual([]);
         }
       });
     }

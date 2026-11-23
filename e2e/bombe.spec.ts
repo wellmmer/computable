@@ -3,10 +3,10 @@ import { openPage } from './helpers';
 
 /**
  * The full search tests 60 rotor orders and takes several seconds, so most tests limit it to the
- * practice key's order with the test-only setting (spec R4 6). The page never shows it.
+ * practice key's order, or Barbarossa's, with the test-only setting (spec R4 6). The page never shows it.
  */
-async function searchOneOrder(page: Page) {
-  await page.addInitScript(() => window.sessionStorage.setItem('computable.test.bombe-orders', 'II III V'));
+async function searchOneOrder(page: Page, order = 'II III V') {
+  await page.addInitScript((setting) => window.sessionStorage.setItem('computable.test.bombe-orders', setting), order);
 }
 
 /** Opens the Bombe lab and waits until React has hydrated it: its buttons work only then. */
@@ -36,6 +36,43 @@ test.describe('the Bombe lab (spec R4 3)', () => {
     await expect(box.getByRole('button', { name: 'Check my answer' })).toHaveCount(0);
     await box.getByRole('button', { name: 'Type it for me' }).click();
     await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText(/^WETTE RBERI CHT/);
+  });
+
+  test('breaks Barbarossa part 1, says why the start is not B L A, and reads blocks of it in the Enigma lab (spec R4 5)', async ({ page }) => {
+    await searchOneOrder(page, 'II IV V');
+    await openBombe(page);
+    await page.getByRole('button', { name: 'Break part 1 with the Bombe' }).click();
+    await expect(page.getByRole('textbox', { name: 'Crib: a word you know is in the message' })).toHaveValue('OWAXNORDWESTLXSE');
+    await expect(page.getByText('Place 37 of 159')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Menu: 1 loop' })).toBeVisible();
+    await expect(page.getByText(/^The real key used rings B U L and start B L A\. The Bombe assumes rings A A A, so it finds start A Q P instead\./)).toBeVisible();
+    await page.getByRole('button', { name: 'Start' }).click();
+    await expect(page.getByRole('status')).toHaveText('Finished: 1 rotor order tested. 1 stop.');
+    await expect(page.getByText('II IV V · start A Q P')).toBeVisible();
+    await expect(page.getByText('Plug pairs found: AV BS CG DL FU HZ IN OW RX')).toBeVisible();
+
+    await page.getByRole('link', { name: 'Try in the Enigma lab: II IV V, A Q P' }).click();
+    const box = page.getByRole('region', { name: 'Decrypting: Bombe stop, rotors II IV V, start A Q P' });
+    await expect(box.getByRole('heading')).toBeFocused();
+    await box.getByRole('button', { name: 'Type it for me' }).click();
+    // Letters 10 to 22 read "EILUNG X VON X KU". Letters 1 to 9 do not: there the middle rotor stands one letter off.
+    await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText(/^SFBEA XFUME ILUNG XVONX KU/);
+  });
+
+  test('has the history under the lab: 5 facts and the film box, each with its sources (spec R4 5)', async ({ page }) => {
+    await openBombe(page);
+    const history = page.getByRole('region', { name: 'How the Bombe came to be' });
+    await expect(history.getByRole('heading', { level: 3 })).toHaveText([
+      '1938: the Polish bomba',
+      'July 1939: the meeting at Pyry',
+      '1939: Turing’s Bombe',
+      'March 1940: Victory',
+      'August 1940: Welchman’s diagonal board',
+      'On film',
+    ]);
+    await expect(history.getByRole('link')).toHaveCount(12);
+    await expect(history.getByText('The Imitation Game (2014), a drama with Benedict Cumberbatch as Alan Turing.')).toBeVisible();
+    await expect(history.locator('img, picture, video')).toHaveCount(0);
   });
 
   test('shows a crash in red, and Start waits for a place without one', async ({ page }) => {
@@ -89,7 +126,7 @@ test.describe('the Bombe lab (spec R4 3)', () => {
 
   test('puts the drum wall left of the cards on a desktop, and below the menu on a phone', async ({ page }) => {
     const box = async (name: string | RegExp) => {
-      const found = await page.getByRole('heading', { level: 2, name }).boundingBox();
+      const found = await page.getByRole('heading', { level: 2, name, exact: true }).boundingBox();
       if (found === null) throw new Error(`no heading ${name}`);
       return found;
     };
