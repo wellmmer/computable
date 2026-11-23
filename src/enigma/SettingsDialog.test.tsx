@@ -2,7 +2,8 @@
 import { cleanup, fireEvent, screen, within } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
-import { LAB_SETTINGS } from './lab-state';
+import type { MachineSettings } from '@/engines/enigma';
+import { LAB_M4_SETTINGS, LAB_SETTINGS } from './lab-state';
 import { SettingsDialog } from './SettingsDialog';
 
 beforeAll(() => {
@@ -18,10 +19,10 @@ beforeAll(() => {
 
 afterEach(cleanup);
 
-function openDialog() {
+function openDialog(settings: MachineSettings = LAB_SETTINGS) {
   const onSave = vi.fn();
   const onClose = vi.fn();
-  renderWithIntl(<SettingsDialog settings={LAB_SETTINGS} onSave={onSave} onClose={onClose} />);
+  renderWithIntl(<SettingsDialog settings={settings} onSave={onSave} onClose={onClose} />);
   return { onSave, onClose, dialog: screen.getByRole('dialog', { name: 'Change settings' }) };
 }
 
@@ -90,5 +91,39 @@ describe('SettingsDialog (spec R3 3, "Change settings")', () => {
     fireEvent.click(within(dialog).getByRole('button', { name: 'Cancel' }));
     expect(onClose).toHaveBeenCalled();
     expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('has no thin rotor for the Enigma I, and offers reflectors B and C', () => {
+    const { dialog } = openDialog();
+    expect(within(dialog).queryByRole('combobox', { name: /^Thin/ })).toBeNull();
+    expect(within(within(dialog).getByRole('group', { name: 'Reflector' })).getAllByRole('radio').map((radio) => radio.parentElement?.textContent)).toEqual(['B', 'C']);
+  });
+});
+
+describe('SettingsDialog for the naval M4 (spec R5a 3)', () => {
+  const value = (dialog: HTMLElement, name: string) => within(dialog).getByRole<HTMLSelectElement>('combobox', { name }).value;
+
+  it('shows the thin rotor, its ring and its start, and offers the thin reflectors only', () => {
+    const { dialog } = openDialog(LAB_M4_SETTINGS);
+    expect(['Thin rotor', 'Left rotor', 'Middle rotor', 'Right rotor'].map((name) => value(dialog, name))).toEqual(['Beta', 'I', 'II', 'III']);
+    expect(['Thin ring', 'Left ring', 'Middle ring', 'Right ring'].map((name) => value(dialog, name))).toEqual(['A', 'A', 'A', 'A']);
+    expect(value(dialog, 'Thin rotor start')).toBe('A');
+    const thinRotor = within(dialog).getByRole('combobox', { name: 'Thin rotor' });
+    expect(within(thinRotor).getAllByRole('option').map((option) => option.textContent)).toEqual(['Beta', 'Gamma']);
+    const reflectors = within(within(dialog).getByRole('group', { name: 'Reflector' })).getAllByRole<HTMLInputElement>('radio');
+    expect(reflectors.map((radio) => [radio.parentElement?.textContent, radio.checked])).toEqual([
+      ['Thin B', false],
+      ['Thin C', true],
+    ]);
+  });
+
+  it('saves a new thin rotor, ring, start and thin reflector, and keeps the M4', () => {
+    const { dialog, onSave } = openDialog(LAB_M4_SETTINGS);
+    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin rotor' }), { target: { value: 'Gamma' } });
+    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin ring' }), { target: { value: 'B' } });
+    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin rotor start' }), { target: { value: 'U' } });
+    fireEvent.click(within(dialog).getByRole('radio', { name: 'Thin B' }));
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Save' }));
+    expect(onSave).toHaveBeenCalledWith({ ...LAB_M4_SETTINGS, thinRotor: 'Gamma', thinRing: 'B', thinPosition: 'U', reflector: 'B' });
   });
 });

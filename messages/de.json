@@ -484,6 +484,9 @@
     "settings": {
       "title": "Einstellungen ändern",
       "rotors": "Walzen",
+      "thinRotor": "Dünne Walze",
+      "thinRing": "Ring der dünnen Walze",
+      "thinStart": "Start der dünnen Walze",
       "rings": "Ringe",
       "reflector": "Umkehrwalze",
       "thinReflector": "{name} dünn",

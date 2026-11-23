@@ -6,8 +6,11 @@ import {
   ALPHABET,
   checkSettings,
   isLetter,
+  isM4,
   REFLECTOR_NAMES,
   ROTOR_NAMES,
+  THIN_REFLECTOR_NAMES,
+  THIN_ROTOR_NAMES,
   type MachineSettings,
   type Letter,
   type SettingsError,
@@ -50,7 +53,8 @@ interface SettingsDialogProps {
 }
 
 /**
- * "Change settings" (spec R3 3): rotors, rings, reflector and plug pairs. The lab mounts it to open
+ * "Change settings" (spec R3 3): rotors, rings, reflector and plug pairs. For the M4 it adds the thin
+ * rotor, its ring and its start, and offers the thin reflectors only (spec R5a 3). The lab mounts it to open
  * it. To add a plug pair, the visitor taps 2 letters; tapping a joined letter removes its pair.
  * Errors show next to their field, and screen readers say them when they show. Save keeps the dialog
  * open until there are none, and moves focus to the first error.
@@ -66,6 +70,7 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
     if (dialog.current?.open === false) dialog.current.showModal();
   }, []);
 
+  const m4 = isM4(draft) ? draft : null;
   const errors = checkSettings(draft);
   const errorText = (field: SettingsError['field']) =>
     errors.filter((error) => error.field === field).map((error) => t(PROBLEM_TEXT[error.problem], { letters: error.letters }));
@@ -114,6 +119,23 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
       <fieldset className="mt-4" aria-describedby={errorText('rotors').length > 0 ? 'settings-rotors-error' : undefined}>
         <legend className={legend}>{t('rotors')}</legend>
         <div className="mt-1 flex flex-wrap gap-3">
+          {m4 !== null && (
+            <label className="flex flex-col text-sm text-muted">
+              {t('thinRotor')}
+              <select
+                value={m4.thinRotor}
+                onChange={(event) => {
+                  const name = THIN_ROTOR_NAMES.find((n) => n === event.target.value);
+                  if (name !== undefined) setDraft({ ...m4, thinRotor: name });
+                }}
+                className={select}
+              >
+                {THIN_ROTOR_NAMES.map((name) => (
+                  <option key={name}>{name}</option>
+                ))}
+              </select>
+            </label>
+          )}
           {SIDES.map(({ slot, rotor }) => (
             <label key={rotor} className="flex flex-col text-sm text-muted">
               {t(rotor)}
@@ -138,6 +160,23 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
       <fieldset className="mt-4">
         <legend className={legend}>{t('rings')}</legend>
         <div className="mt-1 flex flex-wrap gap-3">
+          {m4 !== null && (
+            <label className="flex flex-col text-sm text-muted">
+              {t('thinRing')}
+              <select
+                value={m4.thinRing}
+                onChange={(event) => {
+                  const letter = event.target.value;
+                  if (isLetter(letter)) setDraft({ ...m4, thinRing: letter });
+                }}
+                className={select}
+              >
+                {ALPHABET.map((letter) => (
+                  <option key={letter}>{letter}</option>
+                ))}
+              </select>
+            </label>
+          )}
           {SIDES.map(({ slot, ring }) => (
             <label key={ring} className="flex flex-col text-sm text-muted">
               {t(ring)}
@@ -158,10 +197,31 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
         </div>
       </fieldset>
 
+      {m4 !== null && (
+        <div className="mt-4">
+          {/* The thin rotor never turns, so its start is a setting, like a ring. */}
+          <label className="flex w-fit flex-col text-sm text-muted">
+            {t('thinStart')}
+            <select
+              value={m4.thinPosition}
+              onChange={(event) => {
+                const letter = event.target.value;
+                if (isLetter(letter)) setDraft({ ...m4, thinPosition: letter });
+              }}
+              className={select}
+            >
+              {ALPHABET.map((letter) => (
+                <option key={letter}>{letter}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
+
       <fieldset className="mt-4">
         <legend className={legend}>{t('reflector')}</legend>
         <div className="mt-1 flex gap-5">
-          {REFLECTOR_NAMES.map((name) => (
+          {(m4 === null ? REFLECTOR_NAMES : THIN_REFLECTOR_NAMES).map((name) => (
             <label key={name} className="flex items-center gap-2 font-mono">
               <input
                 type="radio"
@@ -170,7 +230,7 @@ export function SettingsDialog({ settings, onSave, onClose }: SettingsDialogProp
                 onChange={() => setDraft({ ...draft, reflector: name })}
                 className="size-4 accent-ink"
               />
-              {name}
+              {m4 === null ? name : t('thinReflector', { name })}
             </label>
           ))}
         </div>

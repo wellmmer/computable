@@ -484,6 +484,9 @@
     "settings": {
       "title": "Change settings",
       "rotors": "Rotors",
+      "thinRotor": "Thin rotor",
+      "thinRing": "Thin ring",
+      "thinStart": "Thin rotor start",
       "rings": "Rings",
       "reflector": "Reflector",
       "thinReflector": "Thin {name}",

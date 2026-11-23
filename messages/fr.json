@@ -484,6 +484,9 @@
     "settings": {
       "title": "Changer les réglages",
       "rotors": "Rotors",
+      "thinRotor": "Rotor fin",
+      "thinRing": "Anneau du rotor fin",
+      "thinStart": "Départ du rotor fin",
       "rings": "Anneaux",
       "reflector": "Réflecteur",
       "thinReflector": "{name} fin",

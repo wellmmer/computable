@@ -484,6 +484,9 @@
     "settings": {
       "title": "Mudar as configurações",
       "rotors": "Rotores",
+      "thinRotor": "Rotor fino",
+      "thinRing": "Anel do rotor fino",
+      "thinStart": "Início do rotor fino",
       "rings": "Anéis",
       "reflector": "Refletor",
       "thinReflector": "{name} fino",
