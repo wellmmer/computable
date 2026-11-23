@@ -159,6 +159,31 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
+    // The naval M4 (spec R5a 3): 4 rotor windows, typed letters, the path with the thin rotor, practice 4 loaded, then the M4 settings dialog.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/enigma with the naval M4, typed letters, practice 4 and the M4 settings dialog has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        const texts = MESSAGES[locale].enigma;
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openLab(page, `${locale}/enigma`);
+          await page.getByRole('group', { name: texts.lab.machine }).getByRole('radio', { name: texts.lab.modelM4 }).check();
+          await page.keyboard.type('WETTERBERICHT');
+          await expect(page.getByRole('status')).not.toBeEmpty();
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
+          await page.getByRole('button', { name: `${texts.messages.load}: ${texts.messages.practiceM4}` }).click();
+          await expect(page.locator('#decrypt-title')).toBeFocused();
+          expect(await axeViolations(page), `${viewport.width} px, practice 4`).toEqual([]);
+          // The first region of the page is the settings line, with its one button: "Change settings".
+          await page.getByRole('main').getByRole('region').first().getByRole('button').click();
+          await expect(page.getByRole('dialog').getByRole('combobox', { name: texts.settings.thinStart })).toBeVisible();
+          expect(await axeViolations(page), `${viewport.width} px, dialog`).toEqual([]);
+        }
+      });
+    }
+
     // The Bombe lab after a search: the stops list with "This is your key", slow step mode, a crash in red and the hints, then Barbarossa part 1.
     for (const locale of LOCALE_PATHS) {
       test(`${locale}/bombe with a finished search, your key, slow step mode, a crash, the hints and Barbarossa has no axe violations, on a desktop and a phone`, async ({ page }) => {

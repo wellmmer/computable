@@ -1,4 +1,4 @@
-import type { EnigmaSettings, Positions } from '@/engines/enigma';
+import type { EnigmaSettings, M4Settings, Positions } from '@/engines/enigma';
 import type { Locale } from 'next-intl';
 import type { KeySheet } from './key-sheet';
 
@@ -48,6 +48,30 @@ const TEXTS: Record<Locale, readonly [answer: string, cipher: string][]> = {
   ],
 };
 
+/** Practice 4 (spec R5a 3): the naval M4, with thin rotor Gamma at U and thin reflector C. */
+const M4_SHEET: { settings: M4Settings; start: Positions } = {
+  settings: {
+    model: 'M4',
+    thinRotor: 'Gamma',
+    thinRing: 'A',
+    thinPosition: 'U',
+    rotors: ['II', 'IV', 'VIII'],
+    rings: ['A', 'A', 'A'],
+    reflector: 'C',
+    plugs: ['AT', 'BL', 'EN', 'GR'],
+  },
+  start: ['N', 'A', 'V'],
+};
+
+/** Practice 4's plain text and secret letters in each language. src/enigma/practice-messages.test.ts checks them. */
+const M4_TEXTS: Record<Locale, readonly [answer: string, cipher: string]> = {
+  en: ['FOURXROTORSXFORXTHEXNAVY', 'BVPNO JHKGP VCRSK EWZWT XWXQ'],
+  'pt-BR': ['QUATROXROTORESXPARAXAXMARINHA', 'PNNMT GAFGS RIJOG VPSOT WKHOK ZTOK'],
+  es: ['CUATROXROTORESXPARAXLAXARMADA', 'RNNMT GAFGS RIJOG VPSOT PWVOK SPFK'],
+  fr: ['QUATREXROTORSXPOURXLAXMARINE', 'PNNMT PAFGS RIMWY SRSUS WKHOK ZTP'],
+  de: ['VIERXWALZENXFUERXDIEXMARINE', 'IPXNO XXVSI ECRMH FIOJW NCNBS BV'],
+};
+
 /** The 3 practice messages in the visitor's language (spec R3 4), each harder than the last. */
 export function practiceMessages(locale: Locale): KeySheet[] {
   return SHEETS.map((sheet, i) => {
@@ -59,4 +83,10 @@ export function practiceMessages(locale: Locale): KeySheet[] {
 /** "HELLOXFROM" → "HELLO FROM": X stands for a space in Enigma messages. */
 export function readable(answer: string): string {
   return answer.replaceAll('X', ' ');
+}
+
+/** Practice 4, the naval M4, in the visitor's language (spec R5a 3). */
+export function practiceM4Message(locale: Locale): KeySheet {
+  const [answer, cipher] = M4_TEXTS[locale];
+  return { ...M4_SHEET, answer, cipher };
 }

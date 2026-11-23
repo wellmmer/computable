@@ -13,7 +13,7 @@ test.describe('the menu and the footer (spec 4.2)', () => {
 
     await menu.getByRole('link', { name: 'Enigma' }).click();
     await expect(page).toHaveURL(/\/en\/enigma$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma lab');
     await expect(menu.getByRole('link', { name: 'Enigma' })).toHaveAttribute('aria-current', 'page');
 
     await menu.getByRole('link', { name: 'Simulator' }).click();

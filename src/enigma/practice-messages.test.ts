@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { checkSettings, encrypt } from '@/engines/enigma';
+import { checkSettings, encrypt, isM4 } from '@/engines/enigma';
 import { routing } from '@/i18n/routing';
 import { lettersOf } from './key-sheet';
-import { practiceMessages, readable } from './practice-messages';
+import { practiceM4Message, practiceMessages, readable } from './practice-messages';
 
 describe('the practice messages (spec R3 4)', () => {
   it.each(routing.locales)('in %s, each key sheet decrypts to the answer', (locale) => {
@@ -27,5 +27,25 @@ describe('the practice messages (spec R3 4)', () => {
 
   it('shows the answer with spaces for X', () => {
     expect(readable('HELLOXFROMXBLETCHLEYXPARK')).toBe('HELLO FROM BLETCHLEY PARK');
+  });
+});
+
+describe('practice 4, the naval M4 (spec R5a 3)', () => {
+  it.each(routing.locales)('in %s, its key sheet decrypts to the answer, with X only between words', (locale) => {
+    const sheet = practiceM4Message(locale);
+    expect(checkSettings(sheet.settings)).toEqual([]);
+    expect(encrypt(sheet.settings, sheet.start, lettersOf(sheet.cipher))).toBe(sheet.answer);
+    expect(sheet.answer).toMatch(/^[A-WYZ]+(X[A-WYZ]+)*$/);
+  });
+
+  it('uses the same M4 key in every language: Gamma at U, rotors II IV VIII, thin reflector C, 4 plug pairs, start N A V', () => {
+    for (const locale of routing.locales) {
+      const { settings, start } = practiceM4Message(locale);
+      expect(isM4(settings)).toBe(true);
+      expect({ settings, start }).toEqual({
+        settings: { model: 'M4', thinRotor: 'Gamma', thinRing: 'A', thinPosition: 'U', rotors: ['II', 'IV', 'VIII'], rings: ['A', 'A', 'A'], reflector: 'C', plugs: ['AT', 'BL', 'EN', 'GR'] },
+        start: ['N', 'A', 'V'],
+      });
+    }
   });
 });

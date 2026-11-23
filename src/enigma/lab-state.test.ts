@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { isLetter } from '@/engines/enigma';
-import { groupsOf5, initialLab, labReducer, litLetters, typedLetters, type LabAction, type LabState } from './lab-state';
+import { encrypt, isLetter } from '@/engines/enigma';
+import { groupsOf5, initialLab, LAB_M4_SETTINGS, LAB_SETTINGS, LAB_START, labReducer, litLetters, typedLetters, type LabAction, type LabState } from './lab-state';
 
 /** Runs the actions one after the other from the lab's first state. */
 function run(...actions: LabAction[]): LabState {
@@ -133,6 +133,40 @@ describe('labReducer', () => {
 
   it('types a whole text at once, as if each key were pressed in turn', () => {
     expect(run({ type: 'type', letters: 'WETTERBERICHT' })).toEqual(run(...type('WETTERBERICHT')));
+  });
+});
+
+describe('the machine choice (spec R5a 3)', () => {
+  it('starts the M4 with the lab rotors, rings and plug pairs, thin rotor Beta at A, ring A, and thin reflector C', () => {
+    expect(LAB_M4_SETTINGS).toEqual({
+      model: 'M4',
+      thinRotor: 'Beta',
+      thinRing: 'A',
+      thinPosition: 'A',
+      rotors: ['I', 'II', 'III'],
+      rings: ['A', 'A', 'A'],
+      reflector: 'C',
+      plugs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'],
+    });
+  });
+
+  it('switches to the M4: its settings, the windows at the start, and empty strips', () => {
+    const lab = run(...type('WETTER'), { type: 'back-to-start' }, { type: 'turn', slot: 0, by: 1 }, { type: 'model', model: 'M4' });
+    expect(lab.settings).toEqual(LAB_M4_SETTINGS);
+    expect([lab.positions, lab.start, lab.typed, lab.previousLit]).toEqual([LAB_START, LAB_START, [], '']);
+  });
+
+  it('types on the M4 with its own wiring: WETTERBERICHT lights OJPBCPNRASYIM, not the Enigma I letters', () => {
+    const lab = run({ type: 'model', model: 'M4' }, ...type('WETTERBERICHT'));
+    expect(litLetters(lab)).toBe(encrypt(LAB_M4_SETTINGS, LAB_START, 'WETTERBERICHT'));
+    expect(litLetters(lab)).toBe('OJPBCPNRASYIM');
+    expect(lab.typed.at(-1)?.path.filter(({ part }) => part === 'thin')).toHaveLength(2);
+  });
+
+  it('switches back to the Enigma I with its default settings and empty strips', () => {
+    const lab = run({ type: 'model', model: 'M4' }, ...type('WET'), { type: 'model', model: 'I' });
+    expect(lab.settings).toEqual(LAB_SETTINGS);
+    expect([lab.typed, lab.previousLit]).toEqual([[], '']);
   });
 });
 

@@ -1,4 +1,4 @@
-import type { EnigmaSettings } from './machine';
+import type { MachineSettings } from './machine';
 import { isLetter } from './parts';
 
 /** The most plug pairs a plugboard can hold: 26 letters make 13 pairs. */
@@ -12,8 +12,8 @@ export interface SettingsError {
   letters: string;
 }
 
-/** The reasons these settings cannot go on a real Enigma I, or none. */
-export function checkSettings({ rotors, plugs }: EnigmaSettings): SettingsError[] {
+/** The reasons these settings cannot go on a real Enigma I or M4, or none. The M4's thin parts have no such limits. */
+export function checkSettings({ rotors, plugs }: MachineSettings): SettingsError[] {
   const errors: SettingsError[] = [];
 
   const twice = rotors.find((rotor, i) => rotors.indexOf(rotor) !== i);

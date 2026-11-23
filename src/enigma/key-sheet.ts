@@ -1,8 +1,8 @@
-import type { EnigmaSettings, Positions } from '@/engines/enigma';
+import type { MachineSettings, Positions } from '@/engines/enigma';
 
 /** What an operator needs to decrypt one message: the settings, the start and the secret letters. */
 export interface KeySheet {
-  settings: EnigmaSettings;
+  settings: MachineSettings;
   /** The rotor windows before the first secret letter. */
   start: Positions;
   /** The secret letters, in groups, as the key sheet prints them. */

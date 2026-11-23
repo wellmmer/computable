@@ -285,3 +285,123 @@ describe('Home’s secret opened from "Load my secret into the lab" (spec R4 4)'
     expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
   });
 });
+
+describe('EnigmaLab, the machine choice (spec R5a 3)', () => {
+  const machine = () => screen.getByRole('group', { name: 'Machine' });
+  const facts = () =>
+    within(screen.getByRole('region', { name: 'Settings' }))
+      .getAllByRole('term')
+      .map((term) => `${term.textContent}: ${term.nextElementSibling?.textContent}`);
+
+  it('offers the Enigma I and the naval M4, with the Enigma I chosen', () => {
+    renderWithIntl(<EnigmaLab />);
+    const radios = within(machine()).getAllByRole<HTMLInputElement>('radio');
+    expect(radios.map((radio) => [radio.labels?.[0]?.textContent, radio.checked])).toEqual([
+      ['Enigma I', true],
+      ['Naval M4', false],
+    ]);
+    expect(within(machine()).getByText('Switching the machine puts back its starting key: rotors, rings, plug pairs and start. It also clears the letters you typed and closes a loaded message.')).toBeTruthy();
+    expect(screen.queryByText(/^Thin rotor/)).toBeNull();
+  });
+
+  it('switches to the M4: 4 rotor windows, the M4 settings, and empty strips', () => {
+    renderWithIntl(<EnigmaLab />);
+    typeKeys('WET');
+    fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
+    expect(strip('You typed')).toBe('');
+    expect(facts()).toEqual(['Rotors: Beta I II III', 'Rings: A A A A', 'Plug pairs: AV BS CG DL FU HZ IN KM OW RX', 'Reflector: Thin C']);
+    expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('Beta I II III, Thin C, 10 plug pairs')).toBeTruthy();
+    expect(screen.getByText('Thin rotor, rotor Beta, shows A')).toBeTruthy();
+    expect(screen.getByText('Left rotor, rotor I, shows B')).toBeTruthy();
+    // 4 windows, 4 letters: the thin rotor's first, as on the practice 4 card.
+    expect(screen.getByRole('button', { name: 'Back to start (A B L A)' })).toBeTruthy();
+    typeKeys('WETTERBERICHT');
+    expect(strip('Lamps lit')).toBe('OJPBC PNRAS YIM');
+  });
+
+  it('switches back to the Enigma I, which lights PBJGO LIZQM QGZ again', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
+    typeKeys('WET');
+    fireEvent.click(within(machine()).getByRole('radio', { name: 'Enigma I' }));
+    expect(strip('Lamps lit')).toBe('');
+    expect(screen.queryByText(/^Thin rotor/)).toBeNull();
+    typeKeys('WETTERBERICHT');
+    expect(strip('Lamps lit')).toBe('PBJGO LIZQM QGZ');
+  });
+
+  it('closes a loaded message when the machine changes, because its key belongs to the other machine', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 1: no plug pairs' }));
+    expect(screen.getByRole('region', { name: 'Decrypting: Practice 1: no plug pairs' })).toBeTruthy();
+    fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
+    expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
+  });
+
+  describe('switches back to the Enigma I when an Enigma I key arrives while the M4 is chosen', () => {
+    const isEnigmaI = () => within(machine()).getByRole<HTMLInputElement>('radio', { name: 'Enigma I' }).checked;
+
+    afterEach(() => {
+      window.history.replaceState(null, '', '/');
+      localStorage.clear();
+    });
+
+    it('a Bombe stop link ("Try in the Enigma lab")', () => {
+      renderWithIntl(<EnigmaLab />);
+      fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
+      const stop: KeyToTry = { settings: { ...PRACTICE.settings, plugs: ['AH', 'BP'] }, start: PRACTICE.start, cipher: PRACTICE.cipher };
+      act(() => {
+        window.history.replaceState(null, '', `/en/enigma${tryHash(stop)}`);
+        window.dispatchEvent(new HashChangeEvent('hashchange'));
+      });
+      expect(screen.getByRole('region', { name: 'Decrypting: Bombe stop, rotors II III V, start Q K A' })).toBeTruthy();
+      expect(isEnigmaI()).toBe(true);
+      expect(facts()).toEqual(['Rotors: II III V', 'Rings: A A A', 'Plug pairs: AH BP', 'Reflector: B']);
+      expect(screen.getByRole('button', { name: 'Back to start (Q K A)' })).toBeTruthy();
+      expect(screen.queryByText(/^Thin rotor/)).toBeNull();
+    });
+
+    it('Home’s "Load my secret into the lab" (#my-secret)', () => {
+      const secret: SavedSecret = { plain: 'Hello', cipher: encrypt(PRACTICE.settings, PRACTICE.start, 'HELLO'), settings: PRACTICE.settings, start: PRACTICE.start };
+      localStorage.setItem(SECRET_KEY, JSON.stringify(secret));
+      renderWithIntl(<EnigmaLab />);
+      fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
+      act(() => {
+        window.history.replaceState(null, '', `/en/enigma${MY_SECRET_HASH}`);
+        window.dispatchEvent(new HashChangeEvent('hashchange'));
+      });
+      const box = screen.getByRole('region', { name: 'Decrypting: Your secret from Home' });
+      expect(isEnigmaI()).toBe(true);
+      expect(facts()).toEqual(['Rotors: II III V', 'Rings: A A A', `Plug pairs: ${PRACTICE.settings.plugs.join(' ')}`, 'Reflector: B']);
+      expect(screen.queryByText(/^Thin rotor/)).toBeNull();
+      fireEvent.click(within(box).getByRole('button', { name: 'Type it for me' }));
+      expect(strip('Lamps lit')).toBe('HELLO');
+    });
+
+    it('an Enigma I practice message', () => {
+      renderWithIntl(<EnigmaLab />);
+      fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 3: plug pairs and rings' }));
+      const box = screen.getByRole('region', { name: 'Decrypting: Practice 3: plug pairs and rings' });
+      expect(isEnigmaI()).toBe(true);
+      expect(facts()).toEqual(['Rotors: I II III', 'Rings: F U N', 'Plug pairs: AT BL EN GR', 'Reflector: B']);
+      expect(screen.getByRole('button', { name: 'Back to start (Z O O)' })).toBeTruthy();
+      expect(screen.queryByText(/^Thin rotor/)).toBeNull();
+      fireEvent.click(within(box).getByRole('button', { name: 'Type it for me' }));
+      expect(strip('Lamps lit')).toBe('AXLET TERXN EVERX BECOM ESXIT SELF');
+    });
+  });
+
+  it('switches to the M4 when practice 4 loads, and its secret letters decrypt to the answer', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 4: the naval M4' }));
+    expect(within(machine()).getByRole<HTMLInputElement>('radio', { name: 'Naval M4' }).checked).toBe(true);
+    expect(screen.getByText('Thin rotor, rotor Gamma, shows U')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Back to start (U N A V)' })).toBeTruthy();
+    const box = screen.getByRole('region', { name: 'Decrypting: Practice 4: the naval M4' });
+    fireEvent.click(within(box).getByRole('button', { name: 'Type it for me' }));
+    expect(strip('Lamps lit')).toBe('FOURX ROTOR SXFOR XTHEX NAVY');
+    fireEvent.click(within(box).getByRole('button', { name: 'Check my answer' }));
+    expect(within(box).getByText('Right! The message says: FOUR ROTORS FOR THE NAVY')).toBeTruthy();
+  });
+});

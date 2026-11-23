@@ -22,6 +22,20 @@ describe('MessageList (spec R3 4)', () => {
     expect(facts(screen.getByRole('article', { name: 'Practice 3: plug pairs and rings' }))).toContain('Rings: F U N');
   });
 
+  it('shows practice 4, the naval M4, with the thin rotor first in its key (spec R5a 3)', () => {
+    const onLoad = vi.fn();
+    renderWithIntl(<MessageList onLoad={onLoad} />);
+    const card = screen.getByRole('article', { name: 'Practice 4: the naval M4' });
+    expect(facts(card)).toEqual(['Rotors: Gamma II IV VIII', 'Rings: A A A A', 'Plug pairs: AT BL EN GR', 'Reflector: Thin C', 'Start: U N A V']);
+    expect(within(card).getByText('BVPNO JHKGP VCRSK EWZWT XWXQ')).toBeTruthy();
+    const load = within(card).getByRole('button', { name: 'Load into the machine: Practice 4: the naval M4' });
+    fireEvent.click(load);
+    expect(onLoad).toHaveBeenCalledWith(
+      { title: 'Practice 4: the naval M4', sheet: expect.objectContaining({ start: ['N', 'A', 'V'], answer: 'FOURXROTORSXFORXTHEXNAVY' }) },
+      load,
+    );
+  });
+
   it('writes the practice messages in the visitor’s language', () => {
     renderWithIntl(<MessageList onLoad={() => {}} />, 'pt-BR');
     expect(within(screen.getByRole('article', { name: 'Practice 1: no plug pairs' })).getByText('TEZPI NYIAC MKGYS QQKPV S')).toBeTruthy();

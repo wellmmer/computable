@@ -2,10 +2,11 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { Fragment } from 'react';
-import type { EnigmaSettings, Positions } from '@/engines/enigma';
+import { isM4, type MachineSettings, type Positions } from '@/engines/enigma';
 import { textLink } from '@/shell/page-styles';
 import type { KeySheet } from './key-sheet';
-import { practiceMessages } from './practice-messages';
+import { ringsText, rotorsText, startText } from './machine-facts';
+import { practiceM4Message, practiceMessages } from './practice-messages';
 import { REAL_MESSAGES } from './real-messages';
 
 /** A message the visitor loaded into the machine, with the name the "Decrypting" box shows. */
@@ -17,22 +18,38 @@ export interface LoadedMessage {
 
 const PRACTICE_TITLES = ['practice1', 'practice2', 'practice3'] as const;
 
+/** One practice key sheet as a card, with its button. */
+function PracticeCard({ id, title, sheet, load, onLoad }: { id: string; title: string; sheet: KeySheet; load: string; onLoad: MessageListProps['onLoad'] }) {
+  const t = useTranslations('enigma.messages');
+  return (
+    <article aria-labelledby={id} className={card}>
+      <h4 id={id} className="font-semibold">
+        {title}
+      </h4>
+      <Facts settings={sheet.settings} start={sheet.start} />
+      <p className={label}>{t('secret')}</p>
+      <p className={letterGroups}>{sheet.cipher}</p>
+      <LoadButton text={load} title={title} onClick={(button) => onLoad({ title, sheet }, button)} />
+    </article>
+  );
+}
+
 const card = 'border border-soft bg-cell px-4 py-4 sm:rounded';
 const label = 'mt-3 text-sm font-semibold';
 /** Secret letters and published plain texts: monospace, so the groups line up. */
 export const letterGroups = 'font-mono text-[15px] font-medium tracking-[1.5px] [word-spacing:4px] break-words';
 
-/** The settings of a key sheet, and its start, as a list of terms. */
-function Facts({ settings, start }: { settings: EnigmaSettings; start?: Positions }) {
+/** The settings of a key sheet, and its start, as a list of terms. The M4's thin rotor comes first. */
+function Facts({ settings, start }: { settings: MachineSettings; start?: Positions }) {
   const t = useTranslations('enigma.settings');
   const tMessages = useTranslations('enigma.messages');
   const facts = [
-    [t('rotors'), settings.rotors.join(' ')],
-    [t('rings'), settings.rings.join(' ')],
+    [t('rotors'), rotorsText(settings)],
+    [t('rings'), ringsText(settings)],
     [t('plugs'), settings.plugs.length === 0 ? t('noPlugs') : settings.plugs.join(' ')],
-    [t('reflector'), settings.reflector],
+    [t('reflector'), isM4(settings) ? t('thinReflector', { name: settings.reflector }) : settings.reflector],
   ];
-  if (start !== undefined) facts.push([tMessages('start'), start.join(' ')]);
+  if (start !== undefined) facts.push([tMessages('start'), startText(settings, start)]);
   return (
     <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-sm">
       {facts.map(([term, value]) => (
@@ -54,12 +71,16 @@ function LoadButton({ text, title, onClick }: { text: string; title: string; onC
   );
 }
 
+interface MessageListProps {
+  onLoad: (message: LoadedMessage, button: HTMLButtonElement) => void;
+}
+
 /**
- * The messages under the lab (spec R3 4): 3 practice messages in the visitor's language, then the
- * two real messages with their sources. "Load into the machine" hands a key sheet to the lab, with
+ * The messages under the lab (spec R3 4): 3 practice messages in the visitor's language, practice 4
+ * for the naval M4 (spec R5a 3), then the two real messages with their sources. "Load into the machine" hands a key sheet to the lab, with
  * the button that was pressed, so the focus can go back to it.
  */
-export function MessageList({ onLoad }: { onLoad: (message: LoadedMessage, button: HTMLButtonElement) => void }) {
+export function MessageList({ onLoad }: MessageListProps) {
   const t = useTranslations('enigma.messages');
   const locale = useLocale();
 
@@ -72,21 +93,11 @@ export function MessageList({ onLoad }: { onLoad: (message: LoadedMessage, butto
       <p className="mt-1 text-sm text-muted">{t('spaces')}</p>
 
       <h3 className="mt-6 text-lg font-semibold">{t('practice')}</h3>
-      <div className="mt-2 grid gap-4 md:grid-cols-3">
-        {practiceMessages(locale).map((sheet, i) => {
-          const title = t(PRACTICE_TITLES[i]);
-          return (
-            <article key={title} aria-labelledby={`practice-${i + 1}`} className={card}>
-              <h4 id={`practice-${i + 1}`} className="font-semibold">
-                {title}
-              </h4>
-              <Facts settings={sheet.settings} start={sheet.start} />
-              <p className={label}>{t('secret')}</p>
-              <p className={letterGroups}>{sheet.cipher}</p>
-              <LoadButton text={t('load')} title={title} onClick={(button) => onLoad({ title, sheet }, button)} />
-            </article>
-          );
-        })}
+      <div className="mt-2 grid gap-4 md:grid-cols-2">
+        {practiceMessages(locale).map((sheet, i) => (
+          <PracticeCard key={PRACTICE_TITLES[i]} id={`practice-${i + 1}`} title={t(PRACTICE_TITLES[i])} sheet={sheet} load={t('load')} onLoad={onLoad} />
+        ))}
+        <PracticeCard id="practice-4" title={t('practiceM4')} sheet={practiceM4Message(locale)} load={t('load')} onLoad={onLoad} />
       </div>
 
       <h3 className="mt-8 text-lg font-semibold">{t('real')}</h3>

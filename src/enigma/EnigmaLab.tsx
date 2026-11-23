@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
-import { checkSettings, isLetter } from '@/engines/enigma';
+import { checkSettings, isLetter, isM4, modelOf, type MachineModel } from '@/engines/enigma';
 import { toEnigmaLetters } from '@/home/secret';
 import { MY_SECRET_HASH } from '@/home/secret-link';
 import { readSecret } from '@/home/use-secret';
@@ -10,6 +10,7 @@ import { CurrentPath } from './CurrentPath';
 import { DecryptBox } from './DecryptBox';
 import { lettersOf } from './key-sheet';
 import { groupsOf5, initialLab, labReducer, litLetters, typedLetters } from './lab-state';
+import { ringsText, rotorsText, startText } from './machine-facts';
 import { MachinePanel } from './MachinePanel';
 import { MessageList, type LoadedMessage } from './MessageList';
 import { SettingsDialog } from './SettingsDialog';
@@ -17,6 +18,12 @@ import { parseTryHash } from './try-link';
 
 /** The rotor names in the "enigma.machine" messages, by slot. */
 const SLOT_NAMES = ['left', 'middle', 'right'] as const;
+
+/** The machines in the choice at the top of the lab, with their names in the "enigma.lab" messages (spec R5a 3). */
+const MODELS = [
+  { model: 'I', name: 'modelI' },
+  { model: 'M4', name: 'modelM4' },
+] as const satisfies readonly { model: MachineModel; name: string }[];
 
 const button = 'press border-2 border-ink px-3 py-1.5 font-semibold disabled:opacity-50';
 const strip = 'min-h-11 border border-soft bg-cell px-2.5 py-2 font-mono text-[17px] font-medium tracking-[2px] [word-spacing:6px] break-words';
@@ -124,7 +131,9 @@ export function EnigmaLab() {
 
   const lit = litLetters(lab);
   const last = lab.typed.at(-1) ?? null;
-  const { rotors, rings, reflector, plugs } = lab.settings;
+  const { rotors, plugs } = lab.settings;
+  const m4 = isM4(lab.settings) ? lab.settings : null;
+  const reflectorText = m4 === null ? lab.settings.reflector : tSettings('thinReflector', { name: m4.reflector });
 
   const news = () => {
     if (lab.news === null) return null;
@@ -147,15 +156,34 @@ export function EnigmaLab() {
     }
   };
 
+  const chooseModel = (model: MachineModel) => {
+    dispatch({ type: 'model', model });
+    // A loaded message belongs to the machine it was loaded into.
+    setLoaded(null);
+  };
+
   return (
     <>
+      <fieldset className="mt-4">
+        <legend className="font-semibold">{t('machine')}</legend>
+        <div className="mt-1 flex flex-wrap gap-x-6 gap-y-2">
+          {MODELS.map(({ model, name }) => (
+            <label key={model} className="flex items-center gap-2">
+              <input type="radio" name="machine" checked={modelOf(lab.settings) === model} onChange={() => chooseModel(model)} className="size-4 accent-ink" />
+              {t(name)}
+            </label>
+          ))}
+        </div>
+        <p className="mt-1 text-sm text-muted">{t('machineHelp')}</p>
+      </fieldset>
+
       <section ref={settingsLine} aria-label={t('settings')} className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1.5 border border-soft bg-cell px-3.5 py-2.5 sm:rounded">
         <dl className="hidden flex-wrap gap-x-6 gap-y-1.5 sm:flex">
           {[
-            [tSettings('rotors'), rotors.join(' ')],
-            [tSettings('rings'), rings.join(' ')],
+            [tSettings('rotors'), rotorsText(lab.settings)],
+            [tSettings('rings'), ringsText(lab.settings)],
             [tSettings('plugs'), plugs.length === 0 ? tSettings('noPlugs') : plugs.join(' ')],
-            [tSettings('reflector'), reflector],
+            [tSettings('reflector'), reflectorText],
           ].map(([term, value]) => (
             <div key={term}>
               <dt className="text-[13px] text-muted">{term}</dt>
@@ -163,7 +191,7 @@ export function EnigmaLab() {
             </div>
           ))}
         </dl>
-        <p className="text-sm text-muted sm:hidden">{t('summary', { rotors: rotors.join(' '), reflector, count: plugs.length })}</p>
+        <p className="text-sm text-muted sm:hidden">{t('summary', { rotors: rotorsText(lab.settings), reflector: reflectorText, count: plugs.length })}</p>
         <button ref={changeButton} type="button" onClick={() => setChanging(true)} className={`${button} ml-auto bg-cell text-ink`}>
           <span className="sm:hidden">{t('change')}</span>
           <span className="hidden sm:inline">{t('changeSettings')}</span>
@@ -200,6 +228,7 @@ export function EnigmaLab() {
         <div className="md:col-start-1 md:row-span-3 md:row-start-1">
           <MachinePanel
             rotors={rotors}
+            thin={m4 === null ? null : { name: m4.thinRotor, letter: m4.thinPosition }}
             positions={lab.positions}
             lit={last?.lamp ?? null}
             lastKey={last?.key ?? null}
@@ -221,7 +250,7 @@ export function EnigmaLab() {
         <div className="md:col-start-2 md:row-start-3">
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => dispatch({ type: 'back-to-start' })} className={`${button} bg-ink text-paper`}>
-              {t('backToStart', { start: lab.start.join(' ') })}
+              {t('backToStart', { start: startText(lab.settings, lab.start) })}
             </button>
             <button type="button" onClick={copy} disabled={lit === ''} className={`${button} bg-cell text-ink`}>
               {t(copied ?? 'copy')}

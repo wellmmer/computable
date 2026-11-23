@@ -2,13 +2,16 @@
 
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import type { EnigmaSettings, Letter, PathPoint } from '@/engines/enigma';
+import { isM4, type Letter, type MachineSettings, type PathPoint } from '@/engines/enigma';
 import type { TypedLetter } from './lab-state';
 
 /** Out to the reflector, or back from it. */
 type Lane = 'out' | 'back';
 
-/** Where the parts sit: column 0 is the key and lamp, 1 the plugboard, 2 to 4 the rotors, 5 the reflector. */
+/**
+ * Where the parts sit: column 0 is the key and lamp, 1 the plugboard, 2 to 4 the rotors, and the last
+ * column the reflector. The M4 puts its thin rotor in column 5 and the reflector in column 6.
+ */
 interface Layout {
   viewBox: string;
   /** The center of a letter circle. */
@@ -21,53 +24,65 @@ interface Layout {
   line: string;
 }
 
-/** Across, as in the mockup: out on the top line, back on the bottom line. */
-const ACROSS: Layout = {
-  viewBox: '0 0 640 170',
-  at: (column, lane) => ({ x: column === 5 ? 560 : 55 + 100 * column, y: lane === 'out' ? 45 : 105 }),
-  box: (column) => ({ x: column === 5 ? 525 : 20 + 100 * column, y: 15, width: 70, height: 115 }),
-  label: (column) => ({ x: column === 5 ? 560 : 55 + 100 * column, y: 152, anchor: 'middle' }),
-  half: 35,
-  line: 'M70 45H560Q600 45 600 75Q600 105 560 105H70',
-};
+/** Across, as in the mockup: out on the top line, back on the bottom line. `r` is the reflector's column. */
+function across(r: number): Layout {
+  const x = (column: number) => (column === r ? 100 * r + 60 : 55 + 100 * column);
+  return {
+    viewBox: `0 0 ${100 * r + 140} 170`,
+    at: (column, lane) => ({ x: x(column), y: lane === 'out' ? 45 : 105 }),
+    box: (column) => ({ x: x(column) - 35, y: 15, width: 70, height: 115 }),
+    label: (column) => ({ x: x(column), y: 152, anchor: 'middle' }),
+    half: 35,
+    line: `M70 45H${x(r)}Q${x(r) + 40} 45 ${x(r) + 40} 75Q${x(r) + 40} 105 ${x(r)} 105H70`,
+  };
+}
 
-/** Top to bottom, for phones: out on the left line, back on the right line. */
-const DOWN: Layout = {
-  viewBox: '0 0 300 500',
-  at: (column, lane) => ({ x: lane === 'out' ? 50 : 110, y: 35 + 80 * column }),
-  box: (column) => ({ x: 15, y: 7 + 80 * column, width: 130, height: 56 }),
-  label: (column) => ({ x: 160, y: 40 + 80 * column, anchor: 'start' }),
-  half: 28,
-  line: 'M50 50V435Q50 475 80 475Q110 475 110 435V50',
-};
+/** Top to bottom, for phones: out on the left line, back on the right line. `r` is the reflector's column. */
+function down(r: number): Layout {
+  const bottom = 80 * r + 35;
+  return {
+    viewBox: `0 0 300 ${80 * r + 100}`,
+    at: (column, lane) => ({ x: lane === 'out' ? 50 : 110, y: 35 + 80 * column }),
+    box: (column) => ({ x: 15, y: 7 + 80 * column, width: 130, height: 56 }),
+    label: (column) => ({ x: 160, y: 40 + 80 * column, anchor: 'start' }),
+    half: 28,
+    line: `M50 50V${bottom}Q50 ${bottom + 40} 80 ${bottom + 40}Q110 ${bottom + 40} 110 ${bottom}V50`,
+  };
+}
 
 /** The arrows on the yellow line: a darker gold, so they show on squared paper and on night paper. */
 const ARROW = '#b8860b';
 
-/** Each letter of the path with its place: out through columns 0 to 4, the reflector, back through 4 to 1, the lamp. */
+/**
+ * Each letter of the path with its place: out through columns 0 to r − 1, the reflector in column r,
+ * back through r − 1 to 1, the lamp. The path has 2r letters: 10 on the Enigma I, 12 on the M4.
+ */
 function placed(path: readonly PathPoint[]): { column: number; lane: Lane; letter: Letter; swap: boolean; lamp: boolean }[] {
-  const out = [0, 1, 2, 3, 4].map((column) => ({
+  const r = path.length / 2;
+  const last = path.length - 1;
+  const out = Array.from({ length: r }, (_, column) => ({
     column,
     lane: 'out' as const,
     letter: path[column].letter,
     swap: column === 1 && path[1].letter !== path[0].letter,
     lamp: false,
   }));
-  const reflector = { column: 5, lane: 'back' as const, letter: path[5].letter, swap: false, lamp: false };
-  const back = [4, 3, 2, 1].map((column, i) => ({
-    column,
+  const reflector = { column: r, lane: 'back' as const, letter: path[r].letter, swap: false, lamp: false };
+  const back = Array.from({ length: r - 1 }, (_, i) => ({
+    column: r - 1 - i,
     lane: 'back' as const,
-    letter: path[6 + i].letter,
-    swap: column === 1 && path[9].letter !== path[8].letter,
+    letter: path[r + 1 + i].letter,
+    swap: r - 1 - i === 1 && path[last].letter !== path[last - 1].letter,
     lamp: false,
   }));
-  const lamp = { column: 0, lane: 'back' as const, letter: path[9].letter, swap: false, lamp: true };
+  const lamp = { column: 0, lane: 'back' as const, letter: path[last].letter, swap: false, lamp: true };
   return [...out, reflector, ...back, lamp];
 }
 
 function Drawing({ layout, path, labels, name, className }: { layout: Layout; path: readonly PathPoint[]; labels: string[]; name: string; className: string }) {
+  const r = path.length / 2;
   const arrows: string[] = [];
-  for (let column = 0; column < 5; column++) {
+  for (let column = 0; column < r; column++) {
     for (const lane of ['out', 'back'] as const) {
       const [from, to] = lane === 'out' ? [layout.at(column, lane), layout.at(column + 1, lane)] : [layout.at(column + 1, lane), layout.at(column, lane)];
       const length = Math.hypot(to.x - from.x, to.y - from.y);
@@ -84,9 +99,9 @@ function Drawing({ layout, path, labels, name, className }: { layout: Layout; pa
           <path d="M0 0L10 5L0 10z" fill={ARROW} />
         </marker>
       </defs>
-      {[0, 1, 2, 3, 4, 5].map((column) => {
+      {Array.from({ length: r + 1 }, (_, column) => {
         const box = layout.box(column);
-        return <rect key={column} {...box} rx="6" strokeWidth="2" className={`stroke-soft ${column === 5 ? 'fill-reflector' : 'fill-paper'}`} />;
+        return <rect key={column} {...box} rx="6" strokeWidth="2" className={`stroke-soft ${column === r ? 'fill-reflector' : 'fill-paper'}`} />;
       })}
       <path d={layout.line} fill="none" strokeWidth="5" className="stroke-lamp" />
       {arrows.map((d) => (
@@ -124,19 +139,21 @@ function pairOf(plugs: readonly string[], a: Letter, b: Letter): string {
  * "Where the current went for T" (spec R3 3): the path of the last letter as a picture. Wide screens
  * draw it across, phones top to bottom. A red ring marks each plugboard swap.
  */
-export function CurrentPath({ settings, last }: { settings: EnigmaSettings; last: TypedLetter | null }) {
+export function CurrentPath({ settings, last }: { settings: MachineSettings; last: TypedLetter | null }) {
   const t = useTranslations('enigma.path');
   const [show, setShow] = useState(true);
   const [left, middle, right] = settings.rotors;
   const rotorName = { right, middle, left };
+  const thinName = isM4(settings) ? settings.thinRotor : '';
 
-  const labels = [t('keyLamp'), t('plugboard'), t('rotor', { name: right }), t('rotor', { name: middle }), t('rotor', { name: left }), t('reflector')];
+  const thinRotor = isM4(settings) ? [t('rotor', { name: settings.thinRotor })] : [];
+  const labels = [t('keyLamp'), t('plugboard'), t('rotor', { name: right }), t('rotor', { name: middle }), t('rotor', { name: left }), ...thinRotor, t('reflector')];
   const swaps =
     last === null
       ? []
       : [
           [last.path[0].letter, last.path[1].letter],
-          [last.path[8].letter, last.path[9].letter],
+          [last.path[last.path.length - 2].letter, last.path[last.path.length - 1].letter],
         ]
           .filter(([from, to]) => from !== to)
           // Both swaps can be the same, such as A to V on the way in and on the way back. Say it once.
@@ -149,6 +166,8 @@ export function CurrentPath({ settings, last }: { settings: EnigmaSettings; last
             if (part === 'key') return t('labelKey', { letter });
             if (part === 'plugboard') return t('labelPlugboard', { letter });
             if (part === 'reflector') return t('labelReflector', { letter });
+            // Screen readers hear "thin rotor Beta", so the 4th rotor is not taken for a 4th turning rotor.
+            if (part === 'thin') return t('labelThinRotor', { name: thinName, letter });
             return t('labelRotor', { name: rotorName[part], letter });
           }),
           t('labelLamp', { letter: last.lamp }),
@@ -168,8 +187,8 @@ export function CurrentPath({ settings, last }: { settings: EnigmaSettings; last
       {last === null && <p className="mt-2 text-sm text-muted">{t('empty')}</p>}
       {last !== null && show && (
         <>
-          <Drawing layout={ACROSS} path={last.path} labels={labels} name={name} className="mt-2 hidden sm:block" />
-          <Drawing layout={DOWN} path={last.path} labels={labels} name={name} className="mx-auto mt-2 max-w-[300px] sm:hidden" />
+          <Drawing layout={across(last.path.length / 2)} path={last.path} labels={labels} name={name} className="mt-2 hidden sm:block" />
+          <Drawing layout={down(last.path.length / 2)} path={last.path} labels={labels} name={name} className="mx-auto mt-2 max-w-[300px] sm:hidden" />
           <p className="mt-2 text-sm text-muted">
             <span className="hidden sm:inline">{t('outTop')}</span>
             <span className="sm:hidden">{t('outLeft')}</span>

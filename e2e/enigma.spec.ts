@@ -143,22 +143,113 @@ for (const { path, load, box, typeForMe, lit } of PRACTICE_1) {
 }
 
 const LANGUAGES = [
-  { path: '/en', lit: 'Lamps lit', change: 'Change settings' },
-  { path: '/pt-br', lit: 'Lâmpadas acesas', change: 'Mudar as configurações' },
-  { path: '/es', lit: 'Lámparas encendidas', change: 'Cambiar la configuración' },
-  { path: '/fr', lit: 'Lampes allumées', change: 'Changer les réglages' },
-  { path: '/de', lit: 'Leuchtende Lampen', change: 'Einstellungen ändern' },
+  { path: '/en', heading: 'Enigma lab', lit: 'Lamps lit', change: 'Change settings' },
+  { path: '/pt-br', heading: 'Laboratório da Enigma', lit: 'Lâmpadas acesas', change: 'Mudar as configurações' },
+  { path: '/es', heading: 'Laboratorio Enigma', lit: 'Lámparas encendidas', change: 'Cambiar la configuración' },
+  { path: '/fr', heading: 'Labo Enigma', lit: 'Lampes allumées', change: 'Changer les réglages' },
+  { path: '/de', heading: 'Enigma-Labor', lit: 'Leuchtende Lampen', change: 'Einstellungen ändern' },
 ] as const;
 
-for (const { path, lit, change } of LANGUAGES) {
-  test(`${path}/enigma types and lights the same letters`, async ({ page }) => {
+for (const { path, heading, lit, change } of LANGUAGES) {
+  test(`${path}/enigma names the lab, not one machine, and types and lights the same letters`, async ({ page }) => {
     await openLab(page, `${path}/enigma`);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
+    await expect(page).toHaveTitle(new RegExp(`^${heading}`));
     await expect(page.getByRole('button', { name: change })).toBeVisible();
     await page.keyboard.type('WETTERBERICHT');
     await expect(strip(page, lit)).toHaveText('PBJGO LIZQM QGZ');
   });
 }
+
+const M4 = [
+  {
+    path: '/en',
+    machine: 'Machine',
+    enigmaI: 'Enigma I',
+    m4: 'Naval M4',
+    thin: 'Thin rotor, rotor Beta, shows A',
+    lit: 'Lamps lit',
+    load: 'Load into the machine: Practice 4: the naval M4',
+    box: 'Decrypting: Practice 4: the naval M4',
+    typeForMe: 'Type it for me',
+    check: 'Check my answer',
+    right: 'Right! The message says: FOUR ROTORS FOR THE NAVY',
+  },
+  {
+    path: '/pt-br',
+    machine: 'Máquina',
+    enigmaI: 'Enigma I',
+    m4: 'M4 naval',
+    thin: 'Rotor fino, rotor Beta, mostra A',
+    lit: 'Lâmpadas acesas',
+    load: 'Carregar na máquina: Treino 4: a M4 naval',
+    box: 'Decifrando: Treino 4: a M4 naval',
+    typeForMe: 'Digitar para mim',
+    check: 'Conferir minha resposta',
+    right: 'QUATRO ROTORES PARA A MARINHA',
+  },
+] as const;
+
+test.describe('the naval M4 (spec R5a 3)', () => {
+  for (const { path, machine, enigmaI, m4, thin, lit } of M4) {
+    test(`${path}/enigma switches to the M4, types with the thin rotor, and switches back`, async ({ page }) => {
+      await openLab(page, `${path}/enigma`);
+      const choice = page.getByRole('group', { name: machine });
+      await expect(choice.getByRole('radio', { name: enigmaI })).toBeChecked();
+      await page.keyboard.type('WET');
+      await choice.getByRole('radio', { name: m4 }).check();
+      await expect(page.getByText(thin)).toBeAttached();
+      await expect(strip(page, lit)).toHaveText('');
+      // The focus is on the radio. Letters still type, as in the rest of the lab.
+      await page.keyboard.type('WETTERBERICHT');
+      await expect(strip(page, lit)).toHaveText('OJPBC PNRAS YIM');
+      await choice.getByRole('radio', { name: enigmaI }).check();
+      await expect(strip(page, lit)).toHaveText('');
+      await expect(page.getByText(thin)).not.toBeAttached();
+      await page.keyboard.type('WETTERBERICHT');
+      await expect(strip(page, lit)).toHaveText('PBJGO LIZQM QGZ');
+    });
+  }
+
+  for (const { path, machine, m4, load, box, typeForMe, check, right } of M4) {
+    test(`${path}/enigma decrypts practice 4 on the M4 and checks the answer`, async ({ page }) => {
+      await openLab(page, `${path}/enigma`);
+      await page.getByRole('button', { name: load }).click();
+      await expect(page.getByRole('group', { name: machine }).getByRole('radio', { name: m4 })).toBeChecked();
+      const decrypting = page.getByRole('region', { name: box });
+      await decrypting.getByRole('button', { name: typeForMe }).click();
+      await decrypting.getByRole('button', { name: check }).click();
+      await expect(decrypting.getByText(right)).toBeVisible();
+    });
+  }
+
+  test('the settings dialog sets the thin rotor to Gamma and the thin reflector to B', async ({ page }) => {
+    await openLab(page, '/en/enigma');
+    await page.getByRole('group', { name: 'Machine' }).getByRole('radio', { name: 'Naval M4' }).check();
+    const change = page.getByRole('button', { name: 'Change settings' });
+    await change.click();
+    const dialog = page.getByRole('dialog', { name: 'Change settings' });
+    await dialog.getByRole('combobox', { name: 'Thin rotor', exact: true }).selectOption('Gamma');
+    await dialog.getByRole('combobox', { name: 'Thin rotor start' }).selectOption('Q');
+    await dialog.getByRole('radio', { name: 'Thin B' }).check();
+    await dialog.getByRole('button', { name: 'Save' }).click();
+    await expect(change).toBeFocused();
+    const settings = page.getByRole('region', { name: 'Settings' });
+    await expect(settings.getByText('Gamma I II III', { exact: true })).toBeVisible();
+    await expect(settings.getByText('Thin B', { exact: true })).toBeVisible();
+    await expect(page.getByText('Thin rotor, rotor Gamma, shows Q')).toBeAttached();
+  });
+
+  test('on a phone, the 4 rotor windows and the path top to bottom fit the width', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await openLab(page, '/en/enigma');
+    await page.getByRole('group', { name: 'Machine' }).getByRole('radio', { name: 'Naval M4' }).check();
+    await page.getByRole('group', { name: 'Keyboard' }).getByRole('button', { name: 'W' }).click();
+    const drawing = page.getByRole('img', { name: /^Key W/ });
+    await expect(drawing).toHaveAttribute('viewBox', '0 0 300 580');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+  });
+});
 
 test.describe('on a phone, 390 × 844', () => {
   test.use({ viewport: { width: 390, height: 844 } });

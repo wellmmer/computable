@@ -454,10 +454,12 @@
       "left": "Rotor esquerdo",
       "middle": "Rotor do meio",
       "right": "Rotor direito",
+      "thin": "Rotor fino",
       "window": "{rotor}, rotor {name}, mostra {letter}",
       "next": "{rotor}: próxima letra",
       "previous": "{rotor}: letra anterior",
       "note": "O rotor direito gira um passo antes de cada letra.",
+      "thinNote": "O rotor fino nunca gira enquanto você digita. Ajuste-o em “{button}”.",
       "keyboard": "Teclado"
     },
     "path": {
@@ -476,14 +478,19 @@
       "labelKey": "Tecla {letter}",
       "labelPlugboard": "painel de plugues {letter}",
       "labelRotor": "rotor {name} {letter}",
+      "labelThinRotor": "rotor fino {name} {letter}",
       "labelReflector": "refletor {letter}",
       "labelLamp": "lâmpada {letter}"
     },
     "settings": {
       "title": "Mudar as configurações",
       "rotors": "Rotores",
+      "thinRotor": "Rotor fino",
+      "thinRing": "Anel do rotor fino",
+      "thinStart": "Início do rotor fino",
       "rings": "Anéis",
       "reflector": "Refletor",
+      "thinReflector": "{name} fino",
       "plugs": "Pares de plugues",
       "rotorLeft": "Rotor esquerdo",
       "rotorMiddle": "Rotor do meio",
@@ -503,11 +510,15 @@
       "cancel": "Cancelar"
     },
     "page": {
-      "title": "Enigma I",
+      "title": "Laboratório da Enigma",
       "lead": "Digite uma letra no seu teclado ou toque em uma tecla. Uma lâmpada acende a letra secreta."
     },
     "lab": {
       "settings": "Configurações",
+      "machine": "Máquina",
+      "modelI": "Enigma I",
+      "modelM4": "M4 naval",
+      "machineHelp": "Trocar de máquina volta à chave inicial dela: rotores, anéis, pares de plugues e início. Isso também apaga as letras que você digitou e fecha a mensagem carregada.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {nenhum par de plugues} one {# par de plugues} other {# pares de plugues}}",
       "change": "Mudar",
       "changeSettings": "Mudar as configurações",
@@ -532,6 +543,7 @@
       "practice1": "Treino 1: sem pares de plugues",
       "practice2": "Treino 2: pares de plugues",
       "practice3": "Treino 3: pares de plugues e anéis",
+      "practiceM4": "Treino 4: a M4 naval",
       "real": "Mensagens reais da guerra",
       "start": "Início",
       "secret": "Letras secretas",

@@ -454,10 +454,12 @@
       "left": "Rotor izquierdo",
       "middle": "Rotor central",
       "right": "Rotor derecho",
+      "thin": "Rotor fino",
       "window": "{rotor}, rotor {name}, muestra {letter}",
       "next": "{rotor}: letra siguiente",
       "previous": "{rotor}: letra anterior",
       "note": "El rotor derecho gira un paso antes de cada letra.",
+      "thinNote": "El rotor fino nunca gira mientras escribes. Ajústalo en “{button}”.",
       "keyboard": "Teclado"
     },
     "path": {
@@ -476,14 +478,19 @@
       "labelKey": "Tecla {letter}",
       "labelPlugboard": "clavijero {letter}",
       "labelRotor": "rotor {name} {letter}",
+      "labelThinRotor": "rotor fino {name} {letter}",
       "labelReflector": "reflector {letter}",
       "labelLamp": "lámpara {letter}"
     },
     "settings": {
       "title": "Cambiar la configuración",
       "rotors": "Rotores",
+      "thinRotor": "Rotor fino",
+      "thinRing": "Anillo del rotor fino",
+      "thinStart": "Inicio del rotor fino",
       "rings": "Anillos",
       "reflector": "Reflector",
+      "thinReflector": "{name} fino",
       "plugs": "Pares de clavijas",
       "rotorLeft": "Rotor izquierdo",
       "rotorMiddle": "Rotor central",
@@ -503,11 +510,15 @@
       "cancel": "Cancelar"
     },
     "page": {
-      "title": "Enigma I",
+      "title": "Laboratorio Enigma",
       "lead": "Escribe una letra en tu teclado o toca una tecla. Una lámpara ilumina la letra secreta."
     },
     "lab": {
       "settings": "Configuración",
+      "machine": "Máquina",
+      "modelI": "Enigma I",
+      "modelM4": "M4 naval",
+      "machineHelp": "Al cambiar de máquina, vuelve su clave inicial: rotores, anillos, pares de clavijas e inicio. También se borran las letras que escribiste y se cierra el mensaje cargado.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {ningún par de clavijas} one {# par de clavijas} other {# pares de clavijas}}",
       "change": "Cambiar",
       "changeSettings": "Cambiar la configuración",
@@ -532,6 +543,7 @@
       "practice1": "Práctica 1: sin pares de clavijas",
       "practice2": "Práctica 2: pares de clavijas",
       "practice3": "Práctica 3: pares de clavijas y anillos",
+      "practiceM4": "Práctica 4: la M4 naval",
       "real": "Mensajes reales de la guerra",
       "start": "Inicio",
       "secret": "Letras secretas",
