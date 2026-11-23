@@ -1,6 +1,14 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import de from '../messages/de.json';
+import en from '../messages/en.json';
+import es from '../messages/es.json';
+import fr from '../messages/fr.json';
+import ptBR from '../messages/pt-BR.json';
 import { LOCALE_PATHS, openLab, openPage } from './helpers';
+
+/** The page texts of each language, by its URL prefix. The tests pick buttons by these names. */
+const MESSAGES = { '/en': en, '/pt-br': ptBR, '/es': es, '/fr': fr, '/de': de } as const;
 
 /** Every page, after the language prefix. */
 const PATHS = [
@@ -176,29 +184,26 @@ for (const colorScheme of ['light', 'dark'] as const) {
           await expect(page.locator('[data-bombe="ready"]')).toBeAttached();
           const regions = page.getByRole('main').getByRole('region');
           const crib = regions.first();
-          // The crib card's buttons: "Load the practice message", then ◀ and ▶.
-          await crib.getByRole('button').nth(0).click();
-          // The wall's one button: Start.
-          await regions.nth(2).getByRole('button').click();
+          const texts = MESSAGES[locale].bombe;
+          await crib.getByRole('button', { name: texts.crib.practice }).click();
+          await regions.nth(2).getByRole('button', { name: texts.wall.start, exact: true }).click();
           // The regions: crib, menu, wall, slow step mode, stops.
           await expect(regions.nth(4).getByRole('link')).toHaveCount(1);
           await expect(regions.nth(4).getByRole('listitem')).toContainText('✓');
           expect(await axeViolations(page), `${viewport.width} px, stops`).toEqual([]);
           // Slow step mode: "Watch one test slowly", then Step twice to reach a link.
-          await regions.nth(3).getByRole('button').click();
-          // The open card's buttons: Back, Play, Step, Close.
-          await regions.nth(3).getByRole('button').nth(2).click();
-          await regions.nth(3).getByRole('button').nth(2).click();
+          await regions.nth(3).getByRole('button', { name: texts.slow.watch }).click();
+          await regions.nth(3).getByRole('button', { name: texts.slow.step, exact: true }).click();
+          await regions.nth(3).getByRole('button', { name: texts.slow.step, exact: true }).click();
           await expect(page.locator('path[data-active]')).toHaveCount(1);
           expect(await axeViolations(page), `${viewport.width} px, slow step mode`).toEqual([]);
-          // The crib card's buttons: "Load the practice message", "Break part 1 with the Bombe", ◀, ▶.
-          await crib.getByRole('textbox').nth(1).fill('WETTER');
-          await crib.getByRole('button').nth(3).click();
+          await crib.getByRole('textbox', { name: texts.crib.crib }).fill('WETTER');
+          await crib.getByRole('button', { name: texts.crib.slideRight }).click();
           await expect(page.locator('[data-crash]')).not.toHaveCount(0);
           expect(await axeViolations(page), `${viewport.width} px, crash`).toEqual([]);
           // Barbarossa part 1 with its crib at its place, and the note about the rings.
-          await crib.getByRole('button').nth(1).click();
-          await expect(crib.getByRole('textbox').nth(1)).toHaveValue('OWAXNORDWESTLXSE');
+          await crib.getByRole('button', { name: texts.crib.barbarossa }).click();
+          await expect(crib.getByRole('textbox', { name: texts.crib.crib })).toHaveValue('OWAXNORDWESTLXSE');
           expect(await axeViolations(page), `${viewport.width} px, Barbarossa`).toEqual([]);
         }
       });
