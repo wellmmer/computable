@@ -53,6 +53,28 @@ export const REFLECTORS: Record<ReflectorName, string> = {
   C: 'FVPJIAOYEDRZXWGCTKUQSBNMHL',
 };
 
+export const THIN_ROTOR_NAMES = ['Beta', 'Gamma'] as const;
+export type ThinRotorName = (typeof THIN_ROTOR_NAMES)[number];
+
+/**
+ * The thin rotors of the naval M4. They sit left of the left rotor and never turn, so they have no
+ * notch. Checked letter by letter on 2026-11-23 against Wikipedia, "Enigma rotor details", and the
+ * Crypto Museum, "Enigma wiring".
+ */
+export const THIN_ROTORS: Record<ThinRotorName, string> = {
+  Beta: 'LEYJVCNIXWPBQMDRTAKZGFUHOS',
+  Gamma: 'FSOKANUERHMBTIYCWLQPZXVGJD',
+};
+
+export const THIN_REFLECTOR_NAMES = ['B', 'C'] as const;
+export type ThinReflectorName = (typeof THIN_REFLECTOR_NAMES)[number];
+
+/** The thin reflectors B and C of the naval M4 (UKW-b, UKW-c), from the same two sources, on the same day. */
+export const THIN_REFLECTORS: Record<ThinReflectorName, string> = {
+  B: 'ENKQAUYWJICOPBLMDXZVFTHRGS',
+  C: 'RDOBJNTKVEHMLFCWZAXGYIPSUQ',
+};
+
 /** The German key rows of Enigma I, used by both the keyboard and the lampboard. */
 export const KEY_ROWS: readonly (readonly Letter[])[] = [
   ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O'],
