@@ -143,17 +143,18 @@ for (const { path, load, box, typeForMe, lit } of PRACTICE_1) {
 }
 
 const LANGUAGES = [
-  { path: '/en', lit: 'Lamps lit', change: 'Change settings' },
-  { path: '/pt-br', lit: 'Lâmpadas acesas', change: 'Mudar as configurações' },
-  { path: '/es', lit: 'Lámparas encendidas', change: 'Cambiar la configuración' },
-  { path: '/fr', lit: 'Lampes allumées', change: 'Changer les réglages' },
-  { path: '/de', lit: 'Leuchtende Lampen', change: 'Einstellungen ändern' },
+  { path: '/en', heading: 'Enigma lab', lit: 'Lamps lit', change: 'Change settings' },
+  { path: '/pt-br', heading: 'Laboratório da Enigma', lit: 'Lâmpadas acesas', change: 'Mudar as configurações' },
+  { path: '/es', heading: 'Laboratorio Enigma', lit: 'Lámparas encendidas', change: 'Cambiar la configuración' },
+  { path: '/fr', heading: 'Labo Enigma', lit: 'Lampes allumées', change: 'Changer les réglages' },
+  { path: '/de', heading: 'Enigma-Labor', lit: 'Leuchtende Lampen', change: 'Einstellungen ändern' },
 ] as const;
 
-for (const { path, lit, change } of LANGUAGES) {
-  test(`${path}/enigma types and lights the same letters`, async ({ page }) => {
+for (const { path, heading, lit, change } of LANGUAGES) {
+  test(`${path}/enigma names the lab, not one machine, and types and lights the same letters`, async ({ page }) => {
     await openLab(page, `${path}/enigma`);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
+    await expect(page).toHaveTitle(new RegExp(`^${heading}`));
     await expect(page.getByRole('button', { name: change })).toBeVisible();
     await page.keyboard.type('WETTERBERICHT');
     await expect(strip(page, lit)).toHaveText('PBJGO LIZQM QGZ');

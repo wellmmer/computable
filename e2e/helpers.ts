@@ -55,7 +55,7 @@ export const PAGES = [
   { name: 'privacy', path: '/en/privacy', heading: 'Privacy' },
   { name: 'learn', path: '/en/learn', heading: 'Learn' },
   { name: 'lesson', path: '/en/learn/intuition', heading: 'Intuition: the human computer' },
-  { name: 'enigma', path: '/en/enigma', heading: 'Enigma I' },
+  { name: 'enigma', path: '/en/enigma', heading: 'Enigma lab' },
   { name: 'bombe', path: '/en/bombe', heading: 'Bombe' },
 ] as const;
 

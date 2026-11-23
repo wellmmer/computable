@@ -35,7 +35,7 @@ test.describe('the examples (spec 5.3 and R3 spec 5)', () => {
     await expect(await runFast(page)).toHaveText('Accepted after 5 steps. The tape now reads BCCD.');
     await note.getByRole('link', { name: 'Enigma lab' }).click();
     await expect(page).toHaveURL(/\/en\/enigma$/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma lab');
   });
 
   test('in Portuguese, the one-rotor cipher turns DCBA into CBAD', async ({ page }) => {
