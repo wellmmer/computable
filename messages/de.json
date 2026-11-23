@@ -478,6 +478,7 @@
       "labelKey": "Taste {letter}",
       "labelPlugboard": "Steckerbrett {letter}",
       "labelRotor": "Walze {name} {letter}",
+      "labelThinRotor": "dünne Walze {name} {letter}",
       "labelReflector": "Umkehrwalze {letter}",
       "labelLamp": "Lampe {letter}"
     },

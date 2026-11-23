@@ -478,6 +478,7 @@
       "labelKey": "Key {letter}",
       "labelPlugboard": "plugboard {letter}",
       "labelRotor": "rotor {name} {letter}",
+      "labelThinRotor": "thin rotor {name} {letter}",
       "labelReflector": "reflector {letter}",
       "labelLamp": "lamp {letter}"
     },

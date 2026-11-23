@@ -478,6 +478,7 @@
       "labelKey": "Tecla {letter}",
       "labelPlugboard": "clavijero {letter}",
       "labelRotor": "rotor {name} {letter}",
+      "labelThinRotor": "rotor fino {name} {letter}",
       "labelReflector": "reflector {letter}",
       "labelLamp": "lámpara {letter}"
     },

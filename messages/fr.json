@@ -478,6 +478,7 @@
       "labelKey": "Touche {letter}",
       "labelPlugboard": "tableau de connexions {letter}",
       "labelRotor": "rotor {name} {letter}",
+      "labelThinRotor": "rotor fin {name} {letter}",
       "labelReflector": "réflecteur {letter}",
       "labelLamp": "lampe {letter}"
     },

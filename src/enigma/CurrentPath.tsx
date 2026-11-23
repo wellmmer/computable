@@ -143,7 +143,8 @@ export function CurrentPath({ settings, last }: { settings: MachineSettings; las
   const t = useTranslations('enigma.path');
   const [show, setShow] = useState(true);
   const [left, middle, right] = settings.rotors;
-  const rotorName = { right, middle, left, thin: isM4(settings) ? settings.thinRotor : '' };
+  const rotorName = { right, middle, left };
+  const thinName = isM4(settings) ? settings.thinRotor : '';
 
   const thinRotor = isM4(settings) ? [t('rotor', { name: settings.thinRotor })] : [];
   const labels = [t('keyLamp'), t('plugboard'), t('rotor', { name: right }), t('rotor', { name: middle }), t('rotor', { name: left }), ...thinRotor, t('reflector')];
@@ -165,6 +166,8 @@ export function CurrentPath({ settings, last }: { settings: MachineSettings; las
             if (part === 'key') return t('labelKey', { letter });
             if (part === 'plugboard') return t('labelPlugboard', { letter });
             if (part === 'reflector') return t('labelReflector', { letter });
+            // Screen readers hear "thin rotor Beta", so the 4th rotor is not taken for a 4th turning rotor.
+            if (part === 'thin') return t('labelThinRotor', { name: thinName, letter });
             return t('labelRotor', { name: rotorName[part], letter });
           }),
           t('labelLamp', { letter: last.lamp }),

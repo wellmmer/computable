@@ -89,8 +89,8 @@ describe('CurrentPath for the naval M4 (spec R5a 3)', () => {
     if (last === null) throw new Error('nothing typed');
     renderWithIntl(<CurrentPath settings={lab.settings} last={last} />);
     const name = screen.getAllByRole('img')[0].getAttribute('aria-label') ?? '';
-    expect(name.match(/rotor Beta [A-Z]/g)).toHaveLength(2);
-    expect(name).toMatch(/^Key T, plugboard T, rotor III ., rotor II ., rotor I ., rotor Beta ., reflector ., rotor Beta ., rotor I ., rotor II ., rotor III ., plugboard ., lamp M$/);
+    expect(name.match(/thin rotor Beta [A-Z]/g)).toHaveLength(2);
+    expect(name).toMatch(/^Key T, plugboard T, rotor III ., rotor II ., rotor I ., thin rotor Beta ., reflector ., thin rotor Beta ., rotor I ., rotor II ., rotor III ., plugboard ., lamp M$/);
     for (const drawing of screen.getAllByRole('img', { name })) {
       expect(drawing.querySelectorAll('[data-letter]')).toHaveLength(13);
       expect(drawing.querySelector('[data-lamp]')?.textContent).toBe('M');
