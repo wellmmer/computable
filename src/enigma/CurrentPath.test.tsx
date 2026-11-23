@@ -74,4 +74,36 @@ describe('CurrentPath (spec R3 3, "Path panel")', () => {
     expect(screen.queryAllByRole('img')).toHaveLength(0);
     expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('Where the current went for T');
   });
+
+  it('draws each of the 7 parts in its own column, including the Enigma I path in a 640 by 170 frame and a 300 by 500 frame', () => {
+    const lab = typed('T');
+    renderWithIntl(<CurrentPath settings={lab.settings} last={lab.typed[0]} />);
+    expect(screen.getAllByRole('img').map((drawing) => drawing.getAttribute('viewBox'))).toEqual(['0 0 640 170', '0 0 300 500']);
+  });
+});
+
+describe('CurrentPath for the naval M4 (spec R5a 3)', () => {
+  it('draws the thin rotor between rotor I and the reflector, on the way out and on the way back', () => {
+    const lab = [...'WETTERBERICHT'].filter(isLetter).reduce((next, key) => labReducer(next, { type: 'press', key }), labReducer(initialLab(), { type: 'model', model: 'M4' }));
+    const last = lab.typed.at(-1) ?? null;
+    if (last === null) throw new Error('nothing typed');
+    renderWithIntl(<CurrentPath settings={lab.settings} last={last} />);
+    const name = screen.getAllByRole('img')[0].getAttribute('aria-label') ?? '';
+    expect(name.match(/rotor Beta [A-Z]/g)).toHaveLength(2);
+    expect(name).toMatch(/^Key T, plugboard T, rotor III ., rotor II ., rotor I ., rotor Beta ., reflector ., rotor Beta ., rotor I ., rotor II ., rotor III ., plugboard ., lamp M$/);
+    for (const drawing of screen.getAllByRole('img', { name })) {
+      expect(drawing.querySelectorAll('[data-letter]')).toHaveLength(13);
+      expect(drawing.querySelector('[data-lamp]')?.textContent).toBe('M');
+      expect([...drawing.querySelectorAll('[data-part-label]')].map((label) => label.textContent)).toEqual([
+        'Key, lamp',
+        'Plugboard',
+        'Rotor III',
+        'Rotor II',
+        'Rotor I',
+        'Rotor Beta',
+        'Reflector',
+      ]);
+    }
+    expect(screen.getAllByRole('img').map((drawing) => drawing.getAttribute('viewBox'))).toEqual(['0 0 740 170', '0 0 300 580']);
+  });
 });
