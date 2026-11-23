@@ -52,6 +52,20 @@ describe('CribCard (spec R4 3, "Crib card")', () => {
     expect(screen.getByText('Place 1 of 72')).toBeTruthy();
   });
 
+  it('breaks Barbarossa part 1: fills its secret letters and its crib at letter 37, and says why the start is not B L A (spec R4 5)', () => {
+    renderWithIntl(<Lab />);
+    const rings = 'The real key used rings B U L and start B L A. The Bombe assumes rings A A A, so it finds start A Q P instead.';
+    expect(screen.queryByText(rings, { exact: false })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Break part 1 with the Bombe' }));
+    expect(screen.getByRole<HTMLTextAreaElement>('textbox', { name: 'Secret letters' }).value.startsWith('EDPUD NRGYS ZRCXN')).toBe(true);
+    expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Crib: a word you know is in the message' }).value).toBe('OWAXNORDWESTLXSE');
+    expect(screen.getByText('Place 37 of 159')).toBeTruthy();
+    expect(screen.getByText('No letter turns into itself here.')).toBeTruthy();
+    expect(screen.getByText(rings, { exact: false })).toBeTruthy();
+    slide('right');
+    expect(screen.queryByText(rings, { exact: false })).toBeNull();
+  });
+
   it('gives the hints for a short crib without a loop, and says when the crib is too long', () => {
     renderWithIntl(<Lab />);
     fireEvent.click(screen.getByRole('button', { name: 'Load the practice message' }));

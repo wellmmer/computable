@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { press, type EnigmaState } from '@/engines/enigma';
 import { ROTOR_ORDERS, testSteps } from '@/engines/bombe';
-import { blocker, bombeReducer, crashesHere, cribLetters, drumLetters, hints, initialLab, menuOf, NO_SEARCH, placeCount, secretLetters, slowTestKey, type BombeAction, type BombeLab } from './lab-state';
+import { BARBAROSSA } from './barbarossa';
+import { blocker, bombeReducer, crashesHere, cribLetters, drumLetters, hints, initialLab, isBarbarossaAtItsPlace, menuOf, NO_SEARCH, placeCount, secretLetters, slowTestKey, type BombeAction, type BombeLab } from './lab-state';
 import { PRACTICE } from './practice-message';
 import type { SearchReport } from './search-messages';
 
@@ -79,6 +80,44 @@ describe('the crib card (spec R4 3, "Crib card")', () => {
     expect(blocker(lab)).toBe('no-crib');
   });
 
+  it('loads Barbarossa part 1: its secret letters in groups of 5, its crib at letter 37 (spec R4 5)', () => {
+    const lab = run({ type: 'practice' }, { type: 'slide', by: 1 }, { type: 'barbarossa' });
+    expect(lab.secretText.slice(0, 11)).toBe('EDPUD NRGYS');
+    expect(secretLetters(lab)).toBe(BARBAROSSA.cipher);
+    expect([cribLetters(lab), lab.offset]).toEqual(['OWAXNORDWESTLXSE', 36]);
+    expect(lab.search).toEqual(NO_SEARCH);
+    expect(blocker(lab)).toBeNull();
+    expect(hints(lab)).toEqual({ short: false, noLoop: false });
+  });
+
+  it('closes slow step mode and clears the stops when Barbarossa part 1 loads', () => {
+    const finished = run(
+      { type: 'practice' },
+      { type: 'start', total: 60 },
+      { type: 'report', report: { type: 'order-done', order: 0, stops: [STOP], count: 1 } },
+      { type: 'report', report: { type: 'finished' } },
+      { type: 'slow-open', rotors: STOP.rotors, start: STOP.start },
+    );
+    expect(finished.slow).not.toBeNull();
+    expect(finished.search.stops).toEqual([STOP]);
+    const lab = bombeReducer(finished, { type: 'barbarossa' });
+    expect(lab.slow).toBeNull();
+    expect(lab.search).toEqual(NO_SEARCH);
+  });
+
+  it('ignores Barbarossa part 1 while a search runs, as it ignores the practice message', () => {
+    const running = run({ type: 'secret', text: 'ABCDE' }, { type: 'crib', text: 'AB' }, { type: 'start', total: 60 });
+    expect(bombeReducer(running, { type: 'barbarossa' })).toBe(running);
+    expect(bombeReducer(running, { type: 'practice' })).toBe(running);
+  });
+
+  it('knows when Barbarossa part 1 sits with its crib at its place', () => {
+    expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }))).toBe(true);
+    expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }, { type: 'slide', by: 1 }))).toBe(false);
+    expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }, { type: 'crib', text: 'NORDWEST' }))).toBe(false);
+    expect(isBarbarossaAtItsPlace(run({ type: 'practice' }))).toBe(false);
+  });
+
   it('gives the menu of the crib at its place, and no links while the crib has no place', () => {
     expect(menuOf(run({ type: 'practice' })).loops).toBe(3);
     expect(menuOf(run({ type: 'secret', text: 'ABC' })).links).toEqual([]);
@@ -120,6 +159,7 @@ describe('the search (spec R4 3, "Drum wall" and "Stops card")', () => {
     expect(bombeReducer(started, { type: 'crib', text: 'WETTER' })).toBe(started);
     expect(bombeReducer(started, { type: 'slide', by: 1 })).toBe(started);
     expect(bombeReducer(started, { type: 'load-secret', cipher: 'ABC' })).toBe(started);
+    expect(bombeReducer(started, { type: 'barbarossa' })).toBe(started);
     const finished = bombeReducer(started, { type: 'report', report: { type: 'finished' } });
     expect(bombeReducer(finished, { type: 'slide', by: 1 }).search).toEqual(NO_SEARCH);
   });
@@ -198,5 +238,12 @@ describe('slow step mode (spec R4 4, "Watch one test slowly")', () => {
     // A search that was stopped before any stop: the drum wall's rotor order and start.
     const stopped = { ...NO_SEARCH, status: 'stopped', total: 60, done: 0, testing: { order: 0, start: 2197 } } as const;
     expect(slowTestKey({ ...practice, search: stopped }, ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['D', 'G', 'N'] });
+  });
+
+  it('picks the Barbarossa stop before any search of Barbarossa part 1 with its crib at its place', () => {
+    const barbarossa = run({ type: 'barbarossa' });
+    expect(slowTestKey(barbarossa, ROTOR_ORDERS)).toEqual({ rotors: ['II', 'IV', 'V'], start: ['A', 'Q', 'P'] });
+    // The crib moved: the Barbarossa stop no longer fits.
+    expect(slowTestKey(bombeReducer(barbarossa, { type: 'slide', by: 1 }), ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['A', 'A', 'A'] });
   });
 });

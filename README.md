@@ -42,7 +42,7 @@ machine could do the same work.
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
-| **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | In progress: the engine and the lab (R4a), your own secret and slow step mode (R4b). Next: history and Barbarossa (R4c) |
+| **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Live: the engine and the lab (R4a), your own secret and slow step mode (R4b), the history and Barbarossa (R4c) |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
 
 ## What R1 brings
@@ -173,6 +173,16 @@ machine could do the same work.
 - **Slow step mode.** "Watch one test slowly" runs one test with Back, Play and Step. One sentence
   says what each step does: the current enters the center letter, goes through a link, or the
   diagonal board adds the mirror wire. The drum wall and the menu drawing mark the link in use.
+- **The history, with sources.** Under the lab, 5 facts tell how the Bombe came to be: the Polish
+  bomba (1938), the meeting at Pyry (July 1939), Turing's design (1939), the first Bombe, Victory
+  (March 1940), and Welchman's diagonal board (August 1940). Each fact links to the pages it was
+  checked against.
+- **A film to watch.** The Imitation Game (2014) is a drama with Benedict Cumberbatch as Alan Turing.
+  One note says what the film changes, with its sources. The page shows no film pictures.
+- **A real message to break.** "Break part 1 with the Bombe" loads part 1 of the Barbarossa message
+  (1941) and a 16-letter crib from its known text. The search gives 1 stop: the real rotors, II IV V.
+  The real key used rings B U L, and the Bombe assumes A A A. So the stop has start A Q P, and the
+  message reads in blocks of about 15 letters. The page says why.
 
 ## The machine format
 

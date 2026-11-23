@@ -110,10 +110,10 @@ Tests (Vitest):
 
 - **History section** under the Bombe lab, in the same place as the messages under the Enigma lab.
   Each fact links to its source. Topics: Rejewski's Polish *bomba* (1938); the Polish work shared
-  with Britain (July 1939); Turing's design (1940); Welchman's diagonal board; the first Bombe,
+  with Britain (July 1939); Turing's design (1939); Welchman's diagonal board; the first Bombe,
   "Victory" (March 1940).
 - **Film box** in the same section: "The Imitation Game (2014), a drama with Benedict Cumberbatch as
-  Alan Turing." One sentence says what the film changes, for example that Turing did not build the
+  Alan Turing." One or two sentences say what the film changes, for example that Turing did not build the
   Bombe alone, and that the film calls the machine "Christopher".
 - **Barbarossa.** "Break part 1 with the Bombe" fills the real secret letters and a crib from the
   known German text.
@@ -142,6 +142,6 @@ Wellmmer's OK for each PR.
 | --- | --- |
 | The full search finishes in under 60 s on a desktop. | AI theory, not checked. The R4a plan measures it first. |
 | A 15-letter crib with a loop gives few enough stops to read. | AI theory, not checked. The R4a tests count the stops. |
-| The Bombe still finds Barbarossa with rings B U L. The search assumes A A A, so the middle rotor may turn at another letter and the rest of the message may not read cleanly. | AI theory, not checked. Test before R4c ships. If it fails, the page explains why. |
-| The history facts and dates in section 5. | From my own knowledge. Check each one against a published source before R4c ships. |
-| What the film changes. | From my own knowledge. Check against a published source before R4c ships. |
+| The Bombe still finds Barbarossa with rings B U L. The search assumes A A A, so the middle rotor may turn at another letter and the rest of the message may not read cleanly. | Checked on 2026-11-23 by `src/bombe/barbarossa.test.ts`. The crib OWAXNORDWESTLXSE at letter 37 gives 1 stop in all 60 rotor orders: the real order II IV V. Its start is A Q P, not B L A, and it has 9 of the 10 plug pairs. A crib from letter 1 with more than 10 letters misses the real key: the middle rotor turns inside it. The stop's key reads 92 of the 174 letters, in blocks of about 15. The crib card says why. |
+| The history facts and dates in section 5. | Checked on 2026-11-23 against the sources in `src/bombe/history.ts`. One date differs: Turing designed the Bombe in 1939, not 1940. The page adds exact days. The meeting at Pyry was on 25 and 26 July 1939. Victory started on 14 March 1940 (The National Museum of Computing) or arrived on 18 March (Crypto Museum), so the page gives both. The diagonal board first ran in Agnus, installed on 8 August 1940. Only Wikipedia names Rejewski as the bomba's designer; Crypto Museum says "Polish mathematicians". |
+| What the film changes. | Checked on 2026-11-23 against Slate (3 December 2014) and TIME (28 November 2014). Turing did not design the Bombe alone, Welchman does not appear, and the film calls the machine "Christopher". The page does not say the film leaves out the Poles: neither source says that directly. |

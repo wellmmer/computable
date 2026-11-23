@@ -90,7 +90,8 @@ describe('testSteps: one test, step by step (spec R4 4, slow step mode)', () => 
     expect(ends.stop).toBeGreaterThan(500);
     expect(ends.clash).toBeGreaterThan(500);
     expect(ends['all-lit']).toBeGreaterThan(500);
-  });
+    // It builds 24 scrambler tables: 1.5 s alone, but over 5 s when the whole suite shares a busy machine.
+  }, 20_000);
 
   it('lights one new wire in each step but the last; a mirror step lights the mirror of the wire before it', () => {
     const steps = testSteps(['I', 'II', 'III'], ['A', 'A', 'A'], MENU);
