@@ -3,9 +3,11 @@
 import { useTranslations } from 'next-intl';
 import type { Stop } from '@/engines/bombe';
 import { tryHash } from '@/enigma/try-link';
+import type { SecretKey } from '@/home/random-key';
 import { Link } from '@/i18n/navigation';
 import { card, cardTitle } from './CribCard';
 import type { Search } from './lab-state';
+import { isYourKey } from './your-key';
 
 /** The Enigma lab link for a stop: its key, rings A A A, reflector B, and the secret letters. */
 function tryLink({ rotors, start, plugs }: Stop, cipher: string): string {
@@ -14,9 +16,10 @@ function tryLink({ rotors, start, plugs }: Stop, cipher: string): string {
 
 /**
  * The stops card (spec R4 3): each stop's rotor order, start and plug pairs. "Try in the Enigma lab"
- * opens the lab with the stop's key and the secret letters in its decrypt box.
+ * opens the lab with the stop's key and the secret letters in its decrypt box. A stop that matches
+ * the key of Home's secret says "This is your key" (spec R4 4).
  */
-export function StopsCard({ search, cipher }: { search: Search; cipher: string }) {
+export function StopsCard({ search, cipher, yourKey = null }: { search: Search; cipher: string; yourKey?: SecretKey | null }) {
   const t = useTranslations('bombe.stops');
   const { status, stops, count } = search;
 
@@ -38,6 +41,14 @@ export function StopsCard({ search, cipher }: { search: Search; cipher: string }
                 <li key={`${rotors}${start}${stop.plugs.join('')}`} className="border-t border-soft pt-2 first:border-t-0 first:pt-0">
                   <p className="font-mono font-semibold">{t('item', { rotors, start })}</p>
                   <p className="text-sm">{stop.plugs.length === 0 ? t('noPlugs') : t('plugs', { plugs: stop.plugs.join(' ') })}</p>
+                  {yourKey !== null && isYourKey(stop, yourKey) && (
+                    <p className="font-semibold">
+                      <span aria-hidden className="text-drum-right">
+                        ✓{' '}
+                      </span>
+                      {t('yourKey')}
+                    </p>
+                  )}
                   <Link
                     href={tryLink(stop, cipher)}
                     aria-label={t('tryLabel', { rotors, start })}

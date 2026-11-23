@@ -69,6 +69,22 @@ describe('DrumWall (spec R4 3, "Drum wall")', () => {
     expect(screen.queryByText(/^Testing rotors/)).toBeNull();
   });
 
+  it('shows the slow test, even with reduced motion, and marks the Enigma of the link in use (spec R4 4)', () => {
+    wall({ reducedMotion: true, slow: { rotors: PRACTICE.settings.rotors, start: PRACTICE.start, link: 2 } });
+    expect(enigmas()[0]).toBe('QKB');
+    const active = document.querySelectorAll('[data-enigma][data-active]');
+    expect(active).toHaveLength(1);
+    expect([...document.querySelectorAll('[data-enigma]')].indexOf(active[0])).toBe(2);
+  });
+
+  it('marks no Enigma when the step uses no link, or a link past the 12 on the wall', () => {
+    wall({ slow: { rotors: PRACTICE.settings.rotors, start: PRACTICE.start, link: null } });
+    expect(document.querySelectorAll('[data-active]')).toHaveLength(0);
+    cleanup();
+    wall({ slow: { rotors: PRACTICE.settings.rotors, start: PRACTICE.start, link: 12 } });
+    expect(document.querySelectorAll('[data-active]')).toHaveLength(0);
+  });
+
   it('says how many Enigmas a long menu needs', () => {
     wall({ menu: buildMenu(PRACTICE.cipher, 'WETTERBERICHTXNORD', 0) });
     expect(screen.getByText('The wall shows 12 of the 18 Enigmas.')).toBeTruthy();

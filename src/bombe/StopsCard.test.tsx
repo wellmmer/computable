@@ -61,6 +61,19 @@ describe('StopsCard (spec R4 3, "Stops card")', () => {
     expect(screen.getByRole('link', { name: 'Essayer dans le labo Enigma : II III V, Q K A' })).toBeTruthy();
   });
 
+  it('marks the stop that matches the key of Home’s secret (spec R4 4)', () => {
+    const other = { ...STOP, start: ['Q', 'K', 'B'] } as const;
+    renderWithIntl(<StopsCard search={{ ...finished, stops: [STOP, other], count: 2 }} cipher={PRACTICE.cipher} yourKey={{ settings: PRACTICE.settings, start: PRACTICE.start }} />);
+    const [first, second] = screen.getAllByRole('listitem');
+    expect(first.textContent).toContain('✓ This is your key');
+    expect(second.textContent).not.toContain('This is your key');
+  });
+
+  it('marks no stop without a secret on Home', () => {
+    renderWithIntl(<StopsCard search={finished} cipher={PRACTICE.cipher} yourKey={null} />);
+    expect(screen.queryByText('This is your key')).toBeNull();
+  });
+
   it('counts the stops the list leaves out', () => {
     renderWithIntl(<StopsCard search={{ ...finished, count: 1054537 }} cipher={PRACTICE.cipher} />);
     expect(screen.getByText('1,054,537 stops. The list shows the first 1.')).toBeTruthy();

@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
-import { encryptSecret, HOME_SETTINGS, HOME_START } from './secret';
+import { randomKey, type SecretKey } from './random-key';
+import { encryptSecret } from './secret';
 import { createBrowserSecretStorage, SECRET_KEY, type SavedSecret, type SecretStorage } from './secret-storage';
 
 // One copy per page load. A save or "Forget my secret" in another tab updates it through the "storage" event.
@@ -31,7 +32,12 @@ function onStorage(event: StorageEvent) {
 }
 
 function subscribe(listener: () => void) {
-  if (listeners.size === 0) window.addEventListener('storage', onStorage);
+  if (listeners.size === 0) {
+    window.addEventListener('storage', onStorage);
+    // Another tab may have changed the secret while no page here listened. React reads the snapshot again after this.
+    const saved = openStorage().load();
+    if (JSON.stringify(saved) !== JSON.stringify(snapshot)) snapshot = saved;
+  }
   listeners.add(listener);
   return () => {
     listeners.delete(listener);
@@ -44,15 +50,28 @@ function serverSecret(): undefined {
   return undefined;
 }
 
-/** Saves the text the visitor typed, with its secret letters and the settings. An empty text saves nothing. */
-export function saveSecret(plain: string) {
+/**
+ * Saves the text the visitor typed, with its secret letters and its key. A new secret gets a random key
+ * (spec R4 4): the first text after "Forget my secret", or after the visitor erased the whole text.
+ * Typing more keeps the key, so the secret letters typed so far never change. A secret saved before
+ * R4b keeps its key too. An empty text saves nothing and ends the secret. Returns what it saved.
+ * The key is drawn here, in the browser, never on the server.
+ */
+export function saveSecret(plain: string, drawKey: () => SecretKey = randomKey): SavedSecret | null {
   if (plain === '') {
     forgetSecret();
-    return;
+    return null;
   }
-  const secret: SavedSecret = { plain, cipher: encryptSecret(plain).cipher, settings: HOME_SETTINGS, start: HOME_START };
+  const { settings, start } = currentSecret() ?? drawKey();
+  const secret: SavedSecret = { plain, cipher: encryptSecret(plain, { settings, start }).cipher, settings, start };
   openStorage().save(secret);
   publish(secret);
+  return secret;
+}
+
+/** The secret saved in this browser, read now. The labs read it when a Home button opens them. */
+export function readSecret(): SavedSecret | null {
+  return openStorage().load();
 }
 
 /** "Forget my secret" (spec R3 4). */

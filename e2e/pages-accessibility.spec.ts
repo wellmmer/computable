@@ -151,10 +151,22 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
-    // The Bombe lab after a search: the stops list, then a crash in red and the hints.
+    // The Bombe lab after a search: the stops list with "This is your key", slow step mode, then a crash in red and the hints.
     for (const locale of LOCALE_PATHS) {
-      test(`${locale}/bombe with a finished search, a crash and the hints has no axe violations, on a desktop and a phone`, async ({ page }) => {
+      test(`${locale}/bombe with a finished search, your key, slow step mode, a crash and the hints has no axe violations, on a desktop and a phone`, async ({ page }) => {
         await page.addInitScript(() => window.sessionStorage.setItem('computable.test.bombe-orders', 'II III V'));
+        // Home's secret with the practice key, so the stop says "This is your key".
+        await page.addInitScript(() =>
+          window.localStorage.setItem(
+            'computable.secret',
+            JSON.stringify({
+              plain: 'Wetterbericht',
+              cipher: 'HXHICIRWHZRQW',
+              settings: { rotors: ['II', 'III', 'V'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: ['AH', 'BP', 'DF', 'EX', 'KW', 'MR', 'NT', 'OY', 'SU', 'VZ'] },
+              start: ['Q', 'K', 'A'],
+            }),
+          ),
+        );
         for (const viewport of [
           { width: 1280, height: 800 },
           { width: 390, height: 844 },
@@ -162,13 +174,23 @@ for (const colorScheme of ['light', 'dark'] as const) {
           await page.setViewportSize(viewport);
           await openPage(page, `${locale}/bombe`);
           await expect(page.locator('[data-bombe="ready"]')).toBeAttached();
-          const crib = page.getByRole('main').getByRole('region').first();
+          const regions = page.getByRole('main').getByRole('region');
+          const crib = regions.first();
           // The crib card's buttons: "Load the practice message", then ◀ and ▶.
           await crib.getByRole('button').nth(0).click();
           // The wall's one button: Start.
-          await page.getByRole('main').getByRole('region').nth(2).getByRole('button').click();
-          await expect(page.getByRole('main').getByRole('region').nth(3).getByRole('link')).toHaveCount(1);
+          await regions.nth(2).getByRole('button').click();
+          // The regions: crib, menu, wall, slow step mode, stops.
+          await expect(regions.nth(4).getByRole('link')).toHaveCount(1);
+          await expect(regions.nth(4).getByRole('listitem')).toContainText('✓');
           expect(await axeViolations(page), `${viewport.width} px, stops`).toEqual([]);
+          // Slow step mode: "Watch one test slowly", then Step twice to reach a link.
+          await regions.nth(3).getByRole('button').click();
+          // The open card's buttons: Back, Play, Step, Close.
+          await regions.nth(3).getByRole('button').nth(2).click();
+          await regions.nth(3).getByRole('button').nth(2).click();
+          await expect(page.locator('path[data-active]')).toHaveCount(1);
+          expect(await axeViolations(page), `${viewport.width} px, slow step mode`).toEqual([]);
           await crib.getByRole('textbox').nth(1).fill('WETTER');
           await crib.getByRole('button').nth(2).click();
           await expect(page.locator('[data-crash]')).not.toHaveCount(0);
@@ -177,7 +199,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
-    // Home with a typed secret: the lit lamp, both strips and "Forget my secret".
+    // Home with a typed secret: the lit lamp, both strips, the two lab buttons and "Forget my secret".
     for (const locale of LOCALE_PATHS) {
       test(`${locale} with a typed secret has no axe violations, on a desktop and a phone`, async ({ page }) => {
         for (const viewport of [
@@ -188,8 +210,25 @@ for (const colorScheme of ['light', 'dark'] as const) {
           await openPage(page, locale);
           await page.getByRole('textbox').fill('Olá, Turing!');
           await expect(page.locator('[data-lit]')).toHaveCount(1);
+          await expect(page.locator('a[href$="#my-secret"]')).toHaveCount(2);
           expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
         }
+      });
+    }
+
+    // Home's secret loaded into the Enigma lab, typed, and the answer checked.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/enigma with Home's secret loaded and checked has no axe violations`, async ({ page }) => {
+        await openPage(page, locale);
+        await page.getByRole('textbox').fill('Olá, Turing!');
+        await page.locator('a[href$="/enigma#my-secret"]').click();
+        const box = page.locator('#decrypt-title').locator('..');
+        await expect(box.locator('#decrypt-title')).toBeFocused();
+        // The box's buttons: "Type it for me", then "Check my answer".
+        await box.getByRole('button').nth(0).click();
+        await box.getByRole('button').nth(1).click();
+        await expect(box.locator('[aria-live]')).not.toBeEmpty();
+        expect(await axeViolations(page)).toEqual([]);
       });
     }
 

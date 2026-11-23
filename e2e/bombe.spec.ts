@@ -101,8 +101,90 @@ test.describe('the Bombe lab (spec R4 3)', () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     const tops = [];
-    for (const name of ['Crib', /^Menu/, 'The Bombe', 'Stops']) tops.push((await box(name)).y);
+    for (const name of ['Crib', /^Menu/, 'The Bombe', 'One test, step by step', 'Stops']) tops.push((await box(name)).y);
     expect([...tops].sort((a, b) => a - b)).toEqual(tops);
+  });
+});
+
+/**
+ * Home's secret with the practice key, as Home saves it in the browser. Home draws a random key, and
+ * the search of 1 rotor order finds only a key with that order, so the test saves a known key.
+ */
+async function savePracticeSecret(page: Page) {
+  await page.addInitScript(() =>
+    window.localStorage.setItem(
+      'computable.secret',
+      JSON.stringify({
+        plain: 'Wetterbericht Nordsee',
+        cipher: 'HXHICIRWHZRQWGLYJJPQQ',
+        settings: { rotors: ['II', 'III', 'V'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: ['AH', 'BP', 'DF', 'EX', 'KW', 'MR', 'NT', 'OY', 'SU', 'VZ'] },
+        start: ['Q', 'K', 'A'],
+      }),
+    ),
+  );
+}
+
+test.describe('your own secret on the Bombe (spec R4 4)', () => {
+  test('"#my-secret" fills the secret letters, and the stop with the saved key says "This is your key"', async ({ page }) => {
+    await searchOneOrder(page);
+    await savePracticeSecret(page);
+    await openBombe(page, '/en/bombe#my-secret');
+    await expect(page.getByRole('textbox', { name: 'Secret letters' })).toHaveValue('HXHIC IRWHZ RQWGL YJJPQ Q');
+    await expect(page).toHaveURL(/\/en\/bombe$/);
+    await page.getByRole('textbox', { name: 'Crib: a word you know is in the message' }).fill('WETTERBERICHT');
+    await page.getByRole('button', { name: 'Start' }).click();
+    await expect(page.getByRole('status')).toHaveText('Finished: 1 rotor order tested. 1 stop.');
+    await expect(page.getByRole('listitem').filter({ hasText: 'II III V · start Q K A' })).toContainText('✓ This is your key');
+  });
+});
+
+test.describe('slow step mode (spec R4 4)', () => {
+  test('watches the first stop step by step: Step, Back, then Play to the stop', async ({ page }) => {
+    await searchOneOrder(page);
+    await openBombe(page);
+    await page.getByRole('button', { name: 'Load the practice message' }).click();
+    await page.getByRole('button', { name: 'Start' }).click();
+    await expect(page.getByRole('status')).toHaveText('Finished: 1 rotor order tested. 1 stop.');
+    await page.getByRole('button', { name: 'Watch one test slowly' }).click();
+    const card = page.getByRole('region', { name: 'One test, step by step' });
+    const sentence = card.getByTestId('slow-sentence');
+    await expect(card.getByText('Rotors II III V, start Q K A')).toBeVisible();
+    await expect(card.getByText('Step 1 of 18')).toBeVisible();
+    await expect(sentence).toHaveText('The test current enters H on wire A. This is the guess “H is plugged to A”.');
+    await expect(card.getByRole('button', { name: 'Step' })).toBeFocused();
+
+    await card.getByRole('button', { name: 'Step' }).click();
+    await expect(sentence).toHaveText('The diagonal board adds the mirror wire: A on wire H.');
+    await card.getByRole('button', { name: 'Step' }).click();
+    await expect(sentence).toHaveText(/^Through link \d+ /);
+    await expect(page.locator('path[data-active]')).toHaveCount(1);
+    await card.getByRole('button', { name: 'Back' }).click();
+    await expect(card.getByText('Step 2 of 18')).toBeVisible();
+    await expect(page.locator('path[data-active]')).toHaveCount(0);
+
+    await card.getByRole('button', { name: 'Play' }).click();
+    await expect(card.getByText('Step 18 of 18')).toBeVisible({ timeout: 15_000 });
+    await expect(sentence).toHaveText(/^Stop: only \d+ of 26 wires of H lit\.$/);
+    await card.getByRole('button', { name: 'Close' }).click();
+    await expect(page.getByRole('button', { name: 'Watch one test slowly' })).toBeFocused();
+  });
+
+  test('with reduced motion, Play still steps, and the drum wall shows the test', async ({ browser }) => {
+    const context = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await context.newPage();
+    await searchOneOrder(page);
+    await openBombe(page);
+    await page.getByRole('button', { name: 'Load the practice message' }).click();
+    await page.getByRole('button', { name: 'Start' }).click();
+    await expect(page.getByRole('status')).toHaveText('Finished: 1 rotor order tested. 1 stop.');
+    // With reduced motion, the drums stayed at A A A during the search.
+    expect((await drums(page))[0]).toBe('AAB');
+    await page.getByRole('button', { name: 'Watch one test slowly' }).click();
+    expect((await drums(page))[0]).toBe('QKB');
+    const card = page.getByRole('region', { name: 'One test, step by step' });
+    await card.getByRole('button', { name: 'Play' }).click();
+    await expect(card.getByText('Step 18 of 18')).toBeVisible({ timeout: 15_000 });
+    await context.close();
   });
 });
 

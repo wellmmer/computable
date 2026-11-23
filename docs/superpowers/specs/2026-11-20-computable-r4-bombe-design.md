@@ -96,7 +96,15 @@ Tests (Vitest):
 - "Watch one test slowly" on `/bombe` runs one test with Step, Back and Play, as in the simulator.
 - Each step has one sentence: the test current enters the center letter; it goes through one link;
   the diagonal board adds the mirror wire; the test ends with "all 26 wires lit: no stop" or "Stop".
+- With fewer than 26 wires lit, the test still tries each guess for the center letter's partner, as
+  the search does. If every guess gives a letter two partners, the last step says "not a stop".
 - The drum wall and the menu drawing mark the link in use.
+- A test without a stop takes 286 to 445 steps; a stop takes about 18. So "Watch one test slowly"
+  opens on the first stop of the last search, if there is one.
+- If no search has run yet, and the practice message is loaded with its crib at its place, it opens
+  on the practice key: rotors II III V, start Q K A. Otherwise it opens on the rotor order and start
+  on the drum wall.
+- "Skip to the end" sits next to Step, Back and Play. It jumps to the last step and pauses.
 
 ## 5. R4c: history, the film, and Barbarossa
 

@@ -20,11 +20,13 @@
       "typed": "Enigma types",
       "cipher": "Secret letters",
       "rules": "Enigma has only 26 letters. It drops accents, types X for a space, and leaves out digits and signs.",
-      "settings": "Settings: rotors {rotors}, rings {rings}, plug pairs {plugs}, reflector {reflector}, start {start}. The Enigma lab starts with the same settings.",
-      "decrypt": "To read it again, open the Enigma lab and type the secret letters. The lamps light your message.",
       "forget": "Forget my secret",
       "stays": "Your secret stays in this browser. It is never sent anywhere.",
-      "litNews": "Lamp {letter}"
+      "litNews": "Lamp {letter}",
+      "hidden": "Each new secret gets its own random Enigma key. Home keeps the key hidden.",
+      "loadLab": "Load my secret into the lab",
+      "breakIt": "Break it with the Bombe",
+      "bombeHint": "To break it, the Bombe needs a crib: about 15 letters you know are in your secret."
     }
   },
   "simulator": {
@@ -568,7 +570,8 @@
       "soFar": "So far, so good: {right} of {total} letters are right. Keep typing.",
       "wrong": "Letter {at} is not right. Backspace takes letters back.",
       "bombeStop": "Bombe stop, rotors {rotors}, start {start}",
-      "partial": "The Bombe found only some plug pairs. Letters it did not reach may come out wrong."
+      "partial": "The Bombe found only some plug pairs. Letters it did not reach may come out wrong.",
+      "homeSecret": "Your secret from Home"
     }
   },
   "bombe": {
@@ -629,7 +632,28 @@
       "try": "Try in the Enigma lab",
       "tryLabel": "Try in the Enigma lab: {rotors}, {start}",
       "more": "{count, number} stops. The list shows the first {shown}.",
-      "unknown": "Letters the menu never reached stay unknown."
+      "unknown": "Letters the menu never reached stay unknown.",
+      "yourKey": "This is your key"
+    },
+    "slow": {
+      "title": "One test, step by step",
+      "about": "Watch how the Bombe tests one rotor order and one start. It takes the first stop of the last search, or the practice message’s key, or the rotor order and start on the drum wall.",
+      "watch": "Watch one test slowly",
+      "which": "Rotors {rotors}, start {start}",
+      "progress": "Step {step} of {total}",
+      "lit": "{center}: {lit} of 26 wires lit",
+      "back": "Back",
+      "play": "Play",
+      "pause": "Pause",
+      "step": "Step",
+      "end": "Skip to the end",
+      "close": "Close",
+      "enter": "The test current enters {letter} on wire {wire}. This is the guess “{letter} is plugged to {wire}”.",
+      "link": "Through link {number} ({plain} on {cipher}), {from} on wire {fromWire} lights {to} on wire {toWire}.",
+      "mirror": "The diagonal board adds the mirror wire: {letter} on wire {wire}.",
+      "noStop": "All 26 wires of {center} lit: no stop.",
+      "stop": "Stop: only {lit} of 26 wires of {center} lit.",
+      "clash": "Only {lit} of 26 wires of {center} lit. But every guess for {center} gives a letter two partners, so this is not a stop."
     }
   }
 }

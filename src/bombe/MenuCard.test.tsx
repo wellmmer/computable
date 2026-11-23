@@ -19,6 +19,16 @@ describe('MenuCard (spec R4 3, "Menu card")', () => {
     expect(screen.getByText('Each line is one crib letter on its secret letter. The test starts at H, the letter with the most lines.')).toBeTruthy();
   });
 
+  it('marks the link that slow step mode uses (spec R4 4)', () => {
+    renderWithIntl(<MenuCard menu={buildMenu(PRACTICE.cipher, PRACTICE.crib, 0)} activeLink={0} />);
+    const active = document.querySelectorAll('path[data-active]');
+    expect(active).toHaveLength(1);
+    expect(active[0].getAttribute('data-link')).toBe('0');
+    cleanup();
+    renderWithIntl(<MenuCard menu={buildMenu(PRACTICE.cipher, PRACTICE.crib, 0)} activeLink={null} />);
+    expect(document.querySelectorAll('path[data-active]')).toHaveLength(0);
+  });
+
   it('asks for a crib when the menu has no links', () => {
     renderWithIntl(<MenuCard menu={buildMenu('', '', 0)} />);
     expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('Menu: no loops');

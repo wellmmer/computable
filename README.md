@@ -42,7 +42,7 @@ machine could do the same work.
 | **R2b** | Lessons 3 to 6: the universal machine, the halting problem, the Entscheidungsproblem, Church–Turing | Live: lessons 3 to 6 |
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
-| **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | In progress: the engine and the lab (R4a). Next: your own secret and slow step mode (R4b), then history and Barbarossa (R4c) |
+| **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | In progress: the engine and the lab (R4a), your own secret and slow step mode (R4b). Next: history and Barbarossa (R4c) |
 | **R5** | The naval Enigma M4, then optional accounts | Planned |
 
 ## What R1 brings
@@ -164,6 +164,15 @@ machine could do the same work.
   lab" loads the stop into the lab with the secret letters.
 - **A practice message.** A German weather report that starts with WETTERBERICHT. The Bombe finds
   its key with one stop.
+- **Your own secret, with its own key.** Each new secret on Home gets a random key: 3 of rotors I to
+  V, a start and 10 plug pairs. Home keeps the key hidden. Typing more keeps the key; "Forget my
+  secret" ends it. Secrets saved before keep their key.
+- **Two buttons on Home.** "Load my secret into the lab" opens the secret in the Enigma lab, where
+  "Check my answer" works. "Break it with the Bombe" fills the secret letters on the Bombe. Give it
+  a crib of about 15 letters from your message. The stop with your key says "✓ This is your key".
+- **Slow step mode.** "Watch one test slowly" runs one test with Back, Play and Step. One sentence
+  says what each step does: the current enters the center letter, goes through a link, or the
+  diagonal board adds the mirror wire. The drum wall and the menu drawing mark the link in use.
 
 ## The machine format
 

@@ -40,27 +40,42 @@ test.describe('Home: "Type your own secret" (spec R3 4)', () => {
   const textBox = (page: Page) => page.getByRole('textbox', { name: 'Your message' });
   const secretLetters = (page: Page) => page.getByText('Secret letters', { exact: true }).locator('xpath=following-sibling::dd');
 
-  test('keeps a typed secret after a reload, and forgets it', async ({ page }) => {
+  test('keeps a typed secret and its key after a reload, and forgets it', async ({ page }) => {
     await openPage(page, '/en');
     await textBox(page).fill('Wetterbericht');
-    await expect(secretLetters(page)).toHaveText('PBJGO LIZQM QGZ');
+    await expect(secretLetters(page)).toHaveText(/^[A-Z]{5} [A-Z]{5} [A-Z]{3}$/);
+    const letters = await secretLetters(page).textContent();
     await openPage(page, '/en');
     await expect(textBox(page)).toHaveValue('Wetterbericht');
+    await expect(secretLetters(page)).toHaveText(letters ?? '');
     await page.getByRole('button', { name: 'Forget my secret' }).click();
     await expect(textBox(page)).toHaveValue('');
     expect(await page.evaluate(() => localStorage.getItem('computable.secret'))).toBeNull();
   });
 
-  test('the Enigma lab decrypts the secret letters from Home', async ({ page }) => {
+  test('"Load my secret into the lab" opens the secret in the Enigma lab, and the answer checks (spec R4 4)', async ({ page }) => {
     await openPage(page, '/en');
     await textBox(page).fill('Hello, Turing!');
-    await expect(secretLetters(page)).not.toBeEmpty();
-    const secret = (await secretLetters(page).textContent()) ?? '';
-    await page.getByRole('link', { name: 'Open the Enigma lab' }).click();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enigma I');
-    await expect(page.locator('[data-keys="on"]')).toBeAttached();
-    await page.keyboard.type(secret.replaceAll(' ', ''));
+    await page.getByRole('link', { name: 'Load my secret into the lab' }).click();
+    const box = page.getByRole('region', { name: 'Decrypting: Your secret from Home' });
+    await expect(box.getByRole('heading')).toBeFocused();
+    await expect(page).toHaveURL(/\/en\/enigma$/);
+    await box.getByRole('button', { name: 'Type it for me' }).click();
     await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText('HELLO XTURI NG');
+    await box.getByRole('button', { name: 'Check my answer' }).click();
+    await expect(box.getByText('Right! The message says: HELLO TURING')).toBeVisible();
+  });
+
+  test('"Break it with the Bombe" fills the secret letters on the Bombe, with an empty crib (spec R4 4)', async ({ page }) => {
+    await openPage(page, '/en');
+    await textBox(page).fill('Wetterbericht Nordsee');
+    await expect(secretLetters(page)).not.toBeEmpty();
+    const letters = await secretLetters(page).textContent();
+    await page.getByRole('link', { name: 'Break it with the Bombe' }).click();
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Bombe');
+    await expect(page.getByRole('textbox', { name: 'Secret letters' })).toHaveValue(letters ?? '?');
+    await expect(page.getByRole('textbox', { name: 'Crib: a word you know is in the message' })).toHaveValue('');
+    await expect(page).toHaveURL(/\/en\/bombe$/);
   });
 
   test('never erases text typed while the page is still loading', async ({ page }) => {

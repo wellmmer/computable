@@ -20,11 +20,13 @@
       "typed": "A Enigma digita",
       "cipher": "Letras secretas",
       "rules": "A Enigma só tem 26 letras. Ela tira os acentos, digita X no lugar do espaço e deixa de fora números e sinais.",
-      "settings": "Configurações: rotores {rotors}, anéis {rings}, pares de plugues {plugs}, refletor {reflector}, início {start}. O laboratório da Enigma começa com as mesmas configurações.",
-      "decrypt": "Para ler de novo, abra o laboratório da Enigma e digite as letras secretas. As lâmpadas acendem a sua mensagem.",
       "forget": "Esquecer meu segredo",
       "stays": "Seu segredo fica neste navegador. Ele nunca é enviado.",
-      "litNews": "Lâmpada {letter}"
+      "litNews": "Lâmpada {letter}",
+      "hidden": "Cada segredo novo ganha uma chave da Enigma sorteada. A página inicial não mostra a chave.",
+      "loadLab": "Carregar meu segredo no laboratório",
+      "breakIt": "Quebrar com a Bombe",
+      "bombeHint": "Para quebrar, a Bombe precisa de um crib: umas 15 letras que você sabe que estão no seu segredo."
     }
   },
   "simulator": {
@@ -568,7 +570,8 @@
       "soFar": "Até aqui, tudo certo: {right} de {total} letras estão certas. Continue digitando.",
       "wrong": "A letra {at} não está certa. O Backspace apaga letras.",
       "bombeStop": "Parada da Bombe, rotores {rotors}, início {start}",
-      "partial": "A Bombe encontrou só alguns pares de plugues. Letras que ela não alcançou podem sair erradas."
+      "partial": "A Bombe encontrou só alguns pares de plugues. Letras que ela não alcançou podem sair erradas.",
+      "homeSecret": "Seu segredo da página inicial"
     }
   },
   "bombe": {
@@ -629,7 +632,28 @@
       "try": "Testar no laboratório da Enigma",
       "tryLabel": "Testar no laboratório da Enigma: {rotors}, {start}",
       "more": "{count, number} paradas. A lista mostra as primeiras {shown}.",
-      "unknown": "As letras que o menu não alcançou continuam desconhecidas."
+      "unknown": "As letras que o menu não alcançou continuam desconhecidas.",
+      "yourKey": "Esta é a sua chave"
+    },
+    "slow": {
+      "title": "Um teste, passo a passo",
+      "about": "Veja como a Bombe testa uma ordem de rotores e um início. Ela usa a primeira parada da última busca, ou a chave da mensagem de treino, ou a ordem de rotores e o início da parede de tambores.",
+      "watch": "Ver um teste devagar",
+      "which": "Rotores {rotors}, início {start}",
+      "progress": "Passo {step} de {total}",
+      "lit": "{center}: {lit} de 26 fios acesos",
+      "back": "Voltar",
+      "play": "Tocar",
+      "pause": "Pausar",
+      "step": "Passo",
+      "end": "Pular para o fim",
+      "close": "Fechar",
+      "enter": "A corrente de teste entra em {letter} pelo fio {wire}. Este é o palpite “{letter} está ligada a {wire}”.",
+      "link": "Pela ligação {number} ({plain} sobre {cipher}), {from} no fio {fromWire} acende {to} no fio {toWire}.",
+      "mirror": "O quadro diagonal acende o fio espelho: {letter} no fio {wire}.",
+      "noStop": "Os 26 fios de {center} acesos: nenhuma parada.",
+      "stop": "Parada: só {lit} de 26 fios de {center} acesos.",
+      "clash": "Só {lit} de 26 fios de {center} acesos. Mas cada palpite para {center} dá dois parceiros a uma letra, então isto não é uma parada."
     }
   }
 }

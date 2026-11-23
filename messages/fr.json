@@ -20,11 +20,13 @@
       "typed": "Enigma tape",
       "cipher": "Lettres secrètes",
       "rules": "Enigma n’a que 26 lettres. Elle retire les accents, tape X à la place de l’espace et laisse de côté les chiffres et les signes.",
-      "settings": "Réglages : rotors {rotors}, anneaux {rings}, paires de fiches {plugs}, réflecteur {reflector}, départ {start}. Le labo Enigma commence avec les mêmes réglages.",
-      "decrypt": "Pour le relire, ouvrez le labo Enigma et tapez les lettres secrètes. Les lampes allument votre message.",
       "forget": "Oublier mon secret",
       "stays": "Votre secret reste dans ce navigateur. Il n’est jamais envoyé.",
-      "litNews": "Lampe {letter}"
+      "litNews": "Lampe {letter}",
+      "hidden": "Chaque nouveau secret reçoit sa propre clé Enigma tirée au hasard. L’accueil garde la clé cachée.",
+      "loadLab": "Charger mon secret dans le labo",
+      "breakIt": "Le casser avec la Bombe",
+      "bombeHint": "Pour le casser, la Bombe a besoin d’un crib : environ 15 lettres que vous savez être dans votre secret."
     }
   },
   "simulator": {
@@ -568,7 +570,8 @@
       "soFar": "Pour l’instant, tout va bien : {right} lettres sur {total} sont justes. Continuez.",
       "wrong": "La lettre {at} n’est pas juste. La touche Retour arrière efface des lettres.",
       "bombeStop": "Arrêt de la Bombe, rotors {rotors}, départ {start}",
-      "partial": "La Bombe n’a trouvé que quelques paires de fiches. Les lettres qu’elle n’a pas atteintes peuvent sortir fausses."
+      "partial": "La Bombe n’a trouvé que quelques paires de fiches. Les lettres qu’elle n’a pas atteintes peuvent sortir fausses.",
+      "homeSecret": "Votre secret de l’accueil"
     }
   },
   "bombe": {
@@ -629,7 +632,28 @@
       "try": "Essayer dans le labo Enigma",
       "tryLabel": "Essayer dans le labo Enigma : {rotors}, {start}",
       "more": "{count, number} arrêts. La liste montre les {shown} premiers.",
-      "unknown": "Les lettres que le menu n’a pas atteintes restent inconnues."
+      "unknown": "Les lettres que le menu n’a pas atteintes restent inconnues.",
+      "yourKey": "C’est votre clé"
+    },
+    "slow": {
+      "title": "Un test, pas à pas",
+      "about": "Regardez comment la Bombe teste un ordre des rotors et un départ. Elle prend le premier arrêt de la dernière recherche, ou la clé du message d’entraînement, ou l’ordre des rotors et le départ du mur de tambours.",
+      "watch": "Voir un test lentement",
+      "which": "Rotors {rotors}, départ {start}",
+      "progress": "Pas {step} sur {total}",
+      "lit": "{center} : {lit} fils allumés sur 26",
+      "back": "Retour",
+      "play": "Lecture",
+      "pause": "Pause",
+      "step": "Un pas",
+      "end": "Aller à la fin",
+      "close": "Fermer",
+      "enter": "Le courant de test entre dans {letter} par le fil {wire}. C’est l’hypothèse « {letter} est branchée sur {wire} ».",
+      "link": "Par le lien {number} ({plain} sur {cipher}), {from} sur le fil {fromWire} allume {to} sur le fil {toWire}.",
+      "mirror": "Le tableau diagonal allume le fil miroir : {letter} sur le fil {wire}.",
+      "noStop": "Les 26 fils de {center} sont allumés : pas d’arrêt.",
+      "stop": "Arrêt : seulement {lit} fils de {center} allumés sur 26.",
+      "clash": "Seulement {lit} fils de {center} allumés sur 26. Mais chaque hypothèse pour {center} donne deux partenaires à une lettre, donc ce n’est pas un arrêt."
     }
   }
 }
