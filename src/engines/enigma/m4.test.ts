@@ -146,8 +146,11 @@ describe('the M4 model (spec R5a 2)', () => {
     // The left rotor never turns in these 232 letters, and the thin rotor never turns at all.
     // So a ring one letter on, with a start one letter on, lights the same letters.
     it('gives the same text with other ring and start pairs, so the letters alone cannot show the real rings', () => {
-      expect(encrypt({ ...settings, thinRing: 'B', thinPosition: 'W' }, start, cipher)).toBe(plain);
-      expect(encrypt({ ...settings, rings: ['B', 'A', 'V'] }, ['K', 'N', 'A'], cipher)).toBe(plain);
+      const thinRingB: M4Settings = { ...settings, thinRing: 'B', thinPosition: 'W' };
+      expect(encrypt(thinRingB, start, cipher)).toBe(plain);
+      const leftRingB: M4Settings = { ...settings, rings: ['B', 'A', 'V'] };
+      const leftStartK: Positions = ['K', 'N', 'A'];
+      expect(encrypt(leftRingB, leftStartK, cipher)).toBe(plain);
     });
   });
 
