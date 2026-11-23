@@ -14,7 +14,7 @@ the 5 languages.
 | Order | The M4 first (R5a). Accounts later (R5b), with their own design talk. |
 | Place | A choice in the existing `/enigma` lab: "Enigma I" or "Naval M4". No new page. |
 | Bombe | The Bombe stays 3-rotor. The M4 history box explains why. |
-| Messages | The real U-264 message of 25 November 1942, and 1 practice M4 message. |
+| Messages | The real U-264 message of November 1942, and 1 practice M4 message. See section 6 for the date. |
 | How R5a ships | 2 PRs. R5a1: the engine, the M4 choice, the practice message. R5a2: U-264, the history box, the README. |
 | Languages | All 5, as in R3 and R4. Wellmmer reviews EN and PT-BR on the preview link. |
 
@@ -59,7 +59,7 @@ Tests (Vitest):
 
 ## 4. R5a2: U-264 and the history box
 
-- **U-264.** The real message of 25 November 1942 from U-264, as broken by the M4 Project in 2006,
+- **U-264.** The real message of November 1942 from U-264, as broken by the M4 Project in 2006,
   with its published key. The source is linked next to the message.
 - **History box** under the lab: in 1942 the navy added the 4th rotor; Bletchley Park could not read
   U-boat messages for about 10 months; 4-rotor Bombes came in 1943. It says the Bombe on this site
@@ -78,5 +78,11 @@ violations in light and dark mode. Lighthouse is not required.
 | The wirings of Beta, Gamma, thin B and thin C. | Checked letter by letter on 2026-11-23: [Crypto Museum, "Enigma wiring"](https://www.cryptomuseum.com/crypto/enigma/wiring.htm) and [Wikipedia, "Enigma rotor details"](https://en.wikipedia.org/wiki/Enigma_rotor_details) agree. |
 | Beta at A with thin B equals the Enigma I with reflector B; Gamma at A with thin C equals reflector C. | Checked on 2026-11-23: true. A property test in `src/engines/enigma/m4.test.ts` compares both machines on random settings and texts. |
 | An M4 test vector. | Checked on 2026-11-23: [Crypto Museum, "Dönitz message"](https://www.cryptomuseum.com/crypto/enigma/msg/p1030681.htm). M4, thin reflector C, Beta, rotors V VI VIII, rings E P E L, start C D S Z. Its first 108 letters decrypt. The page says later groups have reception errors. |
-| The U-264 message, its date, its key, and its 2006 break by the M4 Project. | From my own knowledge. Check before R5a2 ships. |
-| The 10-month blackout in 1942 and the 4-rotor Bombes in 1943. | From my own knowledge. Check before R5a2 ships. |
+| The U-264 message, its date, its key, and its 2006 break by the M4 Project. | Checked on 2026-11-23: [M4 Project](https://www.bytereef.org/m4_project.html) says the first message was broken on 20 February 2006, with distributed computing. [M4 Project, first break](https://www.bytereef.org/m4-project-first-break.html) gives U264, Hartwig Looks, thin reflector B, rings A A A V, start V J N A, the plug pairs, and the plain text. [uboat.net](https://uboat.net/boats/u264.htm) names Hartwig Looks as commander. All 232 letters decrypt in `src/engines/enigma/m4.test.ts`. |
+| The date of the U-264 message. | Changed to "November 1942". The M4 Project page says 25 November 1942. Erskine's letter shows the signal time "1840/19Z", so it was received on the 19th. I did not open Erskine's letter: this comes from the research before R5a2. The war diary entry on the first break page reads 1851/19/252. |
+| The rings A A A V. | Not historical. They are the rings the M4 Project found. The thin rotor and the left rotor never turn in these 232 letters. So other ring and start pairs give the same text, and `m4.test.ts` shows 2 of them. |
+| The plain text of U-264. | The research before R5a2 gave 231 letters. The first break page and the engine give 232: the text ends "vierysichteinsnull", with a Y before "sicht". The page uses the 232 letters. |
+| The M4 in use from 1 February 1942. | Checked on 2026-11-23: [Wikipedia, "Enigma machine"](https://en.wikipedia.org/wiki/Enigma_machine): "A four-rotor Enigma was introduced by the Navy for U-boat traffic on 1 February 1942." |
+| About 10 months without U-boat messages, the U-559 codebooks, and December 1942. | Checked on 2026-11-23: [Wikipedia, "German submarine U-559"](https://en.wikipedia.org/wiki/German_submarine_U-559) gives 30 October 1942, the ten months, and the value of the codebooks. [Wikipedia, "Cryptanalysis of the Enigma"](https://en.wikipedia.org/wiki/Cryptanalysis_of_the_Enigma) says reading restarted in December 1942. It dates the capture "29 or 30 October 1942". The page says 30 October, as the U-559 article does. |
+| The 4-rotor Bombes of 1943. | Checked on 2026-11-23: [Wikipedia, "Bombe"](https://en.wikipedia.org/wiki/Bombe): Harold Keen at BTM designed Mammoth. NCR in Dayton built the US Navy Bombe, and Joseph Desch led the work. The first one was tested on 3 May 1943. A table lists 4 four-rotor Bombes in June 1943 and 95 in December 1943. |
+| 3-rotor Bombes would take 50 to 100 times as long. | Checked on 2026-11-23: the Bombe article does not say this. [Wikipedia, "Cryptanalysis of the Enigma"](https://en.wikipedia.org/wiki/Cryptanalysis_of_the_Enigma) does: "Solving Shark keys on 3-rotor bombes would have taken 50 to 100 times as long as an average Air Force or Army job." The page links that article. |
