@@ -39,10 +39,10 @@ export function MachinePanel({ rotors, thin = null, positions, lit, lastKey, onP
       <div className="flex justify-center gap-4 sm:gap-5">
         {thin !== null && (
           <div data-thin className="flex flex-col items-center">
-            {/* Empty space where the other rotors have ▲, so the windows line up. */}
+            {/* Empty space where the other rotors have ▲ and ▼, so the windows line up. The window is as tall as theirs, and narrower. */}
             <span aria-hidden className="h-7" />
             <span className="sr-only">{t('window', { rotor: t('thin'), name: thin.name, letter: thin.letter })}</span>
-            <span aria-hidden className="my-[3px] rounded-[3px] border border-brass bg-ivory px-1 font-mono text-base font-bold text-bakelite">
+            <span aria-hidden className="my-px rounded-[3px] border border-brass bg-ivory px-1 py-0.5 font-mono text-base/7 font-bold text-bakelite">
               {thin.letter}
             </span>
             <span aria-hidden className="h-7" />
