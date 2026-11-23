@@ -313,6 +313,8 @@ describe('EnigmaLab, the machine choice (spec R5a 3)', () => {
     expect(within(screen.getByRole('region', { name: 'Settings' })).getByText('Beta I II III, Thin C, 10 plug pairs')).toBeTruthy();
     expect(screen.getByText('Thin rotor, rotor Beta, shows A')).toBeTruthy();
     expect(screen.getByText('Left rotor, rotor I, shows B')).toBeTruthy();
+    // 4 windows, 4 letters: the thin rotor's first, as on the practice 4 card.
+    expect(screen.getByRole('button', { name: 'Back to start (A B L A)' })).toBeTruthy();
     typeKeys('WETTERBERICHT');
     expect(strip('Lamps lit')).toBe('OJPBC PNRAS YIM');
   });
@@ -395,6 +397,7 @@ describe('EnigmaLab, the machine choice (spec R5a 3)', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 4: the naval M4' }));
     expect(within(machine()).getByRole<HTMLInputElement>('radio', { name: 'Naval M4' }).checked).toBe(true);
     expect(screen.getByText('Thin rotor, rotor Gamma, shows U')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Back to start (U N A V)' })).toBeTruthy();
     const box = screen.getByRole('region', { name: 'Decrypting: Practice 4: the naval M4' });
     fireEvent.click(within(box).getByRole('button', { name: 'Type it for me' }));
     expect(strip('Lamps lit')).toBe('FOURX ROTOR SXFOR XTHEX NAVY');

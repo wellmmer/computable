@@ -10,7 +10,7 @@ import { CurrentPath } from './CurrentPath';
 import { DecryptBox } from './DecryptBox';
 import { lettersOf } from './key-sheet';
 import { groupsOf5, initialLab, labReducer, litLetters, typedLetters } from './lab-state';
-import { ringsText, rotorsText } from './machine-facts';
+import { ringsText, rotorsText, startText } from './machine-facts';
 import { MachinePanel } from './MachinePanel';
 import { MessageList, type LoadedMessage } from './MessageList';
 import { SettingsDialog } from './SettingsDialog';
@@ -250,7 +250,7 @@ export function EnigmaLab() {
         <div className="md:col-start-2 md:row-start-3">
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => dispatch({ type: 'back-to-start' })} className={`${button} bg-ink text-paper`}>
-              {t('backToStart', { start: lab.start.join(' ') })}
+              {t('backToStart', { start: startText(lab.settings, lab.start) })}
             </button>
             <button type="button" onClick={copy} disabled={lit === ''} className={`${button} bg-cell text-ink`}>
               {t(copied ?? 'copy')}
