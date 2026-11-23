@@ -1,4 +1,16 @@
-import { indexOf, isLetter, letterAt, press, type EnigmaSettings, type Letter, type PathPoint, type Positions } from '@/engines/enigma';
+import {
+  indexOf,
+  isLetter,
+  letterAt,
+  press,
+  type EnigmaSettings,
+  type Letter,
+  type M4Settings,
+  type MachineModel,
+  type MachineSettings,
+  type PathPoint,
+  type Positions,
+} from '@/engines/enigma';
 
 /** The lab's settings when the page opens (spec R3 3). A reload comes back to them. */
 export const LAB_SETTINGS: EnigmaSettings = {
@@ -6,6 +18,21 @@ export const LAB_SETTINGS: EnigmaSettings = {
   rings: ['A', 'A', 'A'],
   reflector: 'B',
   plugs: ['AV', 'BS', 'CG', 'DL', 'FU', 'HZ', 'IN', 'KM', 'OW', 'RX'],
+};
+
+/**
+ * The M4 when the visitor picks it (spec R5a 3): the lab's rotors, rings and plug pairs, with thin
+ * rotor Beta at A, ring A, and thin reflector C. Beta at A with thin reflector B would light the same
+ * letters as the Enigma I, so the switch would seem to do nothing. Beta with thin C was a real
+ * combination: the Dönitz message of 1 May 1945 used it.
+ */
+export const LAB_M4_SETTINGS: M4Settings = {
+  ...LAB_SETTINGS,
+  model: 'M4',
+  thinRotor: 'Beta',
+  thinRing: 'A',
+  thinPosition: 'A',
+  reflector: 'C',
 };
 
 export const LAB_START: Positions = ['B', 'L', 'A'];
@@ -19,7 +46,8 @@ export interface TypedLetter {
 }
 
 export interface LabState {
-  settings: EnigmaSettings;
+  /** The Enigma I or the M4. The machine choice at the top of the lab follows these settings. */
+  settings: MachineSettings;
   /** The letters in the rotor windows now. */
   positions: Positions;
   /** The windows before the first letter in the strips. "Back to start" turns the rotors back here. */
@@ -40,8 +68,9 @@ export type LabAction =
   | { type: 'turn'; slot: 0 | 1 | 2; by: 1 | -1 }
   | { type: 'back-to-start' }
   | { type: 'clear' }
-  | { type: 'settings'; settings: EnigmaSettings }
-  | { type: 'load'; settings: EnigmaSettings; start: Positions }
+  | { type: 'settings'; settings: MachineSettings }
+  | { type: 'load'; settings: MachineSettings; start: Positions }
+  | { type: 'model'; model: MachineModel }
   | { type: 'type'; letters: string };
 
 export function initialLab(): LabState {
@@ -79,6 +108,11 @@ export function labReducer(lab: LabState, action: LabAction): LabState {
     case 'load':
       // A message from the list: its key sheet's settings, and the rotors at its start.
       return { ...lab, settings: action.settings, positions: action.start, start: action.start, typed: [], previousLit: '' };
+    case 'model': {
+      // A new machine starts from its default settings, as after a reload (spec R5a 3).
+      const settings = action.model === 'M4' ? LAB_M4_SETTINGS : LAB_SETTINGS;
+      return { ...lab, settings, positions: LAB_START, start: LAB_START, typed: [], previousLit: '', news: null };
+    }
     case 'type':
       return [...action.letters].filter(isLetter).reduce((next, key) => labReducer(next, { type: 'press', key }), lab);
   }

@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { Fragment } from 'react';
-import type { EnigmaSettings, Positions } from '@/engines/enigma';
+import type { MachineSettings, Positions } from '@/engines/enigma';
 import { textLink } from '@/shell/page-styles';
 import type { KeySheet } from './key-sheet';
 import { practiceMessages } from './practice-messages';
@@ -23,7 +23,7 @@ const label = 'mt-3 text-sm font-semibold';
 export const letterGroups = 'font-mono text-[15px] font-medium tracking-[1.5px] [word-spacing:4px] break-words';
 
 /** The settings of a key sheet, and its start, as a list of terms. */
-function Facts({ settings, start }: { settings: EnigmaSettings; start?: Positions }) {
+function Facts({ settings, start }: { settings: MachineSettings; start?: Positions }) {
   const t = useTranslations('enigma.settings');
   const tMessages = useTranslations('enigma.messages');
   const facts = [

@@ -84,7 +84,8 @@ describe('the M4 model (spec R5a 2)', () => {
   it('lights other letters when the thin rotor stands at B', () => {
     const enigma: EnigmaSettings = { rotors: ['I', 'II', 'III'], rings: ['A', 'A', 'A'], reflector: 'B', plugs: [] };
     expect(encrypt(enigma, ['A', 'A', 'A'], 'AAAAA')).toBe('BDZGO');
-    expect(encrypt({ ...asM4(enigma, 'Beta'), thinPosition: 'B' }, ['A', 'A', 'A'], 'AAAAA')).not.toBe('BDZGO');
+    const turned: M4Settings = { ...asM4(enigma, 'Beta'), thinPosition: 'B' };
+    expect(encrypt(turned, ['A', 'A', 'A'], 'AAAAA')).not.toBe('BDZGO');
   });
 
   // Crypto Museum, "Dönitz message, 1 May 1945": https://www.cryptomuseum.com/crypto/enigma/msg/p1030681.htm

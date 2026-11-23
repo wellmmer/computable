@@ -28,6 +28,8 @@ export interface EnigmaSettings {
   reflector: ReflectorName;
   /** Plug pairs such as "AV": the plugboard swaps A and V on the way in and on the way out. */
   plugs: readonly string[];
+  /** Never set. It stops M4 settings, which have the same other fields, from passing as Enigma I settings. */
+  model?: never;
 }
 
 export type MachineModel = 'I' | 'M4';
@@ -54,7 +56,7 @@ export interface M4Settings {
 export type MachineSettings = EnigmaSettings | M4Settings;
 
 export function isM4(settings: MachineSettings): settings is M4Settings {
-  return 'model' in settings && settings.model === 'M4';
+  return settings.model === 'M4';
 }
 
 export function modelOf(settings: MachineSettings): MachineModel {

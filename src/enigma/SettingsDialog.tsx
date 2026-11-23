@@ -8,7 +8,7 @@ import {
   isLetter,
   REFLECTOR_NAMES,
   ROTOR_NAMES,
-  type EnigmaSettings,
+  type MachineSettings,
   type Letter,
   type SettingsError,
 } from '@/engines/enigma';
@@ -43,8 +43,8 @@ function withItem<T>([a, b, c]: readonly [T, T, T], slot: 0 | 1 | 2, value: T): 
 }
 
 interface SettingsDialogProps {
-  settings: EnigmaSettings;
-  onSave: (settings: EnigmaSettings) => void;
+  settings: MachineSettings;
+  onSave: (settings: MachineSettings) => void;
   /** Called when the dialog has closed: after Save, Cancel or Esc. */
   onClose: () => void;
 }
