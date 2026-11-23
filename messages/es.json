@@ -591,6 +591,30 @@
       "bombeStop": "Parada de la Bombe, rotores {rotors}, inicio {start}",
       "partial": "La Bombe encontró solo algunos pares de clavijas. Las letras que no alcanzó pueden salir mal.",
       "homeSecret": "Tu secreto de la página de inicio"
+    },
+    "history": {
+      "title": "La M4 y las Bombes",
+      "lead": "Cada dato enlaza a las páginas con las que lo comprobamos.",
+      "sources": "Fuentes",
+      "bombeLink": "Abrir el laboratorio de la Bombe de 3 rotores",
+      "facts": {
+        "m4": {
+          "title": "Febrero de 1942: la M4",
+          "text": "El 1 de febrero de 1942, la marina alemana empezó a usar la M4 de 4 rotores para los mensajes de los U-boats."
+        },
+        "blackout": {
+          "title": "1942: unos 10 meses sin mensajes de U-boats",
+          "text": "Después, Bletchley Park no pudo leer los mensajes de los U-boats durante unos 10 meses. El 30 de octubre de 1942, unos marineros sacaron libros de códigos del U-559, que se hundía. Esos libros ayudaron a Bletchley Park a leer de nuevo los mensajes de los U-boats desde diciembre de 1942."
+        },
+        "bombes": {
+          "title": "1943: Bombes de 4 rotores",
+          "text": "En 1943, las Bombes de 4 rotores empezaron a trabajar en el Reino Unido y en EE. UU. En el Reino Unido, Harold Keen, de BTM, diseñó una llamada Mammoth. En EE. UU., NCR, en Dayton, construyó Bombes para la Marina de EE. UU., y Joseph Desch dirigió el trabajo. La primera se probó en mayo de 1943."
+        },
+        "here": {
+          "title": "La Bombe de este sitio",
+          "text": "La Bombe de este sitio tiene 3 rotores, así que no rompe mensajes de la M4. En Bombes de 3 rotores, las claves de los U-boats habrían tardado de 50 a 100 veces más que una clave del Ejército o de la Fuerza Aérea."
+        }
+      }
     }
   },
   "bombe": {

@@ -591,6 +591,30 @@
       "bombeStop": "Bombe stop, rotors {rotors}, start {start}",
       "partial": "The Bombe found only some plug pairs. Letters it did not reach may come out wrong.",
       "homeSecret": "Your secret from Home"
+    },
+    "history": {
+      "title": "The M4 and the Bombes",
+      "lead": "Each fact links to the pages we checked it against.",
+      "sources": "Sources",
+      "bombeLink": "Open the 3-rotor Bombe lab",
+      "facts": {
+        "m4": {
+          "title": "February 1942: the M4",
+          "text": "On 1 February 1942, the German navy put the 4-rotor M4 into use for U-boat messages."
+        },
+        "blackout": {
+          "title": "1942: about 10 months without U-boat messages",
+          "text": "After that, Bletchley Park could not read U-boat messages for about 10 months. On 30 October 1942, sailors took codebooks from the sinking U-559. The codebooks helped Bletchley Park read U-boat messages again from December 1942."
+        },
+        "bombes": {
+          "title": "1943: 4-rotor Bombes",
+          "text": "In 1943, 4-rotor Bombes started work in Britain and the US. In Britain, Harold Keen at BTM designed one called Mammoth. In the US, NCR in Dayton built Bombes for the US Navy, and Joseph Desch led the work. The first one was tested in May 1943."
+        },
+        "here": {
+          "title": "The Bombe on this site",
+          "text": "The Bombe on this site has 3 rotors, so it does not break M4 messages. On 3-rotor Bombes, U-boat keys would have taken 50 to 100 times as long as an Army or Air Force key."
+        }
+      }
     }
   },
   "bombe": {
