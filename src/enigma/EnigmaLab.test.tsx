@@ -404,4 +404,20 @@ describe('EnigmaLab, the machine choice (spec R5a 3)', () => {
     fireEvent.click(within(box).getByRole('button', { name: 'Check my answer' }));
     expect(within(box).getByText('Right! The message says: FOUR ROTORS FOR THE NAVY')).toBeTruthy();
   });
+
+  it('switches to the M4 when U-264 loads from the Enigma I, and its 232 secret letters decrypt (spec R5a 4)', () => {
+    renderWithIntl(<EnigmaLab />);
+    expect(within(machine()).getByRole<HTMLInputElement>('radio', { name: 'Enigma I' }).checked).toBe(true);
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: A message from U-264, 1942' }));
+    expect(within(machine()).getByRole<HTMLInputElement>('radio', { name: 'Naval M4' }).checked).toBe(true);
+    expect(screen.getByText('Thin rotor, rotor Beta, shows V')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Back to start (V J N A)' })).toBeTruthy();
+    expect(facts()).toEqual(['Rotors: Beta II IV I', 'Rings: A A A V', 'Plug pairs: AT BL DF GJ HM NW OP QY RZ VX', 'Reflector: Thin B']);
+    const box = screen.getByRole('region', { name: 'Decrypting: A message from U-264, 1942' });
+    fireEvent.click(within(box).getByRole('button', { name: 'Type it for me' }));
+    expect(strip('Lamps lit')).toMatch(/^VONVO NJLOO KSJHF FTTTE INSEI NSDRE IZWOY YQNNS NEUNI NHALT/);
+    expect(strip('Lamps lit')).toMatch(/IERYS ICHTE INSNU LL$/);
+    fireEvent.click(within(box).getByRole('button', { name: 'Check my answer' }));
+    expect(within(box).getByText(/^Right! The message says: VONVONJLOOKS/)).toBeTruthy();
+  });
 });

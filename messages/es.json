@@ -564,6 +564,13 @@
         "rules": "X es un espacio, Q suele valer CH y los nombres se escriben dos veces.",
         "text": "Unidad de reconocimiento de Kurtinowa, al noroeste de Sebez, en el corredor aéreo hacia Dubrowki y Opotschka. Salió a las 18:30. Ataque: el Regimiento de Infantería 3 avanza despacio pero seguro. 17:06: I Batallón del Regimiento de Infantería 3 en el corredor aéreo, con la cabeza a 16 km al este de Kamenec. Comandante de la división."
       },
+      "u264": {
+        "title": "Un mensaje del U-264, 1942",
+        "about": "En noviembre de 1942, el submarino alemán U-264 envió este mensaje. Su comandante era Hartwig Looks. El Proyecto M4 descifró el mensaje el 20 de febrero de 2006, con computación distribuida.",
+        "rings": "Los anillos A A A V son los que encontró el Proyecto M4. No se conocen los anillos reales. Otros pares de anillo e inicio dan el mismo texto.",
+        "rules": "Los números se escriben como palabras en alemán: EINS EINS DREI ZWO es 1132.",
+        "text": "De Looks: señal de radio 1132/19. Contenido: obligado a sumergirse durante un ataque, cargas de profundidad. Última posición del enemigo 08:30, cuadrícula AJ 9863, 220 grados, 8 millas náuticas. (Estoy) siguiendo. (Barómetro) 1014 milibares, bajando, NNO 4, visibilidad 10."
+      },
       "scharnhorst": {
         "title": "El último mensaje del Scharnhorst, 1943",
         "about": "El 26 de diciembre de 1943, el buque de guerra alemán Scharnhorst envió este mensaje en su última batalla. Se hundió poco después. El Proyecto M4 descifró el mensaje el 28 de mayo de 2008.",
@@ -584,6 +591,30 @@
       "bombeStop": "Parada de la Bombe, rotores {rotors}, inicio {start}",
       "partial": "La Bombe encontró solo algunos pares de clavijas. Las letras que no alcanzó pueden salir mal.",
       "homeSecret": "Tu secreto de la página de inicio"
+    },
+    "history": {
+      "title": "La M4 y las Bombes",
+      "lead": "Cada dato enlaza a las páginas con las que lo comprobamos.",
+      "sources": "Fuentes",
+      "bombeLink": "Abrir el laboratorio de la Bombe de 3 rotores",
+      "facts": {
+        "m4": {
+          "title": "Febrero de 1942: la M4",
+          "text": "El 1 de febrero de 1942, la marina alemana empezó a usar la M4 de 4 rotores para los mensajes de los U-boats."
+        },
+        "blackout": {
+          "title": "1942: unos 10 meses sin mensajes de U-boats",
+          "text": "Después, Bletchley Park no pudo leer los mensajes de los U-boats durante unos 10 meses. El 30 de octubre de 1942, unos marineros sacaron libros de códigos del U-559, que se hundía. Esos libros ayudaron a Bletchley Park a leer de nuevo los mensajes de los U-boats desde diciembre de 1942."
+        },
+        "bombes": {
+          "title": "1943: Bombes de 4 rotores",
+          "text": "En 1943, las Bombes de 4 rotores empezaron a trabajar en el Reino Unido y en EE. UU. En el Reino Unido, Harold Keen, de BTM, diseñó una llamada Mammoth. En EE. UU., NCR, en Dayton, construyó Bombes para la Marina de EE. UU. Joseph Desch dirigió el trabajo. La primera Bombe de la Marina de EE. UU. se probó en mayo de 1943."
+        },
+        "here": {
+          "title": "La Bombe de este sitio",
+          "text": "La Bombe de este sitio tiene 3 rotores, así que no rompe mensajes de la M4. En Bombes de 3 rotores, las claves de los U-boats habrían tardado de 50 a 100 veces más que una clave del Ejército o de la Fuerza Aérea."
+        }
+      }
     }
   },
   "bombe": {

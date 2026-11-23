@@ -564,6 +564,13 @@
         "rules": "X ist ein Leerzeichen, Q steht oft für CH, und Namen stehen zweimal da.",
         "text": "Die Aufklärungsabteilung ist um 18:30 Uhr von Kurtinowa, nordwestlich von Sebez, auf der Fliegerstraße in Richtung Dubrowki und Opotschka losgefahren. Angriff: Das Infanterie-Regiment 3 kommt langsam, aber sicher voran. 17:06 Uhr: Das I. Bataillon des Infanterie-Regiments 3 steht auf der Fliegerstraße, seine Spitze 16 km östlich von Kamenec. Der Divisionskommandeur."
       },
+      "u264": {
+        "title": "Eine Nachricht von U-264, 1942",
+        "about": "Im November 1942 schickte das deutsche U-Boot U-264 diese Nachricht. Sein Kommandant war Hartwig Looks. Das M4-Projekt hat die Nachricht am 20. Februar 2006 entschlüsselt, mit verteiltem Rechnen.",
+        "rings": "Die Ringe A A A V hat das M4-Projekt gefunden. Die echten Ringe sind nicht bekannt. Andere Paare aus Ring und Start ergeben denselben Text.",
+        "rules": "Zahlen stehen als Wörter da: EINS EINS DREI ZWO ist 1132.",
+        "text": "Von Looks: Funkspruch 1132/19. Inhalt: Beim Angriff zum Tauchen gezwungen, Wasserbomben. Letzter Standort des Gegners 08:30 Uhr, Quadrat AJ 9863, 220 Grad, 8 Seemeilen. (Ich) folge. (Luftdruck) 1014 Millibar, fallend, NNO 4, Sicht 10."
+      },
       "scharnhorst": {
         "title": "Die letzte Nachricht der Scharnhorst, 1943",
         "about": "Am 26. Dezember 1943 schickte das deutsche Kriegsschiff Scharnhorst diese Nachricht in seiner letzten Schlacht. Es sank kurz danach. Das M4-Projekt hat die Nachricht am 28. Mai 2008 entschlüsselt.",
@@ -584,6 +591,30 @@
       "bombeStop": "Bombe-Stopp, Walzen {rotors}, Start {start}",
       "partial": "Die Bombe hat nur einige Steckerpaare gefunden. Buchstaben, die sie nicht erreicht hat, können falsch herauskommen.",
       "homeSecret": "Dein Geheimnis von der Startseite"
+    },
+    "history": {
+      "title": "Die M4 und die Turing-Bomben",
+      "lead": "Jede Angabe verlinkt die Seiten, mit denen wir sie geprüft haben.",
+      "sources": "Quellen",
+      "bombeLink": "Das Labor der 3-Walzen-Bombe öffnen",
+      "facts": {
+        "m4": {
+          "title": "Februar 1942: die M4",
+          "text": "Am 1. Februar 1942 setzte die deutsche Marine die M4 mit 4 Walzen für die Nachrichten der U-Boote ein."
+        },
+        "blackout": {
+          "title": "1942: etwa 10 Monate ohne U-Boot-Nachrichten",
+          "text": "Danach konnte Bletchley Park die Nachrichten der U-Boote etwa 10 Monate lang nicht lesen. Am 30. Oktober 1942 holten Seeleute Codebücher aus dem sinkenden U-559. Mit diesen Büchern las Bletchley Park ab Dezember 1942 wieder Nachrichten der U-Boote."
+        },
+        "bombes": {
+          "title": "1943: Turing-Bomben mit 4 Walzen",
+          "text": "1943 begannen Turing-Bomben mit 4 Walzen in Großbritannien und in den USA zu arbeiten. In Großbritannien entwarf Harold Keen bei BTM eine namens Mammoth. In den USA baute NCR in Dayton Turing-Bomben für die US Navy. Joseph Desch leitete die Arbeit. Die erste Bombe der US Navy wurde im Mai 1943 getestet."
+        },
+        "here": {
+          "title": "Die Bombe auf dieser Seite",
+          "text": "Die Bombe auf dieser Seite hat 3 Walzen, also knackt sie keine Nachrichten der M4. Auf Turing-Bomben mit 3 Walzen hätten die Schlüssel der U-Boote 50- bis 100-mal so lange gedauert wie ein Schlüssel von Heer oder Luftwaffe."
+        }
+      }
     }
   },
   "bombe": {

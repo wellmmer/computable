@@ -43,7 +43,7 @@ machine could do the same work.
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Live: the engine and the lab (R4a), your own secret and slow step mode (R4b), the history and Barbarossa (R4c) |
-| **R5** | The naval Enigma M4, then optional accounts | In progress: R5a1 the M4 in the Enigma lab |
+| **R5** | The naval Enigma M4, then optional accounts | Live: the M4 in the Enigma lab (R5a1), U-264 and the M4 history (R5a2). Accounts (R5b) come later. |
 
 ## What R1 brings
 
@@ -183,6 +183,22 @@ machine could do the same work.
   (1941) and a 16-letter crib from its known text. The search gives 1 stop: the real rotors, II IV V.
   The real key used rings B U L, and the Bombe assumes A A A. So the stop has start A Q P, and the
   message reads in blocks of about 15 letters. The page says why.
+
+## What R5a brings
+
+- **The naval Enigma M4 in the Enigma lab.** A choice at the top of `/enigma` picks "Enigma I" or
+  "Naval M4". The Enigma I stays the default.
+- **4 rotor windows.** The thin rotor, Beta or Gamma, sits leftmost and never turns. The settings
+  dialog sets it, its ring and its start, and offers the thin reflectors B and C.
+- **The path with the 4th rotor.** The drawing of the current shows the thin rotor on the way in
+  and on the way out.
+- **Practice 4.** A short M4 message in each language, with its key shown.
+- **A real M4 message.** U-264 sent it in November 1942. The M4 Project broke it on 20 February
+  2006. Loading it switches the lab to the M4, and all 232 letters decrypt. The card says the rings
+  A A A V are the ones the M4 Project found, not known to be the real ones.
+- **The M4 history, with sources.** Under the lab, 4 facts: the M4 in use from 1 February 1942,
+  about 10 months without U-boat messages, the 4-rotor Bombes of 1943, and why the Bombe on this
+  site does not break M4 messages. Each fact links to the pages it was checked against.
 
 ## The machine format
 
