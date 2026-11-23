@@ -30,10 +30,12 @@ interface MachinePanelProps {
  * The machine from the mockup (lab-c-v2.html): the rotor windows with ▲ and ▼, the lampboard, and
  * the keyboard, on a bakelite panel. Screen readers skip the lampboard: the live region and the
  * "Lamps lit" strip say which lamp lit. The M4 adds its thin rotor as the leftmost window: narrower,
- * and with no ▲ or ▼, because it never turns. The settings dialog sets its letter (spec R5a 3).
+ * and with no ▲ or ▼, because it never turns while the visitor types. The note under the windows says
+ * so, and names the "Change settings" button, where the visitor sets it (spec R5a 3).
  */
 export function MachinePanel({ rotors, thin = null, positions, lit, lastKey, onPress, onTurn }: MachinePanelProps) {
   const t = useTranslations('enigma.machine');
+  const tLab = useTranslations('enigma.lab');
   return (
     <section aria-label={t('label')} className="rounded-[10px] bg-bakelite px-3 py-3.5 text-ivory sm:px-4">
       <div className="flex justify-center gap-4 sm:gap-5">
@@ -74,7 +76,7 @@ export function MachinePanel({ rotors, thin = null, positions, lit, lastKey, onP
           );
         })}
       </div>
-      <p className="mt-1 mb-3 text-center text-xs text-brass">{thin === null ? t('note') : `${t('note')} ${t('thinNote')}`}</p>
+      <p className="mt-1 mb-3 text-center text-xs text-brass">{thin === null ? t('note') : `${t('note')} ${t('thinNote', { button: tLab('changeSettings') })}`}</p>
 
       <Lampboard lit={lit} />
 

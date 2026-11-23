@@ -63,6 +63,6 @@ describe('MachinePanel (spec R3 3, "Machine panel")', () => {
     const windows = screen.getAllByText(/, shows [A-Z]$/).map((window) => window.textContent);
     expect(windows).toEqual(['Thin rotor, rotor Gamma, shows U', 'Left rotor, rotor II, shows N', 'Middle rotor, rotor IV, shows A', 'Right rotor, rotor VIII, shows V']);
     expect(screen.queryByRole('button', { name: /^Thin rotor/ })).toBeNull();
-    expect(screen.getByText('The right rotor turns one step before each letter. The thin rotor never turns.')).toBeTruthy();
+    expect(screen.getByText('The right rotor turns one step before each letter. The thin rotor never turns while you type. Set it in “Change settings”.')).toBeTruthy();
   });
 });

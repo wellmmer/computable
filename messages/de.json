@@ -459,7 +459,7 @@
       "next": "{rotor}: nächster Buchstabe",
       "previous": "{rotor}: vorheriger Buchstabe",
       "note": "Die rechte Walze dreht sich vor jedem Buchstaben um einen Schritt.",
-      "thinNote": "Die dünne Walze dreht sich nie.",
+      "thinNote": "Die dünne Walze dreht sich nie, während du tippst. Stelle sie unter „{button}“ ein.",
       "keyboard": "Tastatur"
     },
     "path": {
