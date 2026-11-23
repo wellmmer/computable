@@ -564,6 +564,13 @@
         "rules": "X est un espace, Q remplace souvent CH, et les noms sont écrits deux fois.",
         "text": "Unité de reconnaissance de Kurtinowa, au nord-ouest de Sebez, sur le couloir aérien vers Dubrowki et Opotschka. Départ à 18 h 30. Attaque : le régiment d’infanterie 3 avance lentement mais sûrement. 17 h 06 : Ier bataillon du régiment d’infanterie 3 sur le couloir aérien, la tête à 16 km à l’est de Kamenec. Le commandant de la division."
       },
+      "u264": {
+        "title": "Un message de l’U-264, 1942",
+        "about": "En novembre 1942, le sous-marin allemand U-264 a envoyé ce message. Son commandant était Hartwig Looks. Le projet M4 a déchiffré le message le 20 février 2006, grâce au calcul distribué.",
+        "rings": "Les anneaux A A A V sont ceux que le projet M4 a trouvés. Les vrais anneaux ne sont pas connus. D’autres paires d’anneau et de départ donnent le même texte.",
+        "rules": "Les nombres sont écrits en mots allemands : EINS EINS DREI ZWO veut dire 1132.",
+        "text": "De Looks : signal radio 1132/19. Contenu : forcé de plonger pendant une attaque, grenades sous-marines. Dernière position de l’ennemi 08 h 30, carré AJ 9863, 220 degrés, 8 milles nautiques. (Je) poursuis. (Baromètre) 1014 millibars, en baisse, NNO 4, visibilité 10."
+      },
       "scharnhorst": {
         "title": "Le dernier message du Scharnhorst, 1943",
         "about": "Le 26 décembre 1943, le navire de guerre allemand Scharnhorst a envoyé ce message pendant sa dernière bataille. Il a coulé peu après. Le projet M4 a déchiffré le message le 28 mai 2008.",

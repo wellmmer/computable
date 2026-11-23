@@ -564,6 +564,13 @@
         "rules": "X ist ein Leerzeichen, Q steht oft für CH, und Namen stehen zweimal da.",
         "text": "Die Aufklärungsabteilung ist um 18:30 Uhr von Kurtinowa, nordwestlich von Sebez, auf der Fliegerstraße in Richtung Dubrowki und Opotschka losgefahren. Angriff: Das Infanterie-Regiment 3 kommt langsam, aber sicher voran. 17:06 Uhr: Das I. Bataillon des Infanterie-Regiments 3 steht auf der Fliegerstraße, seine Spitze 16 km östlich von Kamenec. Der Divisionskommandeur."
       },
+      "u264": {
+        "title": "Eine Nachricht von U-264, 1942",
+        "about": "Im November 1942 schickte das deutsche U-Boot U-264 diese Nachricht. Sein Kommandant war Hartwig Looks. Das M4-Projekt hat die Nachricht am 20. Februar 2006 entschlüsselt, mit verteiltem Rechnen.",
+        "rings": "Die Ringe A A A V hat das M4-Projekt gefunden. Die echten Ringe sind nicht bekannt. Andere Paare aus Ring und Start ergeben denselben Text.",
+        "rules": "Zahlen stehen als Wörter da: EINS EINS DREI ZWO ist 1132.",
+        "text": "Von Looks: Funkspruch 1132/19. Inhalt: Beim Angriff zum Tauchen gezwungen, Wasserbomben. Letzter Standort des Gegners 08:30 Uhr, Quadrat AJ 9863, 220 Grad, 8 Seemeilen. (Ich) folge. (Luftdruck) 1014 Millibar, fallend, NNO 4, Sicht 10."
+      },
       "scharnhorst": {
         "title": "Die letzte Nachricht der Scharnhorst, 1943",
         "about": "Am 26. Dezember 1943 schickte das deutsche Kriegsschiff Scharnhorst diese Nachricht in seiner letzten Schlacht. Es sank kurz danach. Das M4-Projekt hat die Nachricht am 28. Mai 2008 entschlüsselt.",

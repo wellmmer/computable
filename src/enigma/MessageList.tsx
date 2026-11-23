@@ -77,7 +77,7 @@ interface MessageListProps {
 
 /**
  * The messages under the lab (spec R3 4): 3 practice messages in the visitor's language, practice 4
- * for the naval M4 (spec R5a 3), then the two real messages with their sources. "Load into the machine" hands a key sheet to the lab, with
+ * for the naval M4 (spec R5a 3), then the real messages with their sources. U-264 runs on the M4 (spec R5a 4). "Load into the machine" hands a key sheet to the lab, with
  * the button that was pressed, so the focus can go back to it.
  */
 export function MessageList({ onLoad }: MessageListProps) {
@@ -109,14 +109,15 @@ export function MessageList({ onLoad }: MessageListProps) {
               {title}
             </h4>
             <p className="mt-1">{t(`${id}.about`)}</p>
+            {id === 'u264' && <p className="mt-1">{t('u264.rings')}</p>}
             <Facts settings={parts[0].settings} />
             {parts.map((part, i) => {
               const partTitle = parts.length === 1 ? title : t('titlePart', { title, part: i + 1 });
               return (
-                <div key={part.keyGroup} className="mt-4 border-t border-soft pt-3">
+                <div key={i} className="mt-4 border-t border-soft pt-3">
                   {parts.length > 1 && <p className="font-semibold">{t('part', { part: i + 1 })}</p>}
                   <p className="text-sm">
-                    <span className="text-muted">{t('start')}</span> <span className="font-mono font-semibold">{part.start.join(' ')}</span>
+                    <span className="text-muted">{t('start')}</span> <span className="font-mono font-semibold">{startText(part.settings, part.start)}</span>
                   </p>
                   {part.hiddenStart !== null && (
                     <p className="text-sm text-muted">
@@ -124,7 +125,7 @@ export function MessageList({ onLoad }: MessageListProps) {
                     </p>
                   )}
                   <p className={label}>{t('secret')}</p>
-                  <p className="text-sm text-muted">{t('keyGroup', { group: part.keyGroup })}</p>
+                  {part.keyGroup !== null && <p className="text-sm text-muted">{t('keyGroup', { group: part.keyGroup })}</p>}
                   <p className={letterGroups}>{part.cipher}</p>
                   <LoadButton
                     text={parts.length === 1 ? t('load') : t('loadPart', { part: i + 1 })}
@@ -137,8 +138,8 @@ export function MessageList({ onLoad }: MessageListProps) {
             <details className="mt-4 border-t border-soft pt-3">
               <summary className="cursor-pointer font-semibold">{t('whatItSays')}</summary>
               <p className={label}>{t('asPublished')}</p>
-              {parts.map((part) => (
-                <p key={part.keyGroup} lang="de" className={`mt-1 ${letterGroups}`}>
+              {parts.map((part, i) => (
+                <p key={i} lang="de" className={`mt-1 ${letterGroups}`}>
                   {part.published}
                 </p>
               ))}

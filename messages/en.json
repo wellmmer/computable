@@ -564,6 +564,13 @@
         "rules": "X is a space, Q often stands for CH, and names are written twice.",
         "text": "Reconnaissance unit from Kurtinowa, north-west of Sebez, on the flight corridor towards Dubrowki and Opotschka. Set off at 18:30. Attack: Infantry Regiment 3 moves forward slowly but surely. 17:06: 1st Battalion, Infantry Regiment 3, on the flight corridor, its front 16 km east of Kamenec. Division commander."
       },
+      "u264": {
+        "title": "A message from U-264, 1942",
+        "about": "In November 1942, the German submarine U-264 sent this message. Its commander was Hartwig Looks. The M4 Project broke it on 20 February 2006, with distributed computing.",
+        "rings": "The rings A A A V are the ones the M4 Project found. The real rings are not known. Other ring and start pairs give the same text.",
+        "rules": "Numbers are written as German words: EINS EINS DREI ZWO is 1132.",
+        "text": "From Looks: Radio signal 1132/19. Contents: Forced to submerge during attack, depth charges. Last enemy location 08:30, square AJ 9863, 220 degrees, 8 nautical miles. (I am) following. (Barometer) 1014 millibar, falling, NNO 4, visibility 10."
+      },
       "scharnhorst": {
         "title": "The Scharnhorst’s last message, 1943",
         "about": "On 26 December 1943, the German warship Scharnhorst sent this message in its last battle. It sank soon after. The M4 Project broke the message on 28 May 2008.",

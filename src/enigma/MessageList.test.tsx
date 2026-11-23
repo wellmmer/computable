@@ -64,6 +64,46 @@ describe('MessageList (spec R3 4)', () => {
     expect(onLoad).toHaveBeenCalledWith({ title: 'Operation Barbarossa, 1941, part 2', sheet: expect.objectContaining({ start: ['L', 'S', 'D'] }) }, loadPart2);
   });
 
+  it('shows U-264 on the naval M4, with its 4 start letters and no key group (spec R5a 4)', () => {
+    const onLoad = vi.fn();
+    renderWithIntl(<MessageList onLoad={onLoad} />);
+    const card = screen.getByRole('article', { name: 'A message from U-264, 1942' });
+    expect(facts(card)).toEqual(['Rotors: Beta II IV I', 'Rings: A A A V', 'Plug pairs: AT BL DF GJ HM NW OP QY RZ VX', 'Reflector: Thin B']);
+    expect(card.textContent).toContain('Start V J N A');
+    expect(card.textContent).not.toContain('only named the key');
+    expect(within(card).getByText(/^NCZW VUSX PNYM/)).toBeTruthy();
+    const load = within(card).getByRole('button', { name: 'Load into the machine: A message from U-264, 1942' });
+    fireEvent.click(load);
+    expect(onLoad).toHaveBeenCalledWith(
+      { title: 'A message from U-264, 1942', sheet: expect.objectContaining({ settings: expect.objectContaining({ model: 'M4', thinPosition: 'V' }), start: ['J', 'N', 'A'] }) },
+      load,
+    );
+  });
+
+  it('says when U-264 sent its message, who broke it and when, and that the rings are not known (spec R5a 4)', () => {
+    renderWithIntl(<MessageList onLoad={() => {}} />);
+    const card = screen.getByRole('article', { name: 'A message from U-264, 1942' });
+    // bytereef.org/m4_project.html: "The first message has been broken on February 20th, 2006", "with the help of distributed computing".
+    // It says 25 November 1942, but the signal time points to the 19th, so the page says only "November 1942".
+    expect(
+      within(card).getByText(
+        'In November 1942, the German submarine U-264 sent this message. Its commander was Hartwig Looks. The M4 Project broke it on 20 February 2006, with distributed computing.',
+      ),
+    ).toBeTruthy();
+    expect(within(card).getByText('The rings A A A V are the ones the M4 Project found. The real rings are not known. Other ring and start pairs give the same text.')).toBeTruthy();
+    expect(card.textContent).not.toMatch(/\b(19|25) November/);
+    expect(
+      within(card).getByText(
+        'From Looks: Radio signal 1132/19. Contents: Forced to submerge during attack, depth charges. Last enemy location 08:30, square AJ 9863, 220 degrees, 8 nautical miles. (I am) following. (Barometer) 1014 millibar, falling, NNO 4, visibility 10.',
+      ),
+    ).toBeTruthy();
+    expect(within(card).getAllByRole('link').map((link) => link.getAttribute('href'))).toEqual([
+      'https://www.bytereef.org/m4_project.html',
+      'https://www.bytereef.org/m4-project-first-break.html',
+      'https://uboat.net/boats/u264.htm',
+    ]);
+  });
+
   it('shows what each real message says, in German and in the visitor’s language, and links its sources', () => {
     renderWithIntl(<MessageList onLoad={() => {}} />);
     const card = screen.getByRole('article', { name: 'The Scharnhorst’s last message, 1943' });
