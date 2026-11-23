@@ -55,7 +55,9 @@ test.describe('the Bombe lab (spec R4 3)', () => {
     const box = page.getByRole('region', { name: 'Decrypting: Bombe stop, rotors II IV V, start A Q P' });
     await expect(box.getByRole('heading')).toBeFocused();
     await box.getByRole('button', { name: 'Type it for me' }).click();
-    // Letters 10 to 22 read "EILUNG X VON X KU". Letters 1 to 9 do not: there the middle rotor stands one letter off.
+    // Letters 10 to 25 read, as one block. Letter 23 is wrong only because the stop has no KM plug pair.
+    // This checks letters 10 to 22: "EILUNG X VON X KU". Letters 1 to 9 do not read: there the middle rotor
+    // stands one letter off. Letter 6 reads only by chance.
     await expect(page.getByRole('region', { name: 'Lamps lit' }).locator('[data-strip]')).toHaveText(/^SFBEA XFUME ILUNG XVONX KU/);
   });
 

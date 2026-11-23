@@ -53,7 +53,8 @@ describe('Barbarossa part 1 on the Bombe (spec R4 5)', () => {
     const lamps = encrypt(ringsAAA(STOP.plugs), STOP.start, BARBAROSSA.cipher);
     expect(lamps.slice(BARBAROSSA.offset, cribEnd)).toBe(BARBAROSSA.crib);
     expect([...lamps].filter((letter, i) => letter === BARBAROSSA_PART_1.answer[i])).toHaveLength(92);
-    // Letters 10 to 22 read. Letters 26 to 36 do not: there the middle rotor stands one letter off.
+    // Letters 10 to 25 read, as one block. Letter 23 is wrong only because the stop has no KM plug pair.
+    // This checks letters 10 to 22. Letters 26 to 36 do not read: there the middle rotor stands one letter off.
     expect(lamps.slice(9, 22)).toBe('EILUNGXVONXKU');
     for (let i = 25; i < 36; i++) expect(lamps[i], `letter ${i + 1}`).not.toBe(BARBAROSSA_PART_1.answer[i]);
   });
