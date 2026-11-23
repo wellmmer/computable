@@ -517,7 +517,7 @@
       "machine": "Maschine",
       "modelI": "Enigma I",
       "modelM4": "M4 der Marine",
-      "machineHelp": "Ein Wechsel der Maschine löscht die Buchstaben, die du getippt hast.",
+      "machineHelp": "Ein Wechsel der Maschine stellt ihren Startschlüssel wieder her: Walzen, Ringe, Steckerpaare und Start. Er löscht auch die Buchstaben, die du getippt hast, und schließt die geladene Nachricht.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {keine Steckerpaare} one {# Steckerpaar} other {# Steckerpaare}}",
       "change": "Ändern",
       "changeSettings": "Einstellungen ändern",

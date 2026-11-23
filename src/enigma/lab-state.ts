@@ -109,7 +109,8 @@ export function labReducer(lab: LabState, action: LabAction): LabState {
       // A message from the list: its key sheet's settings, and the rotors at its start.
       return { ...lab, settings: action.settings, positions: action.start, start: action.start, typed: [], previousLit: '' };
     case 'model': {
-      // A new machine starts from its default settings, as after a reload (spec R5a 3).
+      // A new machine starts from its starting key, as after a reload: rotors, rings, plug pairs, reflector
+      // and windows. The Enigma I allows only rotors I to V, so an M4 key would not always fit it (spec R5a 3, "Switching").
       const settings = action.model === 'M4' ? LAB_M4_SETTINGS : LAB_SETTINGS;
       return { ...lab, settings, positions: LAB_START, start: LAB_START, typed: [], previousLit: '', news: null };
     }

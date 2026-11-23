@@ -53,7 +53,9 @@ Tests (Vitest):
   thin reflectors only.
 - **The current path** drawing shows the 4th rotor.
 - **Practice M4 message.** One message we make, with its key shown, in the message list.
-- **Switching** back and forth resets the typed letters, as loading a message does now.
+- **Switching** puts back that machine's starting key, as after a reload: its rotors, rings, plug
+  pairs, reflector and windows. It also clears the typed letters and closes a loaded message. This is
+  the simple, safe choice: the Enigma I allows only rotors I to V, so an M4 key would not always fit it.
 
 ## 4. R5a2: U-264 and the history box
 

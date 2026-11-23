@@ -517,7 +517,7 @@
       "machine": "Machine",
       "modelI": "Enigma I",
       "modelM4": "M4 navale",
-      "machineHelp": "Changer de machine efface les lettres que vous avez tapées.",
+      "machineHelp": "Changer de machine remet sa clé de départ : rotors, anneaux, paires de fiches et départ. Cela efface aussi les lettres que vous avez tapées et ferme le message chargé.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {aucune paire de fiches} one {# paire de fiches} other {# paires de fiches}}",
       "change": "Changer",
       "changeSettings": "Changer les réglages",

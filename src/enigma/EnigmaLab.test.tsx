@@ -300,7 +300,7 @@ describe('EnigmaLab, the machine choice (spec R5a 3)', () => {
       ['Enigma I', true],
       ['Naval M4', false],
     ]);
-    expect(within(machine()).getByText('Switching the machine clears the letters you typed.')).toBeTruthy();
+    expect(within(machine()).getByText('Switching the machine puts back its starting key: rotors, rings, plug pairs and start. It also clears the letters you typed and closes a loaded message.')).toBeTruthy();
     expect(screen.queryByText(/^Thin rotor/)).toBeNull();
   });
 

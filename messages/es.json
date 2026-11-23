@@ -517,7 +517,7 @@
       "machine": "Máquina",
       "modelI": "Enigma I",
       "modelM4": "M4 naval",
-      "machineHelp": "Al cambiar de máquina se borran las letras que escribiste.",
+      "machineHelp": "Al cambiar de máquina, vuelve su clave inicial: rotores, anillos, pares de clavijas e inicio. También se borran las letras que escribiste y se cierra el mensaje cargado.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {ningún par de clavijas} one {# par de clavijas} other {# pares de clavijas}}",
       "change": "Cambiar",
       "changeSettings": "Cambiar la configuración",
