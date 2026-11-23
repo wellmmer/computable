@@ -116,7 +116,9 @@ Tests (Vitest):
   Alan Turing." One or two sentences say what the film changes, for example that Turing did not build the
   Bombe alone, and that the film calls the machine "Christopher".
 - **Barbarossa.** "Break part 1 with the Bombe" fills the real secret letters and a crib from the
-  known German text.
+  known German text. After the search finds the stop, the crib card says why its start is A Q P
+  and not B L A. Before the search, it says nothing, so it does not give the answer away
+  (Wellmmer, 2026-11-23).
 
 ## 6. Tests and checks
 

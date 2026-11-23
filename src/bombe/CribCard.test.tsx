@@ -4,7 +4,8 @@ import { useReducer } from 'react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
 import { CribCard } from './CribCard';
-import { bombeReducer, initialLab } from './lab-state';
+import { BARBAROSSA, BARBAROSSA_PART_1 } from './barbarossa';
+import { bombeReducer, initialLab, NO_SEARCH } from './lab-state';
 
 afterEach(cleanup);
 
@@ -61,8 +62,20 @@ describe('CribCard (spec R4 3, "Crib card")', () => {
     expect(screen.getByRole<HTMLInputElement>('textbox', { name: 'Crib: a word you know is in the message' }).value).toBe('OWAXNORDWESTLXSE');
     expect(screen.getByText('Place 37 of 159')).toBeTruthy();
     expect(screen.getByText('No letter turns into itself here.')).toBeTruthy();
+    // The note names the found start, so it waits for the search: before it, it would give the answer away.
+    expect(screen.queryByText(rings, { exact: false })).toBeNull();
+  });
+
+  it('says why the start is not B L A only after the search finds the stop II IV V at A Q P (spec R4 5)', () => {
+    const rings = 'The real key used rings B U L and start B L A. The Bombe assumes rings A A A, so it finds start A Q P instead.';
+    const loaded = bombeReducer(initialLab(), { type: 'barbarossa' });
+    const found = { rotors: BARBAROSSA_PART_1.settings.rotors, start: BARBAROSSA.foundStart, plugs: [] };
+    const finished = { ...loaded, search: { ...NO_SEARCH, status: 'finished' as const, total: 60, done: 60, stops: [found], count: 1 } };
+    renderWithIntl(<CribCard lab={finished} dispatch={() => {}} />);
     expect(screen.getByText(rings, { exact: false })).toBeTruthy();
-    slide('right');
+    cleanup();
+    const otherStop = { ...finished, search: { ...finished.search, stops: [{ ...found, start: ['B', 'L', 'A'] as const }] } };
+    renderWithIntl(<CribCard lab={otherStop} dispatch={() => {}} />);
     expect(screen.queryByText(rings, { exact: false })).toBeNull();
   });
 
