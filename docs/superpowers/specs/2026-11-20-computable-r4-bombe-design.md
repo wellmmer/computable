@@ -113,7 +113,7 @@ Tests (Vitest):
   with Britain (July 1939); Turing's design (1939); Welchman's diagonal board; the first Bombe,
   "Victory" (March 1940).
 - **Film box** in the same section: "The Imitation Game (2014), a drama with Benedict Cumberbatch as
-  Alan Turing." One sentence says what the film changes, for example that Turing did not build the
+  Alan Turing." One or two sentences say what the film changes, for example that Turing did not build the
   Bombe alone, and that the film calls the machine "Christopher".
 - **Barbarossa.** "Break part 1 with the Bombe" fills the real secret letters and a crib from the
   known German text.
