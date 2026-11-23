@@ -45,9 +45,11 @@ test.describe('the Bombe lab (spec R4 3)', () => {
     await expect(page.getByRole('textbox', { name: 'Crib: a word you know is in the message' })).toHaveValue('OWAXNORDWESTLXSE');
     await expect(page.getByText('Place 37 of 159')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Menu: 1 loop' })).toBeVisible();
-    await expect(page.getByText(/^The real key used rings B U L and start B L A\. The Bombe assumes rings A A A, so it finds start A Q P instead\./)).toBeVisible();
+    const ringsNote = page.getByText(/^The real key used rings B U L and start B L A\. The Bombe assumes rings A A A, so it finds start A Q P instead\./);
+    await expect(ringsNote).toHaveCount(0);
     await page.getByRole('button', { name: 'Start' }).click();
     await expect(page.getByRole('status')).toHaveText('Finished: 1 rotor order tested. 1 stop.');
+    await expect(ringsNote).toBeVisible();
     await expect(page.getByText('II IV V · start A Q P')).toBeVisible();
     await expect(page.getByText('Plug pairs found: AV BS CG DL FU HZ IN OW RX')).toBeVisible();
 

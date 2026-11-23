@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import type { Dispatch } from 'react';
 import { BARBAROSSA, BARBAROSSA_PART_1 } from './barbarossa';
-import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, isBarbarossaAtItsPlace, placeCount, SECRET_MAX_LENGTH, secretLetters, type BombeAction, type BombeLab } from './lab-state';
+import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, isBarbarossaStopFound, placeCount, SECRET_MAX_LENGTH, secretLetters, type BombeAction, type BombeLab } from './lab-state';
 
 export const card = 'border border-soft bg-cell px-4 py-3 sm:rounded';
 export const cardTitle = 'font-semibold';
@@ -72,7 +72,7 @@ export function CribCard({ lab, dispatch }: { lab: BombeLab; dispatch: Dispatch<
         {t('barbarossa')}
       </button>
       <p className="mt-1 text-sm text-muted">{t('barbarossaAbout', { crib: BARBAROSSA.crib })}</p>
-      {isBarbarossaAtItsPlace(lab) && (
+      {isBarbarossaStopFound(lab) && (
         <p className="mt-1 text-sm">
           {t('barbarossaRings', {
             rings: BARBAROSSA_PART_1.settings.rings.join(' '),

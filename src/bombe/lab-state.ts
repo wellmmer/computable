@@ -176,9 +176,22 @@ function isPracticeAtItsPlace(lab: BombeLab): boolean {
   return secretLetters(lab) === PRACTICE.cipher && cribLetters(lab) === PRACTICE.crib && lab.offset === PRACTICE.offset;
 }
 
-/** True when the lab holds Barbarossa part 1, with its crib at its place. The crib card then says why the stop's start is not B L A. */
+/** True when the lab holds Barbarossa part 1, with its crib at its place. */
 export function isBarbarossaAtItsPlace(lab: BombeLab): boolean {
   return secretLetters(lab) === BARBAROSSA.cipher && cribLetters(lab) === BARBAROSSA.crib && lab.offset === BARBAROSSA.offset;
+}
+
+/**
+ * True when the lab holds Barbarossa part 1 at its place, and the search found its stop: II IV V at
+ * A Q P. Only then does the crib card say why the start is not B L A. Before the search, that note
+ * would give the answer away.
+ */
+export function isBarbarossaStopFound(lab: BombeLab): boolean {
+  const same = (a: readonly string[], b: readonly string[]) => a.join(' ') === b.join(' ');
+  return (
+    isBarbarossaAtItsPlace(lab) &&
+    lab.search.stops.some((stop) => same(stop.rotors, BARBAROSSA_PART_1.settings.rotors) && same(stop.start, BARBAROSSA.foundStart))
+  );
 }
 
 /**
