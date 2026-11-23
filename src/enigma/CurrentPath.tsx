@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import type { EnigmaSettings, Letter, PathPoint } from '@/engines/enigma';
+import { isM4, type Letter, type MachineSettings, type PathPoint } from '@/engines/enigma';
 import type { TypedLetter } from './lab-state';
 
 /** Out to the reflector, or back from it. */
@@ -124,11 +124,11 @@ function pairOf(plugs: readonly string[], a: Letter, b: Letter): string {
  * "Where the current went for T" (spec R3 3): the path of the last letter as a picture. Wide screens
  * draw it across, phones top to bottom. A red ring marks each plugboard swap.
  */
-export function CurrentPath({ settings, last }: { settings: EnigmaSettings; last: TypedLetter | null }) {
+export function CurrentPath({ settings, last }: { settings: MachineSettings; last: TypedLetter | null }) {
   const t = useTranslations('enigma.path');
   const [show, setShow] = useState(true);
   const [left, middle, right] = settings.rotors;
-  const rotorName = { right, middle, left };
+  const rotorName = { right, middle, left, thin: isM4(settings) ? settings.thinRotor : '' };
 
   const labels = [t('keyLamp'), t('plugboard'), t('rotor', { name: right }), t('rotor', { name: middle }), t('rotor', { name: left }), t('reflector')];
   const swaps =
