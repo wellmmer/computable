@@ -108,6 +108,49 @@ describe('the M4 model (spec R5a 2)', () => {
     );
   });
 
+  // The M4 Project, "First break": https://www.bytereef.org/m4-project-first-break.html
+  // The key is the one the project found: Beta, rotors II IV I, thin reflector B, rings A A A V, start V J N A.
+  describe('the U-264 message of November 1942, all 232 letters', () => {
+    const settings: M4Settings = {
+      model: 'M4',
+      thinRotor: 'Beta',
+      thinRing: 'A',
+      thinPosition: 'V',
+      rotors: ['II', 'IV', 'I'],
+      rings: ['A', 'A', 'V'],
+      reflector: 'B',
+      plugs: ['AT', 'BL', 'DF', 'GJ', 'HM', 'NW', 'OP', 'QY', 'RZ', 'VX'],
+    };
+    const start: Positions = ['J', 'N', 'A'];
+    const cipher = (
+      'NCZW VUSX PNYM INHZ XMQX SFWX WLKJ AHSH NMCO CCAK UQPM KCSM HKSE INJU SBLK IOSX CKUB HMLL XCSJ USRR ' +
+      'DVKO HULX WCCB GVLI YXEO AHXR HKKF VDRE WEZL XOBA FGYU JQUK GRTV UKAM EURB VEKS UHHV OYHA BCJW MAKL ' +
+      'FKLM YFVN RIZR VVRT KOFD ANJM OLBG FFLE OPRG TFLV RHOW OPBE KVWM UQFM PWPA RMFH AGKX IIBG'
+    ).replaceAll(' ', '');
+    const plain = (
+      'vonvonjlooksjhffttteinseinsdreizwoyyqnnsneuninhaltxxbeiangriffunterwassergedruecktywabosxletztergegnerstand' +
+      'nulachtdreinuluhrmarquantonjotaneunachtseyhsdreiyzwozwonulgradyachtsmystossenachxeknsviermbfaelltynnnnnnooo' +
+      'vierysichteinsnull'
+    ).toUpperCase();
+
+    it('decrypts the whole cipher to the plain text', () => {
+      expect(cipher).toHaveLength(232);
+      expect(plain).toHaveLength(232);
+      expect(encrypt(settings, start, cipher)).toBe(plain);
+    });
+
+    it('encrypts the plain text back to the cipher', () => {
+      expect(encrypt(settings, start, plain)).toBe(cipher);
+    });
+
+    // The left rotor never turns in these 232 letters, and the thin rotor never turns at all.
+    // So a ring one letter on, with a start one letter on, lights the same letters.
+    it('gives the same text with other ring and start pairs, so the letters alone cannot show the real rings', () => {
+      expect(encrypt({ ...settings, thinRing: 'B', thinPosition: 'W' }, start, cipher)).toBe(plain);
+      expect(encrypt({ ...settings, rings: ['B', 'A', 'V'] }, ['K', 'N', 'A'], cipher)).toBe(plain);
+    });
+  });
+
   it('gives the text back when the lit letters are typed from the same start', () => {
     fc.assert(
       fc.property(m4, start, text, (settings, from, plain) => {
