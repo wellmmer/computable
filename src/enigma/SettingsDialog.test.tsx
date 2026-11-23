@@ -106,7 +106,7 @@ describe('SettingsDialog for the naval M4 (spec R5a 3)', () => {
   it('shows the thin rotor, its ring and its start, and offers the thin reflectors only', () => {
     const { dialog } = openDialog(LAB_M4_SETTINGS);
     expect(['Thin rotor', 'Left rotor', 'Middle rotor', 'Right rotor'].map((name) => value(dialog, name))).toEqual(['Beta', 'I', 'II', 'III']);
-    expect(['Thin ring', 'Left ring', 'Middle ring', 'Right ring'].map((name) => value(dialog, name))).toEqual(['A', 'A', 'A', 'A']);
+    expect(['Thin rotor ring', 'Left ring', 'Middle ring', 'Right ring'].map((name) => value(dialog, name))).toEqual(['A', 'A', 'A', 'A']);
     expect(value(dialog, 'Thin rotor start')).toBe('A');
     const thinRotor = within(dialog).getByRole('combobox', { name: 'Thin rotor' });
     expect(within(thinRotor).getAllByRole('option').map((option) => option.textContent)).toEqual(['Beta', 'Gamma']);
@@ -120,7 +120,7 @@ describe('SettingsDialog for the naval M4 (spec R5a 3)', () => {
   it('saves a new thin rotor, ring, start and thin reflector, and keeps the M4', () => {
     const { dialog, onSave } = openDialog(LAB_M4_SETTINGS);
     fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin rotor' }), { target: { value: 'Gamma' } });
-    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin ring' }), { target: { value: 'B' } });
+    fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin rotor ring' }), { target: { value: 'B' } });
     fireEvent.change(within(dialog).getByRole('combobox', { name: 'Thin rotor start' }), { target: { value: 'U' } });
     fireEvent.click(within(dialog).getByRole('radio', { name: 'Thin B' }));
     fireEvent.click(within(dialog).getByRole('button', { name: 'Save' }));
