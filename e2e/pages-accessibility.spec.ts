@@ -289,6 +289,31 @@ for (const colorScheme of ['light', 'dark'] as const) {
       });
     }
 
+    // U-264 on the naval M4 (spec R5a 4): loaded, typed, checked, and its "What it says" open. The M4 history is under it.
+    for (const locale of LOCALE_PATHS) {
+      test(`${locale}/enigma with U-264 loaded, typed and checked has no axe violations, on a desktop and a phone`, async ({ page }) => {
+        const texts = MESSAGES[locale].enigma;
+        for (const viewport of [
+          { width: 1280, height: 800 },
+          { width: 390, height: 844 },
+        ]) {
+          await page.setViewportSize(viewport);
+          await openLab(page, `${locale}/enigma`);
+          const card = page.getByRole('article', { name: texts.messages.u264.title });
+          await card.getByRole('button', { name: `${texts.messages.load}: ${texts.messages.u264.title}` }).click();
+          await expect(page.getByRole('group', { name: texts.lab.machine }).getByRole('radio', { name: texts.lab.modelM4 })).toBeChecked();
+          const box = page.locator('#decrypt-title').locator('..');
+          // The box's buttons: "Type it for me", then "Check my answer".
+          await box.getByRole('button').nth(0).click();
+          await box.getByRole('button').nth(1).click();
+          await expect(box.locator('[aria-live]')).not.toBeEmpty();
+          await card.locator('summary').click();
+          await expect(page.getByRole('region', { name: texts.history.title })).toBeVisible();
+          expect(await axeViolations(page), `${viewport.width} px`).toEqual([]);
+        }
+      });
+    }
+
     test("the Learn page's reset question has no axe violations", async ({ page }) => {
       await openPage(page, '/en/learn');
       await page.getByRole('button', { name: 'Reset my progress' }).click();

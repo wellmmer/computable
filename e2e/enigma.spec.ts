@@ -125,6 +125,38 @@ test.describe('the messages under the lab (spec R3 4)', () => {
   });
 });
 
+test.describe('U-264 and the M4 history (spec R5a 4)', () => {
+  test('loads U-264 from the Enigma I, switches to the M4, and the first secret letters decrypt', async ({ page }) => {
+    await openLab(page, '/en/enigma');
+    const choice = page.getByRole('group', { name: 'Machine' });
+    await expect(choice.getByRole('radio', { name: 'Enigma I' })).toBeChecked();
+    const card = page.getByRole('article', { name: 'A message from U-264, 1942' });
+    await expect(card.getByText('In November 1942, the German submarine U-264 sent this message.', { exact: false })).toBeVisible();
+    await card.getByRole('button', { name: 'Load into the machine: A message from U-264, 1942' }).click();
+    await expect(page.getByRole('region', { name: 'Decrypting: A message from U-264, 1942' }).getByRole('heading')).toBeFocused();
+    await expect(choice.getByRole('radio', { name: 'Naval M4' })).toBeChecked();
+    await expect(page.getByText('Thin rotor, rotor Beta, shows V')).toBeAttached();
+    await expect(page.getByRole('button', { name: 'Back to start (V J N A)' })).toBeVisible();
+    await page.keyboard.type('NCZWVUSXPNYMINHZ');
+    await expect(strip(page, 'Lamps lit')).toHaveText('VONVO NJLOO KSJHF F');
+  });
+
+  test('shows the M4 history under the messages, with its sources and a link to the Bombe lab', async ({ page }) => {
+    await openLab(page, '/en/enigma');
+    const history = page.getByRole('region', { name: 'The M4 and the Bombes' });
+    await expect(history.getByRole('heading', { level: 3 })).toHaveText([
+      'February 1942: the M4',
+      '1942: about 10 months without U-boat messages',
+      '1943: 4-rotor Bombes',
+      'The Bombe on this site',
+    ]);
+    await expect(history.locator('a[href^="https://"]')).toHaveCount(5);
+    await expect(history.locator('a[href="https://en.wikipedia.org/wiki/Bombe"]')).toBeVisible();
+    await history.getByRole('link', { name: 'Open the 3-rotor Bombe lab' }).click();
+    await expect(page).toHaveURL(/\/en\/bombe$/);
+  });
+});
+
 const PRACTICE_1 = [
   { path: '/en', load: 'Load into the machine: Practice 1: no plug pairs', box: 'Decrypting: Practice 1: no plug pairs', typeForMe: 'Type it for me', lit: 'HELLO XFROM XBLET CHLEY XPARK' },
   { path: '/pt-br', load: 'Carregar na máquina: Treino 1: sem pares de plugues', box: 'Decifrando: Treino 1: sem pares de plugues', typeForMe: 'Digitar para mim', lit: 'OLAXD EXBLE TCHLE YXPAR K' },
