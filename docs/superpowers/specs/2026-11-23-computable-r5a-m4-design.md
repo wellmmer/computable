@@ -37,8 +37,9 @@ Tests (Vitest):
 
 | Test | Expected |
 | --- | --- |
-| Beta at A, ring A, with thin reflector B | The same letters as the Enigma I with reflector B (AI theory, not checked; see section 6). |
-| Gamma at A, ring A, with thin reflector C | The same letters as the Enigma I with reflector C (same note). |
+| Beta at A, ring A, with thin reflector B | The same letters as the Enigma I with reflector B. Checked on 2026-11-23: true (see section 6). |
+| Gamma at A, ring A, with thin reflector C | The same letters as the Enigma I with reflector C. Checked on 2026-11-23: true. |
+| The Dönitz message of 1 May 1945 | Its first 108 letters decrypt to the plain text the Crypto Museum publishes. |
 | Any M4 setting, a message typed twice from the same start | The second pass gives the plain text back. |
 | No letter | Ever turns into itself. |
 | The 4th rotor | Never turns, over 1,000 key presses. |
@@ -72,7 +73,8 @@ violations in light and dark mode. Lighthouse is not required.
 
 | Claim | Source |
 | --- | --- |
-| The wirings of Beta, Gamma, thin B and thin C. | From my own knowledge. Check against 2 published sources before R5a1 ships. |
-| Beta at A with thin B equals the Enigma I with reflector B; Gamma at A with thin C equals reflector C. | AI theory, not checked. The R5a1 tests check it. If it is false, the tests and this spec change. |
+| The wirings of Beta, Gamma, thin B and thin C. | Checked letter by letter on 2026-11-23: [Crypto Museum, "Enigma wiring"](https://www.cryptomuseum.com/crypto/enigma/wiring.htm) and [Wikipedia, "Enigma rotor details"](https://en.wikipedia.org/wiki/Enigma_rotor_details) agree. |
+| Beta at A with thin B equals the Enigma I with reflector B; Gamma at A with thin C equals reflector C. | Checked on 2026-11-23: true. A property test in `src/engines/enigma/m4.test.ts` compares both machines on random settings and texts. |
+| An M4 test vector. | Checked on 2026-11-23: [Crypto Museum, "Dönitz message"](https://www.cryptomuseum.com/crypto/enigma/msg/p1030681.htm). M4, thin reflector C, Beta, rotors V VI VIII, rings E P E L, start C D S Z. Its first 108 letters decrypt. The page says later groups have reception errors. |
 | The U-264 message, its date, its key, and its 2006 break by the M4 Project. | From my own knowledge. Check before R5a2 ships. |
 | The 10-month blackout in 1942 and the 4-rotor Bombes in 1943. | From my own knowledge. Check before R5a2 ships. |

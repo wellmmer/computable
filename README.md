@@ -43,7 +43,7 @@ machine could do the same work.
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Live: the engine and the lab (R4a), your own secret and slow step mode (R4b), the history and Barbarossa (R4c) |
-| **R5** | The naval Enigma M4, then optional accounts | Planned |
+| **R5** | The naval Enigma M4, then optional accounts | In progress: R5a1 the M4 in the Enigma lab |
 
 ## What R1 brings
 
