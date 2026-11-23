@@ -586,7 +586,7 @@
       "practice": "Load the practice message",
       "practiceAbout": "The practice message is a made-up German weather report. It starts with WETTERBERICHT, “weather report”.",
       "barbarossa": "Break part 1 with the Bombe",
-      "barbarossaAbout": "Part 1 of the Barbarossa message, a real German army report from 7 July 1941. The crib {crib} comes from its known text: “Kurtinowa, nordwestlich Sebez”.",
+      "barbarossaAbout": "Part 1 of the Barbarossa message, a real German army report from 7 July 1941. The crib {crib} comes from its known text: “Kurtinowa nordwestl. Sebez”.",
       "barbarossaRings": "The real key used rings {rings} and start {start}. The Bombe assumes rings A A A, so it finds start {found} instead. With rings A A A, the middle rotor turns at other letters. So the stop’s key reads the message in blocks of about 15 letters, with wrong letters between them.",
       "crib": "Crib: a word you know is in the message",
       "slideLeft": "Slide the crib left",

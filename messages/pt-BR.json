@@ -586,7 +586,7 @@
       "practice": "Carregar a mensagem de treino",
       "practiceAbout": "A mensagem de treino é um boletim do tempo alemão inventado. Ela começa com WETTERBERICHT, “boletim do tempo”.",
       "barbarossa": "Quebrar a parte 1 com a Bombe",
-      "barbarossaAbout": "A parte 1 da mensagem Barbarossa, um relatório real do exército alemão de 7 de julho de 1941. O crib {crib} vem do texto conhecido: “Kurtinowa, nordwestlich Sebez”.",
+      "barbarossaAbout": "A parte 1 da mensagem Barbarossa, um relatório real do exército alemão de 7 de julho de 1941. O crib {crib} vem do texto conhecido: “Kurtinowa nordwestl. Sebez”.",
       "barbarossaRings": "A chave real usava os anéis {rings} e o início {start}. A Bombe supõe os anéis A A A, então ela encontra o início {found}. Com os anéis A A A, o rotor do meio gira em outras letras. Por isso a chave da parada lê a mensagem em blocos de umas 15 letras, com letras erradas entre eles.",
       "crib": "Crib: uma palavra que você sabe que está na mensagem",
       "slideLeft": "Deslizar o crib para a esquerda",

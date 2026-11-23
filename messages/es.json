@@ -586,7 +586,7 @@
       "practice": "Cargar el mensaje de práctica",
       "practiceAbout": "El mensaje de práctica es un parte meteorológico alemán inventado. Empieza con WETTERBERICHT, “parte meteorológico”.",
       "barbarossa": "Romper la parte 1 con la Bombe",
-      "barbarossaAbout": "La parte 1 del mensaje Barbarroja, un informe real del ejército alemán del 7 de julio de 1941. El crib {crib} sale de su texto conocido: «Kurtinowa, nordwestlich Sebez».",
+      "barbarossaAbout": "La parte 1 del mensaje Barbarroja, un informe real del ejército alemán del 7 de julio de 1941. El crib {crib} sale de su texto conocido: «Kurtinowa nordwestl. Sebez».",
       "barbarossaRings": "La clave real usaba los anillos {rings} y el inicio {start}. La Bombe supone los anillos A A A, así que encuentra el inicio {found}. Con los anillos A A A, el rotor del medio gira en otras letras. Por eso la clave de la parada lee el mensaje en bloques de unas 15 letras, con letras erróneas entre ellos.",
       "crib": "Crib: una palabra que sabes que está en el mensaje",
       "slideLeft": "Deslizar el crib a la izquierda",

@@ -586,7 +586,7 @@
       "practice": "Übungsnachricht laden",
       "practiceAbout": "Die Übungsnachricht ist ein ausgedachter deutscher Wetterbericht. Sie beginnt mit WETTERBERICHT.",
       "barbarossa": "Teil 1 mit der Bombe knacken",
-      "barbarossaAbout": "Teil 1 der Barbarossa-Nachricht, ein echter Bericht des deutschen Heeres vom 7. Juli 1941. Der Crib {crib} stammt aus seinem bekannten Text: „Kurtinowa, nordwestlich Sebez“.",
+      "barbarossaAbout": "Teil 1 der Barbarossa-Nachricht, ein echter Bericht des deutschen Heeres vom 7. Juli 1941. Der Crib {crib} stammt aus seinem bekannten Text: „Kurtinowa nordwestl. Sebez“.",
       "barbarossaRings": "Der echte Schlüssel nutzte die Ringe {rings} und den Start {start}. Die Bombe nimmt die Ringe A A A an, darum findet sie den Start {found}. Mit den Ringen A A A dreht sich die mittlere Walze bei anderen Buchstaben. Darum liest der Schlüssel des Stopps die Nachricht in Blöcken von etwa 15 Buchstaben, mit falschen Buchstaben dazwischen.",
       "crib": "Crib: ein Wort, von dem du weißt, dass es in der Nachricht steht",
       "slideLeft": "Crib nach links schieben",
