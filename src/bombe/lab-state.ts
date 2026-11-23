@@ -2,7 +2,7 @@ import { buildMenu, crashes, startAt, testSteps, type Menu, type Stop, type Test
 import { stepRotors, type Positions, type RotorName, type Three } from '@/engines/enigma';
 import { lettersOf } from '@/enigma/key-sheet';
 import { groupsOf5 } from '@/enigma/lab-state';
-import { BARBAROSSA } from './barbarossa';
+import { BARBAROSSA, BARBAROSSA_PART_1 } from './barbarossa';
 import { PRACTICE } from './practice-message';
 import type { SearchReport } from './search-messages';
 
@@ -184,14 +184,16 @@ export function isBarbarossaAtItsPlace(lab: BombeLab): boolean {
 /**
  * The test that "Watch one test slowly" shows. A test without a stop takes 286 to 445 steps, and a
  * stop about 18, so the card opens on a stop when it knows one. First choice: the first stop of the
- * last search. Before any search of the practice message: the practice key. Otherwise: the rotor
- * order and start on the drum wall.
+ * last search. Before any search of the practice message: the practice key. Before any search of
+ * Barbarossa part 1: its stop. Otherwise: the rotor order and start on the drum wall.
  */
 export function slowTestKey(lab: BombeLab, orders: readonly Three<RotorName>[]): { rotors: Three<RotorName>; start: Positions } {
   const { search } = lab;
   const [stop] = search.stops;
   if (stop !== undefined) return { rotors: stop.rotors, start: stop.start };
   if (search.status === 'idle' && isPracticeAtItsPlace(lab)) return { rotors: PRACTICE.settings.rotors, start: PRACTICE.start };
+  // The Barbarossa stop is in the real rotor order, II IV V.
+  if (search.status === 'idle' && isBarbarossaAtItsPlace(lab)) return { rotors: BARBAROSSA_PART_1.settings.rotors, start: BARBAROSSA.foundStart };
   if (search.testing !== null) return { rotors: orders[search.testing.order], start: startAt(search.testing.start) };
   return { rotors: orders[0], start: ['A', 'A', 'A'] };
 }

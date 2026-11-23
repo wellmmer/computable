@@ -218,4 +218,11 @@ describe('slow step mode (spec R4 4, "Watch one test slowly")', () => {
     const stopped = { ...NO_SEARCH, status: 'stopped', total: 60, done: 0, testing: { order: 0, start: 2197 } } as const;
     expect(slowTestKey({ ...practice, search: stopped }, ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['D', 'G', 'N'] });
   });
+
+  it('picks the Barbarossa stop before any search of Barbarossa part 1 with its crib at its place', () => {
+    const barbarossa = run({ type: 'barbarossa' });
+    expect(slowTestKey(barbarossa, ROTOR_ORDERS)).toEqual({ rotors: ['II', 'IV', 'V'], start: ['A', 'Q', 'P'] });
+    // The crib moved: the Barbarossa stop no longer fits.
+    expect(slowTestKey(bombeReducer(barbarossa, { type: 'slide', by: 1 }), ROTOR_ORDERS)).toEqual({ rotors: ROTOR_ORDERS[0], start: ['A', 'A', 'A'] });
+  });
 });
