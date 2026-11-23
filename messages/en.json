@@ -454,10 +454,12 @@
       "left": "Left rotor",
       "middle": "Middle rotor",
       "right": "Right rotor",
+      "thin": "Thin rotor",
       "window": "{rotor}, rotor {name}, shows {letter}",
       "next": "{rotor}: next letter",
       "previous": "{rotor}: previous letter",
       "note": "The right rotor turns one step before each letter.",
+      "thinNote": "The thin rotor never turns.",
       "keyboard": "Keyboard"
     },
     "path": {
@@ -484,6 +486,7 @@
       "rotors": "Rotors",
       "rings": "Rings",
       "reflector": "Reflector",
+      "thinReflector": "Thin {name}",
       "plugs": "Plug pairs",
       "rotorLeft": "Left rotor",
       "rotorMiddle": "Middle rotor",
@@ -508,6 +511,10 @@
     },
     "lab": {
       "settings": "Settings",
+      "machine": "Machine",
+      "modelI": "Enigma I",
+      "modelM4": "Naval M4",
+      "machineHelp": "Switching the machine clears the letters you typed.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {no plug pairs} one {# plug pair} other {# plug pairs}}",
       "change": "Change",
       "changeSettings": "Change settings",

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { KEY_ROWS, type Letter, type Positions, type RotorName, type Three } from '@/engines/enigma';
+import { KEY_ROWS, type Letter, type Positions, type RotorName, type ThinRotorName, type Three } from '@/engines/enigma';
 import { Lampboard, round } from './Lampboard';
 
 const SLOTS = [
@@ -15,6 +15,8 @@ const onPanel = 'focus-visible:outline-lamp';
 
 interface MachinePanelProps {
   rotors: Three<RotorName>;
+  /** The M4's thin rotor and its window letter, or none on the Enigma I. */
+  thin?: { name: ThinRotorName; letter: Letter } | null;
   positions: Positions;
   /** The lamp that is lit, or null before the first key. */
   lit: Letter | null;
@@ -27,13 +29,28 @@ interface MachinePanelProps {
 /**
  * The machine from the mockup (lab-c-v2.html): the rotor windows with ▲ and ▼, the lampboard, and
  * the keyboard, on a bakelite panel. Screen readers skip the lampboard: the live region and the
- * "Lamps lit" strip say which lamp lit.
+ * "Lamps lit" strip say which lamp lit. The M4 adds its thin rotor as the leftmost window: narrower,
+ * and with no ▲ or ▼, because it never turns. The settings dialog sets its letter (spec R5a 3).
  */
-export function MachinePanel({ rotors, positions, lit, lastKey, onPress, onTurn }: MachinePanelProps) {
+export function MachinePanel({ rotors, thin = null, positions, lit, lastKey, onPress, onTurn }: MachinePanelProps) {
   const t = useTranslations('enigma.machine');
   return (
     <section aria-label={t('label')} className="rounded-[10px] bg-bakelite px-3 py-3.5 text-ivory sm:px-4">
       <div className="flex justify-center gap-4 sm:gap-5">
+        {thin !== null && (
+          <div data-thin className="flex flex-col items-center">
+            {/* Empty space where the other rotors have ▲, so the windows line up. */}
+            <span aria-hidden className="h-7" />
+            <span className="sr-only">{t('window', { rotor: t('thin'), name: thin.name, letter: thin.letter })}</span>
+            <span aria-hidden className="my-[3px] rounded-[3px] border border-brass bg-ivory px-1 font-mono text-base font-bold text-bakelite">
+              {thin.letter}
+            </span>
+            <span aria-hidden className="h-7" />
+            <span aria-hidden className="font-display text-xs text-brass">
+              {thin.name}
+            </span>
+          </div>
+        )}
         {SLOTS.map(({ slot, name }) => {
           const rotor = t(name);
           return (
@@ -57,7 +74,7 @@ export function MachinePanel({ rotors, positions, lit, lastKey, onPress, onTurn 
           );
         })}
       </div>
-      <p className="mt-1 mb-3 text-center text-xs text-brass">{t('note')}</p>
+      <p className="mt-1 mb-3 text-center text-xs text-brass">{thin === null ? t('note') : `${t('note')} ${t('thinNote')}`}</p>
 
       <Lampboard lit={lit} />
 

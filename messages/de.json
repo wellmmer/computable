@@ -454,10 +454,12 @@
       "left": "Linke Walze",
       "middle": "Mittlere Walze",
       "right": "Rechte Walze",
+      "thin": "Dünne Walze",
       "window": "{rotor}, Walze {name}, zeigt {letter}",
       "next": "{rotor}: nächster Buchstabe",
       "previous": "{rotor}: vorheriger Buchstabe",
       "note": "Die rechte Walze dreht sich vor jedem Buchstaben um einen Schritt.",
+      "thinNote": "Die dünne Walze dreht sich nie.",
       "keyboard": "Tastatur"
     },
     "path": {
@@ -484,6 +486,7 @@
       "rotors": "Walzen",
       "rings": "Ringe",
       "reflector": "Umkehrwalze",
+      "thinReflector": "{name} dünn",
       "plugs": "Steckerpaare",
       "rotorLeft": "Linke Walze",
       "rotorMiddle": "Mittlere Walze",
@@ -508,6 +511,10 @@
     },
     "lab": {
       "settings": "Einstellungen",
+      "machine": "Maschine",
+      "modelI": "Enigma I",
+      "modelM4": "M4 der Marine",
+      "machineHelp": "Ein Wechsel der Maschine löscht die Buchstaben, die du getippt hast.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {keine Steckerpaare} one {# Steckerpaar} other {# Steckerpaare}}",
       "change": "Ändern",
       "changeSettings": "Einstellungen ändern",

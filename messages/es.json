@@ -454,10 +454,12 @@
       "left": "Rotor izquierdo",
       "middle": "Rotor central",
       "right": "Rotor derecho",
+      "thin": "Rotor fino",
       "window": "{rotor}, rotor {name}, muestra {letter}",
       "next": "{rotor}: letra siguiente",
       "previous": "{rotor}: letra anterior",
       "note": "El rotor derecho gira un paso antes de cada letra.",
+      "thinNote": "El rotor fino nunca gira.",
       "keyboard": "Teclado"
     },
     "path": {
@@ -484,6 +486,7 @@
       "rotors": "Rotores",
       "rings": "Anillos",
       "reflector": "Reflector",
+      "thinReflector": "{name} fino",
       "plugs": "Pares de clavijas",
       "rotorLeft": "Rotor izquierdo",
       "rotorMiddle": "Rotor central",
@@ -508,6 +511,10 @@
     },
     "lab": {
       "settings": "Configuración",
+      "machine": "Máquina",
+      "modelI": "Enigma I",
+      "modelM4": "M4 naval",
+      "machineHelp": "Al cambiar de máquina se borran las letras que escribiste.",
       "summary": "{rotors}, {reflector}, {count, plural, =0 {ningún par de clavijas} one {# par de clavijas} other {# pares de clavijas}}",
       "change": "Cambiar",
       "changeSettings": "Cambiar la configuración",

@@ -55,4 +55,14 @@ describe('MachinePanel (spec R3 3, "Machine panel")', () => {
     renderPanel(null);
     expect(document.body.querySelectorAll('[data-lamp][data-lit]')).toHaveLength(0);
   });
+
+  it('shows the M4 thin rotor as the leftmost window, with no ▲ or ▼, because it never turns (spec R5a 3)', () => {
+    renderWithIntl(
+      <MachinePanel rotors={['II', 'IV', 'VIII']} thin={{ name: 'Gamma', letter: 'U' }} positions={['N', 'A', 'V']} lit={null} lastKey={null} onPress={vi.fn()} onTurn={vi.fn()} />,
+    );
+    const windows = screen.getAllByText(/, shows [A-Z]$/).map((window) => window.textContent);
+    expect(windows).toEqual(['Thin rotor, rotor Gamma, shows U', 'Left rotor, rotor II, shows N', 'Middle rotor, rotor IV, shows A', 'Right rotor, rotor VIII, shows V']);
+    expect(screen.queryByRole('button', { name: /^Thin rotor/ })).toBeNull();
+    expect(screen.getByText('The right rotor turns one step before each letter. The thin rotor never turns.')).toBeTruthy();
+  });
 });
