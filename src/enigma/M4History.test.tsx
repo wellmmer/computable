@@ -40,7 +40,7 @@ describe('M4History (spec R5a 4)', () => {
     expect(text).toContain('Bletchley Park could not read U-boat messages for about 10 months.');
     expect(text).toContain('30 October 1942');
     expect(text).toContain('December 1942');
-    expect(text).toContain('The first one was tested in May 1943.');
+    expect(text).toContain('The first US Navy Bombe was tested in May 1943.');
     expect(text).toContain('50 to 100 times as long');
   });
 
