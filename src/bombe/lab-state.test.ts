@@ -90,6 +90,27 @@ describe('the crib card (spec R4 3, "Crib card")', () => {
     expect(hints(lab)).toEqual({ short: false, noLoop: false });
   });
 
+  it('closes slow step mode and clears the stops when Barbarossa part 1 loads', () => {
+    const finished = run(
+      { type: 'practice' },
+      { type: 'start', total: 60 },
+      { type: 'report', report: { type: 'order-done', order: 0, stops: [STOP], count: 1 } },
+      { type: 'report', report: { type: 'finished' } },
+      { type: 'slow-open', rotors: STOP.rotors, start: STOP.start },
+    );
+    expect(finished.slow).not.toBeNull();
+    expect(finished.search.stops).toEqual([STOP]);
+    const lab = bombeReducer(finished, { type: 'barbarossa' });
+    expect(lab.slow).toBeNull();
+    expect(lab.search).toEqual(NO_SEARCH);
+  });
+
+  it('ignores Barbarossa part 1 while a search runs, as it ignores the practice message', () => {
+    const running = run({ type: 'secret', text: 'ABCDE' }, { type: 'crib', text: 'AB' }, { type: 'start', total: 60 });
+    expect(bombeReducer(running, { type: 'barbarossa' })).toBe(running);
+    expect(bombeReducer(running, { type: 'practice' })).toBe(running);
+  });
+
   it('knows when Barbarossa part 1 sits with its crib at its place', () => {
     expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }))).toBe(true);
     expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }, { type: 'slide', by: 1 }))).toBe(false);
