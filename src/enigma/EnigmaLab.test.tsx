@@ -335,4 +335,16 @@ describe('EnigmaLab, the machine choice (spec R5a 3)', () => {
     fireEvent.click(within(machine()).getByRole('radio', { name: 'Naval M4' }));
     expect(screen.queryByRole('region', { name: /^Decrypting/ })).toBeNull();
   });
+
+  it('switches to the M4 when practice 4 loads, and its secret letters decrypt to the answer', () => {
+    renderWithIntl(<EnigmaLab />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load into the machine: Practice 4: the naval M4' }));
+    expect(within(machine()).getByRole<HTMLInputElement>('radio', { name: 'Naval M4' }).checked).toBe(true);
+    expect(screen.getByText('Thin rotor, rotor Gamma, shows U')).toBeTruthy();
+    const box = screen.getByRole('region', { name: 'Decrypting: Practice 4: the naval M4' });
+    fireEvent.click(within(box).getByRole('button', { name: 'Type it for me' }));
+    expect(strip('Lamps lit')).toBe('FOURX ROTOR SXFOR XTHEX NAVY');
+    fireEvent.click(within(box).getByRole('button', { name: 'Check my answer' }));
+    expect(within(box).getByText('Right! The message says: FOUR ROTORS FOR THE NAVY')).toBeTruthy();
+  });
 });
