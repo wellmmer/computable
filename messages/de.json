@@ -593,7 +593,7 @@
       "homeSecret": "Dein Geheimnis von der Startseite"
     },
     "history": {
-      "title": "Die M4 und die Bomben",
+      "title": "Die M4 und die Turing-Bomben",
       "lead": "Jede Angabe verlinkt die Seiten, mit denen wir sie geprüft haben.",
       "sources": "Quellen",
       "bombeLink": "Das Labor der 3-Walzen-Bombe öffnen",
@@ -607,12 +607,12 @@
           "text": "Danach konnte Bletchley Park die Nachrichten der U-Boote etwa 10 Monate lang nicht lesen. Am 30. Oktober 1942 holten Seeleute Codebücher aus dem sinkenden U-559. Mit diesen Büchern las Bletchley Park ab Dezember 1942 wieder Nachrichten der U-Boote."
         },
         "bombes": {
-          "title": "1943: Bomben mit 4 Walzen",
-          "text": "1943 begannen Bomben mit 4 Walzen in Großbritannien und in den USA zu arbeiten. In Großbritannien entwarf Harold Keen bei BTM eine namens Mammoth. In den USA baute NCR in Dayton Bomben für die US Navy. Joseph Desch leitete die Arbeit. Die erste Bombe der US Navy wurde im Mai 1943 getestet."
+          "title": "1943: Turing-Bomben mit 4 Walzen",
+          "text": "1943 begannen Turing-Bomben mit 4 Walzen in Großbritannien und in den USA zu arbeiten. In Großbritannien entwarf Harold Keen bei BTM eine namens Mammoth. In den USA baute NCR in Dayton Turing-Bomben für die US Navy. Joseph Desch leitete die Arbeit. Die erste Bombe der US Navy wurde im Mai 1943 getestet."
         },
         "here": {
           "title": "Die Bombe auf dieser Seite",
-          "text": "Die Bombe auf dieser Seite hat 3 Walzen, also bricht sie keine Nachrichten der M4. Auf Bomben mit 3 Walzen hätten die Schlüssel der U-Boote 50- bis 100-mal so lange gedauert wie ein Schlüssel von Heer oder Luftwaffe."
+          "text": "Die Bombe auf dieser Seite hat 3 Walzen, also knackt sie keine Nachrichten der M4. Auf Turing-Bomben mit 3 Walzen hätten die Schlüssel der U-Boote 50- bis 100-mal so lange gedauert wie ein Schlüssel von Heer oder Luftwaffe."
         }
       }
     }
