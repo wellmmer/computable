@@ -110,7 +110,7 @@ Tests (Vitest):
 
 - **History section** under the Bombe lab, in the same place as the messages under the Enigma lab.
   Each fact links to its source. Topics: Rejewski's Polish *bomba* (1938); the Polish work shared
-  with Britain (July 1939); Turing's design (1940); Welchman's diagonal board; the first Bombe,
+  with Britain (July 1939); Turing's design (1939); Welchman's diagonal board; the first Bombe,
   "Victory" (March 1940).
 - **Film box** in the same section: "The Imitation Game (2014), a drama with Benedict Cumberbatch as
   Alan Turing." One sentence says what the film changes, for example that Turing did not build the
