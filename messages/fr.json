@@ -585,6 +585,9 @@
       "secretHelp": "Collez les lettres secrètes d’un message. Les espaces ne comptent pas.",
       "practice": "Charger le message d’entraînement",
       "practiceAbout": "Le message d’entraînement est un bulletin météo allemand inventé. Il commence par WETTERBERICHT, « bulletin météo ».",
+      "barbarossa": "Casser la partie 1 avec la Bombe",
+      "barbarossaAbout": "La partie 1 du message Barbarossa, un vrai rapport de l’armée allemande du 7 juillet 1941. Le crib {crib} vient de son texte connu : « Kurtinowa, nordwestlich Sebez ».",
+      "barbarossaRings": "La vraie clé utilisait les anneaux {rings} et le départ {start}. La Bombe suppose les anneaux A A A, donc elle trouve le départ {found}. Avec les anneaux A A A, le rotor du milieu tourne à d’autres lettres. Alors la clé de l’arrêt lit le message par blocs d’environ 15 lettres, avec des lettres fausses entre eux.",
       "crib": "Crib : un mot que vous savez présent dans le message",
       "slideLeft": "Glisser le crib vers la gauche",
       "slideRight": "Glisser le crib vers la droite",
@@ -654,6 +657,38 @@
       "noStop": "Les 26 fils de {center} sont allumés : pas d’arrêt.",
       "stop": "Arrêt : seulement {lit} fils de {center} allumés sur 26.",
       "clash": "Seulement {lit} fils de {center} allumés sur 26. Mais chaque hypothèse pour {center} donne deux partenaires à une lettre, donc ce n’est pas un arrêt."
+    },
+    "history": {
+      "title": "Comment la Bombe est née",
+      "lead": "Chaque fait renvoie aux pages avec lesquelles nous l’avons vérifié.",
+      "sources": "Sources",
+      "facts": {
+        "bomba": {
+          "title": "1938 : la bomba polonaise",
+          "text": "Marian Rejewski, du Bureau du chiffre polonais, a conçu la bomba en 1938. Elle cherchait les réglages quotidiens de l’Enigma avec une machine. Les Polonais faisaient tourner 6 bomby côte à côte, une pour chaque ordre des rotors."
+        },
+        "pyry": {
+          "title": "Juillet 1939 : la réunion de Pyry",
+          "text": "Les 25 et 26 juillet 1939, des cryptologues polonais, français et britanniques se sont réunis à Pyry, près de Varsovie. Les Polonais ont partagé ce qu’ils savaient sur l’Enigma. En août, ils ont envoyé une copie de l’Enigma à Paris et une à Londres."
+        },
+        "turing": {
+          "title": "1939 : la Bombe de Turing",
+          "text": "Alan Turing a conçu la Bombe britannique en 1939. Elle partait d’un crib, un mot que l’on savait présent dans le message. Son nom vient de la bomba polonaise, mais elle marchait autrement. La British Tabulating Machine Company l’a construite à Letchworth, sous la direction de l’ingénieur Harold « Doc » Keen."
+        },
+        "victory": {
+          "title": "Mars 1940 : Victory",
+          "text": "La première Bombe, appelée Victory, a commencé à travailler à Bletchley Park en mars 1940. Une source dit qu’elle a commencé le 14 mars. Une autre dit qu’elle est arrivée le 18 mars."
+        },
+        "welchman": {
+          "title": "Août 1940 : le tableau diagonal de Welchman",
+          "text": "Gordon Welchman a inventé le tableau diagonal. Il utilise un fait : si A est relié à B, alors B est relié à A. Le tableau a supprimé beaucoup de faux arrêts. La première Bombe avec le tableau, Agnus, a été installée le 8 août 1940."
+        }
+      },
+      "film": {
+        "title": "Au cinéma",
+        "text": "The Imitation Game (2014), un drame avec Benedict Cumberbatch dans le rôle d’Alan Turing.",
+        "changes": "Le drame change les faits : Turing n’a pas conçu la Bombe seul, et Gordon Welchman n’apparaît pas dans le film. Le film appelle la machine « Christopher », mais la première vraie Bombe s’appelait Victory."
+      }
     }
   }
 }

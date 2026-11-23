@@ -585,6 +585,9 @@
       "secretHelp": "Paste the secret letters of a message. Spaces do not matter.",
       "practice": "Load the practice message",
       "practiceAbout": "The practice message is a made-up German weather report. It starts with WETTERBERICHT, “weather report”.",
+      "barbarossa": "Break part 1 with the Bombe",
+      "barbarossaAbout": "Part 1 of the Barbarossa message, a real German army report from 7 July 1941. The crib {crib} comes from its known text: “Kurtinowa, nordwestlich Sebez”.",
+      "barbarossaRings": "The real key used rings {rings} and start {start}. The Bombe assumes rings A A A, so it finds start {found} instead. With rings A A A, the middle rotor turns at other letters. So the stop’s key reads the message in blocks of about 15 letters, with wrong letters between them.",
       "crib": "Crib: a word you know is in the message",
       "slideLeft": "Slide the crib left",
       "slideRight": "Slide the crib right",
@@ -654,6 +657,38 @@
       "noStop": "All 26 wires of {center} lit: no stop.",
       "stop": "Stop: only {lit} of 26 wires of {center} lit.",
       "clash": "Only {lit} of 26 wires of {center} lit. But every guess for {center} gives a letter two partners, so this is not a stop."
+    },
+    "history": {
+      "title": "How the Bombe came to be",
+      "lead": "Each fact links to the pages we checked it against.",
+      "sources": "Sources",
+      "facts": {
+        "bomba": {
+          "title": "1938: the Polish bomba",
+          "text": "Marian Rejewski of the Polish Cipher Bureau designed the bomba in 1938. It searched for the daily Enigma settings by machine. The Poles ran 6 bomby side by side, one for each rotor order."
+        },
+        "pyry": {
+          "title": "July 1939: the meeting at Pyry",
+          "text": "On 25 and 26 July 1939, Polish, French and British codebreakers met at Pyry, near Warsaw. The Poles shared what they knew about Enigma. In August, they sent one copy of the Enigma to Paris and one to London."
+        },
+        "turing": {
+          "title": "1939: Turing’s Bombe",
+          "text": "Alan Turing designed the British Bombe in 1939. It worked from a crib, a word known to be in the message. Its name comes from the Polish bomba, but it worked in another way. The British Tabulating Machine Company built it in Letchworth, under the engineer Harold “Doc” Keen."
+        },
+        "victory": {
+          "title": "March 1940: Victory",
+          "text": "The first Bombe, called Victory, started work at Bletchley Park in March 1940. One source says it started on 14 March. Another says it arrived on 18 March."
+        },
+        "welchman": {
+          "title": "August 1940: Welchman’s diagonal board",
+          "text": "Gordon Welchman invented the diagonal board. It uses one fact: if A is plugged to B, then B is plugged to A. The board removed many false stops. The first Bombe with the board, Agnus, was installed on 8 August 1940."
+        }
+      },
+      "film": {
+        "title": "On film",
+        "text": "The Imitation Game (2014), a drama with Benedict Cumberbatch as Alan Turing.",
+        "changes": "The drama changes facts: Turing did not design the Bombe alone, and Gordon Welchman does not appear in the film. The film calls the machine “Christopher”, but the first real Bombe was called Victory."
+      }
     }
   }
 }
