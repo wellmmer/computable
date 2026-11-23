@@ -2,7 +2,8 @@
 
 import { useTranslations } from 'next-intl';
 import type { Dispatch } from 'react';
-import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, placeCount, SECRET_MAX_LENGTH, secretLetters, type BombeAction, type BombeLab } from './lab-state';
+import { BARBAROSSA, BARBAROSSA_PART_1 } from './barbarossa';
+import { crashesHere, cribLetters, HINT_CRIB_LETTERS, hints, isBarbarossaAtItsPlace, placeCount, SECRET_MAX_LENGTH, secretLetters, type BombeAction, type BombeLab } from './lab-state';
 
 export const card = 'border border-soft bg-cell px-4 py-3 sm:rounded';
 export const cardTitle = 'font-semibold';
@@ -13,7 +14,8 @@ const cell = 'grid h-7 w-[22px] place-items-center rounded-[3px] font-mono text-
 /**
  * The crib card (spec R4 3): the secret letters, the crib, and the crib laid under the secret
  * letters at its place. ◀ and ▶ slide it, and stop at the first and last place. A letter that would
- * turn into itself shows in red.
+ * turn into itself shows in red. "Break part 1 with the Bombe" loads Barbarossa part 1 and its crib
+ * (spec R4 5). While it sits at its place, a note says why the stop's start is not the real one.
  */
 export function CribCard({ lab, dispatch }: { lab: BombeLab; dispatch: Dispatch<BombeAction> }) {
   const t = useTranslations('bombe.crib');
@@ -66,6 +68,19 @@ export function CribCard({ lab, dispatch }: { lab: BombeLab; dispatch: Dispatch<
         {t('practice')}
       </button>
       <p className="mt-1 text-sm text-muted">{t('practiceAbout')}</p>
+      <button type="button" disabled={running} onClick={() => dispatch({ type: 'barbarossa' })} className={`${button} mt-3`}>
+        {t('barbarossa')}
+      </button>
+      <p className="mt-1 text-sm text-muted">{t('barbarossaAbout', { crib: BARBAROSSA.crib })}</p>
+      {isBarbarossaAtItsPlace(lab) && (
+        <p className="mt-1 text-sm">
+          {t('barbarossaRings', {
+            rings: BARBAROSSA_PART_1.settings.rings.join(' '),
+            start: BARBAROSSA_PART_1.start.join(' '),
+            found: BARBAROSSA.foundStart.join(' '),
+          })}
+        </p>
+      )}
 
       <label htmlFor="bombe-crib" className="mt-4 block text-sm font-semibold">
         {t('crib')}
