@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { press, type EnigmaState } from '@/engines/enigma';
 import { ROTOR_ORDERS, testSteps } from '@/engines/bombe';
-import { blocker, bombeReducer, crashesHere, cribLetters, drumLetters, hints, initialLab, menuOf, NO_SEARCH, placeCount, secretLetters, slowTestKey, type BombeAction, type BombeLab } from './lab-state';
+import { BARBAROSSA } from './barbarossa';
+import { blocker, bombeReducer, crashesHere, cribLetters, drumLetters, hints, initialLab, isBarbarossaAtItsPlace, menuOf, NO_SEARCH, placeCount, secretLetters, slowTestKey, type BombeAction, type BombeLab } from './lab-state';
 import { PRACTICE } from './practice-message';
 import type { SearchReport } from './search-messages';
 
@@ -79,6 +80,23 @@ describe('the crib card (spec R4 3, "Crib card")', () => {
     expect(blocker(lab)).toBe('no-crib');
   });
 
+  it('loads Barbarossa part 1: its secret letters in groups of 5, its crib at letter 37 (spec R4 5)', () => {
+    const lab = run({ type: 'practice' }, { type: 'slide', by: 1 }, { type: 'barbarossa' });
+    expect(lab.secretText.slice(0, 11)).toBe('EDPUD NRGYS');
+    expect(secretLetters(lab)).toBe(BARBAROSSA.cipher);
+    expect([cribLetters(lab), lab.offset]).toEqual(['OWAXNORDWESTLXSE', 36]);
+    expect(lab.search).toEqual(NO_SEARCH);
+    expect(blocker(lab)).toBeNull();
+    expect(hints(lab)).toEqual({ short: false, noLoop: false });
+  });
+
+  it('knows when Barbarossa part 1 sits with its crib at its place', () => {
+    expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }))).toBe(true);
+    expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }, { type: 'slide', by: 1 }))).toBe(false);
+    expect(isBarbarossaAtItsPlace(run({ type: 'barbarossa' }, { type: 'crib', text: 'NORDWEST' }))).toBe(false);
+    expect(isBarbarossaAtItsPlace(run({ type: 'practice' }))).toBe(false);
+  });
+
   it('gives the menu of the crib at its place, and no links while the crib has no place', () => {
     expect(menuOf(run({ type: 'practice' })).loops).toBe(3);
     expect(menuOf(run({ type: 'secret', text: 'ABC' })).links).toEqual([]);
@@ -120,6 +138,7 @@ describe('the search (spec R4 3, "Drum wall" and "Stops card")', () => {
     expect(bombeReducer(started, { type: 'crib', text: 'WETTER' })).toBe(started);
     expect(bombeReducer(started, { type: 'slide', by: 1 })).toBe(started);
     expect(bombeReducer(started, { type: 'load-secret', cipher: 'ABC' })).toBe(started);
+    expect(bombeReducer(started, { type: 'barbarossa' })).toBe(started);
     const finished = bombeReducer(started, { type: 'report', report: { type: 'finished' } });
     expect(bombeReducer(finished, { type: 'slide', by: 1 }).search).toEqual(NO_SEARCH);
   });

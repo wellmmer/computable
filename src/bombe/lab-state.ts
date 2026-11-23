@@ -2,6 +2,7 @@ import { buildMenu, crashes, startAt, testSteps, type Menu, type Stop, type Test
 import { stepRotors, type Positions, type RotorName, type Three } from '@/engines/enigma';
 import { lettersOf } from '@/enigma/key-sheet';
 import { groupsOf5 } from '@/enigma/lab-state';
+import { BARBAROSSA } from './barbarossa';
 import { PRACTICE } from './practice-message';
 import type { SearchReport } from './search-messages';
 
@@ -46,6 +47,8 @@ export type BombeAction =
   | { type: 'crib'; text: string }
   | { type: 'slide'; by: 1 | -1 }
   | { type: 'practice' }
+  /** "Break part 1 with the Bombe": Barbarossa part 1 and its crib (spec R4 5). */
+  | { type: 'barbarossa' }
   /** Home's secret letters, from "Break it with the Bombe" (spec R4 4). */
   | { type: 'load-secret'; cipher: string }
   | { type: 'start'; total: number }
@@ -95,6 +98,8 @@ export function bombeReducer(lab: BombeLab, action: BombeAction): BombeLab {
       return running ? lab : clamp({ ...lab, offset: Math.max(0, lab.offset + action.by), search: NO_SEARCH, slow: null });
     case 'practice':
       return running ? lab : { secretText: groupsOf5(PRACTICE.cipher), cribText: PRACTICE.crib, offset: PRACTICE.offset, search: NO_SEARCH, slow: null };
+    case 'barbarossa':
+      return running ? lab : { secretText: groupsOf5(BARBAROSSA.cipher), cribText: BARBAROSSA.crib, offset: BARBAROSSA.offset, search: NO_SEARCH, slow: null };
     case 'load-secret':
       // The crib is the visitor's to choose: about 15 letters they know are in their message.
       return running ? lab : { secretText: groupsOf5(action.cipher), cribText: '', offset: 0, search: NO_SEARCH, slow: null };
@@ -169,6 +174,11 @@ export function hints(lab: BombeLab): { short: boolean; noLoop: boolean } {
 /** True when the lab holds the practice message, with WETTERBERICHT at its place. */
 function isPracticeAtItsPlace(lab: BombeLab): boolean {
   return secretLetters(lab) === PRACTICE.cipher && cribLetters(lab) === PRACTICE.crib && lab.offset === PRACTICE.offset;
+}
+
+/** True when the lab holds Barbarossa part 1, with its crib at its place. The crib card then says why the stop's start is not B L A. */
+export function isBarbarossaAtItsPlace(lab: BombeLab): boolean {
+  return secretLetters(lab) === BARBAROSSA.cipher && cribLetters(lab) === BARBAROSSA.crib && lab.offset === BARBAROSSA.offset;
 }
 
 /**
