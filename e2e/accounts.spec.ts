@@ -219,24 +219,27 @@ test.describe('with Supabase values (spec R5b 4)', () => {
   }
 
   // A name gets up to 160px in the menu bar, and Linux draws the same fonts a few pixels wider than
-  // macOS. The menu bar must make room for the name, or cut it with "…".
-  test('at 768px a long name makes no sideways scroll, and the menu bar keeps its right margin', async ({ page }) => {
-    await page.setViewportSize({ width: 768, height: 700 });
-    const person = await signInBeforeLoad(page, 'Ada Augusta King, Countess of Lovelace');
-    await fakeSupabase(page, {});
-    await openPage(page, '/en/about');
-    await expectAccountButton(page, `Account: ${person.name}`);
+  // macOS. At every width the menu bar must make room for the name, or cut it with "…".
+  for (const width of [320, 390, 768, 1024, 1280]) {
+    test(`at ${width}px a long name makes no sideways scroll, and the menu bar keeps its right margin`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 700 });
+      const person = await signInBeforeLoad(page, 'Ada Augusta King, Countess of Lovelace');
+      await fakeSupabase(page, {});
+      await openPage(page, '/en/about');
+      await expectAccountButton(page, `Account: ${person.name}`);
 
-    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
-    // The theme switch, the last button of the row, ends inside the header's padding.
-    const space = await page.getByRole('banner').locator('button[aria-pressed]').evaluate((themeSwitch) => {
-      const row = themeSwitch.closest('header > div');
-      if (row === null) throw new Error('The menu bar has no row.');
-      const contentRight = row.getBoundingClientRect().right - parseFloat(getComputedStyle(row).paddingRight);
-      return contentRight - themeSwitch.getBoundingClientRect().right;
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+      // Every button and link of the menu bar ends inside the header's padding.
+      const space = await page.getByRole('banner').evaluate((header) => {
+        const row = header.firstElementChild;
+        if (row === null) throw new Error('The menu bar has no row.');
+        const contentRight = row.getBoundingClientRect().right - parseFloat(getComputedStyle(row).paddingRight);
+        const rights = [...header.querySelectorAll('a, button')].map((item) => item.getBoundingClientRect().right);
+        return contentRight - Math.max(...rights);
+      });
+      expect(space).toBeGreaterThanOrEqual(-0.5);
     });
-    expect(space).toBeGreaterThanOrEqual(-0.5);
-  });
+  }
 
   for (const colorScheme of ['light', 'dark'] as const) {
     test.describe(`${colorScheme} mode`, () => {
