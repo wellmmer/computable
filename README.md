@@ -237,10 +237,13 @@ Accounts need a Supabase project. Without one, the site works as before and hide
      link.
    - `http://localhost:3000/**`, local development.
 5. **Set the 2 values in Vercel.** In the Vercel project, open Settings, then Environment Variables.
-   Set `NEXT_PUBLIC_SUPABASE_URL` to the Project URL, and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to the
-   anon public key. Both are on the API page of the Supabase project settings. Both are public by
-   design. The row rules protect the data. Deploy again, because Next.js writes the values into the
-   code at build time.
+   Set `NEXT_PUBLIC_SUPABASE_URL` to the Project URL. Set `NEXT_PUBLIC_SUPABASE_ANON_KEY` to the
+   publishable key (`sb_publishable_…`) or to the older anon key. Either one works. supabase-js
+   2.119.0 knows the publishable key format, as its source shows. New dashboards show the
+   publishable key on the API Keys page. The anon key may be on a "Legacy API keys" tab. That
+   dashboard layout is from memory, so check it in the dashboard. Both keys are public by design. The
+   row rules protect the data. Deploy again, because Next.js writes the values into the code at build
+   time.
 
 For local development, put the same 2 values in `.env.local`.
 
