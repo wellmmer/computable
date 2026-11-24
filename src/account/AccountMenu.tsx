@@ -111,7 +111,8 @@ export function AccountMenu({ client }: { client: AccountClient }) {
             className={menuButton}
           >
             <UserRound aria-hidden className="size-[18px] shrink-0" strokeWidth={1.8} />
-            <span className="sr-only max-w-40 truncate sm:not-sr-only">{label}</span>
+            {/* The aria-label gives the name to screen readers, so phones can show the icon alone. */}
+            <span className="hidden max-w-40 truncate sm:block">{label}</span>
             <ChevronDown aria-hidden className={`size-4 shrink-0 motion-safe:transition-transform ${open ? 'rotate-180' : ''}`} />
           </button>
           <ul id={listId} hidden={!open} className="absolute right-0 z-30 mt-1 min-w-52 border-2 border-ink bg-cell py-1">

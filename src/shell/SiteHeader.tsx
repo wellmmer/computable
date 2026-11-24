@@ -48,7 +48,8 @@ function MenuEntry({ item, pathname }: { item: MenuItem; pathname: string }) {
  * The menu bar from the approved mockup (simulator-v4.html): the wordmark, the four sections, the
  * language switcher, "? Tour", Support the dev and the theme switch. One row from 1280px. Below, the
  * sections get a row of their own, and below 768px the language switcher and Tour get a third row.
- * "Sign in" sits before the theme switch, only when accounts are set up (spec R5b 4).
+ * "Sign in" follows Tour, only when accounts are set up (spec R5b 4). On phones it shares the third
+ * row, because the first row has no room for it at 360px.
  */
 export function SiteHeader() {
   const t = useTranslations('shell.menu');
@@ -73,6 +74,7 @@ export function SiteHeader() {
         <div className="col-span-2 row-start-3 flex justify-end gap-2 md:col-span-1 md:col-start-2 md:row-start-1 xl:col-start-3">
           <LanguageSwitcher />
           <TourButton />
+          <AccountArea />
         </div>
         <div className="col-start-2 row-start-1 flex items-center gap-4 md:col-start-3 xl:col-start-4">
           <Link
@@ -83,7 +85,6 @@ export function SiteHeader() {
             <CupIcon className={`size-[19px] shrink-0 ${supportCurrent ? 'text-pencil' : 'text-coffee'}`} />
             {t('support')}
           </Link>
-          <AccountArea />
           <ThemeSwitch />
         </div>
       </div>

@@ -117,14 +117,14 @@ describe('SiteHeader', () => {
     expect(screen.queryByRole('button', { name: 'Sign in' })).toBeNull();
   });
 
-  it('shows "Sign in" before the theme switch when accounts are set up (spec R5b 4)', async () => {
+  it('shows "Sign in" after Tour when accounts are set up (spec R5b 4)', async () => {
     navigation.pathname = '/about';
     accounts.load.mockResolvedValueOnce(createFakeAccount().client);
     await act(async () => {
       renderWithIntl(<SiteHeader />);
     });
     const signIn = screen.getByRole('button', { name: 'Sign in' });
-    const theme = screen.getByRole('button', { name: 'Night paper' });
-    expect(signIn.compareDocumentPosition(theme) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(signIn.parentElement?.lastElementChild).toBe(signIn);
+    expect(screen.getByRole('button', { name: 'Tour' }).compareDocumentPosition(signIn) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 });
