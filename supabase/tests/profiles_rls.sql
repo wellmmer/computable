@@ -3,7 +3,7 @@
 -- Person A and person B each have a login and a row. Every change rolls back at the end.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(11);
+select plan(14);
 
 insert into auth.users (id, email) values
   ('00000000-0000-4000-a000-00000000000a', 'person-a@example.test'),
@@ -45,6 +45,14 @@ select lives_ok(
   'Person A can change her own row'
 );
 
+-- The WITH CHECK part of the update rule: a changed row must still belong to the person.
+select throws_ok(
+  $$ update public.profiles set user_id = gen_random_uuid() where user_id = '00000000-0000-4000-a000-00000000000a' $$,
+  '42501',
+  'new row violates row-level security policy for table "profiles"',
+  'Person A cannot give her own row to another user ID'
+);
+
 select lives_ok('select public.delete_my_account()', 'Person A deletes her account');
 
 -- Back to the owner, to look at every row.
@@ -74,7 +82,27 @@ select is(
   'The row of person B did not change'
 );
 
--- Someone who is not signed in cannot call the function.
+-- A signed-in role with no user ID in its claims: auth.uid() is null, so the function stops.
+-- The number of logins before the call shows afterwards that nothing was deleted.
+create temp table logins_before on commit drop as select count(*)::int as n from auth.users;
+set local role authenticated;
+select set_config('request.jwt.claims', '{}', true);
+select throws_ok(
+  'select public.delete_my_account()',
+  '42501',
+  'Only a signed-in person can delete their account.',
+  'delete_my_account() stops when there is no user ID'
+);
+
+reset role;
+select is(
+  (select count(*)::int from auth.users),
+  (select n from logins_before),
+  'Without a user ID, delete_my_account() deleted no login'
+);
+
+-- Someone who is not signed in cannot call the function. The claims of person A are gone first.
+select set_config('request.jwt.claims', '{"role": "anon"}', true);
 set local role anon;
 select throws_ok('select public.delete_my_account()', '42501', null, 'A visitor who is not signed in cannot delete any account');
 
