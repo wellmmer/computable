@@ -127,7 +127,7 @@ No error blocks a page. The browser copy is always safe.
 | Free Supabase projects pause after about 7 days without activity. | From my own knowledge. Check before R5b2. |
 | The built-in Supabase email sender allows only a few emails per hour, which is why R5b has no email login. | From my own knowledge. Not needed, because R5b uses no email. |
 | The free tier offers the São Paulo region. | From my own knowledge, not checked. Wellmmer sees it when he creates the project. |
-| supabase-js keeps the session in localStorage by default, with no cookie. | From my own knowledge. Check in R5b1 before the privacy text ships. |
+| supabase-js keeps the session in localStorage by default, with no cookie. | Checked on 2026-11-24: the Supabase docs say "The default behavior if you're not using SSR is to store this information in local storage" (https://supabase.com/docs/guides/auth/server-side/advanced-guide). The installed auth-js 2.119.0 uses `globalThis.localStorage` when no storage is given. |
 | A Vercel Hobby project can run 1 cron job per day. | From my own knowledge. Check before R5b2. |
 | Privacy laws such as LGPD and GDPR expect a way to delete an account. | From my own knowledge. "Delete my account" covers it. This is not legal advice. |
 
