@@ -190,19 +190,44 @@ test.describe('with Supabase values (spec R5b 4)', () => {
     });
   }
 
-  // At 768px the account button shares the first row with the wordmark and "Support the dev".
-  // Linux draws the same fonts a few pixels wider than macOS, so the name must give way, not the page.
-  test('at 768px a long name ends in "…", and the menu bar keeps its right margin', async ({ page }) => {
+  // French has the longest "Sign in" label. It must never wrap inside its button. When it shares a
+  // row with "Soutenir le dev", it keeps the 16px gap that the menu bar puts between its groups.
+  for (const width of [768, 1280]) {
+    test(`at ${width}px "Se connecter" stays on one line, 16px or more from "Soutenir le dev"`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 700 });
+      await fakeSupabase(page, {});
+      await openPage(page, '/fr/about');
+      await expectAccountButton(page, 'Se connecter');
+      const banner = page.getByRole('banner');
+      const signIn = banner.getByRole('button', { name: 'Se connecter' });
+
+      // A wrapped label puts its words on 2 lines, so its text boxes have 2 different tops.
+      const lines = await signIn.getByText('Se connecter').evaluate((label) => {
+        const range = document.createRange();
+        range.selectNodeContents(label);
+        return new Set([...range.getClientRects()].map((box) => Math.round(box.top))).size;
+      });
+      expect(lines).toBe(1);
+
+      const button = await signIn.boundingBox();
+      const support = await banner.getByRole('link', { name: 'Soutenir le dev' }).boundingBox();
+      if (button === null || support === null) throw new Error('The menu bar lost a button.');
+      const sameRow = button.y < support.y + support.height && support.y < button.y + button.height;
+      const gap = sameRow ? support.x - (button.x + button.width) : Number.POSITIVE_INFINITY;
+      expect(gap).toBeGreaterThanOrEqual(15.5);
+    });
+  }
+
+  // A name gets up to 160px in the menu bar, and Linux draws the same fonts a few pixels wider than
+  // macOS. The menu bar must make room for the name, or cut it with "…".
+  test('at 768px a long name makes no sideways scroll, and the menu bar keeps its right margin', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 700 });
     const person = await signInBeforeLoad(page, 'Ada Augusta King, Countess of Lovelace');
     await fakeSupabase(page, {});
     await openPage(page, '/en/about');
-    const button = page.getByRole('banner').getByRole('button', { name: `Account: ${person.name}` });
-    await expect(button).toBeVisible();
+    await expectAccountButton(page, `Account: ${person.name}`);
 
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
-    // The name is cut: its text is wider than the space it shows in.
-    expect(await button.getByText(person.name).evaluate((name) => name.scrollWidth > name.clientWidth)).toBe(true);
     // The theme switch, the last button of the row, ends inside the header's padding.
     const space = await page.getByRole('banner').locator('button[aria-pressed]').evaluate((themeSwitch) => {
       const row = themeSwitch.closest('header > div');

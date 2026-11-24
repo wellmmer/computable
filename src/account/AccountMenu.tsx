@@ -7,8 +7,11 @@ import { userLabel, type AccountClient, type AccountUser, type Provider } from '
 import { DeleteAccountDialog } from './DeleteAccountDialog';
 import { SignInDialog } from './SignInDialog';
 
-/** The look of the language switcher's button, so the menu bar stays one family. */
-const menuButton = 'press inline-flex h-9 items-center gap-1.5 border-2 border-ink bg-cell px-2.5 font-semibold text-ink';
+/**
+ * The look of the language switcher's button, so the menu bar stays one family. The label never
+ * wraps: a 2-line label does not fit in the 36px button. The menu bar makes room for it instead.
+ */
+const menuButton = 'press inline-flex h-9 items-center gap-1.5 whitespace-nowrap border-2 border-ink bg-cell px-2.5 font-semibold text-ink';
 const listItem = 'flex w-full items-center gap-2 px-3 py-2 text-left text-ink hover:bg-soft';
 
 /**
