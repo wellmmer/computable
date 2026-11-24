@@ -1,12 +1,18 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen, within } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { AccountClient } from '@/account/account-client';
+import { createFakeAccount } from '@/test/fake-account';
 import { renderWithIntl } from '@/test/intl';
 import { tourStore } from '@/tour/tour';
 import { SiteHeader } from './SiteHeader';
 
 const navigation = vi.hoisted(() => ({ pathname: '/simulator', push: vi.fn() }));
+const accounts = vi.hoisted(() => ({ load: vi.fn(async (): Promise<AccountClient | null> => null) }));
+
+// Vitest has no Supabase values, so the real loader returns null too. The mock lets one test set a client.
+vi.mock('@/account/load-account', () => ({ loadAccountClient: accounts.load }));
 
 // The real Link, usePathname and useRouter need the Next.js router, which screen tests do not have.
 vi.mock('@/i18n/navigation', () => ({
@@ -100,5 +106,25 @@ describe('SiteHeader', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Tour' }));
     expect(tourStore.getState().requested).toBe(true);
     expect(navigation.push).not.toHaveBeenCalled();
+  });
+
+  it('shows no "Sign in" when the 2 Supabase values are not set (spec R5b 2)', async () => {
+    navigation.pathname = '/about';
+    await act(async () => {
+      renderWithIntl(<SiteHeader />);
+    });
+    expect(accounts.load).toHaveBeenCalled();
+    expect(screen.queryByRole('button', { name: 'Sign in' })).toBeNull();
+  });
+
+  it('shows "Sign in" before the theme switch when accounts are set up (spec R5b 4)', async () => {
+    navigation.pathname = '/about';
+    accounts.load.mockResolvedValueOnce(createFakeAccount().client);
+    await act(async () => {
+      renderWithIntl(<SiteHeader />);
+    });
+    const signIn = screen.getByRole('button', { name: 'Sign in' });
+    const theme = screen.getByRole('button', { name: 'Night paper' });
+    expect(signIn.compareDocumentPosition(theme) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 });

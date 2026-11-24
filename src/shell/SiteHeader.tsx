@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { AccountArea } from '@/account/AccountArea';
 import { Link, usePathname } from '@/i18n/navigation';
 import { ThemeSwitch } from '@/theme/ThemeSwitch';
 import { TourButton } from '@/tour/TourButton';
@@ -47,6 +48,7 @@ function MenuEntry({ item, pathname }: { item: MenuItem; pathname: string }) {
  * The menu bar from the approved mockup (simulator-v4.html): the wordmark, the four sections, the
  * language switcher, "? Tour", Support the dev and the theme switch. One row from 1280px. Below, the
  * sections get a row of their own, and below 768px the language switcher and Tour get a third row.
+ * "Sign in" sits before the theme switch, only when accounts are set up (spec R5b 4).
  */
 export function SiteHeader() {
   const t = useTranslations('shell.menu');
@@ -81,6 +83,7 @@ export function SiteHeader() {
             <CupIcon className={`size-[19px] shrink-0 ${supportCurrent ? 'text-pencil' : 'text-coffee'}`} />
             {t('support')}
           </Link>
+          <AccountArea />
           <ThemeSwitch />
         </div>
       </div>
