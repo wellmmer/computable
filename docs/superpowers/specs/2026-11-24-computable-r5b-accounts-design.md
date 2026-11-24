@@ -55,8 +55,9 @@ One table, `profiles`, with one row per person:
 
 ## 4. R5b1: sign in, sign out, delete
 
-- **Sign in.** The site menu in `src/shell/SiteHeader.tsx` gets "Sign in", next to the theme
-  switch. It shows only when the 2 Vercel values are set. It opens a dialog:
+- **Sign in.** The site menu in `src/shell/SiteHeader.tsx` gets "Sign in", right after Tour. Next to
+  the theme switch, the menu bar was 52 px too wide at 320 px. It shows only when the 2 Vercel values
+  are set. It opens a dialog:
   - "Sign in to keep your machine and quiz scores on all your devices."
   - "Continue with Google" and "Continue with GitHub".
   - "Optional. Everything works without an account."
