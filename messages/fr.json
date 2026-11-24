@@ -294,7 +294,8 @@
     "accounts": {
       "lead": "Les comptes sont facultatifs. Sans compte, Computable ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
       "title": "Comptes facultatifs",
-      "stored": "Vous pouvez vous connecter avec Google ou GitHub. Votre compte garde alors votre nom ou votre e-mail donné par ce service.",
+      "stored": "Vous pouvez vous connecter avec Google ou GitHub. Supabase garde alors ce que ce service envoie : votre nom, votre e-mail, le lien de votre photo de profil et votre identifiant chez ce service.",
+      "records": "Supabase garde aussi des traces de connexion, comme l’adresse IP et le navigateur.",
       "later": "Une prochaine mise à jour y gardera aussi votre machine actuelle et vos résultats de quiz.",
       "where": "Supabase garde votre compte. Ses serveurs sont dans la région choisie à la création du projet.",
       "session": "Votre navigateur garde la connexion dans son stockage local, pas dans un cookie.",

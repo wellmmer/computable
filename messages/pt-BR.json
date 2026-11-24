@@ -294,7 +294,8 @@
     "accounts": {
       "lead": "Contas são opcionais. Sem uma conta, o Computable não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
       "title": "Contas opcionais",
-      "stored": "Você pode entrar com o Google ou o GitHub. Sua conta então guarda seu nome ou e-mail desse serviço.",
+      "stored": "Você pode entrar com o Google ou o GitHub. O Supabase então guarda o que esse serviço envia: seu nome, seu e-mail, o link da sua foto de perfil e seu ID de usuário nele.",
+      "records": "O Supabase também guarda registros de login, como o endereço IP e o navegador.",
       "later": "Uma próxima atualização também vai guardar nela sua máquina atual e seus resultados de quiz.",
       "where": "O Supabase guarda sua conta. Os servidores dele ficam na região escolhida quando o projeto é criado.",
       "session": "Seu navegador guarda o login no armazenamento local dele, não em um cookie.",

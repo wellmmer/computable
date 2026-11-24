@@ -42,6 +42,7 @@ export default function PrivacyPage() {
               {t('accounts.title')}
             </h2>
             <p>{t('accounts.stored')}</p>
+            <p>{t('accounts.records')}</p>
             <p>{t('accounts.later')}</p>
             <p>{t('accounts.where')}</p>
             <p>{t('accounts.session')}</p>

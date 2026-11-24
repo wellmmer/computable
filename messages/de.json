@@ -294,7 +294,8 @@
     "accounts": {
       "lead": "Konten sind freiwillig. Ohne Konto speichert Computable keine persönlichen Daten über dich. Es setzt ein einziges Cookie, nur um deine Sprache zu behalten.",
       "title": "Freiwillige Konten",
-      "stored": "Du kannst dich mit Google oder GitHub anmelden. Dein Konto speichert dann deinen Namen oder deine E-Mail von diesem Dienst.",
+      "stored": "Du kannst dich mit Google oder GitHub anmelden. Supabase speichert dann, was dieser Dienst sendet: deinen Namen, deine E-Mail, den Link zu deinem Profilbild und deine Nutzer-ID dort.",
+      "records": "Supabase speichert auch Protokolle der Anmeldungen, etwa die IP-Adresse und den Browser.",
       "later": "Ein späteres Update speichert darin auch deine aktuelle Maschine und deine Quiz-Ergebnisse.",
       "where": "Supabase speichert dein Konto. Die Server stehen in der Region, die beim Anlegen des Projekts gewählt wird.",
       "session": "Dein Browser speichert die Anmeldung in seinem lokalen Speicher, nicht in einem Cookie.",

@@ -67,8 +67,12 @@ One table, `profiles`, with one row per person:
   - "Sign out". The browser keeps everything and stops syncing.
   - "Delete my account". It asks first: "This deletes your account and the copy saved in it. This
     browser keeps its own copy." The buttons are "Delete my account" and "Cancel".
-- **Privacy page.** A new section says what is stored (the name or email from Google or GitHub, the
-  machine, the quiz scores), where (Supabase, and the region), and how to delete it.
+- **Privacy page.** A new section says what is stored, where (Supabase, and the region), and how to
+  delete it. It shows only when the 2 Vercel values are set. It says:
+  - Supabase keeps what Google or GitHub sends when you sign in. That is your name, your email, your
+    profile picture link and your user ID there.
+  - Supabase also keeps sign-in records, such as the IP address and the browser.
+  - A later update will also keep your machine and your quiz scores.
 - **README.** "No accounts, no ads" becomes "Optional accounts, no ads". The R5 row and a "What R5b
   brings" section are updated.
 
@@ -130,6 +134,7 @@ No error blocks a page. The browser copy is always safe.
 | supabase-js keeps the session in localStorage by default, with no cookie. | Checked on 2026-11-24: the Supabase docs say "The default behavior if you're not using SSR is to store this information in local storage" (https://supabase.com/docs/guides/auth/server-side/advanced-guide). The installed auth-js 2.119.0 uses `globalThis.localStorage` when no storage is given. |
 | A Vercel Hobby project can run 1 cron job per day. | From my own knowledge. Check before R5b2. |
 | Privacy laws such as LGPD and GDPR expect a way to delete an account. | From my own knowledge. "Delete my account" covers it. This is not legal advice. |
+| The exact fields Supabase Auth keeps. | From my own knowledge. Check in the dashboard after setup. |
 
 ## 9. Not in R5b
 

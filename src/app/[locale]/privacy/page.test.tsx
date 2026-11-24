@@ -68,7 +68,10 @@ describe('Privacy (spec 4.2)', () => {
     withAccounts();
     renderWithIntl(<PrivacyPage />);
     const section = screen.getByRole('region', { name: 'Optional accounts' });
-    expect(section.textContent).toContain('You can sign in with Google or GitHub. Your account then keeps your name or email from that service.');
+    expect(section.textContent).toContain(
+      'You can sign in with Google or GitHub. Supabase then keeps what that service sends: your name, your email, your profile picture link and your user ID there.',
+    );
+    expect(section.textContent).toContain('Supabase also keeps sign-in records, such as the IP address and the browser.');
     expect(section.textContent).toContain('A later update will also keep your current machine and your quiz scores in it.');
     expect(section.textContent).toContain('Supabase stores your account. Its servers are in the region chosen when the project is created.');
     expect(section.textContent).toContain('Your browser keeps the sign-in in its local storage, not in a cookie.');
