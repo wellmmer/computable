@@ -80,6 +80,8 @@ One table, `profiles`, with one row per person:
 ## 5. R5b2: sync
 
 - A new `SyncedKeyValue` wraps today's `KeyValue`. The simulator and the quiz code do not change.
+- **Size limit.** A `check` constraint limits the JSON size of `machine` and of `progress`. Without
+  it, a person could write JSON of any size into their own row.
 - **Writes.** The browser writes to localStorage first, as today. While the person is signed in, each
   change goes to Supabase about 2 seconds later, in 1 write.
 - **Page load while signed in.** The browser reads the row once.
