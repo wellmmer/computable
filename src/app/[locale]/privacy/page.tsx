@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t('pageTitle') };
 }
 
-/** Privacy (spec 4.2): what stays in the browser (quiz results too, spec R2a 4, and Home's secret, spec R3 4), the one language cookie, what the cookieless analytics counts, and donations. */
+/** Privacy (spec 4.2): what stays in the browser (quiz results too, spec R2a 4, and Home’s secret, spec R3 4), the optional accounts (spec R5b 4), the one language cookie, what the cookieless analytics counts, and donations. */
 export default function PrivacyPage() {
   const t = useTranslations('privacy');
   return (
@@ -28,6 +28,17 @@ export default function PrivacyPage() {
           <p>{t('secret')}</p>
           <p>{t('language')}</p>
           <p>{t('shareLink')}</p>
+        </section>
+
+        <section aria-labelledby="accounts-title" className="space-y-3">
+          <h2 id="accounts-title" className={sectionTitle}>
+            {t('accounts.title')}
+          </h2>
+          <p>{t('accounts.stored')}</p>
+          <p>{t('accounts.later')}</p>
+          <p>{t('accounts.where')}</p>
+          <p>{t('accounts.session')}</p>
+          <p>{t('accounts.delete')}</p>
         </section>
 
         <section aria-labelledby="analytics-title" className="space-y-3">

@@ -12,6 +12,7 @@ describe('Privacy (spec 4.2)', () => {
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Privacy');
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual([
       'What stays in your browser',
+      'Optional accounts',
       'What the site counts',
       'Donations',
     ]);
@@ -20,8 +21,22 @@ describe('Privacy (spec 4.2)', () => {
 
   it('names the one cookie, which keeps the language for a year (spec 3, "Language on first visit")', () => {
     renderWithIntl(<PrivacyPage />);
-    expect(screen.getByText('Computable has no accounts and keeps no personal data about you. It sets one cookie, only to remember your language.')).toBeTruthy();
+    expect(
+      screen.getByText('Accounts are optional. Without one, Computable keeps no personal data about you. It sets one cookie, only to remember your language.'),
+    ).toBeTruthy();
     expect(screen.getByText(/The language is also in a cookie named NEXT_LOCALE, for one year\./)).toBeTruthy();
+  });
+
+  it('says what an account stores, where, and how to delete it (spec R5b 4)', () => {
+    renderWithIntl(<PrivacyPage />);
+    const section = screen.getByRole('region', { name: 'Optional accounts' });
+    expect(section.textContent).toContain('You can sign in with Google or GitHub. Your account then keeps your name or email from that service.');
+    expect(section.textContent).toContain('A later update will also keep your current machine and your quiz scores in it.');
+    expect(section.textContent).toContain('Supabase stores your account. Its servers are in the region chosen when the project is created.');
+    expect(section.textContent).toContain('Your browser keeps the sign-in in its local storage, not in a cookie.');
+    expect(section.textContent).toContain(
+      '“Delete my account” in the account menu deletes your account and everything saved in it. This browser keeps its own copy.',
+    );
   });
 
   it('says that quiz results stay in this browser only (spec R2a 4)', () => {

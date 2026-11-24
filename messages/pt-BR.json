@@ -284,13 +284,21 @@
   "privacy": {
     "pageTitle": "Privacidade",
     "title": "Privacidade",
-    "lead": "O Computable não tem contas e não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
+    "lead": "Contas são opcionais. Sem uma conta, o Computable não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
     "browserTitle": "O que fica no seu navegador",
     "browser": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho.",
     "quiz": "Seus resultados de quiz ficam só neste navegador.",
     "secret": "A mensagem secreta da página inicial, as letras secretas e as configurações da Enigma ficam só neste navegador. “Esquecer meu segredo” apaga tudo.",
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
+    "accounts": {
+      "title": "Contas opcionais",
+      "stored": "Você pode entrar com o Google ou o GitHub. Sua conta então guarda seu nome ou e-mail desse serviço.",
+      "later": "Uma próxima atualização também vai guardar nela sua máquina atual e seus resultados de quiz.",
+      "where": "O Supabase guarda sua conta. Os servidores dele ficam na região escolhida quando o projeto é criado.",
+      "session": "Seu navegador guarda o login no armazenamento local dele, não em um cookie.",
+      "delete": "“Excluir minha conta”, no menu da conta, exclui sua conta e tudo o que está salvo nela. Este navegador mantém a própria cópia."
+    },
     "analytics": {
       "title": "O que o site conta",
       "summary": "Para saber quais páginas ajudam as pessoas, o site conta visitas com o {service}. Ele não usa cookies.",
