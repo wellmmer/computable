@@ -4,6 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // The account tests build a second copy of the site with fake Supabase values (playwright.config.ts).
+  // That copy goes to its own folder, so it never replaces the normal build.
+  distDir: process.env.COMPUTABLE_DIST_DIR ?? ".next",
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
