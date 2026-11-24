@@ -284,7 +284,7 @@
   "privacy": {
     "pageTitle": "Privacidade",
     "title": "Privacidade",
-    "lead": "Contas são opcionais. Sem uma conta, o Computable não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
+    "lead": "O Computable não tem contas e não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
     "browserTitle": "O que fica no seu navegador",
     "browser": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho.",
     "quiz": "Seus resultados de quiz ficam só neste navegador.",
@@ -292,6 +292,7 @@
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
     "accounts": {
+      "lead": "Contas são opcionais. Sem uma conta, o Computable não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
       "title": "Contas opcionais",
       "stored": "Você pode entrar com o Google ou o GitHub. Sua conta então guarda seu nome ou e-mail desse serviço.",
       "later": "Uma próxima atualização também vai guardar nela sua máquina atual e seus resultados de quiz.",

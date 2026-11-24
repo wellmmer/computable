@@ -12,10 +12,27 @@ test.describe('without Supabase values (the normal build)', () => {
     await expect(page.getByRole('button', { name: 'Sign in' })).toHaveCount(0);
     expect(requests.filter((url) => url.includes('supabase'))).toEqual([]);
   });
+
+  test('Privacy says nothing about accounts, as before R5b (spec R5b 2)', async ({ page }) => {
+    await openPage(page, '/en/privacy');
+    await expect(
+      page.getByText('Computable has no accounts and keeps no personal data about you. It sets one cookie, only to remember your language.'),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Optional accounts' })).toHaveCount(0);
+  });
 });
 
 test.describe('with Supabase values (spec R5b 4)', () => {
   test.use({ baseURL: `http://localhost:${ACCOUNTS_PORT}` });
+
+  test('Privacy says that accounts are optional, and what an account keeps', async ({ page }) => {
+    await fakeSupabase(page, {});
+    await openPage(page, '/en/privacy');
+    await expect(
+      page.getByText('Accounts are optional. Without one, Computable keeps no personal data about you. It sets one cookie, only to remember your language.'),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Optional accounts' })).toBeVisible();
+  });
 
   test('"Sign in" opens the dialog with Google, GitHub and the note, and Esc closes it', async ({ page }) => {
     const { unexpected } = await fakeSupabase(page, {});

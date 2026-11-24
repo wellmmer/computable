@@ -1,18 +1,33 @@
 // @vitest-environment jsdom
 import { cleanup, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
 import PrivacyPage from './page';
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.unstubAllEnvs();
+});
+
+/** Sets the 2 Supabase values, as the build with accounts has them (spec R5b 2). */
+function withAccounts() {
+  vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://example.supabase.co');
+  vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'public-key');
+}
+
+/** Removes the 2 Supabase values, as the build without accounts has them. */
+function withoutAccounts() {
+  vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', '');
+  vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', '');
+}
 
 describe('Privacy (spec 4.2)', () => {
   it('says what stays in the browser, what the site counts and how donations work', () => {
+    withoutAccounts();
     renderWithIntl(<PrivacyPage />);
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Privacy');
     expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual([
       'What stays in your browser',
-      'Optional accounts',
       'What the site counts',
       'Donations',
     ]);
@@ -20,14 +35,37 @@ describe('Privacy (spec 4.2)', () => {
   });
 
   it('names the one cookie, which keeps the language for a year (spec 3, "Language on first visit")', () => {
+    withoutAccounts();
     renderWithIntl(<PrivacyPage />);
     expect(
-      screen.getByText('Accounts are optional. Without one, Computable keeps no personal data about you. It sets one cookie, only to remember your language.'),
+      screen.getByText('Computable has no accounts and keeps no personal data about you. It sets one cookie, only to remember your language.'),
     ).toBeTruthy();
     expect(screen.getByText(/The language is also in a cookie named NEXT_LOCALE, for one year\./)).toBeTruthy();
   });
 
+  it('without the 2 Supabase values, says nothing about accounts (spec R5b 2)', () => {
+    withoutAccounts();
+    renderWithIntl(<PrivacyPage />);
+    expect(screen.queryByRole('region', { name: 'Optional accounts' })).toBeNull();
+    expect(screen.queryByText(/Supabase/)).toBeNull();
+  });
+
+  it('with the 2 Supabase values, says accounts are optional, before the accounts section (spec R5b 4)', () => {
+    withAccounts();
+    renderWithIntl(<PrivacyPage />);
+    expect(
+      screen.getByText('Accounts are optional. Without one, Computable keeps no personal data about you. It sets one cookie, only to remember your language.'),
+    ).toBeTruthy();
+    expect(screen.getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual([
+      'What stays in your browser',
+      'Optional accounts',
+      'What the site counts',
+      'Donations',
+    ]);
+  });
+
   it('says what an account stores, where, and how to delete it (spec R5b 4)', () => {
+    withAccounts();
     renderWithIntl(<PrivacyPage />);
     const section = screen.getByRole('region', { name: 'Optional accounts' });
     expect(section.textContent).toContain('You can sign in with Google or GitHub. Your account then keeps your name or email from that service.');

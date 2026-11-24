@@ -284,7 +284,7 @@
   "privacy": {
     "pageTitle": "Confidentialité",
     "title": "Confidentialité",
-    "lead": "Les comptes sont facultatifs. Sans compte, Computable ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
+    "lead": "Computable n’a pas de comptes et ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
     "browserTitle": "Ce qui reste dans votre navigateur",
     "browser": "Votre navigateur garde votre machine actuelle, votre choix entre papier quadrillé et papier de nuit, votre langue, et si vous avez vu la visite. Ils restent sur votre appareil.",
     "quiz": "Vos résultats de quiz restent dans ce navigateur seulement.",
@@ -292,6 +292,7 @@
     "language": "La langue est aussi dans un cookie nommé NEXT_LOCALE, pendant un an. Le site le pose quand vous choisissez une langue, ou quand vous ouvrez une page dans une autre langue que celle de votre navigateur. Votre navigateur l’envoie avec chaque page demandée, pour que l’adresse principale du site s’ouvre dans votre langue. Il ne contient que le code de la langue, comme pt-BR.",
     "shareLink": "Un lien de partage contient la machine après le signe #. Les navigateurs n’envoient cette partie d’un lien à aucun serveur.",
     "accounts": {
+      "lead": "Les comptes sont facultatifs. Sans compte, Computable ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
       "title": "Comptes facultatifs",
       "stored": "Vous pouvez vous connecter avec Google ou GitHub. Votre compte garde alors votre nom ou votre e-mail donné par ce service.",
       "later": "Une prochaine mise à jour y gardera aussi votre machine actuelle et vos résultats de quiz.",
