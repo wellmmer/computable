@@ -190,6 +190,29 @@ test.describe('with Supabase values (spec R5b 4)', () => {
     });
   }
 
+  // At 768px the account button shares the first row with the wordmark and "Support the dev".
+  // Linux draws the same fonts a few pixels wider than macOS, so the name must give way, not the page.
+  test('at 768px a long name ends in "…", and the menu bar keeps its right margin', async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 700 });
+    const person = await signInBeforeLoad(page, 'Ada Augusta King, Countess of Lovelace');
+    await fakeSupabase(page, {});
+    await openPage(page, '/en/about');
+    const button = page.getByRole('banner').getByRole('button', { name: `Account: ${person.name}` });
+    await expect(button).toBeVisible();
+
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+    // The name is cut: its text is wider than the space it shows in.
+    expect(await button.getByText(person.name).evaluate((name) => name.scrollWidth > name.clientWidth)).toBe(true);
+    // The theme switch, the last button of the row, ends inside the header's padding.
+    const space = await page.getByRole('banner').locator('button[aria-pressed]').evaluate((themeSwitch) => {
+      const row = themeSwitch.closest('header > div');
+      if (row === null) throw new Error('The menu bar has no row.');
+      const contentRight = row.getBoundingClientRect().right - parseFloat(getComputedStyle(row).paddingRight);
+      return contentRight - themeSwitch.getBoundingClientRect().right;
+    });
+    expect(space).toBeGreaterThanOrEqual(-0.5);
+  });
+
   for (const colorScheme of ['light', 'dark'] as const) {
     test.describe(`${colorScheme} mode`, () => {
       test.use({ colorScheme });

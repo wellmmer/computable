@@ -50,6 +50,11 @@ function MenuEntry({ item, pathname }: { item: MenuItem; pathname: string }) {
  * sections get a row of their own, and below 768px the language switcher and Tour get a third row.
  * "Sign in" follows Tour, only when accounts are set up (spec R5b 4). On phones it shares the third
  * row, because the first row has no room for it at 360px.
+ *
+ * From 768px to 1279px the column of the buttons is `minmax(0,auto)`, not `auto`. An `auto` column
+ * never gets narrower than the full account name. At 768px that pushed the theme switch off the
+ * screen on Linux, which draws the same fonts a few pixels wider than macOS. Now the column takes
+ * only the space that is left, and the account name ends in "…" when it does not fit.
  */
 export function SiteHeader() {
   const t = useTranslations('shell.menu');
@@ -58,7 +63,7 @@ export function SiteHeader() {
 
   return (
     <header className="border-b-2 border-ink bg-cell">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 px-4 py-3 sm:px-7 md:grid-cols-[1fr_auto_auto] xl:grid-cols-[auto_1fr_auto_auto] xl:gap-x-6">
+      <div className="mx-auto grid max-w-[1200px] grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 px-4 py-3 sm:px-7 md:grid-cols-[1fr_minmax(0,auto)_auto] xl:grid-cols-[auto_1fr_auto_auto] xl:gap-x-6">
         <Link href="/" className="col-start-1 row-start-1 justify-self-start font-display text-[22px]/none font-extrabold tracking-tight text-ink">
           {t('wordmark')}
         </Link>

@@ -44,8 +44,12 @@ function fakeToken(expiresAt: number) {
   return `${part({ alg: 'HS256', typ: 'JWT' })}.${part({ sub: PERSON.id, role: 'authenticated', exp: expiresAt })}.e2e`;
 }
 
-/** Puts a signed-in session in localStorage before the page loads, as supabase-js does after a sign-in. */
-export async function signInBeforeLoad(page: Page) {
+/**
+ * Puts a signed-in session in localStorage before the page loads, as supabase-js does after a sign-in.
+ * `name` replaces the person's name, for a test that needs a longer one.
+ */
+export async function signInBeforeLoad(page: Page, name = PERSON.name) {
+  const person = { ...PERSON, name };
   const expiresAt = Math.floor(Date.now() / 1000) + 3600;
   const session = {
     access_token: fakeToken(expiresAt),
@@ -59,7 +63,7 @@ export async function signInBeforeLoad(page: Page) {
       role: 'authenticated',
       email: PERSON.email,
       app_metadata: { provider: 'github', providers: ['github'] },
-      user_metadata: { full_name: PERSON.name },
+      user_metadata: { full_name: person.name },
       created_at: '2026-11-24T00:00:00Z',
     },
   };
@@ -73,7 +77,7 @@ export async function signInBeforeLoad(page: Page) {
     },
     [SESSION_KEY, JSON.stringify(session)] as const,
   );
-  return PERSON;
+  return person;
 }
 
 /** Waits until the account menu has loaded: it loads after the rest of the menu bar. */

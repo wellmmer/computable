@@ -90,8 +90,10 @@ export function AccountMenu({ client }: { client: AccountClient }) {
   const label = user === undefined || user === null ? null : (userLabel(user) ?? t('account'));
 
   // One wrapper in every state, so an open dialog stays mounted when the person signs in or out.
+  // `flex min-w-0` here and `min-w-0` on the button let the name shrink and end in "…" when the
+  // menu bar is short of room. The list and the dialogs sit outside the flex row.
   return (
-    <div ref={root} className="relative" onKeyDown={onKeyDown} onBlur={onBlur}>
+    <div ref={root} className="relative flex min-w-0" onKeyDown={onKeyDown} onBlur={onBlur}>
       {user === null && (
         <button ref={trigger} type="button" onClick={() => setDialog('sign-in')} className={menuButton}>
           <LogIn aria-hidden className="size-[18px] shrink-0" strokeWidth={1.8} />
@@ -108,7 +110,7 @@ export function AccountMenu({ client }: { client: AccountClient }) {
             aria-expanded={open}
             aria-controls={listId}
             onClick={() => setOpen(!open)}
-            className={menuButton}
+            className={`${menuButton} min-w-0`}
           >
             <UserRound aria-hidden className="size-[18px] shrink-0" strokeWidth={1.8} />
             {/* The aria-label gives the name to screen readers, so phones can show the icon alone. */}
