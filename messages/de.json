@@ -243,6 +243,22 @@
       "source": "Quellcode",
       "license": "Code unter der MIT-Lizenz. Texte unter CC BY 4.0.",
       "machineTranslated": "Eine KI hat diese Seite übersetzt, und noch kein Muttersprachler hat sie geprüft. <link>Hilf mit, die Übersetzung zu verbessern</link>."
+    },
+    "account": {
+      "signIn": "Anmelden",
+      "why": "Melde dich an, um deine Maschine und deine Quiz-Ergebnisse auf all deinen Geräten zu haben.",
+      "google": "Weiter mit Google",
+      "github": "Weiter mit GitHub",
+      "optional": "Freiwillig. Alles funktioniert auch ohne Konto.",
+      "close": "Schließen",
+      "signInFailed": "Die Anmeldung wurde nicht abgeschlossen. Versuch es noch einmal, oder arbeite ohne Konto weiter.",
+      "account": "Konto",
+      "menuLabel": "Konto: {name}",
+      "signOut": "Abmelden",
+      "delete": "Mein Konto löschen",
+      "deleteText": "Das löscht dein Konto und die Kopie darin. Dieser Browser behält seine eigene Kopie.",
+      "cancel": "Abbrechen",
+      "deleteFailed": "Dein Konto wurde nicht gelöscht. Versuch es noch einmal."
     }
   },
   "about": {
