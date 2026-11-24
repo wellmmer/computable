@@ -14,7 +14,8 @@ interface DeleteAccountDialogProps {
 
 /**
  * Asks before "Delete my account" deletes anything (spec R5b 4). Cancel, the safe answer, has the
- * focus. When the deletion fails, the dialog stays open and says so (spec R5b 6).
+ * focus. When the deletion fails, the dialog stays open and says so (spec R5b 6). While the deletion
+ * runs, Esc and Cancel do not close the dialog, so the person always sees how it ended.
  */
 export function DeleteAccountDialog({ onDelete, onClose }: DeleteAccountDialogProps) {
   const t = useTranslations('shell.account');
@@ -44,6 +45,9 @@ export function DeleteAccountDialog({ onDelete, onClose }: DeleteAccountDialogPr
       ref={dialog}
       aria-labelledby="delete-account-title"
       aria-describedby="delete-account-text"
+      onCancel={(event) => {
+        if (deleting) event.preventDefault();
+      }}
       onClose={onClose}
       className="m-auto w-[min(26rem,calc(100vw-2rem))] border-2 border-ink bg-cell p-5 text-ink backdrop:bg-ink/50"
     >
@@ -59,7 +63,13 @@ export function DeleteAccountDialog({ onDelete, onClose }: DeleteAccountDialogPr
         </p>
       )}
       <div className="mt-5 flex flex-wrap justify-end gap-3">
-        <button ref={cancel} type="button" onClick={() => dialog.current?.close()} className={`${button} bg-cell text-ink`}>
+        <button
+          ref={cancel}
+          type="button"
+          onClick={() => dialog.current?.close()}
+          disabled={deleting}
+          className={`${button} bg-cell text-ink`}
+        >
           {t('cancel')}
         </button>
         <button type="button" onClick={deleteAccount} disabled={deleting} className={`${button} bg-ink text-paper`}>
