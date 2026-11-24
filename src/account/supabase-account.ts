@@ -5,6 +5,12 @@ import type { AccountConfig } from './config';
 /** The address parts that Supabase adds when a sign-in fails or is cancelled. */
 const ERROR_KEYS = ['error', 'error_code', 'error_description'];
 
+/**
+ * The address parts of a PKCE return: the code, and the flow ID that auth-js 2.119.0 adds to the
+ * return address. auth-js removes them only after a code exchange that worked.
+ */
+const CODE_KEYS = ['code', 'sb_flow_id'];
+
 function textOf(value: unknown): string | null {
   return typeof value === 'string' && value.trim() !== '' ? value.trim() : null;
 }
@@ -15,10 +21,13 @@ function toAccountUser(user: User): AccountUser {
   return { name: textOf(metadata.full_name) ?? textOf(metadata.name), email: textOf(user.email) };
 }
 
-/** Removes the sign-in error from the address, so a reload does not show it again. A share link after the # sign stays. */
-function removeErrorFromAddress() {
+/**
+ * Removes the sign-in error, the code and the flow ID from the address, so a reload does not try
+ * the code again or show the error again. A share link after the # sign stays.
+ */
+function removeFailedReturnFromAddress() {
   const url = new URL(window.location.href);
-  for (const key of ERROR_KEYS) url.searchParams.delete(key);
+  for (const key of [...ERROR_KEYS, ...CODE_KEYS]) url.searchParams.delete(key);
   const hash = new URLSearchParams(url.hash.slice(1));
   if (ERROR_KEYS.some((key) => hash.has(key))) {
     for (const key of ERROR_KEYS) hash.delete(key);
@@ -45,7 +54,7 @@ export function createSupabaseAccountClient(config: AccountConfig): AccountClien
     async signInFailedOnReturn() {
       const { error } = await supabase.auth.initialize();
       if (error === null) return false;
-      removeErrorFromAddress();
+      removeFailedReturnFromAddress();
       return true;
     },
     async signInWith(provider) {

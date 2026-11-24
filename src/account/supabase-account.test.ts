@@ -88,6 +88,13 @@ describe('createSupabaseAccountClient (spec R5b 4)', () => {
     expect(window.location.pathname + window.location.search + window.location.hash).toBe('/en/about');
   });
 
+  it('removes the code and the flow ID from the address after a failed code exchange', async () => {
+    window.history.replaceState(null, '', '/en/about?code=used-code&sb_flow_id=flow-1&keep=1#m=abc');
+    supabase.client.auth.initialize.mockResolvedValueOnce({ error: new Error('Code already used') });
+    expect(await createSupabaseAccountClient(CONFIG).signInFailedOnReturn()).toBe(true);
+    expect(window.location.pathname + window.location.search + window.location.hash).toBe('/en/about?keep=1#m=abc');
+  });
+
   it('says nothing failed on a normal page load', async () => {
     expect(await createSupabaseAccountClient(CONFIG).signInFailedOnReturn()).toBe(false);
   });
