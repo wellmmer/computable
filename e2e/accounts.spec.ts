@@ -117,6 +117,26 @@ test.describe('with Supabase values (spec R5b 4)', () => {
     expect(unexpected).toEqual([]);
   });
 
+  test('"Sign out" works in this browser when the sign-out request fails', async ({ page }) => {
+    const person = await signInBeforeLoad(page);
+    let logoutCalls = 0;
+    const { unexpected } = await fakeSupabase(page, {
+      // The network fails. supabase-js removes the session before it sends this request.
+      'POST /auth/v1/logout': async (route) => {
+        logoutCalls += 1;
+        await route.abort('internetdisconnected');
+      },
+    });
+    await openPage(page, '/en/about');
+    await expectAccountButton(page, `Account: ${person.name}`);
+    await page.getByRole('button', { name: `Account: ${person.name}` }).click();
+    await page.getByRole('button', { name: 'Sign out' }).click();
+    await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
+    expect(logoutCalls).toBe(1);
+    expect(await page.evaluate(() => localStorage.getItem('sb-computable-e2e-auth-token'))).toBeNull();
+    expect(unexpected).toEqual([]);
+  });
+
   test('"Delete my account" asks first, says when it fails, and signs out when it works', async ({ page }) => {
     const person = await signInBeforeLoad(page);
     let deleteCalls = 0;
