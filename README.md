@@ -43,7 +43,7 @@ machine could do the same work.
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Live: the engine and the lab (R4a), your own secret and slow step mode (R4b), the history and Barbarossa (R4c) |
-| **R5** | The naval Enigma M4, then optional accounts | Live: the M4 in the Enigma lab (R5a1), U-264 and the M4 history (R5a2). Shipping now: sign in, sign out and "Delete my account" (R5b1). Sync comes in R5b2. |
+| **R5** | The naval Enigma M4, then optional accounts | Live: the M4 in the Enigma lab (R5a1), U-264 and the M4 history (R5a2). Live: sign in, sign out and "Delete my account" (R5b1). Shipping now: the current machine and the quiz scores follow you to your other devices (R5b2). |
 
 ## What R1 brings
 
@@ -203,7 +203,7 @@ machine could do the same work.
 
 ## What R5b brings
 
-R5b1 ships first. R5b2 adds the sync.
+R5b1 brought the sign-in. R5b2 adds the sync.
 
 - **Optional accounts.** "Sign in" in the menu bar opens a dialog with Google and GitHub. The dialog
   says: "Optional. Everything works without an account."
@@ -214,7 +214,18 @@ R5b1 ships first. R5b2 adds the sync.
 - **No setup, no buttons.** Without the 2 Supabase values, the site shows no account buttons. Tests,
   forks and local development need no Supabase.
 - **The Privacy page** says what an account keeps, where, and how to delete it.
-- **Coming in R5b2:** the current machine and the quiz scores follow you to all your devices.
+- **Your machine and quiz scores on every device (R5b2).** While you are signed in, each change goes
+  to your account about 2 seconds later. On another device, the account copy loads when you open the
+  site.
+- **Quiz scores merge (R5b2).** The best score of each lesson wins. Nothing asks you.
+- **One question about the machine (R5b2).** When the browser's machine and the saved machine both
+  changed, a dialog asks which one to keep. It shows both names and when each changed. It can
+  download the browser's machine first.
+- **A status line (R5b2).** The account menu says "Saved to your account", "Saving…", or why the work
+  was not saved. With no connection, the site tries again every 30 seconds and when the browser is
+  back online. Your work is always safe in the browser.
+- **A daily keep-alive (R5b2).** A Vercel cron job calls `/api/keep-alive` once a day, so the free
+  Supabase project does not pause.
 
 ## Set up accounts
 
@@ -222,9 +233,9 @@ Accounts need a Supabase project. Without one, the site works as before and hide
 
 1. **Create the project.** Create a project on the Supabase free tier. Pick São Paulo (`sa-east-1`)
    if the free tier offers it. If not, pick the nearest free region.
-2. **Create the table.** In the project's SQL editor, run
-   `supabase/migrations/20261124120000_profiles.sql`. With the Supabase CLI linked to the project,
-   `supabase db push` does the same.
+2. **Create the table.** In the project's SQL editor, run the 2 files in `supabase/migrations/`, in
+   name order: `20261124120000_profiles.sql`, then `20261125120000_profiles_sync.sql`. With the
+   Supabase CLI linked to the project, `supabase db push` does the same.
 3. **Add Google and GitHub.** Create a Google OAuth client and a GitHub OAuth app. Both ask for a
    callback URL. Use `https://<project-ref>.supabase.co/auth/v1/callback`. In Supabase, open
    Authentication, then Sign In / Providers. Turn on Google and GitHub, and paste each client ID and
@@ -245,11 +256,17 @@ Accounts need a Supabase project. Without one, the site works as before and hide
    row rules protect the data. Deploy again, because Next.js writes the values into the code at build
    time.
 
-For local development, put the same 2 values in `.env.local`.
+6. **Set `CRON_SECRET` in Vercel.** In the same Environment Variables page, set `CRON_SECRET` to a
+   long random text, with letters and numbers only. Vercel sends it to `/api/keep-alive` once a day.
+   Without it, the route refuses every call and the project may pause after a week without use.
+   Deploy again after you set it.
+
+For local development, put the same 2 Supabase values in `.env.local`.
 
 **Test the row rules.** `supabase/tests/profiles_rls.sql` checks that person A cannot read or change
-the row of person B. It also checks that `delete_my_account()` deletes only the caller. It needs
-Docker and the Supabase CLI. Nobody has run it yet, because the machine that wrote it had no Docker.
+the row of person B. It also checks that `delete_my_account()` deletes only the caller, that a
+machine over 256 KB is refused, and that a visitor can call `keep_alive()`. It needs Docker and the
+Supabase CLI. On 2026-11-25 all 16 checks passed with Supabase CLI 2.119.0.
 
 ```sh
 supabase init      # only once, if supabase/config.toml does not exist; keep the existing folders
