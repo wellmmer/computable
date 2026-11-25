@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { describe, expect, it } from 'vitest';
-import proxy from './proxy';
+import proxy, { config } from './proxy';
 
 function visit(path: string, headers: Record<string, string> = {}) {
   return proxy(new NextRequest(`http://localhost${path}`, { headers }));
@@ -80,5 +80,15 @@ describe('a lesson address that does not exist (spec R2a 3)', () => {
 
   it('still sends /pt-BR to /pt-br first', () => {
     expect(visit('/pt-BR/learn/nope').headers.get('location')).toBe('http://localhost/pt-br/learn/nope');
+  });
+});
+
+describe('the paths the proxy skips', () => {
+  // The matcher is a path pattern. This one is also a plain regular expression.
+  const matches = (path: string) => new RegExp(`^${config.matcher}$`).test(path);
+
+  it('skips the API routes, so the daily keep-alive gets no language step (spec R5b 5)', () => {
+    expect(matches('/api/keep-alive')).toBe(false);
+    expect(matches('/en/simulator')).toBe(true);
   });
 });
