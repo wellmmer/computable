@@ -18,7 +18,7 @@ beforeAll(() => {
 
 afterEach(cleanup);
 
-const ADA = { name: 'Ada Lovelace', email: 'ada@example.test' };
+const ADA = { id: 'id-ada', name: 'Ada Lovelace', email: 'ada@example.test' };
 
 /** Renders the menu and waits for the effects that ask the fake client about a failed return. */
 async function renderMenu(fake: ReturnType<typeof createFakeAccount>) {
@@ -79,7 +79,7 @@ describe('AccountMenu, signed in (spec R5b 4)', () => {
   });
 
   it('shows the email when the service gave no name', async () => {
-    await renderMenu(createFakeAccount({ user: { name: null, email: 'ada@example.test' } }));
+    await renderMenu(createFakeAccount({ user: { id: 'id-ada', name: null, email: 'ada@example.test' } }));
     expect(screen.getByRole('button', { name: 'Account: ada@example.test' }).textContent).toBe('ada@example.test');
   });
 
