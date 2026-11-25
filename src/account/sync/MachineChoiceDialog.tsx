@@ -39,7 +39,8 @@ function MachineRow({ id, label, name, time }: { id: string; label: string; name
 
 /**
  * Asks which machine to keep, when both the browser's machine and the saved machine changed since
- * the last sync (spec R5b 5). Esc does not close it: the person must choose. Before that, the person
+ * the last sync (spec R5b 5). Esc does not close it: the person must choose. When the browser closes
+ * it anyway, it opens again. Before that, the person
  * can download the browser's machine, with the same JSON file as "Download" in the simulator.
  */
 export function MachineChoiceDialog({ conflict, onKeepBrowser, onUseSaved }: MachineChoiceDialogProps) {
@@ -69,7 +70,12 @@ export function MachineChoiceDialog({ conflict, onKeepBrowser, onUseSaved }: Mac
       aria-labelledby="machine-choice-title"
       aria-describedby="machine-choice-text"
       onCancel={(event) => event.preventDefault()}
-      onClose={() => answer.current?.()}
+      onClose={() => {
+        // Before any click on the page, Chrome may let Esc close a modal dialog without a "cancel"
+        // that the page can stop. With no answer yet, the dialog opens again.
+        if (answer.current === null) dialog.current?.showModal();
+        else answer.current();
+      }}
       className="m-auto w-[min(28rem,calc(100vw-2rem))] border-2 border-ink bg-cell p-5 text-ink backdrop:bg-ink/50"
     >
       <h2 id="machine-choice-title" className="font-display text-xl font-semibold">

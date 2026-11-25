@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, screen, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen, within } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { serializeMachine } from '@/engines/turing';
 import { machine } from '@/engines/turing/test-helpers';
@@ -73,6 +73,15 @@ describe('MachineChoiceDialog (spec R5b 5)', () => {
     fireEvent.click(within(dialog).getByRole('button', { name: "Download this browser's machine first" }));
     expect(files.downloadMachine).toHaveBeenCalledExactlyOnceWith(MINE);
     expect(dialog.hasAttribute('open')).toBe(true);
+    expect(onKeepBrowser).not.toHaveBeenCalled();
+    expect(onUseSaved).not.toHaveBeenCalled();
+  });
+
+  it('opens again when the browser closes it with no answer', () => {
+    // Before any click on the page, Chrome may let Esc close a modal dialog without a "cancel" it can stop.
+    const { dialog, onKeepBrowser, onUseSaved } = renderDialog();
+    act(() => (dialog as HTMLDialogElement).close());
+    expect((dialog as HTMLDialogElement).open).toBe(true);
     expect(onKeepBrowser).not.toHaveBeenCalled();
     expect(onUseSaved).not.toHaveBeenCalled();
   });
