@@ -36,6 +36,9 @@ for (const width of [390, 768, 1440]) {
 
 test('on a phone, the text under Home\'s tape stays still while the machine runs, in every language', async ({ page }) => {
   // Lighthouse measured a layout shift of 0.114 on /pt-br at 412 px: the step sentence took one line, then two.
+  // 5 languages, each watched for 5 seconds plus its page load, took 29 to 31 seconds on master.
+  // That is right at the default limit of 30 seconds, so this test gets 60.
+  test.setTimeout(60_000);
   await page.setViewportSize({ width: 390, height: 844 });
   for (const path of LOCALE_PATHS) {
     await openPage(page, path);
