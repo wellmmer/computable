@@ -186,6 +186,9 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
       if (machine !== null) recordSynced(machine);
       status(tooBig ? 'too-big' : 'saved');
     } else if (result === 'too-big') {
+      // The database does not say which column was too big. The machine goes again with its next
+      // change. The scores stay marked, so the next write sends them again.
+      if ('progress' in patch) dirty.add('progress');
       status('too-big');
     } else {
       // The browser keeps the change. The next write sends it again.

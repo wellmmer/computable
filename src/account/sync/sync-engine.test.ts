@@ -311,6 +311,19 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     expect(sync.lastStatus()).toBe('too-big');
   });
 
+  it('keeps the scores marked as changed after the database refuses a write as too big', async () => {
+    const sync = await started({ results: ['too-big'] });
+    const scores = { intuition: result(4, 5, NOW.toISOString()) };
+    sync.values.write(MACHINE_KEY, text(MINE));
+    sync.values.write(PROGRESS_KEY, JSON.stringify(scores));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toHaveLength(1);
+    // The next change sends the scores again, with the new machine.
+    sync.values.write(MACHINE_KEY, text(OLD));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes[1]).toEqual({ machine: JSON.parse(text(OLD)), machineChangedAt: NOW.toISOString(), progress: scores });
+  });
+
   it('does not try again when the login is not valid any more', async () => {
     const sync = await started({ results: ['signed-out'] });
     sync.values.write(MACHINE_KEY, text(MINE));
