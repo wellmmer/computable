@@ -304,7 +304,9 @@
     "lead": "O Computable não tem contas e não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
     "browserTitle": "O que fica no seu navegador",
     "browser": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho.",
+    "browserAccounts": "Seu navegador guarda sua máquina atual, sua escolha entre papel quadriculado e papel noturno, seu idioma e se você já viu o tour. Eles ficam no seu aparelho. Se você entrar na sua conta, ela também guarda sua máquina atual.",
     "quiz": "Seus resultados de quiz ficam só neste navegador.",
+    "quizAccounts": "Seus resultados de quiz ficam neste navegador, a não ser que você entre na sua conta. Aí sua conta também guarda uma cópia.",
     "secret": "A mensagem secreta da página inicial, as letras secretas e as configurações da Enigma ficam só neste navegador. “Esquecer meu segredo” apaga tudo.",
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
@@ -431,6 +433,7 @@
       "yourAnswer": "Sua resposta",
       "score": "Você acertou {score} de {total}.",
       "saved": "Seu resultado fica salvo só neste navegador.",
+      "savedAccounts": "Seu resultado fica salvo neste navegador. Se você estiver conectado, sua conta guarda uma cópia.",
       "tryAgain": "Tentar de novo"
     },
     "machine": {

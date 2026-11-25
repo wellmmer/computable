@@ -80,6 +80,17 @@ describe('Privacy (spec 4.2)', () => {
     );
   });
 
+  it('says what an account also keeps, in the browser section, when the site has accounts (spec R5b 5)', () => {
+    withAccounts();
+    renderWithIntl(<PrivacyPage />);
+    const section = screen.getByRole('region', { name: 'What stays in your browser' });
+    expect(section.textContent).toContain(
+      'They stay on your device. If you sign in, your account also keeps your current machine.',
+    );
+    expect(section.textContent).toContain('Your quiz results stay in this browser, unless you sign in. Then your account keeps a copy too.');
+    expect(section.textContent).not.toContain('Your quiz results stay in this browser only.');
+  });
+
   it('says that quiz results stay in this browser only (spec R2a 4)', () => {
     renderWithIntl(<PrivacyPage />);
     expect(screen.getByText('Your quiz results stay in this browser only.')).toBeTruthy();

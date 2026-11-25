@@ -304,7 +304,9 @@
     "lead": "Computable has no accounts and keeps no personal data about you. It sets one cookie, only to remember your language.",
     "browserTitle": "What stays in your browser",
     "browser": "Your browser keeps your current machine, your choice of squared or night paper, your language, and whether you saw the tour. They stay on your device.",
+    "browserAccounts": "Your browser keeps your current machine, your choice of squared or night paper, your language, and whether you saw the tour. They stay on your device. If you sign in, your account also keeps your current machine.",
     "quiz": "Your quiz results stay in this browser only.",
+    "quizAccounts": "Your quiz results stay in this browser, unless you sign in. Then your account keeps a copy too.",
     "secret": "Home’s secret message, its secret letters and the Enigma settings stay in this browser only. “Forget my secret” deletes them.",
     "language": "The language is also in a cookie named NEXT_LOCALE, for one year. The site sets it when you choose a language, or when you open a page in a language other than your browser's. Your browser sends it with each page request, so the site's main address opens your language. It holds only the language code, such as pt-BR.",
     "shareLink": "A share link holds the machine after the # sign. Browsers do not send that part of a link to any server.",
@@ -431,6 +433,7 @@
       "yourAnswer": "Your answer",
       "score": "You got {score} of {total} right.",
       "saved": "Your result is saved in this browser only.",
+      "savedAccounts": "Your result is saved in this browser. If you are signed in, your account keeps a copy.",
       "tryAgain": "Try again"
     },
     "machine": {

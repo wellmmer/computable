@@ -79,7 +79,8 @@ machine could do the same work.
   Each part points to the place in the simulator that holds it. The lesson also says where the
   simulator differs from the book. It runs a machine that checks palindromes.
 - **A quiz at the end of each lesson.** Every answer says why it is right or wrong. Your best score
-  stays in your browser only, and "Reset my progress" clears it.
+  stays in your browser, and "Reset my progress" clears it. If you sign in, your account keeps a copy
+  (R5b2).
 - **All 5 languages.** The Spanish, French and German lesson texts are AI translations, marked as
   such on every page.
 - **Sources for every lesson.** Each lesson lists the books and papers it draws on. Each textbook links

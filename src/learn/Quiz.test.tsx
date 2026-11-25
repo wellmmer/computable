@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, screen, within } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderWithIntl } from '@/test/intl';
 import { resetProgress } from './progress';
 import { parseProgress, PROGRESS_KEY } from './progress-storage';
@@ -32,6 +32,7 @@ const QUESTIONS: QuizQuestion[] = [
 afterEach(() => {
   cleanup();
   resetProgress();
+  vi.unstubAllEnvs();
 });
 
 const question = (number: number) => screen.getByRole('group', { name: new RegExp(`^Question ${number} of 2`) });
@@ -87,6 +88,17 @@ describe('Quiz (spec 2.4)', () => {
     answer(2, 'Never');
     expect(screen.getByRole('status').textContent).toBe('You got 1 of 2 right. Your result is saved in this browser only.');
     expect(parseProgress(localStorage.getItem(PROGRESS_KEY)).intuition).toMatchObject({ best: 1, total: 2 });
+  });
+
+  it('says the account keeps a copy when the site has accounts (spec R5b 5)', () => {
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://example.supabase.co');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'public-key');
+    renderWithIntl(<Quiz slug="intuition" questions={QUESTIONS} />);
+    answer(1, 'The pencil');
+    answer(2, 'Never');
+    expect(screen.getByRole('status').textContent).toBe(
+      'You got 1 of 2 right. Your result is saved in this browser. If you are signed in, your account keeps a copy.',
+    );
   });
 
   it('clears the answers on Try again, and keeps the best score', () => {
