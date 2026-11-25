@@ -108,8 +108,8 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     if (!stopped) onStatus(next);
   };
 
-  /** The machine this browser last synced for this login. A record of another login counts as none. */
-  const lastSynced = (): string | null => {
+  /** The sync record of this browser, or null when there is none. */
+  const readRecord = (): z.infer<typeof recordSchema> | null => {
     let saved: unknown;
     try {
       saved = JSON.parse(values.read(SYNC_KEY) ?? 'null');
@@ -117,7 +117,13 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
       return null;
     }
     const record = recordSchema.safeParse(saved);
-    return record.success && record.data.userId === userId ? record.data.machine : null;
+    return record.success ? record.data : null;
+  };
+
+  /** The machine this browser last synced for this login. A record of another login counts as none. */
+  const lastSynced = (): string | null => {
+    const record = readRecord();
+    return record !== null && record.userId === userId ? record.machine : null;
   };
 
   const recordSynced = (machine: string | null) => {
@@ -301,6 +307,28 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     }
   };
 
+  /**
+   * Page load after another login synced in this browser. Its machine and scores are in its own
+   * account, so none of them go into this one. The saved scores replace the browser scores. The
+   * browser machine goes up only after the person changes it, or chooses it in the dialog.
+   */
+  const startAfterOtherLogin = (saved: SavedProfile | null) => {
+    const browserText = canonicalMachine(values.read(MACHINE_KEY));
+    const savedText = canonicalMachine(textOf(saved?.machine));
+    const savedChangedAt = saved?.machineChangedAt ?? null;
+    if (savedText === null) recordSynced(browserText);
+    else if (browserText === null || browserText === savedText) {
+      if (browserText === null) values.writeFromAccount(MACHINE_KEY, savedText, savedChangedAt);
+      recordSynced(savedText);
+    } else {
+      recordSynced(null);
+      ask(browserText, savedText, savedChangedAt);
+    }
+    const browser = parseProgress(values.read(PROGRESS_KEY));
+    const savedProgress = parseProgress(textOf(saved?.progress));
+    if (!sameProgress(browser, savedProgress)) values.writeFromAccount(PROGRESS_KEY, JSON.stringify(savedProgress));
+  };
+
   const start = async (): Promise<void> => {
     if (stopped || started) return;
     status('saving');
@@ -312,6 +340,14 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
       return;
     }
     if (stopped) return;
+    const record = readRecord();
+    if (record !== null && record.userId !== userId) {
+      startAfterOtherLogin(saved);
+      started = true;
+      status(settledStatus());
+      return;
+    }
+    // No record at all is a first sign-in in this browser: the browser copy is this person's.
     startMachine(saved);
     // The scores always merge on page load. The write goes out only when the account lacks something.
     dirty.add('progress');

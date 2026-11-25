@@ -147,6 +147,66 @@ describe('createSyncEngine, the machine on page load (spec R5b 5)', () => {
     expect(sync.writes).toEqual([]);
   });
 
+  it('asks, and writes nothing, when the browser machine of another login differs from the saved one', async () => {
+    const sync = setup({
+      profile: row(SAVED, { saved: result(1, 2, '2026-11-24T10:00:00.000Z') }),
+      browser: {
+        [MACHINE_KEY]: text(MINE),
+        [PROGRESS_KEY]: JSON.stringify({ theirs: result(2, 2, '2026-11-24T11:00:00.000Z') }),
+        [SYNC_KEY]: JSON.stringify({ userId: 'id-b', machine: text(MINE) }),
+      },
+    });
+    await sync.engine.start();
+    expect(sync.conflicts).toHaveLength(1);
+    // The scores of the other login are in its own account. This account's scores replace them.
+    expect(JSON.parse(sync.values.read(PROGRESS_KEY) ?? 'null')).toEqual({ saved: result(1, 2, '2026-11-24T10:00:00.000Z') });
+    expect(sync.writes).toEqual([]);
+  });
+
+  it('does not upload the machine or the scores of another login to an account without a row', async () => {
+    const sync = setup({
+      browser: {
+        [MACHINE_KEY]: text(MINE),
+        [PROGRESS_KEY]: JSON.stringify({ theirs: result(2, 2, '2026-11-24T11:00:00.000Z') }),
+        [SYNC_KEY]: JSON.stringify({ userId: 'id-b', machine: text(MINE) }),
+      },
+    });
+    await sync.engine.start();
+    expect(sync.writes).toEqual([]);
+    expect(sync.conflicts).toEqual([]);
+    expect(JSON.parse(sync.values.read(PROGRESS_KEY) ?? 'null')).toEqual({});
+    expect(sync.record()).toEqual({ userId: USER, machine: text(MINE) });
+    // A change by this person is theirs, so it goes up.
+    sync.values.write(MACHINE_KEY, text(OLD));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toEqual([{ machine: JSON.parse(text(OLD)), machineChangedAt: NOW.toISOString() }]);
+  });
+
+  it('does not upload the machine of another login on the next page load either', async () => {
+    const browser = { [MACHINE_KEY]: text(MINE), [SYNC_KEY]: JSON.stringify({ userId: 'id-b', machine: text(MINE) }) };
+    const first = setup({ browser });
+    await first.engine.start();
+    first.engine.stop();
+    const again = setup({ browser: { [MACHINE_KEY]: text(MINE), [SYNC_KEY]: first.values.read(SYNC_KEY) ?? '' } });
+    await again.engine.start();
+    expect(again.writes).toEqual([]);
+  });
+
+  it('only records the machine when the browser machine of another login is the saved one', async () => {
+    const sync = setup({ profile: row(MINE), browser: { [MACHINE_KEY]: text(MINE), [SYNC_KEY]: JSON.stringify({ userId: 'id-b', machine: null }) } });
+    await sync.engine.start();
+    expect(sync.writes).toEqual([]);
+    expect(sync.conflicts).toEqual([]);
+    expect(sync.record()).toEqual({ userId: USER, machine: text(MINE) });
+  });
+
+  it('merges and uploads on the first sign-in in this browser, when there is no sync record at all', async () => {
+    const scores = { mine: result(2, 2, '2026-11-24T11:00:00.000Z') };
+    const sync = setup({ browser: { [MACHINE_KEY]: text(MINE), [PROGRESS_KEY]: JSON.stringify(scores) } });
+    await sync.engine.start();
+    expect(sync.writes).toEqual([{ machine: JSON.parse(text(MINE)), machineChangedAt: null, progress: scores }]);
+  });
+
   it('"Keep this browser\'s machine" uploads it and closes the question', async () => {
     const sync = setup({ profile: row(SAVED), browser: { [MACHINE_KEY]: text(MINE) } });
     await sync.engine.start();

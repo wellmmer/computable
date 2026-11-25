@@ -58,7 +58,7 @@ export type MachineDecision = 'nothing' | 'record' | 'take-saved' | 'upload-brow
  * when it differs from it.
  */
 export function decideMachine(browser: string | null, saved: string | null, lastSynced: string | null): MachineDecision {
-  if (saved === null) return browser === null ? 'nothing' : 'upload-browser';
+  if (saved === null) return browser === null || browser === lastSynced ? 'nothing' : 'upload-browser';
   if (browser === saved) return 'record';
   if (browser === null || browser === lastSynced) return 'take-saved';
   if (saved === lastSynced) return 'upload-browser';
