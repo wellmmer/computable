@@ -103,14 +103,17 @@ One table, `profiles`, with one row per person:
    canonical text of the last machine synced for that login. A machine changed when its canonical
    text differs from it. A record of another login, or no record, means nothing was synced yet.
 2. **Page load while signed in,** once per login and page. No readable saved machine: upload the
-   browser machine. Both the same: record it. Browser machine unchanged, or none: the saved machine
+   browser machine, unless it did not change since the last sync. Both the same: record it. Browser machine unchanged, or none: the saved machine
    replaces it. Saved machine unchanged: upload the browser machine. Both changed: the dialog. jsonb
    does not keep the key order, so the sync compares canonical texts.
 3. **Score merge.** Per lesson, with the same number of questions, the higher best wins with the
    later time. With another number of questions, the later result wins. Each side gets the merge
    when it lacks something.
-4. **Writes.** One upsert on `user_id` sends only the changed columns, plus `user_id`, `updated_at`
-   and, for the machine, `machine_changed_at`.
+4. **Writes.** Each write reads the row first, because another device may have written it since
+   the page loaded. A saved machine that changed since the last sync is never written over: the
+   machine dialog asks. The scores merge with the saved ones, and the browser gets the merge. One
+   upsert on `user_id` sends only the changed columns, plus `user_id`, `updated_at` and, for the
+   machine, `machine_changed_at`.
 5. **When each machine changed.** The browser keeps `computable.machine.changedAt`. A page change to
    the machine sets it, signed in or not. Writing the same text again is not a change. The row keeps
    `machine_changed_at`. The dialog shows both with `Intl.DateTimeFormat`, in the page language.
@@ -119,12 +122,23 @@ One table, `profiles`, with one row per person:
 7. **Session lost.** When the person is signed out without "Sign out" or "Delete my account", the
    sign-in dialog opens with "You were signed out. Sign in again to keep saving."
 8. **Keep-alive.** `GET /api/keep-alive` calls `keep_alive()` with the public key. It needs
-   `Authorization: Bearer <CRON_SECRET>`. Without `CRON_SECRET`: 503. Without the Supabase values:
-   204 and no call. `vercel.json` runs it once a day.
+   `Authorization: Bearer <CRON_SECRET>`, compared in constant time. A missing or wrong secret: 401
+   with no body. Without the Supabase values: 204 and no call. `vercel.json` runs it once a day.
 9. **Support page.** The lead says "no ads and no accounts" only without the Supabase values.
    With them, it says accounts are optional.
 10. **Privacy page.** It says the account keeps the current machine and the quiz scores, so they
-    follow the person to other devices.
+    follow the person to other devices. With accounts, the texts that said "this browser only" say
+    that the account of a signed-in person keeps a copy.
+11. **Another login synced in this browser before.** The sync record names that login. Its machine
+    and scores are in its own account, so none of them go into this one. The saved scores replace
+    the browser scores. The browser machine is never uploaded without a question. When it differs
+    from a saved machine, the dialog asks. Without a saved machine, it goes up only after the person
+    changes it. No sync record at all is a first sign-in in this browser: the scores merge and the
+    machine goes up, as above.
+12. **"Reset my progress" while signed in.** The row keeps `progress_reset_at`, and the sync record
+    keeps the reset time of this browser. A reset writes empty scores and the reset time to the
+    account. Every merge drops the results that ended before the newest reset known. With accounts,
+    the question says it also clears the account copy.
 
 ## 6. Errors
 
@@ -133,7 +147,10 @@ No error blocks a page. The browser copy is always safe.
 | What happens | What the person sees |
 | --- | --- |
 | No connection, or Supabase is down or paused | "Not saved: no connection. Your work is safe in this browser." It tries again when the browser is back online, and every 30 seconds. |
-| The machine or the quiz scores are over the size limit | "Not saved: this machine is too big for your account. Your work is safe in this browser." No retry until the next change. |
+| The machine or the quiz scores are over the size limit | "Not saved: this machine is too big for your account. Your work is safe in this browser." No retry until the next change. The status stays until a write of that machine works. |
+| Another device saved a new machine since this page loaded | The next machine write does not go out. The machine dialog asks which machine to keep. |
+| The login is not valid any more when the sync reads or writes | The sync stops trying. The account menu then signs the person out. |
+| "Sign out" in another tab | That tab signs out. This tab follows, with no "You were signed out" message. |
 | The login is cancelled or refused | "Sign-in did not finish. Try again, or keep working without an account." |
 | The session cannot be renewed | The person is signed out: "You were signed out. Sign in again to keep saving." |
 | The saved row has bad data | The parsers that exist today read it. Bad data reads as empty, and the browser copy wins. |
