@@ -149,7 +149,7 @@ No error blocks a page. The browser copy is always safe.
 | No connection, or Supabase is down or paused | "Not saved: no connection. Your work is safe in this browser." It tries again when the browser is back online, and every 30 seconds. |
 | The machine or the quiz scores are over the size limit | "Not saved: this machine is too big for your account. Your work is safe in this browser." No retry until the next change. The status stays until a write of that machine works. |
 | Another device saved a new machine since this page loaded | The next machine write does not go out. The machine dialog asks which machine to keep. |
-| The login is not valid any more when the sync reads or writes | The sync stops trying. The account menu then signs the person out. |
+| The login is not valid any more when the sync reads or writes | The sync stops trying, and the status says "Not saved". A new sign-in starts it again. |
 | "Sign out" in another tab | That tab signs out. This tab follows, with no "You were signed out" message. |
 | The login is cancelled or refused | "Sign-in did not finish. Try again, or keep working without an account." |
 | The session cannot be renewed | The person is signed out: "You were signed out. Sign in again to keep saving." |
