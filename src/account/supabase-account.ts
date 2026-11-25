@@ -21,6 +21,31 @@ const CHECK_VIOLATION = '23514';
  */
 const SIGNED_OUT_CODES = new Set(['PGRST301', 'PGRST303', '42501']);
 
+/**
+ * "Sign out" and "Delete my account" write the time here. Other tabs of the browser then hear the
+ * sign-out too. A sign-out less than 10 seconds after that time is not a lost session.
+ */
+const SIGN_OUT_KEY = 'computable.signOutAt';
+const SIGN_OUT_WINDOW_MS = 10_000;
+
+function markSignOut() {
+  try {
+    window.localStorage.setItem(SIGN_OUT_KEY, String(Date.now()));
+  } catch {
+    // Blocked storage: other tabs may then say the session was lost. Nothing else changes.
+  }
+}
+
+/** True when "Sign out" or "Delete my account" ran in a tab of this browser a moment ago. */
+function signedOutHereRecently(): boolean {
+  try {
+    const at = Number(window.localStorage.getItem(SIGN_OUT_KEY));
+    return at > 0 && Date.now() - at < SIGN_OUT_WINDOW_MS;
+  } catch {
+    return false;
+  }
+}
+
 /** True when a failed request says the login is not valid any more. */
 function isSignedOut(error: { code: string }, status: number): boolean {
   return status === 401 || SIGNED_OUT_CODES.has(error.code);
@@ -89,6 +114,7 @@ export function createSupabaseAccountClient(config: AccountConfig): AccountClien
   /** Signs out in this browser. auth-js tells the listeners before this resolves. */
   const signOutHere = async () => {
     signingOut = true;
+    markSignOut();
     try {
       await supabase.auth.signOut({ scope: 'local' });
     } finally {
@@ -101,7 +127,7 @@ export function createSupabaseAccountClient(config: AccountConfig): AccountClien
       let signedIn = false;
       const { data } = supabase.auth.onAuthStateChange((_event, session) => {
         const user = session === null ? null : toAccountUser(session.user);
-        const lost = signedIn && user === null && !signingOut;
+        const lost = signedIn && user === null && !signingOut && !signedOutHereRecently();
         signedIn = user !== null;
         listener(user, lost);
       });

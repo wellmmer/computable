@@ -40,6 +40,8 @@ const CONFIG = { url: 'https://example.supabase.co', anonKey: 'public-key' };
 
 beforeEach(() => {
   vi.clearAllMocks();
+  // "Sign out" leaves a time in localStorage for the other tabs. Each test starts without it.
+  localStorage.clear();
   window.history.replaceState(null, '', '/en/simulator');
 });
 
@@ -177,8 +179,49 @@ describe('the sign-out reason (spec R5b 6)', () => {
     emit('SIGNED_IN', ADA);
     await account.deleteAccount();
     emit('SIGNED_IN', ADA);
+    // A minute later, a sign-out that no button started is a lost session again.
+    localStorage.setItem('computable.signOutAt', String(Date.now() - 60_000));
     emit('SIGNED_OUT', null);
     expect(seen.map(([, lost]) => lost)).toEqual([false, false, false, false, false, true]);
+  });
+});
+
+describe('a sign-out in another tab (spec R5b 6)', () => {
+  const ADA = { user: { id: 'id-a', email: 'a@example.test', user_metadata: {} } };
+
+  afterEach(() => {
+    vi.useRealTimers();
+    localStorage.clear();
+  });
+
+  /** 2 tabs of the same browser: each has its own client, and both share localStorage. */
+  function twoTabs() {
+    const first = createSupabaseAccountClient(CONFIG);
+    const second = createSupabaseAccountClient(CONFIG);
+    const seen: boolean[] = [];
+    second.onUserChange((_user, lost) => seen.push(lost));
+    const emitInSecond = supabase.state.listener;
+    if (emitInSecond === null) throw new Error('The adapter did not listen.');
+    emitInSecond('INITIAL_SESSION', ADA);
+    return { first, seen, emitInSecond };
+  }
+
+  it('is not a lost session when "Sign out" in another tab ran a moment ago', async () => {
+    vi.useFakeTimers({ now: new Date('2026-11-25T10:00:00.000Z') });
+    const { first, seen, emitInSecond } = twoTabs();
+    await first.signOut();
+    vi.setSystemTime(new Date('2026-11-25T10:00:02.000Z'));
+    emitInSecond('SIGNED_OUT', null);
+    expect(seen).toEqual([false, false]);
+  });
+
+  it('is a lost session when the last "Sign out" in this browser was long ago', async () => {
+    vi.useFakeTimers({ now: new Date('2026-11-25T10:00:00.000Z') });
+    const { first, seen, emitInSecond } = twoTabs();
+    await first.signOut();
+    vi.setSystemTime(new Date('2026-11-25T10:05:00.000Z'));
+    emitInSecond('SIGNED_OUT', null);
+    expect(seen).toEqual([false, true]);
   });
 });
 
