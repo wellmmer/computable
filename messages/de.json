@@ -243,6 +243,22 @@
       "source": "Quellcode",
       "license": "Code unter der MIT-Lizenz. Texte unter CC BY 4.0.",
       "machineTranslated": "Eine KI hat diese Seite übersetzt, und noch kein Muttersprachler hat sie geprüft. <link>Hilf mit, die Übersetzung zu verbessern</link>."
+    },
+    "account": {
+      "signIn": "Anmelden",
+      "why": "Melde dich an, um deine Maschine und deine Quiz-Ergebnisse auf all deinen Geräten zu haben.",
+      "google": "Weiter mit Google",
+      "github": "Weiter mit GitHub",
+      "optional": "Freiwillig. Alles funktioniert auch ohne Konto.",
+      "close": "Schließen",
+      "signInFailed": "Die Anmeldung wurde nicht abgeschlossen. Versuch es noch einmal, oder arbeite ohne Konto weiter.",
+      "account": "Konto",
+      "menuLabel": "Konto: {name}",
+      "signOut": "Abmelden",
+      "delete": "Mein Konto löschen",
+      "deleteText": "Das löscht dein Konto und die Kopie darin. Dieser Browser behält seine eigene Kopie.",
+      "cancel": "Abbrechen",
+      "deleteFailed": "Dein Konto wurde nicht gelöscht. Versuch es noch einmal."
     }
   },
   "about": {
@@ -275,6 +291,16 @@
     "secret": "Die geheime Nachricht der Startseite, ihre geheimen Buchstaben und die Enigma-Einstellungen bleiben nur in diesem Browser. „Mein Geheimnis vergessen“ löscht sie.",
     "language": "Die Sprache steht außerdem ein Jahr lang in einem Cookie namens NEXT_LOCALE. Die Website setzt es, wenn du eine Sprache wählst oder eine Seite in einer anderen Sprache als der deines Browsers öffnest. Dein Browser sendet es bei jedem Seitenabruf mit, damit die Hauptadresse der Website in deiner Sprache öffnet. Es enthält nur den Sprachcode, etwa pt-BR.",
     "shareLink": "Ein Link zum Teilen enthält die Maschine hinter dem Zeichen #. Browser senden diesen Teil eines Links an keinen Server.",
+    "accounts": {
+      "lead": "Konten sind freiwillig. Ohne Konto speichert Computable keine persönlichen Daten über dich. Es setzt ein einziges Cookie, nur um deine Sprache zu behalten.",
+      "title": "Freiwillige Konten",
+      "stored": "Du kannst dich mit Google oder GitHub anmelden. Supabase speichert dann, was dieser Dienst sendet: deinen Namen, deine E-Mail, den Link zu deinem Profilbild und deine Nutzer-ID dort.",
+      "records": "Supabase speichert auch Protokolle der Anmeldungen, etwa die IP-Adresse und den Browser.",
+      "later": "Ein späteres Update speichert darin auch deine aktuelle Maschine und deine Quiz-Ergebnisse.",
+      "where": "Supabase speichert dein Konto. Die Server stehen in der Region, die beim Anlegen des Projekts gewählt wird.",
+      "session": "Dein Browser speichert die Anmeldung in seinem lokalen Speicher, nicht in einem Cookie.",
+      "delete": "„Mein Konto löschen“ im Kontomenü löscht dein Konto und alles, was darin gespeichert ist. Dieser Browser behält seine eigene Kopie."
+    },
     "analytics": {
       "title": "Was die Website zählt",
       "summary": "Um zu erfahren, welche Seiten Menschen helfen, zählt die Website Besuche mit {service}. Es setzt keine Cookies.",

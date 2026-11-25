@@ -243,6 +243,22 @@
       "source": "Código fuente",
       "license": "Código bajo la licencia MIT. Textos bajo CC BY 4.0.",
       "machineTranslated": "Una IA tradujo esta página y ningún hablante nativo la ha revisado aún. <link>Ayuda a mejorar la traducción</link>."
+    },
+    "account": {
+      "signIn": "Iniciar sesión",
+      "why": "Inicia sesión para tener tu máquina y tus resultados de cuestionarios en todos tus dispositivos.",
+      "google": "Continuar con Google",
+      "github": "Continuar con GitHub",
+      "optional": "Opcional. Todo funciona sin una cuenta.",
+      "close": "Cerrar",
+      "signInFailed": "El inicio de sesión no terminó. Inténtalo de nuevo, o sigue sin una cuenta.",
+      "account": "Cuenta",
+      "menuLabel": "Cuenta: {name}",
+      "signOut": "Cerrar sesión",
+      "delete": "Eliminar mi cuenta",
+      "deleteText": "Esto elimina tu cuenta y la copia guardada en ella. Este navegador conserva su propia copia.",
+      "cancel": "Cancelar",
+      "deleteFailed": "Tu cuenta no se eliminó. Inténtalo de nuevo."
     }
   },
   "about": {
@@ -275,6 +291,16 @@
     "secret": "El mensaje secreto de la página de inicio, sus letras secretas y la configuración de Enigma se quedan solo en este navegador. «Olvidar mi secreto» los borra.",
     "language": "El idioma también se guarda en una cookie llamada NEXT_LOCALE, durante un año. El sitio la crea cuando eliges un idioma, o cuando abres una página en un idioma distinto al de tu navegador. Tu navegador la envía con cada página que pide, para que la dirección principal del sitio se abra en tu idioma. Solo contiene el código del idioma, como pt-BR.",
     "shareLink": "Un enlace para compartir guarda la máquina después del signo #. Los navegadores no envían esa parte de un enlace a ningún servidor.",
+    "accounts": {
+      "lead": "Las cuentas son opcionales. Sin una cuenta, Computable no guarda datos personales sobre ti. Usa una sola cookie, solo para recordar tu idioma.",
+      "title": "Cuentas opcionales",
+      "stored": "Puedes iniciar sesión con Google o GitHub. Supabase guarda entonces lo que ese servicio envía: tu nombre, tu correo, el enlace de tu foto de perfil y tu ID de usuario en él.",
+      "records": "Supabase también guarda registros de inicio de sesión, como la dirección IP y el navegador.",
+      "later": "Una próxima actualización también guardará en ella tu máquina actual y tus resultados de cuestionarios.",
+      "where": "Supabase guarda tu cuenta. Sus servidores están en la región elegida al crear el proyecto.",
+      "session": "Tu navegador guarda la sesión en su almacenamiento local, no en una cookie.",
+      "delete": "«Eliminar mi cuenta», en el menú de la cuenta, elimina tu cuenta y todo lo guardado en ella. Este navegador conserva su propia copia."
+    },
     "analytics": {
       "title": "Lo que cuenta el sitio",
       "summary": "Para saber qué páginas ayudan a la gente, el sitio cuenta las visitas con {service}. No usa cookies.",

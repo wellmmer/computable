@@ -243,6 +243,22 @@
       "source": "Código-fonte",
       "license": "Código sob a licença MIT. Textos sob CC BY 4.0.",
       "machineTranslated": "Uma IA traduziu esta página, e nenhum falante nativo a revisou ainda. <link>Ajude a melhorar a tradução</link>."
+    },
+    "account": {
+      "signIn": "Entrar",
+      "why": "Entre para ter sua máquina e seus resultados de quiz em todos os seus aparelhos.",
+      "google": "Continuar com o Google",
+      "github": "Continuar com o GitHub",
+      "optional": "Opcional. Tudo funciona sem uma conta.",
+      "close": "Fechar",
+      "signInFailed": "O login não terminou. Tente de novo, ou continue sem uma conta.",
+      "account": "Conta",
+      "menuLabel": "Conta: {name}",
+      "signOut": "Sair",
+      "delete": "Excluir minha conta",
+      "deleteText": "Isso exclui sua conta e a cópia salva nela. Este navegador mantém a própria cópia.",
+      "cancel": "Cancelar",
+      "deleteFailed": "Sua conta não foi excluída. Tente de novo."
     }
   },
   "about": {
@@ -275,6 +291,16 @@
     "secret": "A mensagem secreta da página inicial, as letras secretas e as configurações da Enigma ficam só neste navegador. “Esquecer meu segredo” apaga tudo.",
     "language": "O idioma também fica num cookie chamado NEXT_LOCALE, por um ano. O site o grava quando você escolhe um idioma, ou quando abre uma página num idioma diferente do seu navegador. Seu navegador o envia a cada página pedida, para que o endereço principal do site abra no seu idioma. Ele guarda só o código do idioma, como pt-BR.",
     "shareLink": "Um link de compartilhamento guarda a máquina depois do sinal #. Os navegadores não enviam essa parte do link a nenhum servidor.",
+    "accounts": {
+      "lead": "Contas são opcionais. Sem uma conta, o Computable não guarda dados pessoais sobre você. Ele usa um único cookie, só para lembrar o seu idioma.",
+      "title": "Contas opcionais",
+      "stored": "Você pode entrar com o Google ou o GitHub. O Supabase então guarda o que esse serviço envia: seu nome, seu e-mail, o link da sua foto de perfil e seu ID de usuário nele.",
+      "records": "O Supabase também guarda registros de login, como o endereço IP e o navegador.",
+      "later": "Uma próxima atualização também vai guardar nela sua máquina atual e seus resultados de quiz.",
+      "where": "O Supabase guarda sua conta. Os servidores dele ficam na região escolhida quando o projeto é criado.",
+      "session": "Seu navegador guarda o login no armazenamento local dele, não em um cookie.",
+      "delete": "“Excluir minha conta”, no menu da conta, exclui sua conta e tudo o que está salvo nela. Este navegador mantém a própria cópia."
+    },
     "analytics": {
       "title": "O que o site conta",
       "summary": "Para saber quais páginas ajudam as pessoas, o site conta visitas com o {service}. Ele não usa cookies.",

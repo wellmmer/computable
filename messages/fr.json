@@ -243,6 +243,22 @@
       "source": "Code source",
       "license": "Code sous licence MIT. Textes sous CC BY 4.0.",
       "machineTranslated": "Une IA a traduit cette page, et aucun locuteur natif ne l’a encore relue. <link>Aidez à améliorer la traduction</link>."
+    },
+    "account": {
+      "signIn": "Se connecter",
+      "why": "Connectez-vous pour retrouver votre machine et vos résultats de quiz sur tous vos appareils.",
+      "google": "Continuer avec Google",
+      "github": "Continuer avec GitHub",
+      "optional": "Facultatif. Tout fonctionne sans compte.",
+      "close": "Fermer",
+      "signInFailed": "La connexion n’a pas abouti. Réessayez, ou continuez sans compte.",
+      "account": "Compte",
+      "menuLabel": "Compte : {name}",
+      "signOut": "Se déconnecter",
+      "delete": "Supprimer mon compte",
+      "deleteText": "Cela supprime votre compte et la copie qui y est enregistrée. Ce navigateur garde sa propre copie.",
+      "cancel": "Annuler",
+      "deleteFailed": "Votre compte n’a pas été supprimé. Réessayez."
     }
   },
   "about": {
@@ -275,6 +291,16 @@
     "secret": "Le message secret de l’accueil, ses lettres secrètes et les réglages d’Enigma restent seulement dans ce navigateur. « Oublier mon secret » les efface.",
     "language": "La langue est aussi dans un cookie nommé NEXT_LOCALE, pendant un an. Le site le pose quand vous choisissez une langue, ou quand vous ouvrez une page dans une autre langue que celle de votre navigateur. Votre navigateur l’envoie avec chaque page demandée, pour que l’adresse principale du site s’ouvre dans votre langue. Il ne contient que le code de la langue, comme pt-BR.",
     "shareLink": "Un lien de partage contient la machine après le signe #. Les navigateurs n’envoient cette partie d’un lien à aucun serveur.",
+    "accounts": {
+      "lead": "Les comptes sont facultatifs. Sans compte, Computable ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
+      "title": "Comptes facultatifs",
+      "stored": "Vous pouvez vous connecter avec Google ou GitHub. Supabase garde alors ce que ce service envoie : votre nom, votre e-mail, le lien de votre photo de profil et votre identifiant chez ce service.",
+      "records": "Supabase garde aussi des traces de connexion, comme l’adresse IP et le navigateur.",
+      "later": "Une prochaine mise à jour y gardera aussi votre machine actuelle et vos résultats de quiz.",
+      "where": "Supabase garde votre compte. Ses serveurs sont dans la région choisie à la création du projet.",
+      "session": "Votre navigateur garde la connexion dans son stockage local, pas dans un cookie.",
+      "delete": "« Supprimer mon compte », dans le menu du compte, supprime votre compte et tout ce qui y est enregistré. Ce navigateur garde sa propre copie."
+    },
     "analytics": {
       "title": "Ce que le site compte",
       "summary": "Pour savoir quelles pages aident les gens, le site compte les visites avec {service}. Il ne pose aucun cookie.",

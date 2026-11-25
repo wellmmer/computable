@@ -43,7 +43,7 @@ machine could do the same work.
 | **R2c** | Turing's 1936 paper, read alongside a running tape | Live |
 | **R3** | Enigma lab: a working Enigma I with plugboard, real and practice messages | Live: the lab (R3a), messages and the new Home (R3b), and a one-rotor machine in the simulator (R3c) |
 | **R4** | Bombe lab: break your own Enigma message with a crib and a wall of drums | Live: the engine and the lab (R4a), your own secret and slow step mode (R4b), the history and Barbarossa (R4c) |
-| **R5** | The naval Enigma M4, then optional accounts | Live: the M4 in the Enigma lab (R5a1), U-264 and the M4 history (R5a2). Accounts (R5b) come later. |
+| **R5** | The naval Enigma M4, then optional accounts | Live: the M4 in the Enigma lab (R5a1), U-264 and the M4 history (R5a2). Shipping now: sign in, sign out and "Delete my account" (R5b1). Sync comes in R5b2. |
 
 ## What R1 brings
 
@@ -64,8 +64,9 @@ machine could do the same work.
   language and lets you switch back.
 - **Squared paper by day, night paper by night.** Follows your system theme, and a switch in the
   menu overrides it.
-- **No accounts, no ads.** The site counts visits with Vercel Web Analytics, which sets no cookies.
-  The only cookie keeps your language. The Privacy page lists what is counted.
+- **Optional accounts, no ads.** Everything works without an account. The site counts visits with
+  Vercel Web Analytics, which sets no cookies. The only cookie keeps your language. The Privacy page
+  lists what is counted.
 
 ## What R2a brings
 
@@ -200,6 +201,64 @@ machine could do the same work.
   about 10 months without U-boat messages, the 4-rotor Bombes of 1943, and why the Bombe on this
   site does not break M4 messages. Each fact links to the pages it was checked against.
 
+## What R5b brings
+
+R5b1 ships first. R5b2 adds the sync.
+
+- **Optional accounts.** "Sign in" in the menu bar opens a dialog with Google and GitHub. The dialog
+  says: "Optional. Everything works without an account."
+- **Back to the same page.** After the sign-in, the browser comes back to the page it left. When the
+  sign-in is cancelled or refused, the dialog says so.
+- **Sign out and delete.** Signed in, the menu shows your name or email. "Sign out" signs out this
+  browser only. "Delete my account" asks first, then deletes the account and its saved copy.
+- **No setup, no buttons.** Without the 2 Supabase values, the site shows no account buttons. Tests,
+  forks and local development need no Supabase.
+- **The Privacy page** says what an account keeps, where, and how to delete it.
+- **Coming in R5b2:** the current machine and the quiz scores follow you to all your devices.
+
+## Set up accounts
+
+Accounts need a Supabase project. Without one, the site works as before and hides "Sign in".
+
+1. **Create the project.** Create a project on the Supabase free tier. Pick São Paulo (`sa-east-1`)
+   if the free tier offers it. If not, pick the nearest free region.
+2. **Create the table.** In the project's SQL editor, run
+   `supabase/migrations/20261124120000_profiles.sql`. With the Supabase CLI linked to the project,
+   `supabase db push` does the same.
+3. **Add Google and GitHub.** Create a Google OAuth client and a GitHub OAuth app. Both ask for a
+   callback URL. Use `https://<project-ref>.supabase.co/auth/v1/callback`. In Supabase, open
+   Authentication, then Sign In / Providers. Turn on Google and GitHub, and paste each client ID and
+   secret.
+4. **Allow the return addresses.** In Authentication, then URL Configuration, set the Site URL to
+   `https://computable-lac.vercel.app`. Add these redirect URLs. The `**` lets the browser come back
+   to any page.
+   - `https://computable-lac.vercel.app/**`, the live site.
+   - `https://*-<vercel-team>.vercel.app/**`, the Vercel previews. Use the team name from a preview
+     link.
+   - `http://localhost:3000/**`, local development.
+5. **Set the 2 values in Vercel.** In the Vercel project, open Settings, then Environment Variables.
+   Set `NEXT_PUBLIC_SUPABASE_URL` to the Project URL. Set `NEXT_PUBLIC_SUPABASE_ANON_KEY` to the
+   publishable key (`sb_publishable_…`) or to the older anon key. Either one works. supabase-js
+   2.119.0 knows the publishable key format, as its source shows. New dashboards show the
+   publishable key on the API Keys page. The anon key may be on a "Legacy API keys" tab. That
+   dashboard layout is from memory, so check it in the dashboard. Both keys are public by design. The
+   row rules protect the data. Deploy again, because Next.js writes the values into the code at build
+   time.
+
+For local development, put the same 2 values in `.env.local`.
+
+**Test the row rules.** `supabase/tests/profiles_rls.sql` checks that person A cannot read or change
+the row of person B. It also checks that `delete_my_account()` deletes only the caller. It needs
+Docker and the Supabase CLI. Nobody has run it yet, because the machine that wrote it had no Docker.
+
+```sh
+supabase init      # only once, if supabase/config.toml does not exist; keep the existing folders
+supabase start     # starts a local Supabase in Docker and runs the migrations
+supabase test db   # runs the tests in supabase/tests
+```
+
+Run it by hand when the SQL changes. It is not part of CI.
+
 ## The machine format
 
 A machine is a small JSON file. This one adds 1 to a binary number:
@@ -231,7 +290,8 @@ Input `1011` ends as `1100` and the machine accepts.
 
 Next.js and TypeScript, Tailwind CSS, next-intl for languages, MDX for the lessons, React Flow
 for the state diagram, and Zustand for the simulator's state. The Turing machine logic lives in plain TypeScript with no
-UI code, tested with Vitest and Playwright. Hosted on Vercel, with Vercel Web Analytics.
+UI code, tested with Vitest and Playwright. Hosted on Vercel, with Vercel Web Analytics. Optional
+accounts use Supabase Auth.
 
 ## Where this came from
 
