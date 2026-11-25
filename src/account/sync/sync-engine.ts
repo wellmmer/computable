@@ -99,6 +99,8 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
   let writeAgain = false;
   let cancelBatch: (() => void) | null = null;
   let cancelRetry: (() => void) | null = null;
+  /** The columns that are over the size limit. The status says "too big" until a write of each one works. */
+  const tooBig = new Set<'machine' | 'progress'>();
 
   const status = (next: SyncStatus) => {
     if (!stopped) onStatus(next);
@@ -135,29 +137,31 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     }, RETRY_MS);
   };
 
+  /** The status after a write, or after a change that needed no write. */
+  const settledStatus = (): SyncStatus => (tooBig.size > 0 ? 'too-big' : 'saved');
+
   /** Builds the write from the browser values now. It leaves out what is too big or did not change. */
-  const buildPatch = (): { patch: ProfilePatch; machine: string | null; tooBig: boolean } => {
+  const buildPatch = (): { patch: ProfilePatch; machine: string | null } => {
     const patch: { machine?: unknown; machineChangedAt?: string | null; progress?: Progress } = {};
     let machine: string | null = null;
-    let tooBig = false;
     if (dirty.has('machine')) {
       const text = canonicalMachine(values.read(MACHINE_KEY));
-      if (text !== null && text !== lastSynced()) {
-        if (jsonBytes(text) > MACHINE_LIMIT) tooBig = true;
-        else {
-          patch.machine = JSON.parse(text);
-          patch.machineChangedAt = values.read(MACHINE_CHANGED_AT_KEY);
-          machine = text;
-        }
+      // A machine back to the one last synced fits, and needs no write.
+      if (text === null || text === lastSynced()) tooBig.delete('machine');
+      else if (jsonBytes(text) > MACHINE_LIMIT) tooBig.add('machine');
+      else {
+        patch.machine = JSON.parse(text);
+        patch.machineChangedAt = values.read(MACHINE_CHANGED_AT_KEY);
+        machine = text;
       }
     }
     if (dirty.has('progress')) {
       const progress = parseProgress(values.read(PROGRESS_KEY));
-      if (jsonBytes(JSON.stringify(progress, null, 1)) > PROGRESS_LIMIT) tooBig = true;
+      if (jsonBytes(JSON.stringify(progress, null, 1)) > PROGRESS_LIMIT) tooBig.add('progress');
       else patch.progress = progress;
     }
     dirty.clear();
-    return { patch, machine, tooBig };
+    return { patch, machine };
   };
 
   /** Sends the changed columns now. */
@@ -171,10 +175,10 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     }
     cancelRetry?.();
     cancelRetry = null;
-    const { patch, machine, tooBig } = buildPatch();
+    const { patch, machine } = buildPatch();
     const columns = Object.keys(patch);
     if (columns.length === 0) {
-      status(tooBig ? 'too-big' : 'saved');
+      status(settledStatus());
       return;
     }
     writing = true;
@@ -184,11 +188,17 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     if (stopped) return;
     if (result === 'ok') {
       if (machine !== null) recordSynced(machine);
-      status(tooBig ? 'too-big' : 'saved');
+      if ('machine' in patch) tooBig.delete('machine');
+      if ('progress' in patch) tooBig.delete('progress');
+      status(settledStatus());
     } else if (result === 'too-big') {
       // The database does not say which column was too big. The machine goes again with its next
       // change. The scores stay marked, so the next write sends them again.
-      if ('progress' in patch) dirty.add('progress');
+      if ('machine' in patch) tooBig.add('machine');
+      if ('progress' in patch) {
+        tooBig.add('progress');
+        dirty.add('progress');
+      }
       status('too-big');
     } else {
       // The browser keeps the change. The next write sends it again.

@@ -303,6 +303,28 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     expect(sync.lastStatus()).toBe('saved');
   });
 
+  it('keeps saying too-big after a scores-only write, until a machine write works', async () => {
+    const sync = await started();
+    sync.values.write(MACHINE_KEY, text(machine([rule], { name: 'Huge', input: '1'.repeat(262_144) })));
+    await vi.advanceTimersByTimeAsync(2000);
+    sync.values.write(PROGRESS_KEY, '{}');
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toEqual([{ progress: {} }]);
+    expect(sync.lastStatus()).toBe('too-big');
+    sync.values.write(MACHINE_KEY, text(MINE));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.lastStatus()).toBe('saved');
+  });
+
+  it('keeps saying too-big after the database refused the machine, until a machine write works', async () => {
+    const sync = await started({ results: ['too-big'] });
+    sync.values.write(MACHINE_KEY, text(MINE));
+    await vi.advanceTimersByTimeAsync(2000);
+    sync.values.write(PROGRESS_KEY, '{}');
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.lastStatus()).toBe('too-big');
+  });
+
   it('shows too-big when the database refuses the size, and does not try again', async () => {
     const sync = await started({ results: ['too-big'] });
     sync.values.write(MACHINE_KEY, text(MINE));
