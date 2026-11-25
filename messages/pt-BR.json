@@ -268,7 +268,14 @@
         "keepBrowser": "Manter a máquina deste navegador",
         "useSaved": "Usar sua máquina salva",
         "download": "Baixar antes a máquina deste navegador"
-      }
+      },
+      "status": {
+        "saved": "Salvo na sua conta",
+        "saving": "Salvando…",
+        "offline": "Não salvo: sem conexão. Seu trabalho está seguro neste navegador.",
+        "tooBig": "Não salvo: esta máquina é grande demais para sua conta. Seu trabalho está seguro neste navegador."
+      },
+      "signedOutLost": "Sua sessão terminou. Entre de novo para continuar salvando."
     }
   },
   "about": {

@@ -268,7 +268,14 @@
         "keepBrowser": "Garder la machine de ce navigateur",
         "useSaved": "Utiliser votre machine enregistrée",
         "download": "Télécharger d’abord la machine de ce navigateur"
-      }
+      },
+      "status": {
+        "saved": "Enregistré dans votre compte",
+        "saving": "Enregistrement…",
+        "offline": "Non enregistré : pas de connexion. Votre travail est en sécurité dans ce navigateur.",
+        "tooBig": "Non enregistré : cette machine est trop grande pour votre compte. Votre travail est en sécurité dans ce navigateur."
+      },
+      "signedOutLost": "Vous avez été déconnecté. Reconnectez-vous pour continuer à enregistrer."
     }
   },
   "about": {

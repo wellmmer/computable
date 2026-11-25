@@ -268,7 +268,14 @@
         "keepBrowser": "Keep this browser's machine",
         "useSaved": "Use your saved machine",
         "download": "Download this browser's machine first"
-      }
+      },
+      "status": {
+        "saved": "Saved to your account",
+        "saving": "Saving…",
+        "offline": "Not saved: no connection. Your work is safe in this browser.",
+        "tooBig": "Not saved: this machine is too big for your account. Your work is safe in this browser."
+      },
+      "signedOutLost": "You were signed out. Sign in again to keep saving."
     }
   },
   "about": {

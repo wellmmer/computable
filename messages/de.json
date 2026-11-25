@@ -268,7 +268,14 @@
         "keepBrowser": "Maschine dieses Browsers behalten",
         "useSaved": "Gespeicherte Maschine verwenden",
         "download": "Zuerst die Maschine dieses Browsers herunterladen"
-      }
+      },
+      "status": {
+        "saved": "In deinem Konto gespeichert",
+        "saving": "Wird gespeichert…",
+        "offline": "Nicht gespeichert: keine Verbindung. Deine Arbeit ist in diesem Browser sicher.",
+        "tooBig": "Nicht gespeichert: Diese Maschine ist zu groß für dein Konto. Deine Arbeit ist in diesem Browser sicher."
+      },
+      "signedOutLost": "Du wurdest abgemeldet. Melde dich wieder an, um weiter zu speichern."
     }
   },
   "about": {
