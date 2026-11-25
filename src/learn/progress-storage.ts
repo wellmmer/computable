@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import { createKeyValue, type KeyValue } from '@/storage/key-value';
+import { PROGRESS_KEY } from '@/storage/keys';
+import { sharedBrowserValues } from '@/storage/synced-key-value';
 
-/** Where the browser keeps the quiz results (spec 4). */
-export const PROGRESS_KEY = 'computable.progress';
+export { PROGRESS_KEY };
 
 /** One lesson's quiz result. */
 export interface LessonResult {
@@ -86,7 +87,10 @@ function createProgressStorage(values: KeyValue): ProgressStorage {
   };
 }
 
-/** Progress in the browser's localStorage, with an in-memory fallback. */
-export function createBrowserProgressStorage(getStorage: () => Storage = () => window.localStorage): ProgressStorage {
-  return createProgressStorage(createKeyValue(getStorage));
+/**
+ * Progress in the browser's localStorage, with an in-memory fallback. With no argument it uses the
+ * values that the account sync shares on the page. Tests pass their own `getStorage`.
+ */
+export function createBrowserProgressStorage(getStorage?: () => Storage): ProgressStorage {
+  return createProgressStorage(getStorage === undefined ? sharedBrowserValues() : createKeyValue(getStorage));
 }

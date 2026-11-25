@@ -6,7 +6,9 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import en from '../../../messages/en.json';
 import { machine } from '@/engines/turing/test-helpers';
 import { shareUrl } from '@/share/share-link';
+import { serializeMachine } from '@/engines/turing';
 import { MACHINE_KEY } from '@/storage/machine-storage';
+import { sharedBrowserValues } from '@/storage/synced-key-value';
 import { examples } from '../examples';
 import { Simulator } from './Simulator';
 
@@ -64,6 +66,13 @@ describe('Simulator', () => {
     await waitFor(() => expect(window.history.state).toEqual({ entry: 'before the link' }));
     expect(`${window.location.pathname}${window.location.search}${window.location.hash}`).toBe(`${PAGE}?x=1`);
     expect(title()).toBe('Palindrome checker');
+  });
+
+  it('loads the machine that the sync wrote from the account (spec R5b 5)', () => {
+    renderPage();
+    expect(title()).toBe('Binary +1');
+    act(() => sharedBrowserValues().writeFromAccount(MACHINE_KEY, serializeMachine(BUILT)));
+    expect(title()).toBe('My machine');
   });
 
   it('shows the bad-link note when React runs the effect twice, as StrictMode does in dev', () => {
