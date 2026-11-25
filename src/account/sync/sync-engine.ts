@@ -99,6 +99,8 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
   let writeAgain = false;
   let cancelBatch: (() => void) | null = null;
   let cancelRetry: (() => void) | null = null;
+  /** True after "Keep this browser's machine": the next machine write goes out without the check. */
+  let keepBrowser = false;
   /** The columns that are over the size limit. The status says "too big" until a write of each one works. */
   const tooBig = new Set<'machine' | 'progress'>();
 
@@ -140,32 +142,69 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
   /** The status after a write, or after a change that needed no write. */
   const settledStatus = (): SyncStatus => (tooBig.size > 0 ? 'too-big' : 'saved');
 
-  /** Builds the write from the browser values now. It leaves out what is too big or did not change. */
-  const buildPatch = (): { patch: ProfilePatch; machine: string | null } => {
+  /** Opens the machine dialog. Machine changes wait until the person chooses. */
+  const ask = (browserText: string, savedText: string, savedChangedAt: string | null) => {
+    pendingChoice = { text: savedText, changedAt: savedChangedAt };
+    onConflict({
+      browser: { name: machineName(browserText), changedAt: values.read(MACHINE_CHANGED_AT_KEY) },
+      saved: { name: machineName(savedText), changedAt: savedChangedAt },
+    });
+  };
+
+  /**
+   * Builds the write from the browser values and the row as read just before. Another device may
+   * have written the row since this page loaded. So a machine that changed there is never written
+   * over: the dialog asks first. The scores are merged with the saved ones.
+   */
+  const buildPatch = (saved: SavedProfile | null): { patch: ProfilePatch; machine: string | null } => {
     const patch: { machine?: unknown; machineChangedAt?: string | null; progress?: Progress } = {};
     let machine: string | null = null;
     if (dirty.has('machine')) {
       const text = canonicalMachine(values.read(MACHINE_KEY));
-      // A machine back to the one last synced fits, and needs no write.
-      if (text === null || text === lastSynced()) tooBig.delete('machine');
-      else if (jsonBytes(text) > MACHINE_LIMIT) tooBig.add('machine');
-      else {
+      const savedText = canonicalMachine(textOf(saved?.machine));
+      const last = lastSynced();
+      const forced = keepBrowser;
+      keepBrowser = false;
+      if (text === null || text === last || text === savedText) {
+        // Nothing new to send. A machine back to the one last synced fits.
+        if (text !== null && text === savedText) recordSynced(text);
+        tooBig.delete('machine');
+      } else if (!forced && savedText !== null && savedText !== last) {
+        ask(text, savedText, saved?.machineChangedAt ?? null);
+      } else if (jsonBytes(text) > MACHINE_LIMIT) {
+        tooBig.add('machine');
+      } else {
         patch.machine = JSON.parse(text);
         patch.machineChangedAt = values.read(MACHINE_CHANGED_AT_KEY);
         machine = text;
       }
     }
     if (dirty.has('progress')) {
-      const progress = parseProgress(values.read(PROGRESS_KEY));
-      if (jsonBytes(JSON.stringify(progress, null, 1)) > PROGRESS_LIMIT) tooBig.add('progress');
-      else patch.progress = progress;
+      const browser = parseProgress(values.read(PROGRESS_KEY));
+      const savedProgress = parseProgress(textOf(saved?.progress));
+      const merged = mergeProgress(browser, savedProgress);
+      if (!sameProgress(merged, browser)) values.writeFromAccount(PROGRESS_KEY, JSON.stringify(merged));
+      if (sameProgress(merged, savedProgress)) tooBig.delete('progress');
+      else if (jsonBytes(JSON.stringify(merged, null, 1)) > PROGRESS_LIMIT) tooBig.add('progress');
+      else patch.progress = merged;
     }
     dirty.clear();
     return { patch, machine };
   };
 
-  /** Sends the changed columns now. */
-  const flush = async (): Promise<void> => {
+  /** What happens after a failed read: try again later, or stop when the login is not valid any more. */
+  const readFailed = (error: unknown, again: () => void) => {
+    status('offline');
+    // A login that is not valid any more stays so. The person must sign in again.
+    if (error instanceof AccountSignedOutError) stopped = true;
+    else retryLater(again);
+  };
+
+  /**
+   * Reads the row, then sends the changed columns. `saved` is the row when the caller has just read
+   * it, as on page load.
+   */
+  const flush = async (saved?: SavedProfile | null): Promise<void> => {
     cancelBatch?.();
     cancelBatch = null;
     if (stopped || !started) return;
@@ -175,18 +214,30 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     }
     cancelRetry?.();
     cancelRetry = null;
-    const { patch, machine } = buildPatch();
-    const columns = Object.keys(patch);
-    if (columns.length === 0) {
+    if (dirty.size === 0) {
       status(settledStatus());
       return;
     }
     writing = true;
     status('saving');
-    const result = await client.writeProfile(userId, patch);
+    let row: SavedProfile | null;
+    if (saved === undefined) {
+      try {
+        row = await client.readProfile(userId);
+      } catch (error) {
+        writing = false;
+        if (!stopped) readFailed(error, () => void flush());
+        return;
+      }
+    } else row = saved;
+    if (stopped) return;
+    const { patch, machine } = buildPatch(row);
+    const result = Object.keys(patch).length === 0 ? 'none' : await client.writeProfile(userId, patch);
     writing = false;
     if (stopped) return;
-    if (result === 'ok') {
+    if (result === 'none') {
+      status(settledStatus());
+    } else if (result === 'ok') {
       if (machine !== null) recordSynced(machine);
       if ('machine' in patch) tooBig.delete('machine');
       if ('progress' in patch) tooBig.delete('progress');
@@ -243,25 +294,11 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
         dirty.add('machine');
         break;
       case 'ask':
-        if (browserText === null || savedText === null) break;
-        pendingChoice = { text: savedText, changedAt: savedChangedAt };
-        onConflict({
-          browser: { name: machineName(browserText), changedAt: values.read(MACHINE_CHANGED_AT_KEY) },
-          saved: { name: machineName(savedText), changedAt: savedChangedAt },
-        });
+        if (browserText !== null && savedText !== null) ask(browserText, savedText, savedChangedAt);
         break;
       case 'nothing':
         break;
     }
-  };
-
-  /** Merges the quiz scores. Each side gets the merge when it lacks something. */
-  const startProgress = (saved: SavedProfile | null) => {
-    const browser = parseProgress(values.read(PROGRESS_KEY));
-    const savedProgress = parseProgress(textOf(saved?.progress));
-    const merged = mergeProgress(browser, savedProgress);
-    if (!sameProgress(merged, browser)) values.writeFromAccount(PROGRESS_KEY, JSON.stringify(merged));
-    if (saved !== null ? !sameProgress(merged, savedProgress) : Object.keys(merged).length > 0) dirty.add('progress');
   };
 
   const start = async (): Promise<void> => {
@@ -271,18 +308,15 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     try {
       saved = await client.readProfile(userId);
     } catch (error) {
-      if (stopped) return;
-      status('offline');
-      // A login that is not valid any more stays so. The person must sign in again.
-      if (error instanceof AccountSignedOutError) stopped = true;
-      else retryLater(() => void start());
+      if (!stopped) readFailed(error, () => void start());
       return;
     }
     if (stopped) return;
     startMachine(saved);
-    startProgress(saved);
+    // The scores always merge on page load. The write goes out only when the account lacks something.
+    dirty.add('progress');
     started = true;
-    await flush();
+    await flush(saved);
   };
 
   const stopLocal = values.onLocalChange(onLocalChange);
@@ -303,6 +337,7 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
       if (pendingChoice === null) return;
       pendingChoice = null;
       onConflict(null);
+      keepBrowser = true;
       dirty.add('machine');
       await flush();
     },

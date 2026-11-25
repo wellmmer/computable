@@ -31,8 +31,10 @@ function setup({ profile = null, results = [], browser = {} }: Setup = {}) {
   for (const [key, value] of Object.entries(browser)) inner.write(key, value);
   const values = createSyncedKeyValue(inner, () => NOW);
   const writes: ProfilePatch[] = [];
+  /** The row now. Another device can change it between 2 writes. */
+  const row = { current: profile };
   const client = {
-    readProfile: vi.fn(async (): Promise<SavedProfile | null> => profile),
+    readProfile: vi.fn(async (): Promise<SavedProfile | null> => row.current),
     writeProfile: vi.fn(async (_userId: string, patch: ProfilePatch): Promise<WriteResult> => {
       writes.push(patch);
       return results.shift() ?? 'ok';
@@ -58,7 +60,11 @@ function setup({ profile = null, results = [], browser = {} }: Setup = {}) {
   });
   const record = () => JSON.parse(values.read(SYNC_KEY) ?? 'null');
   const lastStatus = () => statuses.at(-1);
-  return { engine, values, client, writes, statuses, conflicts, fromAccount, online, record, lastStatus };
+  /** Another device writes the row. */
+  const otherDeviceWrites = (next: SavedProfile | null) => {
+    row.current = next;
+  };
+  return { engine, values, client, writes, statuses, conflicts, fromAccount, online, record, lastStatus, otherDeviceWrites };
 }
 
 /** A row with the saved machine and scores. */
@@ -275,7 +281,7 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
 
   it('tries again at once when the browser is back online', async () => {
     const sync = await started({ results: ['offline'] });
-    sync.values.write(PROGRESS_KEY, '{}');
+    sync.values.write(PROGRESS_KEY, JSON.stringify({ intuition: result(4, 5, NOW.toISOString()) }));
     await vi.advanceTimersByTimeAsync(2000);
     expect(sync.lastStatus()).toBe('offline');
     sync.online.listener?.();
@@ -307,9 +313,10 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     const sync = await started();
     sync.values.write(MACHINE_KEY, text(machine([rule], { name: 'Huge', input: '1'.repeat(262_144) })));
     await vi.advanceTimersByTimeAsync(2000);
-    sync.values.write(PROGRESS_KEY, '{}');
+    const scores = { intuition: result(4, 5, NOW.toISOString()) };
+    sync.values.write(PROGRESS_KEY, JSON.stringify(scores));
     await vi.advanceTimersByTimeAsync(2000);
-    expect(sync.writes).toEqual([{ progress: {} }]);
+    expect(sync.writes).toEqual([{ progress: scores }]);
     expect(sync.lastStatus()).toBe('too-big');
     sync.values.write(MACHINE_KEY, text(MINE));
     await vi.advanceTimersByTimeAsync(2000);
@@ -320,8 +327,9 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     const sync = await started({ results: ['too-big'] });
     sync.values.write(MACHINE_KEY, text(MINE));
     await vi.advanceTimersByTimeAsync(2000);
-    sync.values.write(PROGRESS_KEY, '{}');
+    sync.values.write(PROGRESS_KEY, JSON.stringify({ intuition: result(4, 5, NOW.toISOString()) }));
     await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toHaveLength(2);
     expect(sync.lastStatus()).toBe('too-big');
   });
 
@@ -384,7 +392,7 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     sync.values.write(MACHINE_KEY, text(MINE));
     sync.engine.stop();
     await vi.advanceTimersByTimeAsync(5000);
-    sync.values.write(PROGRESS_KEY, '{}');
+    sync.values.write(PROGRESS_KEY, JSON.stringify({ intuition: result(4, 5, NOW.toISOString()) }));
     await vi.advanceTimersByTimeAsync(5000);
     expect(sync.writes).toEqual([]);
     expect(sync.online.listener).toBeNull();
@@ -392,9 +400,76 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
 
   it('does not upload machine changes while the question is open, but still uploads quiz changes', async () => {
     const sync = await started({ profile: row(SAVED), browser: { [MACHINE_KEY]: text(MINE) } });
+    const scores = { intuition: result(4, 5, NOW.toISOString()) };
     sync.values.write(MACHINE_KEY, text(OLD));
-    sync.values.write(PROGRESS_KEY, '{}');
+    sync.values.write(PROGRESS_KEY, JSON.stringify(scores));
     await vi.advanceTimersByTimeAsync(2000);
-    expect(sync.writes).toEqual([{ progress: {} }]);
+    expect(sync.writes).toEqual([{ progress: scores }]);
+  });
+});
+
+describe('createSyncEngine, a second device wrote between page loads (spec R5b 5)', () => {
+  async function startedWithOld() {
+    const sync = setup({
+      profile: row(OLD),
+      browser: { [MACHINE_KEY]: text(OLD), [SYNC_KEY]: JSON.stringify({ userId: USER, machine: text(OLD) }) },
+    });
+    await sync.engine.start();
+    return sync;
+  }
+
+  it('asks instead of writing over a machine that another device saved', async () => {
+    const sync = await startedWithOld();
+    sync.otherDeviceWrites(row(SAVED));
+    sync.values.write(MACHINE_KEY, text(MINE));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toEqual([]);
+    expect(sync.conflicts.at(-1)).toEqual({
+      browser: { name: 'Mine', changedAt: NOW.toISOString() },
+      saved: { name: 'Saved one', changedAt: '2026-11-24T18:30:00.000Z' },
+    });
+    // "Keep this browser's machine" writes it after all.
+    await sync.engine.keepBrowserMachine();
+    expect(sync.writes).toEqual([{ machine: JSON.parse(text(MINE)), machineChangedAt: NOW.toISOString() }]);
+  });
+
+  it('asks when the retry after a lost connection finds a machine from another device', async () => {
+    const sync = setup({
+      profile: row(OLD),
+      results: ['offline'],
+      browser: { [MACHINE_KEY]: text(OLD), [SYNC_KEY]: JSON.stringify({ userId: USER, machine: text(OLD) }) },
+    });
+    await sync.engine.start();
+    sync.values.write(MACHINE_KEY, text(MINE));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.lastStatus()).toBe('offline');
+    sync.otherDeviceWrites(row(SAVED));
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(sync.writes).toHaveLength(1);
+    expect(sync.conflicts.at(-1)).toMatchObject({ saved: { name: 'Saved one' } });
+  });
+
+  it('merges the scores that another device saved before it writes, and gives the browser the merge', async () => {
+    const sync = await startedWithOld();
+    const other = { busyBeaver: result(2, 3, '2026-11-24T20:00:00.000Z') };
+    sync.otherDeviceWrites(row(OLD, other));
+    const mine = { intuition: result(4, 5, NOW.toISOString()) };
+    sync.values.write(PROGRESS_KEY, JSON.stringify(mine));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toEqual([{ progress: { ...mine, ...other } }]);
+    expect(JSON.parse(sync.values.read(PROGRESS_KEY) ?? 'null')).toEqual({ ...mine, ...other });
+    expect(sync.fromAccount).toEqual([PROGRESS_KEY]);
+  });
+
+  it('says offline and tries again when the read before a write fails', async () => {
+    const sync = await startedWithOld();
+    sync.client.readProfile.mockRejectedValueOnce(new Error('Failed to fetch'));
+    sync.values.write(MACHINE_KEY, text(MINE));
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toEqual([]);
+    expect(sync.lastStatus()).toBe('offline');
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(sync.writes).toHaveLength(1);
+    expect(sync.lastStatus()).toBe('saved');
   });
 });
