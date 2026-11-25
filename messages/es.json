@@ -313,7 +313,7 @@
       "title": "Cuentas opcionales",
       "stored": "Puedes iniciar sesión con Google o GitHub. Supabase guarda entonces lo que ese servicio envía: tu nombre, tu correo, el enlace de tu foto de perfil y tu ID de usuario en él.",
       "records": "Supabase también guarda registros de inicio de sesión, como la dirección IP y el navegador.",
-      "later": "Una próxima actualización también guardará en ella tu máquina actual y tus resultados de cuestionarios.",
+      "synced": "Tu cuenta también guarda tu máquina actual y tus resultados de cuestionarios, para que te sigan en tus otros dispositivos.",
       "where": "Supabase guarda tu cuenta. Sus servidores están en la región elegida al crear el proyecto.",
       "session": "Tu navegador guarda la sesión en su almacenamiento local, no en una cookie.",
       "delete": "«Eliminar mi cuenta», en el menú de la cuenta, elimina tu cuenta y todo lo guardado en ella. Este navegador conserva su propia copia."
@@ -334,6 +334,7 @@
     "pageTitle": "Apoya al dev",
     "title": "Invita un café al dev",
     "lead": "Computable es gratis, sin anuncios y sin cuentas. Si te ayudó a aprender, un café me ayuda a seguir construyéndolo.",
+    "leadAccounts": "Computable es gratis, sin anuncios. Las cuentas son opcionales. Si te ayudó a aprender, un café me ayuda a seguir construyéndolo.",
     "notReady": "Los enlaces de pago aún no están listos. Gracias por querer ayudar.",
     "notReadyShare": "Mientras tanto, compartir Computable con un amigo o una clase también ayuda.",
     "amount": "Cantidad, en {currency, select, BRL {reales brasileños} other {dólares estadounidenses}}",

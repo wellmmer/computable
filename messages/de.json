@@ -313,7 +313,7 @@
       "title": "Freiwillige Konten",
       "stored": "Du kannst dich mit Google oder GitHub anmelden. Supabase speichert dann, was dieser Dienst sendet: deinen Namen, deine E-Mail, den Link zu deinem Profilbild und deine Nutzer-ID dort.",
       "records": "Supabase speichert auch Protokolle der Anmeldungen, etwa die IP-Adresse und den Browser.",
-      "later": "Ein späteres Update speichert darin auch deine aktuelle Maschine und deine Quiz-Ergebnisse.",
+      "synced": "Dein Konto speichert auch deine aktuelle Maschine und deine Quiz-Ergebnisse, damit du sie auf deinen anderen Geräten hast.",
       "where": "Supabase speichert dein Konto. Die Server stehen in der Region, die beim Anlegen des Projekts gewählt wird.",
       "session": "Dein Browser speichert die Anmeldung in seinem lokalen Speicher, nicht in einem Cookie.",
       "delete": "„Mein Konto löschen“ im Kontomenü löscht dein Konto und alles, was darin gespeichert ist. Dieser Browser behält seine eigene Kopie."
@@ -334,6 +334,7 @@
     "pageTitle": "Dev unterstützen",
     "title": "Spendiere dem Dev einen Kaffee",
     "lead": "Computable ist kostenlos, ohne Werbung und ohne Konten. Wenn es dir beim Lernen geholfen hat, hilft mir ein Kaffee, weiterzubauen.",
+    "leadAccounts": "Computable ist kostenlos, ohne Werbung. Konten sind freiwillig. Wenn es dir beim Lernen geholfen hat, hilft mir ein Kaffee, weiterzubauen.",
     "notReady": "Die Zahlungslinks sind noch nicht fertig. Danke, dass du helfen möchtest.",
     "notReadyShare": "Bis dahin hilft es auch, Computable mit Freunden oder einer Klasse zu teilen.",
     "amount": "Betrag in {currency, select, BRL {brasilianischen Real} other {US-Dollar}}",

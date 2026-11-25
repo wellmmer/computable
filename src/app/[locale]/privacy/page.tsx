@@ -43,7 +43,7 @@ export default function PrivacyPage() {
             </h2>
             <p>{t('accounts.stored')}</p>
             <p>{t('accounts.records')}</p>
-            <p>{t('accounts.later')}</p>
+            <p>{t('accounts.synced')}</p>
             <p>{t('accounts.where')}</p>
             <p>{t('accounts.session')}</p>
             <p>{t('accounts.delete')}</p>

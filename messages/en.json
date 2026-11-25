@@ -313,7 +313,7 @@
       "title": "Optional accounts",
       "stored": "You can sign in with Google or GitHub. Supabase then keeps what that service sends: your name, your email, your profile picture link and your user ID there.",
       "records": "Supabase also keeps sign-in records, such as the IP address and the browser.",
-      "later": "A later update will also keep your current machine and your quiz scores in it.",
+      "synced": "Your account also keeps your current machine and your quiz scores, so they follow you to your other devices.",
       "where": "Supabase stores your account. Its servers are in the region chosen when the project is created.",
       "session": "Your browser keeps the sign-in in its local storage, not in a cookie.",
       "delete": "“Delete my account” in the account menu deletes your account and everything saved in it. This browser keeps its own copy."
@@ -334,6 +334,7 @@
     "pageTitle": "Support the dev",
     "title": "Buy the dev a coffee",
     "lead": "Computable is free, with no ads and no accounts. If it helped you learn, a coffee helps me keep building it.",
+    "leadAccounts": "Computable is free, with no ads. Accounts are optional. If it helped you learn, a coffee helps me keep building it.",
     "notReady": "The payment links are not ready yet. Thank you for wanting to help.",
     "notReadyShare": "Until then, sharing Computable with a friend or a class helps too.",
     "amount": "Amount, in {currency, select, BRL {Brazilian reais} other {US dollars}}",

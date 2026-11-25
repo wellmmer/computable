@@ -313,7 +313,7 @@
       "title": "Comptes facultatifs",
       "stored": "Vous pouvez vous connecter avec Google ou GitHub. Supabase garde alors ce que ce service envoie : votre nom, votre e-mail, le lien de votre photo de profil et votre identifiant chez ce service.",
       "records": "Supabase garde aussi des traces de connexion, comme l’adresse IP et le navigateur.",
-      "later": "Une prochaine mise à jour y gardera aussi votre machine actuelle et vos résultats de quiz.",
+      "synced": "Votre compte garde aussi votre machine actuelle et vos résultats de quiz, pour que vous les retrouviez sur vos autres appareils.",
       "where": "Supabase garde votre compte. Ses serveurs sont dans la région choisie à la création du projet.",
       "session": "Votre navigateur garde la connexion dans son stockage local, pas dans un cookie.",
       "delete": "« Supprimer mon compte », dans le menu du compte, supprime votre compte et tout ce qui y est enregistré. Ce navigateur garde sa propre copie."
@@ -334,6 +334,7 @@
     "pageTitle": "Soutenir le dev",
     "title": "Offrez un café au dev",
     "lead": "Computable est gratuit, sans publicité et sans compte. S’il vous a aidé à apprendre, un café m’aide à continuer.",
+    "leadAccounts": "Computable est gratuit, sans publicité. Les comptes sont facultatifs. S’il vous a aidé à apprendre, un café m’aide à continuer.",
     "notReady": "Les liens de paiement ne sont pas encore prêts. Merci de vouloir aider.",
     "notReadyShare": "En attendant, partager Computable avec un ami ou une classe aide aussi.",
     "amount": "Montant, en {currency, select, BRL {réais brésiliens} other {dollars américains}}",
