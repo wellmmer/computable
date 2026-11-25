@@ -1,4 +1,16 @@
+import { timingSafeEqual } from 'node:crypto';
 import { accountConfig } from '@/account/config';
+
+/**
+ * True when the header holds the secret. timingSafeEqual takes the same time for every wrong
+ * guess of the same length, so the time of the answer does not leak the secret.
+ */
+function holdsSecret(authorization: string | null, secret: string): boolean {
+  if (authorization === null || secret === '') return false;
+  const given = Buffer.from(authorization);
+  const expected = Buffer.from(`Bearer ${secret}`);
+  return given.length === expected.length && timingSafeEqual(given, expected);
+}
 
 /**
  * The daily keep-alive (spec R5b 5). A free Supabase project pauses after a week with too little
@@ -7,7 +19,8 @@ import { accountConfig } from '@/account/config';
  *
  * Vercel sends `Authorization: Bearer <CRON_SECRET>` when the project has CRON_SECRET
  * (https://vercel.com/docs/cron-jobs/manage-cron-jobs#securing-cron-jobs). Without CRON_SECRET the
- * route refuses every call, so nobody else can make it call Supabase.
+ * route refuses every call, so nobody else can make it call Supabase. A refusal is a 401 with no
+ * body, so it tells a caller nothing about the setup.
  *
  * With cacheComponents, `export const dynamic` is not allowed. The route reads the request headers
  * first, so Next.js never prerenders it.
@@ -17,9 +30,7 @@ export async function GET(request: Request): Promise<Response> {
   const config = accountConfig();
   // No accounts on this site: there is nothing to keep alive.
   if (config === null) return new Response(null, { status: 204 });
-  const secret = process.env.CRON_SECRET?.trim() ?? '';
-  if (secret === '') return new Response('CRON_SECRET is not set.', { status: 503 });
-  if (authorization !== `Bearer ${secret}`) return new Response('Unauthorized', { status: 401 });
+  if (!holdsSecret(authorization, process.env.CRON_SECRET?.trim() ?? '')) return new Response(null, { status: 401 });
 
   try {
     const answer = await fetch(`${config.url}/rest/v1/rpc/keep_alive`, {

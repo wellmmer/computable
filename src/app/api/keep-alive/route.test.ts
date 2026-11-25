@@ -31,16 +31,20 @@ describe('GET /api/keep-alive (spec R5b 5)', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('answers 503 when CRON_SECRET is not set, so nobody can call it without a secret', async () => {
+  it('answers 401 with no body when CRON_SECRET is not set, so nobody can call it without a secret', async () => {
     vi.stubEnv('CRON_SECRET', '');
     const response = await GET(request('Bearer '));
-    expect(response.status).toBe(503);
+    expect(response.status).toBe(401);
+    expect(await response.text()).toBe('');
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('answers 401 to a wrong or missing secret', async () => {
-    expect((await GET(request('Bearer wrong'))).status).toBe(401);
-    expect((await GET(request())).status).toBe(401);
+  it('answers 401 with no body to a wrong, shorter, longer or missing secret', async () => {
+    for (const authorization of ['Bearer wrong-secret-of-same-size!', 'Bearer wrong', `Bearer ${SECRET}x`, undefined]) {
+      const response = await GET(request(authorization));
+      expect(response.status, authorization).toBe(401);
+      expect(await response.text()).toBe('');
+    }
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
