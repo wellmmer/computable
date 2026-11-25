@@ -258,7 +258,17 @@
       "delete": "Delete my account",
       "deleteText": "This deletes your account and the copy saved in it. This browser keeps its own copy.",
       "cancel": "Cancel",
-      "deleteFailed": "Your account was not deleted. Try again."
+      "deleteFailed": "Your account was not deleted. Try again.",
+      "machine": {
+        "title": "Which machine do you want to keep?",
+        "text": "This browser and your account each have a machine that changed since the last sync.",
+        "browser": "This browser",
+        "saved": "Your account",
+        "changed": "Changed {time}",
+        "keepBrowser": "Keep this browser's machine",
+        "useSaved": "Use your saved machine",
+        "download": "Download this browser's machine first"
+      }
     }
   },
   "about": {

@@ -258,7 +258,17 @@
       "delete": "Excluir minha conta",
       "deleteText": "Isso exclui sua conta e a cópia salva nela. Este navegador mantém a própria cópia.",
       "cancel": "Cancelar",
-      "deleteFailed": "Sua conta não foi excluída. Tente de novo."
+      "deleteFailed": "Sua conta não foi excluída. Tente de novo.",
+      "machine": {
+        "title": "Qual máquina você quer manter?",
+        "text": "Este navegador e sua conta têm, cada um, uma máquina que mudou desde a última sincronização.",
+        "browser": "Este navegador",
+        "saved": "Sua conta",
+        "changed": "Alterada em {time}",
+        "keepBrowser": "Manter a máquina deste navegador",
+        "useSaved": "Usar sua máquina salva",
+        "download": "Baixar antes a máquina deste navegador"
+      }
     }
   },
   "about": {

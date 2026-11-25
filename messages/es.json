@@ -258,7 +258,17 @@
       "delete": "Eliminar mi cuenta",
       "deleteText": "Esto elimina tu cuenta y la copia guardada en ella. Este navegador conserva su propia copia.",
       "cancel": "Cancelar",
-      "deleteFailed": "Tu cuenta no se eliminó. Inténtalo de nuevo."
+      "deleteFailed": "Tu cuenta no se eliminó. Inténtalo de nuevo.",
+      "machine": {
+        "title": "¿Qué máquina quieres conservar?",
+        "text": "Este navegador y tu cuenta tienen cada uno una máquina que cambió desde la última sincronización.",
+        "browser": "Este navegador",
+        "saved": "Tu cuenta",
+        "changed": "Cambiada el {time}",
+        "keepBrowser": "Conservar la máquina de este navegador",
+        "useSaved": "Usar tu máquina guardada",
+        "download": "Descargar antes la máquina de este navegador"
+      }
     }
   },
   "about": {

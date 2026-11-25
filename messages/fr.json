@@ -258,7 +258,17 @@
       "delete": "Supprimer mon compte",
       "deleteText": "Cela supprime votre compte et la copie qui y est enregistrée. Ce navigateur garde sa propre copie.",
       "cancel": "Annuler",
-      "deleteFailed": "Votre compte n’a pas été supprimé. Réessayez."
+      "deleteFailed": "Votre compte n’a pas été supprimé. Réessayez.",
+      "machine": {
+        "title": "Quelle machine voulez-vous garder ?",
+        "text": "Ce navigateur et votre compte ont chacun une machine modifiée depuis la dernière synchronisation.",
+        "browser": "Ce navigateur",
+        "saved": "Votre compte",
+        "changed": "Modifiée le {time}",
+        "keepBrowser": "Garder la machine de ce navigateur",
+        "useSaved": "Utiliser votre machine enregistrée",
+        "download": "Télécharger d’abord la machine de ce navigateur"
+      }
     }
   },
   "about": {

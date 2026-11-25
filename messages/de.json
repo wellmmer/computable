@@ -258,7 +258,17 @@
       "delete": "Mein Konto löschen",
       "deleteText": "Das löscht dein Konto und die Kopie darin. Dieser Browser behält seine eigene Kopie.",
       "cancel": "Abbrechen",
-      "deleteFailed": "Dein Konto wurde nicht gelöscht. Versuch es noch einmal."
+      "deleteFailed": "Dein Konto wurde nicht gelöscht. Versuch es noch einmal.",
+      "machine": {
+        "title": "Welche Maschine möchtest du behalten?",
+        "text": "Dieser Browser und dein Konto haben je eine Maschine, die sich seit dem letzten Abgleich geändert hat.",
+        "browser": "Dieser Browser",
+        "saved": "Dein Konto",
+        "changed": "Geändert am {time}",
+        "keepBrowser": "Maschine dieses Browsers behalten",
+        "useSaved": "Gespeicherte Maschine verwenden",
+        "download": "Zuerst die Maschine dieses Browsers herunterladen"
+      }
     }
   },
   "about": {
