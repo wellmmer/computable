@@ -1,8 +1,10 @@
 import { useSyncExternalStore } from 'react';
+import { sharedBrowserValues } from '@/storage/synced-key-value';
 import { createBrowserProgressStorage, PROGRESS_KEY, type Progress, type ProgressStorage } from './progress-storage';
 
 // One copy per page load, shared by the quiz and the Learn page, so a finished quiz shows at once.
-// A save or reset in another tab updates it through the "storage" event.
+// A save or reset in another tab updates it through the "storage" event. Scores that the account
+// sync wrote update it too (spec R5b 5).
 let storage: ProgressStorage | null = null;
 let snapshot: Progress | null = null;
 const listeners = new Set<() => void>();
@@ -33,12 +35,23 @@ function onStorage(event: StorageEvent) {
   publish(openStorage().load());
 }
 
+/** Stops listening to the account sync. Null while no component listens. */
+let stopAccountListener: (() => void) | null = null;
+
 function subscribe(listener: () => void) {
-  if (listeners.size === 0) window.addEventListener('storage', onStorage);
+  if (listeners.size === 0) {
+    window.addEventListener('storage', onStorage);
+    stopAccountListener = sharedBrowserValues().onAccountChange((key) => {
+      if (key === PROGRESS_KEY) publish(openStorage().load());
+    });
+  }
   listeners.add(listener);
   return () => {
     listeners.delete(listener);
-    if (listeners.size === 0) window.removeEventListener('storage', onStorage);
+    if (listeners.size > 0) return;
+    window.removeEventListener('storage', onStorage);
+    stopAccountListener?.();
+    stopAccountListener = null;
   };
 }
 

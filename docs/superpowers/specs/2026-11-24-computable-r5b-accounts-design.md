@@ -95,7 +95,50 @@ One table, `profiles`, with one row per person:
 - **Status line** in the account menu: "Saved to your account", "Saving…", or "Not saved: no
   connection. Your work is safe in this browser."
 - **Keep-alive.** Free Supabase projects pause after some days without use (section 8). A daily
-  Vercel cron job calls one route that reads 1 row.
+  Vercel cron job calls one route that calls a database function.
+
+### Decisions made while planning R5b2 (2026-11-25)
+
+1. **What "changed" means.** The browser keeps `computable.sync` = `{ userId, machine }`: the
+   canonical text of the last machine synced for that login. A machine changed when its canonical
+   text differs from it. A record of another login, or no record, means nothing was synced yet.
+2. **Page load while signed in,** once per login and page. No readable saved machine: upload the
+   browser machine, unless it did not change since the last sync. Both the same: record it. Browser machine unchanged, or none: the saved machine
+   replaces it. Saved machine unchanged: upload the browser machine. Both changed: the dialog. jsonb
+   does not keep the key order, so the sync compares canonical texts.
+3. **Score merge.** Per lesson, with the same number of questions, the higher best wins with the
+   later time. With another number of questions, the later result wins. Each side gets the merge
+   when it lacks something.
+4. **Writes.** Each write reads the row first, because another device may have written it since
+   the page loaded. A saved machine that changed since the last sync is never written over: the
+   machine dialog asks. The scores merge with the saved ones, and the browser gets the merge. One
+   upsert on `user_id` sends only the changed columns, plus `user_id`, `updated_at` and, for the
+   machine, `machine_changed_at`.
+5. **When each machine changed.** The browser keeps `computable.machine.changedAt`. A page change to
+   the machine sets it, signed in or not. Writing the same text again is not a change. The row keeps
+   `machine_changed_at`. The dialog shows both with `Intl.DateTimeFormat`, in the page language.
+6. **Size limit.** `check` constraints: 256 KB for the machine and 64 KB for the quiz scores, as
+   JSON text. The sync checks the same limits before it writes.
+7. **Session lost.** When the person is signed out without "Sign out" or "Delete my account", the
+   sign-in dialog opens with "You were signed out. Sign in again to keep saving."
+8. **Keep-alive.** `GET /api/keep-alive` calls `keep_alive()` with the public key. It needs
+   `Authorization: Bearer <CRON_SECRET>`, compared in constant time. A missing or wrong secret: 401
+   with no body. Without the Supabase values: 204 and no call. `vercel.json` runs it once a day.
+9. **Support page.** The lead says "no ads and no accounts" only without the Supabase values.
+   With them, it says accounts are optional.
+10. **Privacy page.** It says the account keeps the current machine and the quiz scores, so they
+    follow the person to other devices. With accounts, the texts that said "this browser only" say
+    that the account of a signed-in person keeps a copy.
+11. **Another login synced in this browser before.** The sync record names that login. Its machine
+    and scores are in its own account, so none of them go into this one. The saved scores replace
+    the browser scores. The browser machine is never uploaded without a question. When it differs
+    from a saved machine, the dialog asks. Without a saved machine, it goes up only after the person
+    changes it. No sync record at all is a first sign-in in this browser: the scores merge and the
+    machine goes up, as above.
+12. **"Reset my progress" while signed in.** The row keeps `progress_reset_at`, and the sync record
+    keeps the reset time of this browser. A reset writes empty scores and the reset time to the
+    account. Every merge drops the results that ended before the newest reset known. With accounts,
+    the question says it also clears the account copy.
 
 ## 6. Errors
 
@@ -104,6 +147,10 @@ No error blocks a page. The browser copy is always safe.
 | What happens | What the person sees |
 | --- | --- |
 | No connection, or Supabase is down or paused | "Not saved: no connection. Your work is safe in this browser." It tries again when the browser is back online, and every 30 seconds. |
+| The machine or the quiz scores are over the size limit | "Not saved: this machine is too big for your account. Your work is safe in this browser." No retry until the next change. The status stays until a write of that machine works. |
+| Another device saved a new machine since this page loaded | The next machine write does not go out. The machine dialog asks which machine to keep. |
+| The login is not valid any more when the sync reads or writes | The sync stops trying, and the status says "Not saved". A new sign-in starts it again. |
+| "Sign out" in another tab | That tab signs out. This tab follows, with no "You were signed out" message. |
 | The login is cancelled or refused | "Sign-in did not finish. Try again, or keep working without an account." |
 | The session cannot be renewed | The person is signed out: "You were signed out. Sign in again to keep saving." |
 | The saved row has bad data | The parsers that exist today read it. Bad data reads as empty, and the browser copy wins. |
@@ -131,11 +178,12 @@ No error blocks a page. The browser copy is always safe.
 
 | Claim | Source |
 | --- | --- |
-| Free Supabase projects pause after about 7 days without activity. | From my own knowledge. Check before R5b2. |
+| Free Supabase projects pause after about 7 days without activity. | Checked on 2026-11-25: free projects pause after 1 week of too little database activity (https://supabase.com/docs/guides/platform/free-project-pausing). |
 | The built-in Supabase email sender allows only a few emails per hour, which is why R5b has no email login. | From my own knowledge. Not needed, because R5b uses no email. |
 | The free tier offers the São Paulo region. | From my own knowledge, not checked. Wellmmer sees it when he creates the project. |
 | supabase-js keeps the session in localStorage by default, with no cookie. | Checked on 2026-11-24: the Supabase docs say "The default behavior if you're not using SSR is to store this information in local storage" (https://supabase.com/docs/guides/auth/server-side/advanced-guide). The installed auth-js 2.119.0 uses `globalThis.localStorage` when no storage is given. |
-| A Vercel Hobby project can run 1 cron job per day. | From my own knowledge. Check before R5b2. |
+| A Vercel Hobby project can run 1 cron job per day. | Checked on 2026-11-25: Hobby cron jobs run at most once a day, at any minute of the chosen hour (https://vercel.com/docs/cron-jobs/usage-and-pricing). Vercel now calls Cron Jobs a legacy feature, to be moved to "Schedules". |
+| Vercel sends `CRON_SECRET` to the cron route. | Checked on 2026-11-25: Vercel sends the value as `Authorization: Bearer <CRON_SECRET>` (https://vercel.com/docs/cron-jobs/manage-cron-jobs#securing-cron-jobs). |
 | Privacy laws such as LGPD and GDPR expect a way to delete an account. | From my own knowledge. "Delete my account" covers it. This is not legal advice. |
 | The exact fields Supabase Auth keeps. | From my own knowledge. Check in the dashboard after setup. |
 

@@ -72,12 +72,23 @@ describe('Privacy (spec 4.2)', () => {
       'You can sign in with Google or GitHub. Supabase then keeps what that service sends: your name, your email, your profile picture link and your user ID there.',
     );
     expect(section.textContent).toContain('Supabase also keeps sign-in records, such as the IP address and the browser.');
-    expect(section.textContent).toContain('A later update will also keep your current machine and your quiz scores in it.');
+    expect(section.textContent).toContain('Your account also keeps your current machine and your quiz scores, so they follow you to your other devices.');
     expect(section.textContent).toContain('Supabase stores your account. Its servers are in the region chosen when the project is created.');
     expect(section.textContent).toContain('Your browser keeps the sign-in in its local storage, not in a cookie.');
     expect(section.textContent).toContain(
       '“Delete my account” in the account menu deletes your account and everything saved in it. This browser keeps its own copy.',
     );
+  });
+
+  it('says what an account also keeps, in the browser section, when the site has accounts (spec R5b 5)', () => {
+    withAccounts();
+    renderWithIntl(<PrivacyPage />);
+    const section = screen.getByRole('region', { name: 'What stays in your browser' });
+    expect(section.textContent).toContain(
+      'They stay on your device. If you sign in, your account also keeps your current machine.',
+    );
+    expect(section.textContent).toContain('Your quiz results stay in this browser, unless you sign in. Then your account keeps a copy too.');
+    expect(section.textContent).not.toContain('Your quiz results stay in this browser only.');
   });
 
   it('says that quiz results stay in this browser only (spec R2a 4)', () => {

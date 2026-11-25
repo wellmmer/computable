@@ -95,8 +95,9 @@ for (const { path, learn, lessons } of LANGUAGES) {
       await page.getByRole('link', { name: title }).click();
       await expect(page).toHaveURL(new RegExp(`${path}/learn/${slug}$`));
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
-      // The tab shows the title without the soft hyphen of lesson 5.
-      expect(await page.title(), slug).toContain(title);
+      // The tab shows the title without the soft hyphen of lesson 5. After the click, the title can
+      // come after the heading: on Linux it was still empty once. So the check waits for it.
+      await expect(page, slug).toHaveTitle(new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
       await expect(page.getByText(position)).toBeVisible();
       await expect(page.locator('figure')).toHaveCount(machines);
     }

@@ -19,11 +19,13 @@ function dropLinkFromUrl() {
 /**
  * The simulator with its own store. The server renders Binary +1; after hydration, the store opens
  * the machine from a share link or from browser storage. A link pasted into the address bar later opens too.
+ * A machine that the account sync writes to the browser opens too (spec R5b 5).
  */
 export function Simulator() {
-  const [store] = useState(() =>
-    createSimulatorStore({ storage: typeof window === 'undefined' ? createMemoryStorage() : createBrowserStorage() }),
-  );
+  const [{ store, storage }] = useState(() => {
+    const storage = typeof window === 'undefined' ? createMemoryStorage() : createBrowserStorage();
+    return { store: createSimulatorStore({ storage }), storage };
+  });
 
   useEffect(() => {
     store.getState().boot(window.location.hash);
@@ -42,12 +44,14 @@ export function Simulator() {
       window.history.back();
     };
     window.addEventListener('hashchange', onHashChange);
+    const stopAccount = storage.onMachineFromAccount((machine) => store.getState().loadMachine(machine));
     return () => {
       window.removeEventListener('hashchange', onHashChange);
+      stopAccount();
       unsubscribe();
       store.getState().pause();
     };
-  }, [store]);
+  }, [store, storage]);
 
   return (
     <SimulatorStoreProvider store={store}>

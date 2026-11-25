@@ -1,9 +1,11 @@
 // @vitest-environment jsdom
 import { act, cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { SYNC_KEY } from '@/storage/keys';
 import { createFakeAccount } from '@/test/fake-account';
 import { renderWithIntl } from '@/test/intl';
 import { AccountMenu } from './AccountMenu';
+import type { SyncStatus } from './sync/sync-engine';
 
 beforeAll(() => {
   // jsdom has <dialog> but not showModal() or close(). A browser fires "close" when the dialog closes.
@@ -18,12 +20,12 @@ beforeAll(() => {
 
 afterEach(cleanup);
 
-const ADA = { name: 'Ada Lovelace', email: 'ada@example.test' };
+const ADA = { id: 'id-ada', name: 'Ada Lovelace', email: 'ada@example.test' };
 
 /** Renders the menu and waits for the effects that ask the fake client about a failed return. */
-async function renderMenu(fake: ReturnType<typeof createFakeAccount>) {
+async function renderMenu(fake: ReturnType<typeof createFakeAccount>, status: SyncStatus = 'saved') {
   await act(async () => {
-    renderWithIntl(<AccountMenu client={fake.client} />);
+    renderWithIntl(<AccountMenu client={fake.client} status={status} />);
   });
 }
 
@@ -79,7 +81,7 @@ describe('AccountMenu, signed in (spec R5b 4)', () => {
   });
 
   it('shows the email when the service gave no name', async () => {
-    await renderMenu(createFakeAccount({ user: { name: null, email: 'ada@example.test' } }));
+    await renderMenu(createFakeAccount({ user: { id: 'id-ada', name: null, email: 'ada@example.test' } }));
     expect(screen.getByRole('button', { name: 'Account: ada@example.test' }).textContent).toBe('ada@example.test');
   });
 
@@ -148,5 +150,47 @@ describe('AccountMenu, signed in (spec R5b 4)', () => {
     await act(async () => fireEvent.click(within(dialog).getByRole('button', { name: 'Delete my account' })));
     expect(within(dialog).getByRole('alert').textContent).toBe('Your account was not deleted. Try again.');
     expect(screen.getByRole('button', { name: 'Account: Ada Lovelace' })).toBeTruthy();
+  });
+});
+
+describe('AccountMenu, the sync status (spec R5b 5 and 6)', () => {
+  it.each([
+    ['saved', 'Saved to your account'],
+    ['saving', 'Saving…'],
+    ['offline', 'Not saved: no connection. Your work is safe in this browser.'],
+    ['too-big', 'Not saved: this machine is too big for your account. Your work is safe in this browser.'],
+  ] as const)('says "%s" as the first line of the list', async (status, text) => {
+    await renderMenu(createFakeAccount({ user: ADA }), status);
+    fireEvent.click(screen.getByRole('button', { name: 'Account: Ada Lovelace' }));
+    const line = screen.getByRole('status');
+    expect(line.textContent).toBe(text);
+    const items = screen.getAllByRole('listitem');
+    expect(items[0].contains(line)).toBe(true);
+  });
+
+  it('opens the sign-in dialog with a message when the session was lost (spec R5b 6)', async () => {
+    const fake = createFakeAccount({ user: ADA });
+    await renderMenu(fake);
+    act(() => fake.loseSession());
+    const dialog = screen.getByRole('dialog', { name: 'Sign in' });
+    expect(within(dialog).getByRole('alert').textContent).toBe('You were signed out. Sign in again to keep saving.');
+  });
+
+  it('opens no dialog after "Sign out"', async () => {
+    const fake = createFakeAccount({ user: ADA });
+    await renderMenu(fake);
+    fireEvent.click(screen.getByRole('button', { name: 'Account: Ada Lovelace' }));
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Sign out' })));
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
+  it('forgets the sync record after "Delete my account"', async () => {
+    localStorage.setItem(SYNC_KEY, '{"userId":"id-ada","machine":null}');
+    await renderMenu(createFakeAccount({ user: ADA }));
+    fireEvent.click(screen.getByRole('button', { name: 'Account: Ada Lovelace' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete my account' }));
+    const dialog = screen.getByRole('dialog', { name: 'Delete my account' });
+    await act(async () => fireEvent.click(within(dialog).getByRole('button', { name: 'Delete my account' })));
+    expect(localStorage.getItem(SYNC_KEY)).toBeNull();
   });
 });

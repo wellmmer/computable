@@ -3,6 +3,7 @@ import { act, cleanup, renderHook } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { resetProgress, saveQuizResult, useProgress } from './progress';
+import { sharedBrowserValues } from '@/storage/synced-key-value';
 import { PROGRESS_KEY } from './progress-storage';
 
 afterEach(() => {
@@ -76,5 +77,14 @@ describe('useProgress', () => {
       window.dispatchEvent(new StorageEvent('storage', { key: 'computable.machine', newValue: '{}', storageArea: localStorage }));
     });
     expect(result.current).toBe(before);
+  });
+
+  it('shows the scores that the sync wrote from the account (spec R5b 5)', () => {
+    const { result } = renderHook(() => useProgress());
+    expect(result.current).toEqual({});
+    act(() => {
+      sharedBrowserValues().writeFromAccount(PROGRESS_KEY, '{"intuition":{"best":2,"total":5,"finishedAt":"2026-11-24T09:00:00.000Z"}}');
+    });
+    expect(result.current).toEqual({ intuition: { best: 2, total: 5, finishedAt: '2026-11-24T09:00:00.000Z' } });
   });
 });

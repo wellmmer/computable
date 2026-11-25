@@ -3,9 +3,12 @@
 import { ChevronDown, LogIn, LogOut, Trash2, UserRound } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useId, useRef, useState, type FocusEvent, type KeyboardEvent } from 'react';
+import { SYNC_KEY } from '@/storage/keys';
+import { sharedBrowserValues } from '@/storage/synced-key-value';
 import { userLabel, type AccountClient, type AccountUser, type Provider } from './account-client';
 import { DeleteAccountDialog } from './DeleteAccountDialog';
 import { SignInDialog } from './SignInDialog';
+import type { SyncStatus } from './sync/sync-engine';
 
 /**
  * The look of the language switcher's button, so the menu bar stays one family. The label never
@@ -14,17 +17,22 @@ import { SignInDialog } from './SignInDialog';
 const menuButton = 'press inline-flex h-9 items-center gap-1.5 whitespace-nowrap border-2 border-ink bg-cell px-2.5 font-semibold text-ink';
 const listItem = 'flex w-full items-center gap-2 px-3 py-2 text-left text-ink hover:bg-soft';
 
+/** The text key of each sync status. */
+const statusText = { saved: 'saved', saving: 'saving', offline: 'offline', 'too-big': 'tooBig' } as const;
+
 /**
  * The account part of the menu bar (spec R5b 4). Signed out, it shows "Sign in", which opens the
- * sign-in dialog. Signed in, it shows the name or the email, with a list: "Sign out" and "Delete my
- * account". On phones the buttons show only their icon, and screen readers still hear the text.
+ * sign-in dialog. Signed in, it shows the name or the email, with a list: the sync status, "Sign
+ * out" and "Delete my account". On phones the buttons show only their icon, and screen readers still
+ * hear the text.
  */
-export function AccountMenu({ client }: { client: AccountClient }) {
+export function AccountMenu({ client, status }: { client: AccountClient; status: SyncStatus }) {
   const t = useTranslations('shell.account');
   /** Undefined until the client knows if someone is signed in. */
   const [user, setUser] = useState<AccountUser | null | undefined>(undefined);
   const [dialog, setDialog] = useState<'sign-in' | 'delete' | null>(null);
-  const [signInFailed, setSignInFailed] = useState(false);
+  /** The message of the sign-in dialog, when something went wrong. */
+  const [notice, setNotice] = useState<'failed' | 'lost' | null>(null);
   const [open, setOpen] = useState(false);
   /** Each increase moves the focus to the menu button, after the button changed or a dialog closed. */
   const [focusRequest, setFocusRequest] = useState(0);
@@ -32,14 +40,25 @@ export function AccountMenu({ client }: { client: AccountClient }) {
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => client.onUserChange(setUser), [client]);
+  // When the session is lost, the sign-in dialog opens with the message (spec R5b 6).
+  useEffect(
+    () =>
+      client.onUserChange((next, lost) => {
+        setUser(next);
+        if (!lost) return;
+        setOpen(false);
+        setNotice('lost');
+        setDialog('sign-in');
+      }),
+    [client],
+  );
 
   // After a cancelled or refused sign-in, the dialog opens again with the message (spec R5b 6).
   useEffect(() => {
     let current = true;
     void client.signInFailedOnReturn().then((failed) => {
       if (!current || !failed) return;
-      setSignInFailed(true);
+      setNotice('failed');
       setDialog('sign-in');
     });
     return () => {
@@ -75,8 +94,8 @@ export function AccountMenu({ client }: { client: AccountClient }) {
   };
 
   const signIn = async (provider: Provider) => {
-    setSignInFailed(false);
-    if (!(await client.signInWith(provider))) setSignInFailed(true);
+    setNotice(null);
+    if (!(await client.signInWith(provider))) setNotice('failed');
   };
 
   const signOut = async () => {
@@ -88,6 +107,13 @@ export function AccountMenu({ client }: { client: AccountClient }) {
   const askToDelete = () => {
     setOpen(false);
     setDialog('delete');
+  };
+
+  // A later account starts with no sync record, as on a new browser.
+  const deleteAccount = async () => {
+    const deleted = await client.deleteAccount();
+    if (deleted) sharedBrowserValues().remove(SYNC_KEY);
+    return deleted;
   };
 
   const label = user === undefined || user === null ? null : (userLabel(user) ?? t('account'));
@@ -121,6 +147,11 @@ export function AccountMenu({ client }: { client: AccountClient }) {
             <ChevronDown aria-hidden className={`size-4 shrink-0 motion-safe:transition-transform ${open ? 'rotate-180' : ''}`} />
           </button>
           <ul id={listId} hidden={!open} className="absolute right-0 z-30 mt-1 min-w-52 border-2 border-ink bg-cell py-1">
+            <li className="border-b-2 border-ink/20">
+              <p role="status" className={`max-w-72 px-3 py-2 text-sm ${status === 'offline' || status === 'too-big' ? 'font-medium text-pencil' : 'text-muted'}`}>
+                {t(`status.${statusText[status]}`)}
+              </p>
+            </li>
             <li>
               <button type="button" onClick={signOut} className={listItem}>
                 <LogOut aria-hidden className="size-4 shrink-0" />
@@ -138,17 +169,17 @@ export function AccountMenu({ client }: { client: AccountClient }) {
       )}
       {dialog === 'sign-in' && (
         <SignInDialog
-          failed={signInFailed}
+          notice={notice}
           onSignIn={signIn}
           onClose={() => {
             setDialog(null);
-            setSignInFailed(false);
+            setNotice(null);
           }}
         />
       )}
       {dialog === 'delete' && (
         <DeleteAccountDialog
-          onDelete={() => client.deleteAccount()}
+          onDelete={deleteAccount}
           onClose={() => {
             setDialog(null);
             // The list item that opened the dialog is hidden now, so the browser cannot return the focus to it.

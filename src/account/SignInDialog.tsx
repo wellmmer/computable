@@ -7,8 +7,8 @@ import type { Provider } from './account-client';
 const button = 'press border-2 border-ink px-3 py-1.5 font-semibold';
 
 interface SignInDialogProps {
-  /** True when the last sign-in did not finish. The dialog then says so. */
-  failed: boolean;
+  /** Why the dialog opened by itself: the last sign-in did not finish, or the session was lost. */
+  notice: 'failed' | 'lost' | null;
   onSignIn: (provider: Provider) => void;
   /** Called when the dialog has closed: after Close or Esc. */
   onClose: () => void;
@@ -18,7 +18,7 @@ interface SignInDialogProps {
  * The "Sign in" dialog (spec R5b 4). Each button opens the sign-in page of its service. The menu
  * mounts the dialog to open it. When it closes, the browser returns the focus to where it was.
  */
-export function SignInDialog({ failed, onSignIn, onClose }: SignInDialogProps) {
+export function SignInDialog({ notice, onSignIn, onClose }: SignInDialogProps) {
   const t = useTranslations('shell.account');
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -40,9 +40,9 @@ export function SignInDialog({ failed, onSignIn, onClose }: SignInDialogProps) {
       <p id="sign-in-text" className="mt-3">
         {t('why')}
       </p>
-      {failed && (
+      {notice !== null && (
         <p role="alert" className="mt-3 font-medium text-pencil">
-          {t('signInFailed')}
+          {notice === 'failed' ? t('signInFailed') : t('signedOutLost')}
         </p>
       )}
       <div className="mt-5 flex flex-col gap-3">

@@ -258,7 +258,24 @@
       "delete": "Delete my account",
       "deleteText": "This deletes your account and the copy saved in it. This browser keeps its own copy.",
       "cancel": "Cancel",
-      "deleteFailed": "Your account was not deleted. Try again."
+      "deleteFailed": "Your account was not deleted. Try again.",
+      "machine": {
+        "title": "Which machine do you want to keep?",
+        "text": "This browser and your account each have a machine that changed since the last sync.",
+        "browser": "This browser",
+        "saved": "Your account",
+        "changed": "Changed {time}",
+        "keepBrowser": "Keep this browser's machine",
+        "useSaved": "Use your saved machine",
+        "download": "Download this browser's machine first"
+      },
+      "status": {
+        "saved": "Saved to your account",
+        "saving": "Saving…",
+        "offline": "Not saved: no connection. Your work is safe in this browser.",
+        "tooBig": "Not saved: this machine is too big for your account. Your work is safe in this browser."
+      },
+      "signedOutLost": "You were signed out. Sign in again to keep saving."
     }
   },
   "about": {
@@ -287,7 +304,9 @@
     "lead": "Computable has no accounts and keeps no personal data about you. It sets one cookie, only to remember your language.",
     "browserTitle": "What stays in your browser",
     "browser": "Your browser keeps your current machine, your choice of squared or night paper, your language, and whether you saw the tour. They stay on your device.",
+    "browserAccounts": "Your browser keeps your current machine, your choice of squared or night paper, your language, and whether you saw the tour. They stay on your device. If you sign in, your account also keeps your current machine.",
     "quiz": "Your quiz results stay in this browser only.",
+    "quizAccounts": "Your quiz results stay in this browser, unless you sign in. Then your account keeps a copy too.",
     "secret": "Home’s secret message, its secret letters and the Enigma settings stay in this browser only. “Forget my secret” deletes them.",
     "language": "The language is also in a cookie named NEXT_LOCALE, for one year. The site sets it when you choose a language, or when you open a page in a language other than your browser's. Your browser sends it with each page request, so the site's main address opens your language. It holds only the language code, such as pt-BR.",
     "shareLink": "A share link holds the machine after the # sign. Browsers do not send that part of a link to any server.",
@@ -296,7 +315,7 @@
       "title": "Optional accounts",
       "stored": "You can sign in with Google or GitHub. Supabase then keeps what that service sends: your name, your email, your profile picture link and your user ID there.",
       "records": "Supabase also keeps sign-in records, such as the IP address and the browser.",
-      "later": "A later update will also keep your current machine and your quiz scores in it.",
+      "synced": "Your account also keeps your current machine and your quiz scores, so they follow you to your other devices.",
       "where": "Supabase stores your account. Its servers are in the region chosen when the project is created.",
       "session": "Your browser keeps the sign-in in its local storage, not in a cookie.",
       "delete": "“Delete my account” in the account menu deletes your account and everything saved in it. This browser keeps its own copy."
@@ -317,6 +336,7 @@
     "pageTitle": "Support the dev",
     "title": "Buy the dev a coffee",
     "lead": "Computable is free, with no ads and no accounts. If it helped you learn, a coffee helps me keep building it.",
+    "leadAccounts": "Computable is free, with no ads. Accounts are optional. If it helped you learn, a coffee helps me keep building it.",
     "notReady": "The payment links are not ready yet. Thank you for wanting to help.",
     "notReadyShare": "Until then, sharing Computable with a friend or a class helps too.",
     "amount": "Amount, in {currency, select, BRL {Brazilian reais} other {US dollars}}",
@@ -413,6 +433,7 @@
       "yourAnswer": "Your answer",
       "score": "You got {score} of {total} right.",
       "saved": "Your result is saved in this browser only.",
+      "savedAccounts": "Your result is saved in this browser. If you are signed in, your account keeps a copy.",
       "tryAgain": "Try again"
     },
     "machine": {
@@ -441,6 +462,7 @@
     "reset": {
       "button": "Reset my progress",
       "question": "Clear all your quiz results in this browser?",
+      "questionAccounts": "Clear all your quiz results in this browser, and in your account if you are signed in?",
       "confirm": "Yes, clear them",
       "cancel": "Cancel",
       "done": "Your quiz results are cleared."

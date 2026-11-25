@@ -258,7 +258,24 @@
       "delete": "Eliminar mi cuenta",
       "deleteText": "Esto elimina tu cuenta y la copia guardada en ella. Este navegador conserva su propia copia.",
       "cancel": "Cancelar",
-      "deleteFailed": "Tu cuenta no se eliminó. Inténtalo de nuevo."
+      "deleteFailed": "Tu cuenta no se eliminó. Inténtalo de nuevo.",
+      "machine": {
+        "title": "¿Qué máquina quieres conservar?",
+        "text": "Este navegador y tu cuenta tienen cada uno una máquina que cambió desde la última sincronización.",
+        "browser": "Este navegador",
+        "saved": "Tu cuenta",
+        "changed": "Cambiada el {time}",
+        "keepBrowser": "Conservar la máquina de este navegador",
+        "useSaved": "Usar tu máquina guardada",
+        "download": "Descargar antes la máquina de este navegador"
+      },
+      "status": {
+        "saved": "Guardado en tu cuenta",
+        "saving": "Guardando…",
+        "offline": "No guardado: sin conexión. Tu trabajo está seguro en este navegador.",
+        "tooBig": "No guardado: esta máquina es demasiado grande para tu cuenta. Tu trabajo está seguro en este navegador."
+      },
+      "signedOutLost": "Se cerró tu sesión. Inicia sesión de nuevo para seguir guardando."
     }
   },
   "about": {
@@ -287,7 +304,9 @@
     "lead": "Computable no tiene cuentas y no guarda datos personales sobre ti. Usa una sola cookie, solo para recordar tu idioma.",
     "browserTitle": "Lo que queda en tu navegador",
     "browser": "Tu navegador guarda tu máquina actual, tu elección entre papel cuadriculado y papel nocturno, tu idioma y si ya viste el recorrido. Se quedan en tu dispositivo.",
+    "browserAccounts": "Tu navegador guarda tu máquina actual, tu elección entre papel cuadriculado y papel nocturno, tu idioma y si ya viste el recorrido. Se quedan en tu dispositivo. Si inicias sesión, tu cuenta también guarda tu máquina actual.",
     "quiz": "Tus resultados de cuestionarios se quedan solo en este navegador.",
+    "quizAccounts": "Tus resultados de cuestionarios se quedan en este navegador, salvo que inicies sesión. Entonces tu cuenta también guarda una copia.",
     "secret": "El mensaje secreto de la página de inicio, sus letras secretas y la configuración de Enigma se quedan solo en este navegador. «Olvidar mi secreto» los borra.",
     "language": "El idioma también se guarda en una cookie llamada NEXT_LOCALE, durante un año. El sitio la crea cuando eliges un idioma, o cuando abres una página en un idioma distinto al de tu navegador. Tu navegador la envía con cada página que pide, para que la dirección principal del sitio se abra en tu idioma. Solo contiene el código del idioma, como pt-BR.",
     "shareLink": "Un enlace para compartir guarda la máquina después del signo #. Los navegadores no envían esa parte de un enlace a ningún servidor.",
@@ -296,7 +315,7 @@
       "title": "Cuentas opcionales",
       "stored": "Puedes iniciar sesión con Google o GitHub. Supabase guarda entonces lo que ese servicio envía: tu nombre, tu correo, el enlace de tu foto de perfil y tu ID de usuario en él.",
       "records": "Supabase también guarda registros de inicio de sesión, como la dirección IP y el navegador.",
-      "later": "Una próxima actualización también guardará en ella tu máquina actual y tus resultados de cuestionarios.",
+      "synced": "Tu cuenta también guarda tu máquina actual y tus resultados de cuestionarios, para que te sigan en tus otros dispositivos.",
       "where": "Supabase guarda tu cuenta. Sus servidores están en la región elegida al crear el proyecto.",
       "session": "Tu navegador guarda la sesión en su almacenamiento local, no en una cookie.",
       "delete": "«Eliminar mi cuenta», en el menú de la cuenta, elimina tu cuenta y todo lo guardado en ella. Este navegador conserva su propia copia."
@@ -317,6 +336,7 @@
     "pageTitle": "Apoya al dev",
     "title": "Invita un café al dev",
     "lead": "Computable es gratis, sin anuncios y sin cuentas. Si te ayudó a aprender, un café me ayuda a seguir construyéndolo.",
+    "leadAccounts": "Computable es gratis, sin anuncios. Las cuentas son opcionales. Si te ayudó a aprender, un café me ayuda a seguir construyéndolo.",
     "notReady": "Los enlaces de pago aún no están listos. Gracias por querer ayudar.",
     "notReadyShare": "Mientras tanto, compartir Computable con un amigo o una clase también ayuda.",
     "amount": "Cantidad, en {currency, select, BRL {reales brasileños} other {dólares estadounidenses}}",
@@ -413,6 +433,7 @@
       "yourAnswer": "Tu respuesta",
       "score": "Acertaste {score} de {total}.",
       "saved": "Tu resultado se guarda solo en este navegador.",
+      "savedAccounts": "Tu resultado se guarda en este navegador. Si iniciaste sesión, tu cuenta guarda una copia.",
       "tryAgain": "Intentar de nuevo"
     },
     "machine": {
@@ -441,6 +462,7 @@
     "reset": {
       "button": "Borrar mi progreso",
       "question": "¿Borrar todos tus resultados de cuestionarios en este navegador?",
+      "questionAccounts": "¿Borrar todos tus resultados de cuestionarios en este navegador y, si iniciaste sesión, en tu cuenta?",
       "confirm": "Sí, borrarlos",
       "cancel": "Cancelar",
       "done": "Tus resultados de cuestionarios están borrados."

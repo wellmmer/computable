@@ -29,8 +29,9 @@ export default function PrivacyPage() {
           <h2 id="browser-title" className={sectionTitle}>
             {t('browserTitle')}
           </h2>
-          <p>{t('browser')}</p>
-          <p>{t('quiz')}</p>
+          {/* With accounts, these 2 lines say that a signed-in person's account keeps a copy (spec R5b 5). */}
+          <p>{hasAccounts ? t('browserAccounts') : t('browser')}</p>
+          <p>{hasAccounts ? t('quizAccounts') : t('quiz')}</p>
           <p>{t('secret')}</p>
           <p>{t('language')}</p>
           <p>{t('shareLink')}</p>
@@ -43,7 +44,7 @@ export default function PrivacyPage() {
             </h2>
             <p>{t('accounts.stored')}</p>
             <p>{t('accounts.records')}</p>
-            <p>{t('accounts.later')}</p>
+            <p>{t('accounts.synced')}</p>
             <p>{t('accounts.where')}</p>
             <p>{t('accounts.session')}</p>
             <p>{t('accounts.delete')}</p>

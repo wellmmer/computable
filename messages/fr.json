@@ -258,7 +258,24 @@
       "delete": "Supprimer mon compte",
       "deleteText": "Cela supprime votre compte et la copie qui y est enregistrée. Ce navigateur garde sa propre copie.",
       "cancel": "Annuler",
-      "deleteFailed": "Votre compte n’a pas été supprimé. Réessayez."
+      "deleteFailed": "Votre compte n’a pas été supprimé. Réessayez.",
+      "machine": {
+        "title": "Quelle machine voulez-vous garder ?",
+        "text": "Ce navigateur et votre compte ont chacun une machine modifiée depuis la dernière synchronisation.",
+        "browser": "Ce navigateur",
+        "saved": "Votre compte",
+        "changed": "Modifiée le {time}",
+        "keepBrowser": "Garder la machine de ce navigateur",
+        "useSaved": "Utiliser votre machine enregistrée",
+        "download": "Télécharger d’abord la machine de ce navigateur"
+      },
+      "status": {
+        "saved": "Enregistré dans votre compte",
+        "saving": "Enregistrement…",
+        "offline": "Non enregistré : pas de connexion. Votre travail est en sécurité dans ce navigateur.",
+        "tooBig": "Non enregistré : cette machine est trop grande pour votre compte. Votre travail est en sécurité dans ce navigateur."
+      },
+      "signedOutLost": "Vous avez été déconnecté. Reconnectez-vous pour continuer à enregistrer."
     }
   },
   "about": {
@@ -287,7 +304,9 @@
     "lead": "Computable n’a pas de comptes et ne garde aucune donnée personnelle sur vous. Il pose un seul cookie, uniquement pour retenir votre langue.",
     "browserTitle": "Ce qui reste dans votre navigateur",
     "browser": "Votre navigateur garde votre machine actuelle, votre choix entre papier quadrillé et papier de nuit, votre langue, et si vous avez vu la visite. Ils restent sur votre appareil.",
+    "browserAccounts": "Votre navigateur garde votre machine actuelle, votre choix entre papier quadrillé et papier de nuit, votre langue, et si vous avez vu la visite. Ils restent sur votre appareil. Si vous vous connectez, votre compte garde aussi votre machine actuelle.",
     "quiz": "Vos résultats de quiz restent dans ce navigateur seulement.",
+    "quizAccounts": "Vos résultats de quiz restent dans ce navigateur, sauf si vous vous connectez. Votre compte en garde alors aussi une copie.",
     "secret": "Le message secret de l’accueil, ses lettres secrètes et les réglages d’Enigma restent seulement dans ce navigateur. « Oublier mon secret » les efface.",
     "language": "La langue est aussi dans un cookie nommé NEXT_LOCALE, pendant un an. Le site le pose quand vous choisissez une langue, ou quand vous ouvrez une page dans une autre langue que celle de votre navigateur. Votre navigateur l’envoie avec chaque page demandée, pour que l’adresse principale du site s’ouvre dans votre langue. Il ne contient que le code de la langue, comme pt-BR.",
     "shareLink": "Un lien de partage contient la machine après le signe #. Les navigateurs n’envoient cette partie d’un lien à aucun serveur.",
@@ -296,7 +315,7 @@
       "title": "Comptes facultatifs",
       "stored": "Vous pouvez vous connecter avec Google ou GitHub. Supabase garde alors ce que ce service envoie : votre nom, votre e-mail, le lien de votre photo de profil et votre identifiant chez ce service.",
       "records": "Supabase garde aussi des traces de connexion, comme l’adresse IP et le navigateur.",
-      "later": "Une prochaine mise à jour y gardera aussi votre machine actuelle et vos résultats de quiz.",
+      "synced": "Votre compte garde aussi votre machine actuelle et vos résultats de quiz, pour que vous les retrouviez sur vos autres appareils.",
       "where": "Supabase garde votre compte. Ses serveurs sont dans la région choisie à la création du projet.",
       "session": "Votre navigateur garde la connexion dans son stockage local, pas dans un cookie.",
       "delete": "« Supprimer mon compte », dans le menu du compte, supprime votre compte et tout ce qui y est enregistré. Ce navigateur garde sa propre copie."
@@ -317,6 +336,7 @@
     "pageTitle": "Soutenir le dev",
     "title": "Offrez un café au dev",
     "lead": "Computable est gratuit, sans publicité et sans compte. S’il vous a aidé à apprendre, un café m’aide à continuer.",
+    "leadAccounts": "Computable est gratuit, sans publicité. Les comptes sont facultatifs. S’il vous a aidé à apprendre, un café m’aide à continuer.",
     "notReady": "Les liens de paiement ne sont pas encore prêts. Merci de vouloir aider.",
     "notReadyShare": "En attendant, partager Computable avec un ami ou une classe aide aussi.",
     "amount": "Montant, en {currency, select, BRL {réais brésiliens} other {dollars américains}}",
@@ -413,6 +433,7 @@
       "yourAnswer": "Votre réponse",
       "score": "Vous avez {score} bonnes réponses sur {total}.",
       "saved": "Votre résultat est enregistré dans ce navigateur seulement.",
+      "savedAccounts": "Votre résultat est enregistré dans ce navigateur. Si vous êtes connecté, votre compte en garde une copie.",
       "tryAgain": "Réessayer"
     },
     "machine": {
@@ -441,6 +462,7 @@
     "reset": {
       "button": "Effacer ma progression",
       "question": "Effacer tous vos résultats de quiz dans ce navigateur ?",
+      "questionAccounts": "Effacer tous vos résultats de quiz dans ce navigateur et, si vous êtes connecté, dans votre compte ?",
       "confirm": "Oui, les effacer",
       "cancel": "Annuler",
       "done": "Vos résultats de quiz sont effacés."

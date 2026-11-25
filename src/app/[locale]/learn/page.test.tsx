@@ -18,6 +18,7 @@ vi.mock('@/i18n/navigation', () => ({
 afterEach(() => {
   cleanup();
   resetProgress();
+  vi.unstubAllEnvs();
 });
 
 const lessonRow = (number = 1) => screen.getAllByRole('listitem')[number - 1];
@@ -85,6 +86,14 @@ describe('Learn page (spec 2.1)', () => {
     fireEvent.click(within(question).getByRole('button', { name: 'Cancel' }));
     expect(within(lessonRow()).getByText('Quiz: 4 of 5')).toBeTruthy();
     expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Reset my progress' }));
+  });
+
+  it('says the reset also clears the account copy when the site has accounts (spec R5b 5)', () => {
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_URL', 'https://example.supabase.co');
+    vi.stubEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY', 'public-key');
+    renderWithIntl(<LearnPage />);
+    fireEvent.click(screen.getByRole('button', { name: 'Reset my progress' }));
+    expect(screen.getByRole('group', { name: 'Clear all your quiz results in this browser, and in your account if you are signed in?' })).toBeTruthy();
   });
 
   it('clears every quiz result after the confirmation', () => {

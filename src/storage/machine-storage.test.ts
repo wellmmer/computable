@@ -1,7 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { serializeMachine } from '@/engines/turing';
 import { machine } from '@/engines/turing/test-helpers';
 import { blockedStorage, fakeStorage } from '@/test/fake-storage';
-import { createBrowserStorage, createMemoryStorage, MACHINE_KEY } from './machine-storage';
+import { createKeyValue } from './key-value';
+import { PROGRESS_KEY } from './keys';
+import { createBrowserStorage, createMemoryStorage, createSyncedStorage, MACHINE_KEY } from './machine-storage';
+import { createSyncedKeyValue } from './synced-key-value';
 
 const binary = machine([{ state: 'q0', read: '1', write: '0', move: 'R', next: 'qA' }], { name: 'Mine', input: '1' });
 
@@ -60,5 +64,34 @@ describe('createMemoryStorage', () => {
     expect(storage.persistent).toBe(false);
     expect(storage.loadMachine()).toBeNull();
     expect(storage.hasSeen('left-edge')).toBe(false);
+  });
+});
+
+describe('MachineStorage.onMachineFromAccount (spec R5b 5)', () => {
+  it('gives the machine that the sync wrote from the account', () => {
+    const values = createSyncedKeyValue(createKeyValue(null));
+    const storage = createSyncedStorage(values);
+    const listener = vi.fn();
+    storage.onMachineFromAccount(listener);
+    values.writeFromAccount(MACHINE_KEY, serializeMachine(binary));
+    expect(listener).toHaveBeenCalledExactlyOnceWith(binary);
+  });
+
+  it('gives nothing for unreadable text, for the quiz scores, or after the stop function ran', () => {
+    const values = createSyncedKeyValue(createKeyValue(null));
+    const storage = createSyncedStorage(values);
+    const listener = vi.fn();
+    const stop = storage.onMachineFromAccount(listener);
+    values.writeFromAccount(MACHINE_KEY, '{"format":"something else"}');
+    values.writeFromAccount(PROGRESS_KEY, '{}');
+    stop();
+    values.writeFromAccount(MACHINE_KEY, serializeMachine(binary));
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('never calls from memory storage, which has no account', () => {
+    const listener = vi.fn();
+    createMemoryStorage().onMachineFromAccount(listener)();
+    expect(listener).not.toHaveBeenCalled();
   });
 });

@@ -3,6 +3,7 @@
 import { Check, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useId, useRef, useState } from 'react';
+import { accountConfig } from '@/account/config';
 import { sectionTitle, sheet } from '@/shell/page-styles';
 import { saveQuizResult } from './progress';
 import type { QuizQuestion } from './quiz-data';
@@ -148,7 +149,7 @@ export function Quiz({ slug, questions }: { slug: string; questions: QuizQuestio
         {done && (
           <>
             <p className="font-display text-xl">{t('score', { score, total })}</p>{' '}
-            <p className="mt-1 text-sm font-normal text-muted">{t('saved')}</p>
+            <p className="mt-1 text-sm font-normal text-muted">{accountConfig() === null ? t('saved') : t('savedAccounts')}</p>
           </>
         )}
       </div>

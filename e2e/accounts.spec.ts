@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
-import { ACCOUNTS_PORT, expectAccountButton, fakeSupabase, FAKE_SUPABASE_URL, signInBeforeLoad } from './accounts';
+import { expect, test, type Page } from '@playwright/test';
+import { ACCOUNTS_PORT, expectAccountButton, fakeSupabase, FAKE_SUPABASE_URL, seedBeforeLoad, signInBeforeLoad, type FakeRow } from './accounts';
 import { openPage } from './helpers';
 
 test.describe('without Supabase values (the normal build)', () => {
@@ -268,6 +268,153 @@ test.describe('with Supabase values (spec R5b 4)', () => {
         const dialog = page.getByRole('dialog', { name: 'Delete my account' });
         await dialog.getByRole('button', { name: 'Delete my account' }).click();
         await expect(dialog.getByRole('alert')).toBeVisible();
+        expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+      });
+    });
+  }
+});
+
+/** A machine in the JSON of the file download. */
+function machineJson(name: string) {
+  return {
+    format: 'computable/machine@1',
+    name,
+    tape: 'one-sided',
+    blank: '_',
+    start: 'q0',
+    accept: ['qA'],
+    reject: [],
+    input: '1',
+    rules: [{ state: 'q0', read: '1', write: '0', move: 'R', next: 'qA' }],
+  };
+}
+
+/** A row with a saved machine, and saved quiz scores when given. */
+function savedRow(name: string, progress: object = {}): FakeRow {
+  return { machine: machineJson(name), machine_changed_at: '2026-11-24T18:30:00.000Z', progress, progress_reset_at: null };
+}
+
+/** The browser machine of an earlier visit: the simulator keeps it as indented JSON. */
+const browserMachine = (name: string) => ({
+  'computable.machine': `${JSON.stringify(machineJson(name), null, 2)}\n`,
+  'computable.machine.changedAt': '2026-11-25T08:00:00.000Z',
+});
+
+/** The machine name in the simulator's title. */
+const machineTitle = (page: Page) => page.getByRole('main').getByRole('heading', { level: 1 });
+
+/** Changes the machine name in the simulator's "Machine file" section. */
+async function renameMachine(page: Page, name: string) {
+  await page.getByText('Machine file', { exact: true }).click();
+  await page.getByRole('textbox', { name: 'Name', exact: true }).fill(name);
+}
+
+test.describe('the sync, with Supabase values (spec R5b 5)', () => {
+  test.use({ baseURL: `http://localhost:${ACCOUNTS_PORT}` });
+
+  test('an empty browser takes the saved machine', async ({ page }) => {
+    await signInBeforeLoad(page);
+    const { unexpected, writes } = await fakeSupabase(page, {}, { row: savedRow('Saved one') });
+    await openPage(page, '/en/simulator');
+    await expect(machineTitle(page)).toHaveText('Saved one');
+    expect(writes).toEqual([]);
+    expect(unexpected).toEqual([]);
+  });
+
+  test('when both machines changed, the dialog asks, and "Use your saved machine" loads it', async ({ page }) => {
+    await signInBeforeLoad(page);
+    await seedBeforeLoad(page, browserMachine('Mine'));
+    const { writes } = await fakeSupabase(page, {}, { row: savedRow('Saved one') });
+    await openPage(page, '/en/simulator');
+    const dialog = page.getByRole('dialog', { name: 'Which machine do you want to keep?' });
+    await expect(dialog.getByRole('group', { name: 'This browser' })).toContainText('Mine');
+    await expect(dialog.getByRole('group', { name: 'Your account' })).toContainText('Saved one');
+    await dialog.getByRole('button', { name: 'Use your saved machine' }).click();
+    await expect(dialog).toBeHidden();
+    await expect(machineTitle(page)).toHaveText('Saved one');
+    expect(writes).toEqual([]);
+  });
+
+  test('"Keep this browser\'s machine" uploads the browser machine', async ({ page }) => {
+    await signInBeforeLoad(page);
+    await seedBeforeLoad(page, browserMachine('Mine'));
+    const { writes } = await fakeSupabase(page, {}, { row: savedRow('Saved one') });
+    await openPage(page, '/en/simulator');
+    const dialog = page.getByRole('dialog', { name: 'Which machine do you want to keep?' });
+    await dialog.getByRole('button', { name: "Keep this browser's machine" }).click();
+    await expect(dialog).toBeHidden();
+    await expect.poll(() => writes.length).toBe(1);
+    expect(writes[0].body).toMatchObject({ machine: { name: 'Mine' }, machine_changed_at: '2026-11-25T08:00:00.000Z' });
+    await expect(machineTitle(page)).toHaveText('Mine');
+  });
+
+  test('a new machine name goes to the account in 1 write, about 2 seconds later', async ({ page }) => {
+    await signInBeforeLoad(page);
+    const { writes, unexpected } = await fakeSupabase(page, {});
+    await openPage(page, '/en/simulator');
+    await expectAccountButton(page, /^Account: /);
+    const renamedAt = Date.now();
+    await renameMachine(page, 'Renamed');
+    await expect.poll(() => writes.length, { timeout: 5000 }).toBe(1);
+    expect(writes[0].at - renamedAt).toBeGreaterThanOrEqual(1500);
+    expect(writes[0].body).toMatchObject({ machine: { name: 'Renamed' } });
+    expect(writes[0].body).not.toHaveProperty('progress');
+    // No second write follows.
+    await page.waitForTimeout(2500);
+    expect(writes).toHaveLength(1);
+    expect(unexpected).toEqual([]);
+  });
+
+  test('a failed write says the work is not saved, and is safe in this browser', async ({ page }) => {
+    const person = await signInBeforeLoad(page);
+    const { writes } = await fakeSupabase(page, {}, { writeStatus: 500 });
+    await openPage(page, '/en/simulator');
+    await expectAccountButton(page, `Account: ${person.name}`);
+    await renameMachine(page, 'Renamed');
+    await expect.poll(() => writes.length, { timeout: 5000 }).toBe(1);
+    await page.getByRole('button', { name: `Account: ${person.name}` }).click();
+    await expect(page.getByRole('status').filter({ hasText: 'Not saved' })).toHaveText(
+      'Not saved: no connection. Your work is safe in this browser.',
+    );
+  });
+
+  test('a finished quiz merges with the saved scores, and both show on the Learn page', async ({ page }) => {
+    await signInBeforeLoad(page);
+    const intuition = { best: 3, total: 5, finishedAt: '2026-11-24T10:00:00.000Z' };
+    const { writes } = await fakeSupabase(page, {}, { row: { machine: null, machine_changed_at: null, progress: { intuition }, progress_reset_at: null } });
+    await openPage(page, '/en/learn/church-turing');
+    await expectAccountButton(page, /^Account: /);
+    // The right option of each question in lesson 6's quiz (content/lessons/church-turing/quiz.ts).
+    for (const [index, right] of [1, 2, 0, 1, 2].entries()) {
+      const group = page.getByRole('group', { name: new RegExp(`^Question ${index + 1} of 5`) });
+      await group.getByRole('radio').nth(right).check();
+      await group.getByRole('button', { name: 'Check' }).click();
+    }
+    await page.getByRole('navigation', { name: 'Lessons' }).getByRole('link', { name: 'All lessons' }).click();
+    const row = (title: string) => page.getByRole('listitem').filter({ has: page.getByRole('link', { name: title }) });
+    await expect(row('Intuition: the human computer').getByText('Quiz: 3 of 5')).toBeVisible();
+    await expect(row('The Church–Turing thesis').getByText('Quiz: 5 of 5')).toBeVisible();
+    await expect.poll(() => writes.length, { timeout: 5000 }).toBe(1);
+    expect(writes[0].body).toMatchObject({ progress: { intuition, 'church-turing': { best: 5, total: 5 } } });
+    expect(writes[0].body).not.toHaveProperty('machine');
+  });
+
+  for (const colorScheme of ['light', 'dark'] as const) {
+    test.describe(`${colorScheme} mode`, () => {
+      test.use({ colorScheme });
+
+      test('the machine dialog and the menu with the status line have no axe violations', async ({ page }) => {
+        const person = await signInBeforeLoad(page);
+        await seedBeforeLoad(page, browserMachine('Mine'));
+        await fakeSupabase(page, {}, { row: savedRow('Saved one') });
+        await openPage(page, '/en/simulator');
+        const dialog = page.getByRole('dialog', { name: 'Which machine do you want to keep?' });
+        await expect(dialog).toBeVisible();
+        expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+
+        await dialog.getByRole('button', { name: 'Use your saved machine' }).click();
+        await page.getByRole('button', { name: `Account: ${person.name}` }).click();
+        await expect(page.getByRole('status').filter({ hasText: 'Saved to your account' })).toBeVisible();
         expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
       });
     });

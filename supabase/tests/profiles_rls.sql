@@ -1,9 +1,9 @@
--- Row rules of public.profiles and delete_my_account() (spec R5b, sections 3 and 7).
+-- Row rules of public.profiles, its size limits, delete_my_account() and keep_alive() (spec R5b, sections 3, 5 and 7).
 -- Run it against a local Supabase: `supabase start`, then `supabase test db`. It needs Docker.
 -- Person A and person B each have a login and a row. Every change rolls back at the end.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(14);
+select plan(16);
 
 insert into auth.users (id, email) values
   ('00000000-0000-4000-a000-00000000000a', 'person-a@example.test'),
@@ -51,6 +51,14 @@ select throws_ok(
   '42501',
   'new row violates row-level security policy for table "profiles"',
   'Person A cannot give her own row to another user ID'
+);
+
+-- A machine of more than 256 KB of JSON text breaks the size limit (check_violation).
+select throws_ok(
+  $$ update public.profiles set machine = jsonb_build_object('name', repeat('x', 262144)) where user_id = '00000000-0000-4000-a000-00000000000a' $$,
+  '23514',
+  null,
+  'Person A cannot save a machine of more than 256 KB'
 );
 
 select lives_ok('select public.delete_my_account()', 'Person A deletes her account');
@@ -105,6 +113,9 @@ select is(
 select set_config('request.jwt.claims', '{"role": "anon"}', true);
 set local role anon;
 select throws_ok('select public.delete_my_account()', '42501', null, 'A visitor who is not signed in cannot delete any account');
+
+-- The daily keep-alive calls keep_alive() with the public key, as a visitor who is not signed in.
+select is(public.keep_alive(), 1, 'A visitor who is not signed in can call keep_alive()');
 
 select * from finish();
 rollback;
