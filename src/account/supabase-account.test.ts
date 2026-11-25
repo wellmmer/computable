@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { AccountUser } from './account-client';
+import { AccountSignedOutError, type AccountUser } from './account-client';
 import { createSupabaseAccountClient } from './supabase-account';
 
 /** A fake of the parts of the Supabase client that the adapter uses. No network. */
@@ -203,6 +203,11 @@ describe('readProfile and writeProfile (spec R5b 5)', () => {
   it('throws when the read fails', async () => {
     supabase.query.maybeSingle.mockResolvedValueOnce({ data: null, error: { code: '', message: 'TypeError: Failed to fetch' }, status: 0 });
     await expect(createSupabaseAccountClient(CONFIG).readProfile('id-a')).rejects.toThrow('Failed to fetch');
+  });
+
+  it('throws AccountSignedOutError when the login is not valid any more', async () => {
+    supabase.query.maybeSingle.mockResolvedValueOnce({ data: null, error: { code: 'PGRST303', message: 'JWT expired' }, status: 401 });
+    await expect(createSupabaseAccountClient(CONFIG).readProfile('id-a')).rejects.toBeInstanceOf(AccountSignedOutError);
   });
 
   it('upserts only the changed columns, with the user ID and the time of the write', async () => {

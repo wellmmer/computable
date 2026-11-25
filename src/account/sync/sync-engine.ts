@@ -3,7 +3,7 @@ import { parseMachine } from '@/engines/turing';
 import { parseProgress, type Progress } from '@/learn/progress-storage';
 import { MACHINE_CHANGED_AT_KEY, MACHINE_KEY, PROGRESS_KEY, SYNC_KEY } from '@/storage/keys';
 import type { SyncedKey, SyncedKeyValue } from '@/storage/synced-key-value';
-import type { AccountClient, ProfilePatch, SavedProfile } from '../account-client';
+import { AccountSignedOutError, type AccountClient, type ProfilePatch, type SavedProfile } from '../account-client';
 import { canonicalMachine, decideMachine, mergeProgress, sameProgress } from './merge';
 
 /** What the account menu says about the sync (spec R5b 5 and 6). */
@@ -260,10 +260,12 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     let saved: SavedProfile | null;
     try {
       saved = await client.readProfile(userId);
-    } catch {
+    } catch (error) {
       if (stopped) return;
       status('offline');
-      retryLater(() => void start());
+      // A login that is not valid any more stays so. The person must sign in again.
+      if (error instanceof AccountSignedOutError) stopped = true;
+      else retryLater(() => void start());
       return;
     }
     if (stopped) return;

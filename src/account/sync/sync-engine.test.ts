@@ -5,7 +5,7 @@ import type { Progress } from '@/learn/progress-storage';
 import { createKeyValue } from '@/storage/key-value';
 import { MACHINE_CHANGED_AT_KEY, MACHINE_KEY, PROGRESS_KEY, SYNC_KEY } from '@/storage/keys';
 import { createSyncedKeyValue } from '@/storage/synced-key-value';
-import type { ProfilePatch, SavedProfile, WriteResult } from '../account-client';
+import { AccountSignedOutError, type ProfilePatch, type SavedProfile, type WriteResult } from '../account-client';
 import { createSyncEngine, type MachineConflict, type SyncStatus } from './sync-engine';
 
 const USER = 'id-a';
@@ -345,6 +345,16 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     expect(sync.client.readProfile).toHaveBeenCalledTimes(2);
     expect(sync.writes).toEqual([{ machine: JSON.parse(text(OLD)), machineChangedAt: NOW.toISOString() }]);
     expect(sync.lastStatus()).toBe('saved');
+  });
+
+  it('stops trying when the first read says the login is not valid any more', async () => {
+    const sync = setup();
+    sync.client.readProfile.mockRejectedValueOnce(new AccountSignedOutError());
+    await sync.engine.start();
+    sync.online.listener?.();
+    await vi.advanceTimersByTimeAsync(90_000);
+    expect(sync.client.readProfile).toHaveBeenCalledOnce();
+    expect(sync.lastStatus()).toBe('offline');
   });
 
   it('stops: the pending write is cancelled and later changes are ignored', async () => {

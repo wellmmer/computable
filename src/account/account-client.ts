@@ -26,6 +26,14 @@ export interface ProfilePatch {
   readonly progress?: unknown;
 }
 
+/** What readProfile throws when the login is not valid any more. Trying again does not help. */
+export class AccountSignedOutError extends Error {
+  constructor() {
+    super('The login is not valid any more.');
+    this.name = 'AccountSignedOutError';
+  }
+}
+
 /**
  * How a write ended. `offline`: no connection, or Supabase failed; try again later. `too-big`: the
  * row's size limit refused it. `signed-out`: the login is not valid any more.
@@ -51,7 +59,10 @@ export interface AccountClient {
   signOut(): Promise<void>;
   /** Deletes the account and its row, then signs out. False when the deletion failed; then nothing changed. */
   deleteAccount(): Promise<boolean>;
-  /** Reads the person's row. Null when the person has no row yet. Throws when the read fails. */
+  /**
+   * Reads the person's row. Null when the person has no row yet. Throws when the read fails:
+   * AccountSignedOutError when the login is not valid any more.
+   */
   readProfile(userId: string): Promise<SavedProfile | null>;
   /** Writes the columns in `patch` to the person's row, and adds the row when it is missing. */
   writeProfile(userId: string, patch: ProfilePatch): Promise<WriteResult>;

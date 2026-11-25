@@ -1,6 +1,6 @@
 import { createClient, type User } from '@supabase/supabase-js';
 import { z } from 'zod';
-import type { AccountClient, AccountUser, ProfilePatch, WriteResult } from './account-client';
+import { AccountSignedOutError, type AccountClient, type AccountUser, type ProfilePatch, type WriteResult } from './account-client';
 import type { AccountConfig } from './config';
 
 /** The synced columns of a row, as PostgREST sends them. */
@@ -16,11 +16,15 @@ const CHECK_VIOLATION = '23514';
  */
 const SIGNED_OUT_CODES = new Set(['PGRST301', 'PGRST303', '42501']);
 
+/** True when a failed request says the login is not valid any more. */
+function isSignedOut(error: { code: string }, status: number): boolean {
+  return status === 401 || SIGNED_OUT_CODES.has(error.code);
+}
+
 /** Maps a failed write to what the sync does next. */
 function toWriteResult(error: { code: string }, status: number): WriteResult {
   if (error.code === CHECK_VIOLATION) return 'too-big';
-  if (status === 401 || SIGNED_OUT_CODES.has(error.code)) return 'signed-out';
-  return 'offline';
+  return isSignedOut(error, status) ? 'signed-out' : 'offline';
 }
 
 /** The row columns for a patch. A column that is not in the patch stays out, so the write leaves it as it is. */
@@ -123,8 +127,12 @@ export function createSupabaseAccountClient(config: AccountConfig): AccountClien
       return true;
     },
     async readProfile(userId) {
-      const { data, error } = await supabase.from('profiles').select('machine, machine_changed_at, progress').eq('user_id', userId).maybeSingle();
-      if (error !== null) throw new Error(error.message);
+      const { data, error, status } = await supabase
+        .from('profiles')
+        .select('machine, machine_changed_at, progress')
+        .eq('user_id', userId)
+        .maybeSingle();
+      if (error !== null) throw isSignedOut(error, status) ? new AccountSignedOutError() : new Error(error.message);
       if (data === null) return null;
       const row = rowSchema.safeParse(data);
       if (!row.success) throw new Error('The row does not have the synced columns.');
