@@ -16,15 +16,43 @@ const SESSION_KEY = 'sb-computable-e2e-auth-token';
 /** The answer of the fake Supabase to one request. */
 type Answer = (route: Route, url: URL) => Promise<void>;
 
+/** The synced columns of a fake row in public.profiles, as PostgREST sends them. */
+export interface FakeRow {
+  machine: unknown;
+  machine_changed_at: string | null;
+  progress: unknown;
+}
+
+interface FakeOptions {
+  /** The person's row. Null, the default, means the person has no row yet. */
+  row?: FakeRow | null;
+  /** The status of each write to the row. The default is 201, as PostgREST answers an upsert. */
+  writeStatus?: number;
+}
+
 /**
  * Fakes every request to Supabase. `answers` maps "METHOD /path" to an answer. A request with no
  * answer is aborted and recorded, so the test can check that nothing unexpected went out.
+ * The row of the sync (spec R5b 5) has default answers: reads give `options.row`, and writes are
+ * recorded in `writes`, with the time each one went out.
  */
-export async function fakeSupabase(page: Page, answers: Record<string, Answer>) {
+export async function fakeSupabase(page: Page, answers: Record<string, Answer>, options: FakeOptions = {}) {
   const unexpected: string[] = [];
+  const writes: { body: Record<string, unknown>; at: number }[] = [];
+  const writeStatus = options.writeStatus ?? 201;
+  const defaults: Record<string, Answer> = {
+    'GET /rest/v1/profiles': (route) =>
+      route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(options.row ? [options.row] : []) }),
+    'POST /rest/v1/profiles': async (route) => {
+      writes.push({ body: route.request().postDataJSON(), at: Date.now() });
+      if (writeStatus < 300) await route.fulfill({ status: writeStatus });
+      else await route.fulfill({ status: writeStatus, contentType: 'application/json', body: '{"code":"XX000","message":"down"}' });
+    },
+  };
+  const all = { ...defaults, ...answers };
   await page.route(`${FAKE_SUPABASE_URL}/**`, async (route) => {
     const url = new URL(route.request().url());
-    const answer = answers[`${route.request().method()} ${url.pathname}`];
+    const answer = all[`${route.request().method()} ${url.pathname}`];
     if (answer === undefined) {
       unexpected.push(`${route.request().method()} ${url.pathname}`);
       await route.abort();
@@ -32,7 +60,19 @@ export async function fakeSupabase(page: Page, answers: Record<string, Answer>) 
     }
     await answer(route, url);
   });
-  return { unexpected };
+  return { unexpected, writes };
+}
+
+/**
+ * Puts values in localStorage before the first page load, as an earlier visit would leave them.
+ * Later loads keep what the page wrote since.
+ */
+export async function seedBeforeLoad(page: Page, values: Record<string, string>) {
+  await page.addInitScript((entries) => {
+    if (sessionStorage.getItem('e2e-values-seeded') !== null) return;
+    for (const [key, value] of Object.entries(entries)) localStorage.setItem(key, value);
+    sessionStorage.setItem('e2e-values-seeded', '1');
+  }, values);
 }
 
 /** The person of the fake session. The email domain is reserved for tests. */
