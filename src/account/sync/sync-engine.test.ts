@@ -68,11 +68,17 @@ function setup({ profile = null, results = [], browser = {} }: Setup = {}) {
 }
 
 /** A row with the saved machine and scores. */
-const row = (savedMachine: Machine | null, progress: Progress = {}, machineChangedAt: string | null = '2026-11-24T18:30:00.000Z'): SavedProfile => ({
+const row = (
+  savedMachine: Machine | null,
+  progress: Progress = {},
+  machineChangedAt: string | null = '2026-11-24T18:30:00.000Z',
+  progressResetAt: string | null = null,
+): SavedProfile => ({
   // The database gives the machine as an object, with its keys in another order.
   machine: savedMachine === null ? null : Object.fromEntries(Object.entries(savedMachine).reverse()),
   machineChangedAt,
   progress,
+  progressResetAt,
 });
 
 beforeEach(() => {
@@ -229,7 +235,7 @@ describe('createSyncEngine, the machine on page load (spec R5b 5)', () => {
   });
 
   it('treats a saved machine that does not parse as no saved machine', async () => {
-    const sync = setup({ profile: { machine: { format: 'something else' }, machineChangedAt: null, progress: {} }, browser: { [MACHINE_KEY]: text(MINE) } });
+    const sync = setup({ profile: { machine: { format: 'something else' }, machineChangedAt: null, progress: {}, progressResetAt: null }, browser: { [MACHINE_KEY]: text(MINE) } });
     await sync.engine.start();
     expect(sync.writes).toEqual([{ machine: JSON.parse(text(MINE)), machineChangedAt: null }]);
   });
@@ -465,6 +471,48 @@ describe('createSyncEngine, page changes (spec R5b 5)', () => {
     sync.values.write(PROGRESS_KEY, JSON.stringify(scores));
     await vi.advanceTimersByTimeAsync(2000);
     expect(sync.writes).toEqual([{ progress: scores }]);
+  });
+});
+
+describe('createSyncEngine, "Reset my progress" while signed in (spec R5b 5)', () => {
+  const OLD_SCORE = result(4, 5, '2026-11-20T10:00:00.000Z');
+
+  it('clears the scores in the account too, with the time of the reset', async () => {
+    const sync = setup({
+      profile: row(null, { intuition: OLD_SCORE }),
+      browser: { [PROGRESS_KEY]: JSON.stringify({ intuition: OLD_SCORE }) },
+    });
+    await sync.engine.start();
+    sync.values.remove(PROGRESS_KEY);
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(sync.writes).toEqual([{ progress: {}, progressResetAt: NOW.toISOString() }]);
+    expect(sync.values.read(PROGRESS_KEY)).toBeNull();
+    expect(sync.record()).toEqual({ userId: USER, machine: null, resetAt: NOW.toISOString() });
+  });
+
+  it('keeps a reset made while offline, and sends it on the next page load', async () => {
+    const sync = setup({
+      profile: row(null, { intuition: OLD_SCORE }),
+      browser: { [SYNC_KEY]: JSON.stringify({ userId: USER, machine: null, resetAt: '2026-11-24T00:00:00.000Z' }) },
+    });
+    await sync.engine.start();
+    expect(sync.values.read(PROGRESS_KEY)).toBeNull();
+    expect(sync.writes).toEqual([{ progress: {}, progressResetAt: '2026-11-24T00:00:00.000Z' }]);
+  });
+
+  it('drops the older browser scores after a reset on another device, and keeps newer ones', async () => {
+    const newer = result(1, 5, '2026-11-24T12:00:00.000Z');
+    const sync = setup({
+      profile: row(null, {}, null, '2026-11-24T00:00:00.000Z'),
+      browser: {
+        [PROGRESS_KEY]: JSON.stringify({ intuition: OLD_SCORE, busyBeaver: newer }),
+        [SYNC_KEY]: JSON.stringify({ userId: USER, machine: null }),
+      },
+    });
+    await sync.engine.start();
+    expect(JSON.parse(sync.values.read(PROGRESS_KEY) ?? 'null')).toEqual({ busyBeaver: newer });
+    expect(sync.writes).toEqual([{ progress: { busyBeaver: newer } }]);
+    expect(sync.record()).toEqual({ userId: USER, machine: null, resetAt: '2026-11-24T00:00:00.000Z' });
   });
 });
 

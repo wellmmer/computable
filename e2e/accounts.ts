@@ -21,6 +21,7 @@ export interface FakeRow {
   machine: unknown;
   machine_changed_at: string | null;
   progress: unknown;
+  progress_reset_at: string | null;
 }
 
 interface FakeOptions {

@@ -185,15 +185,25 @@ describe('the sign-out reason (spec R5b 6)', () => {
 describe('readProfile and writeProfile (spec R5b 5)', () => {
   it('reads the 3 synced columns of the person', async () => {
     supabase.query.maybeSingle.mockResolvedValueOnce({
-      data: { machine: { name: 'Saved' }, machine_changed_at: '2026-11-24T18:30:00+00:00', progress: { a: 1 } },
+      data: {
+        machine: { name: 'Saved' },
+        machine_changed_at: '2026-11-24T18:30:00+00:00',
+        progress: { a: 1 },
+        progress_reset_at: '2026-11-23T08:00:00+00:00',
+      },
       error: null,
       status: 200,
     });
     const profile = await createSupabaseAccountClient(CONFIG).readProfile('id-a');
     expect(supabase.client.from).toHaveBeenCalledWith('profiles');
-    expect(supabase.query.select).toHaveBeenCalledWith('machine, machine_changed_at, progress');
+    expect(supabase.query.select).toHaveBeenCalledWith('machine, machine_changed_at, progress, progress_reset_at');
     expect(supabase.query.eq).toHaveBeenCalledWith('user_id', 'id-a');
-    expect(profile).toEqual({ machine: { name: 'Saved' }, machineChangedAt: '2026-11-24T18:30:00+00:00', progress: { a: 1 } });
+    expect(profile).toEqual({
+      machine: { name: 'Saved' },
+      machineChangedAt: '2026-11-24T18:30:00+00:00',
+      progress: { a: 1 },
+      progressResetAt: '2026-11-23T08:00:00+00:00',
+    });
   });
 
   it('gives null when the person has no row yet', async () => {
@@ -214,14 +224,17 @@ describe('readProfile and writeProfile (spec R5b 5)', () => {
     vi.useFakeTimers({ now: new Date('2026-11-25T10:00:00.000Z') });
     const account = createSupabaseAccountClient(CONFIG);
     expect(await account.writeProfile('id-a', { machine: { name: 'Mine' }, machineChangedAt: '2026-11-25T09:59:00.000Z' })).toBe('ok');
-    expect(await account.writeProfile('id-a', { progress: {} })).toBe('ok');
+    expect(await account.writeProfile('id-a', { progress: {}, progressResetAt: '2026-11-25T09:58:00.000Z' })).toBe('ok');
     vi.useRealTimers();
     expect(supabase.query.upsert.mock.calls).toEqual([
       [
         { user_id: 'id-a', updated_at: '2026-11-25T10:00:00.000Z', machine: { name: 'Mine' }, machine_changed_at: '2026-11-25T09:59:00.000Z' },
         { onConflict: 'user_id' },
       ],
-      [{ user_id: 'id-a', updated_at: '2026-11-25T10:00:00.000Z', progress: {} }, { onConflict: 'user_id' }],
+      [
+        { user_id: 'id-a', updated_at: '2026-11-25T10:00:00.000Z', progress: {}, progress_reset_at: '2026-11-25T09:58:00.000Z' },
+        { onConflict: 'user_id' },
+      ],
     ]);
   });
 

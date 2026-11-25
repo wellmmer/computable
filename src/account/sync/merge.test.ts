@@ -76,6 +76,21 @@ describe('mergeProgress (spec R5b 5)', () => {
   });
 });
 
+describe('mergeProgress after "Reset my progress" (spec R5b 5)', () => {
+  const result = (best: number, total: number, finishedAt: string) => ({ best, total, finishedAt });
+
+  it('drops the results that ended before the newest reset, on both sides', () => {
+    const browser: Progress = { a: result(1, 2, '2026-11-20T10:00:00.000Z'), b: result(2, 2, '2026-11-23T10:00:00.000Z') };
+    const saved: Progress = { c: result(1, 1, '2026-11-21T10:00:00.000Z'), d: result(1, 1, '2026-11-24T10:00:00.000Z') };
+    expect(mergeProgress(browser, saved, '2026-11-22T00:00:00.000Z')).toEqual({ b: browser.b, d: saved.d });
+  });
+
+  it('keeps everything without a reset', () => {
+    const browser: Progress = { a: result(1, 2, '2026-11-20T10:00:00.000Z') };
+    expect(mergeProgress(browser, {}, null)).toEqual(browser);
+  });
+});
+
 describe('sameProgress', () => {
   it('ignores the order of the lessons', () => {
     const one = { best: 1, total: 2, finishedAt: '2026-11-20T10:00:00.000Z' };

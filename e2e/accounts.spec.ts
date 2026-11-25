@@ -291,7 +291,7 @@ function machineJson(name: string) {
 
 /** A row with a saved machine, and saved quiz scores when given. */
 function savedRow(name: string, progress: object = {}): FakeRow {
-  return { machine: machineJson(name), machine_changed_at: '2026-11-24T18:30:00.000Z', progress };
+  return { machine: machineJson(name), machine_changed_at: '2026-11-24T18:30:00.000Z', progress, progress_reset_at: null };
 }
 
 /** The browser machine of an earlier visit: the simulator keeps it as indented JSON. */
@@ -381,7 +381,7 @@ test.describe('the sync, with Supabase values (spec R5b 5)', () => {
   test('a finished quiz merges with the saved scores, and both show on the Learn page', async ({ page }) => {
     await signInBeforeLoad(page);
     const intuition = { best: 3, total: 5, finishedAt: '2026-11-24T10:00:00.000Z' };
-    const { writes } = await fakeSupabase(page, {}, { row: { machine: null, machine_changed_at: null, progress: { intuition } } });
+    const { writes } = await fakeSupabase(page, {}, { row: { machine: null, machine_changed_at: null, progress: { intuition }, progress_reset_at: null } });
     await openPage(page, '/en/learn/church-turing');
     await expectAccountButton(page, /^Account: /);
     // The right option of each question in lesson 6's quiz (content/lessons/church-turing/quiz.ts).

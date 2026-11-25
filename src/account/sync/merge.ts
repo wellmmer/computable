@@ -28,11 +28,23 @@ function mergeResult(browser: LessonResult, saved: LessonResult): LessonResult {
   return { best: Math.max(browser.best, saved.best), total: browser.total, finishedAt };
 }
 
-/** Merges the browser's quiz scores with the saved ones (spec R5b 5). Lessons on one side only stay. */
-export function mergeProgress(browser: Progress, saved: Progress): Progress {
-  const merged: Record<string, LessonResult> = { ...saved, ...browser };
-  for (const [slug, result] of Object.entries(saved)) {
-    const mine = browser[slug];
+/** The results that ended at or after `resetAt`. All of them when there was no reset. */
+function sinceReset(progress: Progress, resetAt: string | null): Progress {
+  if (resetAt === null) return progress;
+  const reset = Date.parse(resetAt);
+  return Object.fromEntries(Object.entries(progress).filter(([, result]) => Date.parse(result.finishedAt) >= reset));
+}
+
+/**
+ * Merges the browser's quiz scores with the saved ones (spec R5b 5). Lessons on one side only stay.
+ * `resetAt` is the newest "Reset my progress" known: results that ended before it are dropped.
+ */
+export function mergeProgress(browser: Progress, saved: Progress, resetAt: string | null = null): Progress {
+  const mineSinceReset = sinceReset(browser, resetAt);
+  const savedSinceReset = sinceReset(saved, resetAt);
+  const merged: Record<string, LessonResult> = { ...savedSinceReset, ...mineSinceReset };
+  for (const [slug, result] of Object.entries(savedSinceReset)) {
+    const mine = mineSinceReset[slug];
     if (mine !== undefined) merged[slug] = mergeResult(mine, result);
   }
   return merged;

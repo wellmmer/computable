@@ -459,6 +459,7 @@
     "reset": {
       "button": "Fortschritt zurücksetzen",
       "question": "Alle deine Quiz-Ergebnisse in diesem Browser löschen?",
+      "questionAccounts": "Alle deine Quiz-Ergebnisse in diesem Browser löschen, und in deinem Konto, wenn du angemeldet bist?",
       "confirm": "Ja, löschen",
       "cancel": "Abbrechen",
       "done": "Deine Quiz-Ergebnisse sind gelöscht."

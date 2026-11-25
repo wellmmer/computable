@@ -17,6 +17,8 @@ export interface SavedProfile {
   readonly machineChangedAt: string | null;
   /** The quiz scores as JSON. The sync parses them too. */
   readonly progress: unknown;
+  /** When "Reset my progress" last ran while signed in, on any device, or null. */
+  readonly progressResetAt: string | null;
 }
 
 /** The columns that one write changes. A missing column stays as it is in the row. */
@@ -24,6 +26,7 @@ export interface ProfilePatch {
   readonly machine?: unknown;
   readonly machineChangedAt?: string | null;
   readonly progress?: unknown;
+  readonly progressResetAt?: string | null;
 }
 
 /** What readProfile throws when the login is not valid any more. Trying again does not help. */

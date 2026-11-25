@@ -459,6 +459,7 @@
     "reset": {
       "button": "Effacer ma progression",
       "question": "Effacer tous vos résultats de quiz dans ce navigateur ?",
+      "questionAccounts": "Effacer tous vos résultats de quiz dans ce navigateur et, si vous êtes connecté, dans votre compte ?",
       "confirm": "Oui, les effacer",
       "cancel": "Annuler",
       "done": "Vos résultats de quiz sont effacés."

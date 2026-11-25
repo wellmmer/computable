@@ -4,7 +4,12 @@ import { AccountSignedOutError, type AccountClient, type AccountUser, type Profi
 import type { AccountConfig } from './config';
 
 /** The synced columns of a row, as PostgREST sends them. */
-const rowSchema = z.object({ machine: z.unknown(), machine_changed_at: z.string().nullable(), progress: z.unknown() });
+const rowSchema = z.object({
+  machine: z.unknown(),
+  machine_changed_at: z.string().nullable(),
+  progress: z.unknown(),
+  progress_reset_at: z.string().nullable(),
+});
 
 /** The Postgres code of a broken check constraint: here, the size limit of a column. */
 const CHECK_VIOLATION = '23514';
@@ -33,6 +38,7 @@ function toRowColumns(patch: ProfilePatch): Record<string, unknown> {
   if ('machine' in patch) columns.machine = patch.machine;
   if ('machineChangedAt' in patch) columns.machine_changed_at = patch.machineChangedAt;
   if ('progress' in patch) columns.progress = patch.progress;
+  if ('progressResetAt' in patch) columns.progress_reset_at = patch.progressResetAt;
   return columns;
 }
 
@@ -129,14 +135,19 @@ export function createSupabaseAccountClient(config: AccountConfig): AccountClien
     async readProfile(userId) {
       const { data, error, status } = await supabase
         .from('profiles')
-        .select('machine, machine_changed_at, progress')
+        .select('machine, machine_changed_at, progress, progress_reset_at')
         .eq('user_id', userId)
         .maybeSingle();
       if (error !== null) throw isSignedOut(error, status) ? new AccountSignedOutError() : new Error(error.message);
       if (data === null) return null;
       const row = rowSchema.safeParse(data);
       if (!row.success) throw new Error('The row does not have the synced columns.');
-      return { machine: row.data.machine ?? null, machineChangedAt: row.data.machine_changed_at, progress: row.data.progress };
+      return {
+        machine: row.data.machine ?? null,
+        machineChangedAt: row.data.machine_changed_at,
+        progress: row.data.progress,
+        progressResetAt: row.data.progress_reset_at,
+      };
     },
     async writeProfile(userId, patch) {
       try {

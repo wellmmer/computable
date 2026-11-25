@@ -459,6 +459,7 @@
     "reset": {
       "button": "Borrar mi progreso",
       "question": "¿Borrar todos tus resultados de cuestionarios en este navegador?",
+      "questionAccounts": "¿Borrar todos tus resultados de cuestionarios en este navegador y, si iniciaste sesión, en tu cuenta?",
       "confirm": "Sí, borrarlos",
       "cancel": "Cancelar",
       "done": "Tus resultados de cuestionarios están borrados."

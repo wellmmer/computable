@@ -37,6 +37,8 @@ interface SyncEngineOptions {
   setTimer?: (run: () => void, ms: number) => () => void;
   /** Calls `listener` when the browser is back online. Returns the function that stops it. */
   onlineEvents?: (listener: () => void) => () => void;
+  /** The time of a reset. Tests pass a fixed one. */
+  now?: () => Date;
 }
 
 /** A change is sent this long after it happened, so that quick changes go in 1 write. */
@@ -47,7 +49,8 @@ const RETRY_MS = 30_000;
 const MACHINE_LIMIT = 262_144;
 const PROGRESS_LIMIT = 65_536;
 
-const recordSchema = z.object({ userId: z.string(), machine: z.string().nullable() });
+/** The sync record. `resetAt` is the newest "Reset my progress" this browser knows for the login. */
+const recordSchema = z.object({ userId: z.string(), machine: z.string().nullable(), resetAt: z.string().nullable().optional() });
 
 function defaultTimer(run: () => void, ms: number) {
   const id = setTimeout(run, ms);
@@ -65,6 +68,13 @@ function defaultOnlineEvents(listener: () => void) {
  */
 function jsonBytes(text: string): number {
   return new TextEncoder().encode(text).length;
+}
+
+/** The later of 2 times, or null when both are missing. */
+function newerTime(a: string | null, b: string | null): string | null {
+  if (a === null) return b;
+  if (b === null) return a;
+  return Date.parse(b) > Date.parse(a) ? b : a;
 }
 
 /** The JSON text of a value from the database, or null when there is nothing. */
@@ -86,6 +96,7 @@ function machineName(text: string): string {
 export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
   const { userId, client, values, onStatus, onConflict } = options;
   const setTimer = options.setTimer ?? defaultTimer;
+  const now = options.now ?? (() => new Date());
 
   let stopped = false;
   /** True after the page-load read worked. No write goes out before. */
@@ -126,9 +137,18 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
     return record !== null && record.userId === userId ? record.machine : null;
   };
 
-  const recordSynced = (machine: string | null) => {
-    values.write(SYNC_KEY, JSON.stringify({ userId, machine }));
+  /** The newest reset this browser knows for this login, or null. */
+  const knownReset = (): string | null => {
+    const record = readRecord();
+    return record !== null && record.userId === userId ? (record.resetAt ?? null) : null;
   };
+
+  const writeRecord = (machine: string | null, resetAt: string | null) => {
+    values.write(SYNC_KEY, JSON.stringify(resetAt === null ? { userId, machine } : { userId, machine, resetAt }));
+  };
+
+  const recordSynced = (machine: string | null) => writeRecord(machine, knownReset());
+  const rememberReset = (resetAt: string | null) => writeRecord(lastSynced(), resetAt);
 
   const cancelTimers = () => {
     cancelBatch?.();
@@ -163,7 +183,7 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
    * over: the dialog asks first. The scores are merged with the saved ones.
    */
   const buildPatch = (saved: SavedProfile | null): { patch: ProfilePatch; machine: string | null } => {
-    const patch: { machine?: unknown; machineChangedAt?: string | null; progress?: Progress } = {};
+    const patch: { machine?: unknown; machineChangedAt?: string | null; progress?: Progress; progressResetAt?: string | null } = {};
     let machine: string | null = null;
     if (dirty.has('machine')) {
       const text = canonicalMachine(values.read(MACHINE_KEY));
@@ -186,13 +206,20 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
       }
     }
     if (dirty.has('progress')) {
+      const savedReset = saved?.progressResetAt ?? null;
+      const reset = newerTime(savedReset, knownReset());
+      if (reset !== knownReset()) rememberReset(reset);
       const browser = parseProgress(values.read(PROGRESS_KEY));
       const savedProgress = parseProgress(textOf(saved?.progress));
-      const merged = mergeProgress(browser, savedProgress);
+      const merged = mergeProgress(browser, savedProgress, reset);
       if (!sameProgress(merged, browser)) values.writeFromAccount(PROGRESS_KEY, JSON.stringify(merged));
-      if (sameProgress(merged, savedProgress)) tooBig.delete('progress');
+      const resetIsNew = reset !== savedReset;
+      if (sameProgress(merged, savedProgress) && !resetIsNew) tooBig.delete('progress');
       else if (jsonBytes(JSON.stringify(merged, null, 1)) > PROGRESS_LIMIT) tooBig.add('progress');
-      else patch.progress = merged;
+      else {
+        patch.progress = merged;
+        if (resetIsNew) patch.progressResetAt = reset;
+      }
     }
     dirty.clear();
     return { patch, machine };
@@ -271,7 +298,11 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
   };
 
   const onLocalChange = (key: SyncedKey) => {
-    if (stopped || !started) return;
+    if (stopped) return;
+    // "Reset my progress" removes the scores. The time of the reset makes it last: the next merge
+    // drops every result that ended before it, here and on the other devices.
+    if (key === PROGRESS_KEY && values.read(PROGRESS_KEY) === null) rememberReset(now().toISOString());
+    if (!started) return;
     // While the dialog is open, the person has not chosen a machine yet.
     if (key === MACHINE_KEY && pendingChoice !== null) return;
     dirty.add(key === MACHINE_KEY ? 'machine' : 'progress');
@@ -325,8 +356,10 @@ export function createSyncEngine(options: SyncEngineOptions): SyncEngine {
       ask(browserText, savedText, savedChangedAt);
     }
     const browser = parseProgress(values.read(PROGRESS_KEY));
-    const savedProgress = parseProgress(textOf(saved?.progress));
+    const savedReset = saved?.progressResetAt ?? null;
+    const savedProgress = mergeProgress({}, parseProgress(textOf(saved?.progress)), savedReset);
     if (!sameProgress(browser, savedProgress)) values.writeFromAccount(PROGRESS_KEY, JSON.stringify(savedProgress));
+    rememberReset(savedReset);
   };
 
   const start = async (): Promise<void> => {

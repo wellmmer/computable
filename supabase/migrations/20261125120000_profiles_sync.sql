@@ -2,6 +2,10 @@
 -- When the machine in the row last changed in a browser. The machine dialog shows it.
 alter table public.profiles add column machine_changed_at timestamptz;
 
+-- When "Reset my progress" last ran while signed in, on any device. Every device drops the quiz
+-- results that ended before it, so the reset lasts.
+alter table public.profiles add column progress_reset_at timestamptz;
+
 -- Without a limit, a person could write JSON of any size into their own row.
 -- The machine may hold 256 KB of JSON text, and the quiz scores 64 KB.
 alter table public.profiles

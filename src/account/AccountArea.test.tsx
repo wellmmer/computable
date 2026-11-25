@@ -89,7 +89,7 @@ describe('AccountArea, the sync (spec R5b 5)', () => {
 
   it('asks which machine to keep when both changed, and "Use your saved machine" loads it', async () => {
     localStorage.setItem(MACHINE_KEY, serializeMachine(MINE));
-    const fake = createFakeAccount({ user: ADA, profile: { machine: JSON.parse(serializeMachine(SAVED)), machineChangedAt: null, progress: {} } });
+    const fake = createFakeAccount({ user: ADA, profile: { machine: JSON.parse(serializeMachine(SAVED)), machineChangedAt: null, progress: {}, progressResetAt: null } });
     await renderArea(fake);
     const dialog = screen.getByRole('dialog', { name: 'Which machine do you want to keep?' });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Use your saved machine' }));
@@ -100,7 +100,7 @@ describe('AccountArea, the sync (spec R5b 5)', () => {
 
   it('"Keep this browser\'s machine" uploads it', async () => {
     localStorage.setItem(MACHINE_KEY, serializeMachine(MINE));
-    const fake = createFakeAccount({ user: ADA, profile: { machine: JSON.parse(serializeMachine(SAVED)), machineChangedAt: null, progress: {} } });
+    const fake = createFakeAccount({ user: ADA, profile: { machine: JSON.parse(serializeMachine(SAVED)), machineChangedAt: null, progress: {}, progressResetAt: null } });
     await renderArea(fake);
     const dialog = screen.getByRole('dialog', { name: 'Which machine do you want to keep?' });
     await act(async () => fireEvent.click(within(dialog).getByRole('button', { name: "Keep this browser's machine" })));
@@ -110,7 +110,7 @@ describe('AccountArea, the sync (spec R5b 5)', () => {
 
   it('closes the question when the person signs out', async () => {
     localStorage.setItem(MACHINE_KEY, serializeMachine(MINE));
-    const fake = createFakeAccount({ user: ADA, profile: { machine: JSON.parse(serializeMachine(SAVED)), machineChangedAt: null, progress: {} } });
+    const fake = createFakeAccount({ user: ADA, profile: { machine: JSON.parse(serializeMachine(SAVED)), machineChangedAt: null, progress: {}, progressResetAt: null } });
     await renderArea(fake);
     expect(screen.getByRole('dialog', { name: 'Which machine do you want to keep?' })).toBeTruthy();
     await act(async () => fake.setUser(null));

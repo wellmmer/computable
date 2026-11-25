@@ -459,6 +459,7 @@
     "reset": {
       "button": "Reset my progress",
       "question": "Clear all your quiz results in this browser?",
+      "questionAccounts": "Clear all your quiz results in this browser, and in your account if you are signed in?",
       "confirm": "Yes, clear them",
       "cancel": "Cancel",
       "done": "Your quiz results are cleared."
